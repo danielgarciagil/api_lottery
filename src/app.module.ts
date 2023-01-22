@@ -11,6 +11,8 @@ import { TodoModule } from './components/todo/todo.module';
 import { ItemsModule } from './components/items/items.module';
 import { config, enviroments, validationENV } from './config/config';
 import { DatabaseModule } from './database/database.module';
+import { UsersModule } from './components/users/users.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,6 +35,10 @@ import { DatabaseModule } from './database/database.module';
     // HelloWordModule,
     // TodoModule,
     ItemsModule,
+
+    UsersModule,
+
+    AuthModule,
   ],
   controllers: [],
   providers: [],
