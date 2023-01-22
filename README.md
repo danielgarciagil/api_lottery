@@ -5,8 +5,7 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
+
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
@@ -26,30 +25,38 @@
 
 Este es el repositorio de Nest con GraphqQl de Udemy con Fernando Herrera
 
-## Installation
+# Prev
+  Primero clonar el archivo `.env.exmaple` y colocarlo en ```.env```
+  - Luego configurar las variables de entorno
+
+# Installation
 
 ```bash
 $ npm install
+$ docker-compose up -d
 ```
 
-## Running the app
+# Running the app
 
 ```bash
 # development
 $ npm run start
 
 # watch mode
-$ npm run start:dev
+$ npm run dev
 
 # production mode
 $ npm run start:prod
 ```
 
-## License
+# License
 
 Carlos Diaz
 
-## Librerias utilizadas
+## Librerias utilizada
 - npm i @nestjs/graphql @nestjs/apollo graphql apollo-server-express
 - npm i apollo-server-core
 - npm i class-validator class-transformer
+- npm i @nestjs/config
+- npm install --save @nestjs/typeorm typeorm pg
+- npm i joi

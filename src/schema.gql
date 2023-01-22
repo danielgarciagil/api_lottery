@@ -2,37 +2,29 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Todo {
-  id: Int!
-  description: String!
-  done: Boolean!
+type Item {
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
 
 type Query {
-  """Va a retornar Hola Mundo"""
-  hello: String!
-  randomNumber: Float!
-
-  """Te devuelvo un numero hasta este numero: """
-  numeroEntero(to: Int): Int!
-  todos: [Todo!]!
-  todo(id: Int!): Todo!
+  items: [Item!]!
+  item(id: Int!): Item!
 }
 
 type Mutation {
-  createTodo(createTodoInput: CreateTodoInput!): Todo!
-  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
+  createItem(createItemInput: CreateItemInput!): Item!
+  updateItem(updateItemInput: UpdateItemInput!): Item!
+  removeItem(id: Int!): Item!
 }
 
-input CreateTodoInput {
-  """Descripcion de la tarea"""
-  description: String!
+input CreateItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
 
-input UpdateTodoInput {
+input UpdateItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int
   id: Int!
-
-  """Descripcion de la tarea"""
-  description: String
-  done: Boolean
 }
