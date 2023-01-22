@@ -46,7 +46,10 @@ export class ItemsService {
     return await this.itemRepo.save(item);
   }
 
-  async remove(id: string) {
-    return `This action removes a #${id} item`;
+  async remove(id: string): Promise<Item> {
+    // TODO: soft delete, integridad referencial
+    const item = await this.findOne(id);
+    await this.itemRepo.remove(item);
+    return { ...item, id };
   }
 }

@@ -38,7 +38,9 @@ export class ItemsResolver {
   }
 
   @Mutation(() => Item)
-  async removeItem(@Args('id', { type: () => String }) id: string) {
+  async removeItem(
+    @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
+  ): Promise<Item> {
     return this.itemsService.remove(id);
   }
 }
