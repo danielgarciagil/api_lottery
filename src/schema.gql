@@ -2,6 +2,27 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Todo {
+  id: Int!
+  description: String!
+  done: Boolean!
+}
+
 type Query {
-  helloWorld: String!
+  """Va a retornar Hola Mundo"""
+  hello: String!
+  randomNumber: Float!
+
+  """Te devuelvo un numero hasta este numero: """
+  numeroEntero(to: Int): Int!
+  todo(id: Int!): Todo!
+}
+
+type Mutation {
+  createTodo(createTodoInput: CreateTodoInput!): Todo!
+}
+
+input CreateTodoInput {
+  """Descricion de la tarea"""
+  description: String!
 }

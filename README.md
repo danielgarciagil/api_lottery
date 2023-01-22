@@ -51,3 +51,4 @@ Carlos Diaz
 
 ## Librerias utilizadas
 - npm i @nestjs/graphql @nestjs/apollo graphql apollo-server-express
+- yarn add apollo-server-core
