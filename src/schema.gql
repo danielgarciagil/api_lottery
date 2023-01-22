@@ -15,14 +15,24 @@ type Query {
 
   """Te devuelvo un numero hasta este numero: """
   numeroEntero(to: Int): Int!
+  todos: [Todo!]!
   todo(id: Int!): Todo!
 }
 
 type Mutation {
   createTodo(createTodoInput: CreateTodoInput!): Todo!
+  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
 }
 
 input CreateTodoInput {
-  """Descricion de la tarea"""
+  """Descripcion de la tarea"""
   description: String!
+}
+
+input UpdateTodoInput {
+  id: Int!
+
+  """Descripcion de la tarea"""
+  description: String
+  done: Boolean
 }
