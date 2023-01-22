@@ -34,6 +34,7 @@ Este es el repositorio de Nest con GraphqQl de Udemy con Fernando Herrera
 ```bash
 $ npm install
 $ docker-compose up -d
+$ npm pg:run-mg
 ```
 
 # Running the app
@@ -60,3 +61,4 @@ Carlos Diaz
 - npm i @nestjs/config
 - npm install --save @nestjs/typeorm typeorm pg
 - npm i joi
+- npm i dotenv

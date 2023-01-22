@@ -10,7 +10,7 @@ import { HelloWordModule } from './components/hello-word/hello-word.module';
 import { TodoModule } from './components/todo/todo.module';
 import { ItemsModule } from './components/items/items.module';
 import { config, enviroments, validationENV } from './config/config';
-import { DatabaseModule } from './database/database/database.module';
+import { DatabaseModule } from './database/database.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
