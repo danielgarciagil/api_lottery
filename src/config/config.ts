@@ -10,6 +10,10 @@ export const config = registerAs('config', () => {
       DB_PORT: Number(process.env.DB_PORT),
       DB_HOST: process.env.DB_HOST,
     },
+    JWT: {
+      JWT_SECRET: process.env.JWT_SECRET,
+      JWT_EXPIRE: process.env.JWT_EXPIRE,
+    },
   };
 });
 
@@ -20,6 +24,9 @@ export const validationENV = () => {
     DB_PASSWORD: Joi.string().required(),
     DB_PORT: Joi.number().required(),
     DB_HOST: Joi.string().required(),
+
+    JWT_SECRET: Joi.string().required(),
+    JWT_EXPIRE: Joi.string().required(),
   });
 };
 

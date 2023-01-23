@@ -25,8 +25,12 @@ type AuthResponse {
 type Query {
   items: [Item!]!
   item(id: ID!): Item!
-  users: [User!]!
-  user(id: ID!): User!
+
+  """Devolver todos los usuarios"""
+  findAllUsers: [User!]!
+
+  """Te devuelvo un usuario por su ID"""
+  findUser(id: ID!): User!
 }
 
 type Mutation {
@@ -34,7 +38,11 @@ type Mutation {
   updateItem(updateItemInput: UpdateItemInput!): Item!
   removeItem(id: ID!): Item!
   blockUser(id: ID!): User!
+
+  """Para registrar un usuario"""
   signup(signupInput: SignupInput!): AuthResponse!
+
+  """Para loguear el usuario"""
   login(loginInput: LoginInput!): AuthResponse!
 }
 

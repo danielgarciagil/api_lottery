@@ -29,11 +29,13 @@ export class UsersService {
       return await this.userRepository.save(newUser);
     } catch (error) {
       this.logger.error(error);
-      throw new BadRequestException(error?.message);
+      console.log(error);
+      throw new BadRequestException(error?.detail);
     }
   }
 
   async findAll(): Promise<User[]> {
+    throw new NotFoundException('Falta implementar');
     return [];
   }
 
@@ -44,7 +46,7 @@ export class UsersService {
   async findOneByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ email: email });
     if (!user) {
-      throw new NotFoundException('');
+      throw new BadRequestException('mail/password incorrect 2');
     }
     return user;
   }
@@ -54,6 +56,6 @@ export class UsersService {
   //}
 
   async block(id: string): Promise<User> {
-    throw new NotFoundException('');
+    throw new NotFoundException('Falta implementar');
   }
 }

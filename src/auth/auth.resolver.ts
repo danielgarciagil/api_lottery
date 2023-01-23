@@ -10,14 +10,20 @@ import { LoginInput } from './dto/login.input';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => AuthResponse, { name: 'signup' })
+  @Mutation(() => AuthResponse, {
+    name: 'signup',
+    description: 'Para registrar un usuario',
+  })
   async signup(
     @Args('signupInput') signupInput: SignupInput,
   ): Promise<AuthResponse> {
     return this.authService.signup(signupInput);
   }
 
-  @Mutation(() => AuthResponse, { name: 'login' })
+  @Mutation(() => AuthResponse, {
+    name: 'login',
+    description: 'Para loguear el usuario',
+  })
   async login(
     @Args('loginInput') loginInput: LoginInput,
   ): Promise<AuthResponse> {

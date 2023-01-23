@@ -4,6 +4,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 //Propios
 import { AuthResponse } from './types/auth-response.types';
@@ -13,17 +14,24 @@ import { LoginInput } from './dto/login.input';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  private getJwtToken(userId: string) {
+    return this.jwtService.sign({ id: userId });
+  }
 
   //Registrar User
   async signup(signupInput: SignupInput): Promise<AuthResponse> {
-    // TODO: Crear un usuario
     const user = await this.usersService.create(signupInput);
+    const token = this.getJwtToken(user.id);
+
     return {
-      token: 'TOKEN',
+      token: token,
       user: user,
     };
-    // TODO Crear el token
   }
 
   async login(loginInput: LoginInput): Promise<AuthResponse> {
@@ -31,11 +39,12 @@ export class AuthService {
     const user = await this.usersService.findOneByEmail(email);
 
     if (!bcrypt.compareSync(password, user.password)) {
-      throw new BadRequestException();
+      throw new BadRequestException('mail/password incorrect');
     }
-    //TODO token
+    const token = this.getJwtToken(user.id);
+
     return {
-      token: 'TOKEN',
+      token: token,
       user: user,
     };
   }

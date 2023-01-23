@@ -10,13 +10,13 @@ import { AggregationsType } from './types/aggregations.type';
 export class TodoResolver {
   constructor(private readonly todoService: TodoService) {}
 
-  @Query(() => [Todo], { name: 'todos' })
+  @Query(() => [Todo], { name: 'allTodos' })
   findAll(@Args() statusArgs: StatusArgs): //! Tarea: Args
   Todo[] {
     return this.todoService.findAll(statusArgs);
   }
 
-  @Query(() => Todo, { name: 'todo' })
+  @Query(() => Todo, { name: 'findTodo' })
   findOne(@Args('id', { type: () => Int }) id: number): Todo {
     return this.todoService.findOne(id);
   }
