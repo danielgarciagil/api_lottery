@@ -16,7 +16,7 @@ export class User {
   @Field(() => String)
   email: string;
 
-  @Column({ type: 'varchar', select: false })
+  @Column({ type: 'varchar' })
   //@Field(() => String)
   password: string;
 

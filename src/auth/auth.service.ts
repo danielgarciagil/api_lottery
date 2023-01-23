@@ -31,32 +31,44 @@ export class AuthService {
   async signup(signupInput: SignupInput): Promise<AuthResponse> {
     const user = await this.usersService.create(signupInput);
     const token = this.getJwtToken({ id: user.id });
-
-    return {
+    const response: AuthResponse = {
       token: token,
       user: user,
     };
+    return response;
   }
 
+  //Iniciar seccion
   async login(loginInput: LoginInput): Promise<AuthResponse> {
     const { email, password } = loginInput;
     const user = await this.usersService.findOneByEmail(email);
-
     if (!bcrypt.compareSync(password, user.password)) {
       throw new BadRequestException('mail/password incorrect');
     }
     const token = this.getJwtToken({ id: user.id });
-
-    return {
+    delete user.password;
+    const response: AuthResponse = {
       token: token,
       user: user,
     };
+    return response;
   }
 
+  //Revalidar el token del que es enviado, generar uno nuevo
+  revalidateToken(user: User): AuthResponse {
+    const token = this.getJwtToken({ id: user.id });
+    const response: AuthResponse = {
+      token: token,
+      user: user,
+    };
+    return response;
+  }
+
+  //Validar que el suuario exista para la strategya del Jwl
   async validateUser(id: string): Promise<User> {
     const user = await this.usersService.findOneById(id);
     if (!user.isActive) {
-      throw new UnauthorizedException(MESSAGE.Su_USUARIO_ESTA_INACTIVO);
+      throw new UnauthorizedException(MESSAGE.SU_USUARIO_ESTA_INACTIVO);
     }
     delete user.password;
     return user;

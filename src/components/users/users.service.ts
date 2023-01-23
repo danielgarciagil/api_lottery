@@ -42,7 +42,7 @@ export class UsersService {
   async findOneById(id: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ id: id });
     if (!user) {
-      throw new NotFoundException('mail/password incorrect 3');
+      throw new NotFoundException('mail/password incorrect 2');
     }
     return user;
   }
