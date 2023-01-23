@@ -62,3 +62,5 @@ Carlos Diaz
 - npm install --save @nestjs/typeorm typeorm pg
 - npm i joi
 - npm i dotenv
+- npm i bcrypt
+- npm i --save @types/bcrypt

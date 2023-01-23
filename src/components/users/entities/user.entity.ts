@@ -20,7 +20,7 @@ export class User {
   //@Field(() => String)
   password: string;
 
-  @Column({ type: 'text', array: true })
+  @Column({ type: 'text', array: true, default: [] })
   @Field(() => [String])
   roles: string[];
 

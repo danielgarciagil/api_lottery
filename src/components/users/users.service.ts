@@ -1,11 +1,16 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateUserInput } from './dto/create-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
-import { User } from './entities/user.entity';
-import { NotFoundError } from 'rxjs';
-import { SignupInput } from './../../auth/dto/signup.input';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+
+//Propias
+import { User } from './entities/user.entity';
+import { SignupInput } from './../../auth/dto/signup.input';
 
 @Injectable()
 export class UsersService {
@@ -13,11 +18,17 @@ export class UsersService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
+  private logger: Logger = new Logger('UsersService');
+
   async create(signupInput: SignupInput): Promise<User> {
     try {
-      const newUser = this.userRepository.create(signupInput);
+      const newUser = this.userRepository.create({
+        ...signupInput,
+        password: bcrypt.hashSync(signupInput.password, 10),
+      });
       return await this.userRepository.save(newUser);
     } catch (error) {
+      this.logger.error(error);
       throw new BadRequestException(error?.message);
     }
   }
@@ -27,7 +38,15 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<User> {
-    throw new NotFoundError('Falta');
+    throw new NotFoundException('Falta');
+  }
+
+  async findOneByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOneBy({ email: email });
+    if (!user) {
+      throw new NotFoundException('');
+    }
+    return user;
   }
 
   //async update(id: string, updateUserInput: UpdateUserInput) {
@@ -35,6 +54,6 @@ export class UsersService {
   //}
 
   async block(id: string): Promise<User> {
-    throw new NotFoundError('');
+    throw new NotFoundException('');
   }
 }
