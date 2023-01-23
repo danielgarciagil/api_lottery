@@ -11,6 +11,7 @@ import * as bcrypt from 'bcrypt';
 //Propias
 import { User } from './entities/user.entity';
 import { SignupInput } from './../../auth/dto/signup.input';
+import { MESSAGE } from './../../config/messages';
 
 @Injectable()
 export class UsersService {
@@ -29,20 +30,19 @@ export class UsersService {
       return await this.userRepository.save(newUser);
     } catch (error) {
       this.logger.error(error);
-      console.log(error);
       throw new BadRequestException(error?.detail);
     }
   }
 
   async findAll(): Promise<User[]> {
-    throw new NotFoundException('Falta implementar');
+    throw new NotFoundException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
     return [];
   }
 
   async findOneById(id: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ id: id });
     if (!user) {
-      throw new NotFoundException('mail/password incorrect 2');
+      throw new NotFoundException(MESSAGE.MAIL_OR_PASSWORD_INCORRECT);
     }
     return user;
   }
@@ -50,7 +50,7 @@ export class UsersService {
   async findOneByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ email: email });
     if (!user) {
-      throw new BadRequestException('mail/password incorrect 2');
+      throw new NotFoundException(MESSAGE.MAIL_OR_PASSWORD_INCORRECT);
     }
     return user;
   }
@@ -60,6 +60,6 @@ export class UsersService {
   //}
 
   async block(id: string): Promise<User> {
-    throw new NotFoundException('Falta implementar');
+    throw new NotFoundException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
   }
 }

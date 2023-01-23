@@ -13,7 +13,7 @@ import { MESSAGE } from './../../config/messages';
 //Siempre y cuando haga pasado por la validacion del token
 export const CurrentUser = createParamDecorator(
   (roles: ValidRoles[] = [], context: ExecutionContext) => {
-    console.log(roles);
+    //console.log(roles);
     const ctx = GqlExecutionContext.create(context);
     const user: User = ctx.getContext().req.user;
     if (!user) {

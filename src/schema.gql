@@ -23,15 +23,22 @@ type AuthResponse {
 }
 
 type Query {
-  items: [Item!]!
-  item(id: ID!): Item!
+  findAllItems: [Item!]!
+  findItem(id: ID!): Item!
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
-  findAllUsers: [User!]!
+  findAllUsers(roles: [ValidRoles!] = []): [User!]!
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
   findUser(id: ID!): User!
   revaliteToken: AuthResponse!
+}
+
+"""Estos son los roles validos"""
+enum ValidRoles {
+  ADMIN
+  USER
+  SUPER_USER
 }
 
 type Mutation {
@@ -64,6 +71,7 @@ input SignupInput {
   email: String!
   fullName: String!
   password: String!
+  roles: [String!]!
 }
 
 input LoginInput {

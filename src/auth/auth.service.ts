@@ -1,5 +1,4 @@
 import {
-  BadGatewayException,
   BadRequestException,
   Injectable,
   UnauthorizedException,
@@ -43,7 +42,7 @@ export class AuthService {
     const { email, password } = loginInput;
     const user = await this.usersService.findOneByEmail(email);
     if (!bcrypt.compareSync(password, user.password)) {
-      throw new BadRequestException('mail/password incorrect');
+      throw new BadRequestException(MESSAGE.MAIL_OR_PASSWORD_INCORRECT);
     }
     const token = this.getJwtToken({ id: user.id });
     delete user.password;

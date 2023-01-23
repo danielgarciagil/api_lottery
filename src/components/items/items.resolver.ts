@@ -18,12 +18,12 @@ export class ItemsResolver {
     return this.itemsService.create(createItemInput);
   }
 
-  @Query(() => [Item], { name: 'items' })
+  @Query(() => [Item], { name: 'findAllItems' })
   async findAll(): Promise<Item[]> {
     return this.itemsService.findAll();
   }
 
-  @Query(() => Item, { name: 'item' })
+  @Query(() => Item, { name: 'findItem' })
   async findOne(
     @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
   ): Promise<Item> {
