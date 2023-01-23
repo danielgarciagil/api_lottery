@@ -2,6 +2,7 @@ import {
   BadGatewayException,
   BadRequestException,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -11,6 +12,9 @@ import { AuthResponse } from './types/auth-response.types';
 import { SignupInput } from './dto/signup.input';
 import { UsersService } from './../components/users/users.service';
 import { LoginInput } from './dto/login.input';
+import { payloadTokenInterface } from './interface/token-payload.interface';
+import { User } from './../components/users/entities/user.entity';
+import { MESSAGE } from './../config/messages';
 
 @Injectable()
 export class AuthService {
@@ -19,14 +23,14 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  private getJwtToken(userId: string) {
-    return this.jwtService.sign({ id: userId });
+  private getJwtToken(payloadToken: payloadTokenInterface) {
+    return this.jwtService.sign({ id: payloadToken.id });
   }
 
   //Registrar User
   async signup(signupInput: SignupInput): Promise<AuthResponse> {
     const user = await this.usersService.create(signupInput);
-    const token = this.getJwtToken(user.id);
+    const token = this.getJwtToken({ id: user.id });
 
     return {
       token: token,
@@ -41,11 +45,20 @@ export class AuthService {
     if (!bcrypt.compareSync(password, user.password)) {
       throw new BadRequestException('mail/password incorrect');
     }
-    const token = this.getJwtToken(user.id);
+    const token = this.getJwtToken({ id: user.id });
 
     return {
       token: token,
       user: user,
     };
+  }
+
+  async validateUser(id: string): Promise<User> {
+    const user = await this.usersService.findOneById(id);
+    if (!user.isActive) {
+      throw new UnauthorizedException(MESSAGE.Su_USUARIO_ESTA_INACTIVO);
+    }
+    delete user.password;
+    return user;
   }
 }

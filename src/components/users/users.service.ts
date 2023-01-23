@@ -39,8 +39,12 @@ export class UsersService {
     return [];
   }
 
-  async findOne(id: string): Promise<User> {
-    throw new NotFoundException('Falta');
+  async findOneById(id: string): Promise<User> {
+    const user = await this.userRepository.findOneBy({ id: id });
+    if (!user) {
+      throw new NotFoundException('mail/password incorrect 3');
+    }
+    return user;
   }
 
   async findOneByEmail(email: string): Promise<User> {

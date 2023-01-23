@@ -1,3 +1,4 @@
+import { BadGatewayException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 //Propios
@@ -5,6 +6,7 @@ import { AuthService } from './auth.service';
 import { SignupInput } from './dto/signup.input';
 import { AuthResponse } from './types/auth-response.types';
 import { LoginInput } from './dto/login.input';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Resolver()
 export class AuthResolver {
@@ -29,9 +31,11 @@ export class AuthResolver {
   ): Promise<AuthResponse> {
     return this.authService.login(loginInput);
   }
-  //
-  // @Query(``, { name: 'revalite' })
-  // async revalidateToken() {
-  //   return this.authService.revalidateToken(``);
-  // }
+
+  @Query(() => AuthResponse, { name: 'revaliteToken' })
+  @UseGuards(JwtAuthGuard)
+  revalidateToken(): AuthResponse {
+    throw new BadGatewayException('falta implemntar');
+    //return this.authService.revalidateToken(``);
+  }
 }

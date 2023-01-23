@@ -26,11 +26,12 @@ type Query {
   items: [Item!]!
   item(id: ID!): Item!
 
-  """Devolver todos los usuarios"""
+  """Devolver todos los usuarios,EXAMPLE borrar este Query"""
   findAllUsers: [User!]!
 
-  """Te devuelvo un usuario por su ID"""
+  """Devolver todos los usuarios,EXAMPLE borrar este Query"""
   findUser(id: ID!): User!
+  revaliteToken: AuthResponse!
 }
 
 type Mutation {

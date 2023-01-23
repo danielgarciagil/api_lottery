@@ -8,20 +8,22 @@ import { UpdateUserInput } from './dto/update-user.input';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
+  //TODO example, borrar esto
   @Query(() => [User], {
     name: 'findAllUsers',
-    description: 'Devolver todos los usuarios',
+    description: 'Devolver todos los usuarios,EXAMPLE borrar este Query',
   })
   findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
+  //TODO example, borrar esto
   @Query(() => User, {
     name: 'findUser',
-    description: 'Te devuelvo un usuario por su ID',
+    description: 'Devolver todos los usuarios,EXAMPLE borrar este Query',
   })
   findOne(@Args('id', { type: () => ID }) id: string): Promise<User> {
-    return this.usersService.findOne(id);
+    return this.usersService.findOneById(id);
   }
 
   // @Mutation(() => User)
