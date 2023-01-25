@@ -24,6 +24,9 @@ type User {
   isActive: Boolean!
   lastUpdateBy: User
   items: [Item!]!
+
+  """Cuantos items tiene este usuario"""
+  itemCount: Int!
 }
 
 type Item {
@@ -47,14 +50,14 @@ type Query {
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
   findUser(id: ID!): User!
+  findAllItems: [Item!]!
+  findItem(id: ID!): Item!
   allTodos(status: Boolean): [Todo!]!
   findTodo(id: Int!): Todo!
   totalTodos: Int!
   pendingTodos: Int!
   completedTodos: Int!
   aggregations: AggregationsType!
-  findAllItems: [Item!]!
-  findItem(id: ID!): Item!
 }
 
 """Estos son los roles validos"""
@@ -76,12 +79,12 @@ type Mutation {
 
   """ Para bloquear el estado de un usuario"""
   blockUser(id: ID!): User!
-  createTodo(createTodoInput: CreateTodoInput!): Todo!
-  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
-  removeTodo(Id: Int!): Boolean!
   createItem(createItemInput: CreateItemInput!): Item!
   updateItem(updateItemInput: UpdateItemInput!): Item!
   removeItem(id: ID!): Item!
+  createTodo(createTodoInput: CreateTodoInput!): Todo!
+  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
+  removeTodo(Id: Int!): Boolean!
 }
 
 input SignupInput {
@@ -105,19 +108,6 @@ input UpdateUserInput {
   isActive: Boolean
 }
 
-input CreateTodoInput {
-  """Descripcion de la tarea"""
-  description: String!
-}
-
-input UpdateTodoInput {
-  id: Int!
-
-  """Descripcion de la tarea"""
-  description: String
-  done: Boolean
-}
-
 input CreateItemInput {
   name: String!
   quantity: Float!
@@ -129,4 +119,17 @@ input UpdateItemInput {
   quantity: Float
   quantityUnits: String
   id: ID!
+}
+
+input CreateTodoInput {
+  """Descripcion de la tarea"""
+  description: String!
+}
+
+input UpdateTodoInput {
+  id: Int!
+
+  """Descripcion de la tarea"""
+  description: String
+  done: Boolean
 }
