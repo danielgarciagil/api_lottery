@@ -9,7 +9,7 @@ import { InputType, Field, PartialType, ID } from '@nestjs/graphql';
 
 //Poropias
 import { CreateUserInput } from './create-user.input';
-import { ValidRoles } from 'src/auth/enums/valid-roles.enum';
+import { ValidRoles } from './../../../auth/enums/valid-roles.enum';
 
 @InputType()
 export class UpdateUserInput extends PartialType(CreateUserInput) {

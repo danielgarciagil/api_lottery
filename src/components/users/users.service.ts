@@ -57,7 +57,7 @@ export class UsersService {
   async findOneById(id: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ id: id });
     if (!user) {
-      throw new NotFoundException(MESSAGE.MAIL_OR_PASSWORD_INCORRECT);
+      throw new NotFoundException(MESSAGE.MAIL_O_CONTRASENA_INCORRECTA);
     }
     return user;
   }
@@ -65,7 +65,7 @@ export class UsersService {
   async findOneByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ email: email });
     if (!user) {
-      throw new NotFoundException(MESSAGE.MAIL_OR_PASSWORD_INCORRECT);
+      throw new NotFoundException(MESSAGE.MAIL_O_CONTRASENA_INCORRECTA);
     }
     return user;
   }

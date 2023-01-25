@@ -42,7 +42,7 @@ export class AuthService {
     const { email, password } = loginInput;
     const user = await this.usersService.findOneByEmail(email);
     if (!bcrypt.compareSync(password, user.password)) {
-      throw new BadRequestException(MESSAGE.MAIL_OR_PASSWORD_INCORRECT);
+      throw new BadRequestException(MESSAGE.MAIL_O_CONTRASENA_INCORRECTA);
     }
     const token = this.getJwtToken({ id: user.id });
     delete user.password;
@@ -64,6 +64,7 @@ export class AuthService {
   }
 
   //Validar que el suuario exista para la strategya del Jwl
+  //TODO cambair si mando un uuid mal en el payload me dice que no fue encontrado
   async validateUser(id: string): Promise<User> {
     const user = await this.usersService.findOneById(id);
     if (!user.isActive) {

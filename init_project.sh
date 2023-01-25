@@ -1,5 +1,5 @@
-rm -rf mysql_data postgres_data mongo_data node_modules
-
+rm -rf mysql_data postgres_data mongo_data node_modules postgres
+sleep 5
 docker compose up -d
 sleep 10
 npm i

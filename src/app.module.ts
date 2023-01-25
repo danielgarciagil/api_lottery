@@ -35,17 +35,18 @@ import { AuthModule } from './auth/auth.module';
           plugins: [ApolloServerPluginLandingPageLocalDefault],
           context({ req }) {
             //Con esto el esquema de Grpahq Ql no me cargara las rutas si no mando un token Valid
-            const token = req.headers.authorization?.replace('Bearer ', ''); //Aqui obtengo el codigo que me viene
-            if (!token) {
-              console.log('Token Need');
-              throw Error('Token Need');
-            }
-            const payload = jwtService.decode(token);
-
-            if (!payload) {
-              console.log('Token no valid');
-              throw Error('Token not valid');
-            }
+            //! Loquitare poara fines de prueba
+            //const token = req.headers.authorization?.replace('Bearer ', ''); //Aqui obtengo el codigo que me viene
+            //if (!token) {
+            //  console.log('Token Need');
+            //  throw Error('Token Need');
+            //}
+            //const payload = jwtService.decode(token);
+            //
+            //if (!payload) {
+            //  console.log('Token no valid');
+            //  throw Error('Token not valid');
+            //}
           },
         };
       },

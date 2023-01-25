@@ -17,7 +17,9 @@ export const CurrentUser = createParamDecorator(
     const ctx = GqlExecutionContext.create(context);
     const user: User = ctx.getContext().req.user;
     if (!user) {
-      throw new InternalServerErrorException('No user in Req');
+      throw new InternalServerErrorException(
+        `${MESSAGE.PORFAVOR_COMUNICARSE_CON_EL_ADMINISTRADOR} => Not user in Req`,
+      );
     }
 
     if (roles.length === 0) {

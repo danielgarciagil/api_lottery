@@ -16,13 +16,6 @@ type AggregationsType {
   totalTodosCompleted: Int! @deprecated(reason: "No usar, mejor use total")
 }
 
-type Item {
-  id: ID!
-  name: String!
-  quantity: Float!
-  quantityUnits: String!
-}
-
 type User {
   id: ID!
   fullName: String!
@@ -30,6 +23,15 @@ type User {
   roles: [String!]!
   isActive: Boolean!
   lastUpdateBy: User
+  items: [Item!]!
+}
+
+type Item {
+  id: ID!
+  name: String!
+  quantity: Float!
+  quantityUnits: String!
+  user: User!
 }
 
 type AuthResponse {
@@ -86,7 +88,7 @@ input SignupInput {
   email: String!
   fullName: String!
   password: String!
-  roles: [String!]!
+  roles: [ValidRoles!]!
 }
 
 input LoginInput {
