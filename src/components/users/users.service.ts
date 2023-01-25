@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  InternalServerErrorException,
   Logger,
   NotFoundException,
 } from '@nestjs/common';
@@ -12,6 +13,8 @@ import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { SignupInput } from './../../auth/dto/signup.input';
 import { MESSAGE } from './../../config/messages';
+import { ValidRoles } from './../../auth/enums/valid-roles.enum';
+import { UpdateUserInput } from './dto/update-user.input';
 
 @Injectable()
 export class UsersService {
@@ -34,9 +37,21 @@ export class UsersService {
     }
   }
 
-  async findAll(): Promise<User[]> {
-    throw new NotFoundException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
-    return [];
+  async findAll(roles: ValidRoles[]): Promise<User[]> {
+    // Aqui devulevo el finde si no me manda roles
+    if (roles.length === 0)
+      return this.userRepository.find({
+        relations: {
+          lastUpdateBy: true,
+        },
+      });
+
+    // Aqui hago mi query en si
+    return this.userRepository
+      .createQueryBuilder()
+      .andWhere('ARRAY[roles] && ARRAY[:...roles]') // Aqui estoy buscando en el arreglo de roles y tienen que estar en el rol que estoy mandando
+      .setParameter('roles', roles) // Aqui defino el parametro que estoy mandnado y defino cual es
+      .getMany();
   }
 
   async findOneById(id: string): Promise<User> {
@@ -55,11 +70,33 @@ export class UsersService {
     return user;
   }
 
-  //async update(id: string, updateUserInput: UpdateUserInput) {
-  //  return `This action updates a #${id} user`;
-  //}
+  // TODO: update by
+  async update(
+    id: string,
+    updateUserInput: UpdateUserInput,
+    updateByUser: User,
+  ): Promise<User> {
+    try {
+      const userUpdate = await this.userRepository.preload({
+        ...updateUserInput,
+        id: id,
+        lastUpdateBy: updateByUser,
+      });
+      userUpdate.lastUpdateBy = updateByUser;
+      if (!userUpdate) {
+        throw new Error(MESSAGE.ESTE_ID_NO_EXISTE); //TODO controlar errrores
+      }
+      return await this.userRepository.save(userUpdate);
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException(error?.detail);
+    }
+  }
 
-  async block(id: string): Promise<User> {
-    throw new NotFoundException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
+  async block(id: string, user: User): Promise<User> {
+    const userToBlock = await this.findOneById(id);
+    userToBlock.isActive = false;
+    userToBlock.lastUpdateBy = user;
+    return this.userRepository.save(userToBlock);
   }
 }

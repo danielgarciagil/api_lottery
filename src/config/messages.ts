@@ -4,4 +4,5 @@ export const MESSAGE = {
   NO_TIENE_EL_ROL_PARA_ESTA_ACCION: 'No tiene el rol para esta accion',
   MAIL_OR_PASSWORD_INCORRECT: 'Mail or Password Incorrect',
   FALTA_IMPLEMENTAR_ESTE_METODO: 'Falta implementar este metodo',
+  ESTE_ID_NO_EXISTE: 'Este Id no existe',
 };

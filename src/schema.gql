@@ -2,6 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Todo {
+  id: Int!
+  description: String!
+  done: Boolean!
+}
+
+"""Todo quick aggregations"""
+type AggregationsType {
+  total: Int!
+  pending: Int!
+  completed: Int!
+  totalTodosCompleted: Int! @deprecated(reason: "No usar, mejor use total")
+}
+
 type Item {
   id: ID!
   name: String!
@@ -15,6 +29,7 @@ type User {
   email: String!
   roles: [String!]!
   isActive: Boolean!
+  lastUpdateBy: User
 }
 
 type AuthResponse {
@@ -23,15 +38,21 @@ type AuthResponse {
 }
 
 type Query {
-  findAllItems: [Item!]!
-  findItem(id: ID!): Item!
+  revaliteToken: AuthResponse!
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
   findAllUsers(roles: [ValidRoles!] = []): [User!]!
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
   findUser(id: ID!): User!
-  revaliteToken: AuthResponse!
+  allTodos(status: Boolean): [Todo!]!
+  findTodo(id: Int!): Todo!
+  totalTodos: Int!
+  pendingTodos: Int!
+  completedTodos: Int!
+  aggregations: AggregationsType!
+  findAllItems: [Item!]!
+  findItem(id: ID!): Item!
 }
 
 """Estos son los roles validos"""
@@ -42,16 +63,57 @@ enum ValidRoles {
 }
 
 type Mutation {
-  createItem(createItemInput: CreateItemInput!): Item!
-  updateItem(updateItemInput: UpdateItemInput!): Item!
-  removeItem(id: ID!): Item!
-  blockUser(id: ID!): User!
-
   """Para registrar un usuario"""
   signup(signupInput: SignupInput!): AuthResponse!
 
   """Para loguear el usuario"""
   login(loginInput: LoginInput!): AuthResponse!
+
+  """Con este query actualiza el usuario"""
+  updateUser(updateUserInput: UpdateUserInput!): User!
+
+  """ Para bloquear el estado de un usuario"""
+  blockUser(id: ID!): User!
+  createTodo(createTodoInput: CreateTodoInput!): Todo!
+  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
+  removeTodo(Id: Int!): Boolean!
+  createItem(createItemInput: CreateItemInput!): Item!
+  updateItem(updateItemInput: UpdateItemInput!): Item!
+  removeItem(id: ID!): Item!
+}
+
+input SignupInput {
+  email: String!
+  fullName: String!
+  password: String!
+  roles: [String!]!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  email: String
+  fullName: String
+  password: String
+  roles: [ValidRoles!]
+  id: ID!
+  isActive: Boolean
+}
+
+input CreateTodoInput {
+  """Descripcion de la tarea"""
+  description: String!
+}
+
+input UpdateTodoInput {
+  id: Int!
+
+  """Descripcion de la tarea"""
+  description: String
+  done: Boolean
 }
 
 input CreateItemInput {
@@ -65,16 +127,4 @@ input UpdateItemInput {
   quantity: Float
   quantityUnits: String
   id: ID!
-}
-
-input SignupInput {
-  email: String!
-  fullName: String!
-  password: String!
-  roles: [String!]!
-}
-
-input LoginInput {
-  email: String!
-  password: String!
 }

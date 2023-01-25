@@ -6,5 +6,5 @@ import { ArgsType, Field } from '@nestjs/graphql';
 export class ValidRolesArgs {
   @Field(() => [ValidRoles], { nullable: true })
   @IsArray()
-  roles: string[] = []; //TODO
+  roles: ValidRoles[] = []; //TODO falta implentar en class valdiator
 }
