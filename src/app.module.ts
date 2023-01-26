@@ -16,6 +16,7 @@ import { UsersModule } from './components/users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { ListsModule } from './components/lists/lists.module';
+import { ListsItemModule } from './components/lists-item/lists-item.module';
 
 @Module({
   imports: [
@@ -76,6 +77,8 @@ import { ListsModule } from './components/lists/lists.module';
     CommonModule,
 
     ListsModule,
+
+    ListsItemModule,
   ],
   controllers: [],
   providers: [],

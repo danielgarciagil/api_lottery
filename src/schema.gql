@@ -16,10 +16,18 @@ type AggregationsType {
   totalTodosCompleted: Int! @deprecated(reason: "No usar, mejor use total")
 }
 
+type ListsItem {
+  id: ID!
+  quantity: Int!
+  completed: Boolean!
+  item: Item!
+}
+
 type List {
   id: ID!
   name: String!
   user: User!
+  listItem: [ListsItem!]!
 }
 
 type User {
@@ -74,6 +82,7 @@ type Query {
   pendingTodos: Int!
   completedTodos: Int!
   aggregations: AggregationsType!
+  listsItem(id: Int!): ListsItem!
 }
 
 """Estos son los roles validos"""
@@ -104,6 +113,9 @@ type Mutation {
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
   removeTodo(Id: Int!): Boolean!
+  createListsItem(createListsItemInput: CreateListsItemInput!): ListsItem!
+  updateListsItem(updateListsItemInput: UpdateListsItemInput!): ListsItem!
+  removeListsItem(id: Int!): ListsItem!
 }
 
 input SignupInput {
@@ -160,4 +172,15 @@ input UpdateTodoInput {
   """Descripcion de la tarea"""
   description: String
   done: Boolean
+}
+
+input CreateListsItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateListsItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

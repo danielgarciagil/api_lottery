@@ -9,9 +9,12 @@ import { Repository } from 'typeorm';
 //Propios
 import { CreateListInput } from './dto/create-list.input';
 import { UpdateListInput } from './dto/update-list.input';
-import { List } from './entities/list.entity';
-import { MESSAGE } from './../../config/messages';
+
 import { User } from '../users/entities/user.entity';
+import { List } from './entities/list.entity';
+
+import { MESSAGE } from './../../config/messages';
+
 import { PaginationArgs } from './../../common/dto/args';
 
 @Injectable()
@@ -66,8 +69,9 @@ export class ListsService {
   }
 
   async remove(id: string, user: User): Promise<List> {
-    throw new BadRequestException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
-    //return `This action removes a #${id} list`;
+    const list = await this.findOne(id, user);
+    await this.listRepo.remove(list);
+    return { ...list, id };
   }
 
   async listCountByUser(user: User): Promise<number> {

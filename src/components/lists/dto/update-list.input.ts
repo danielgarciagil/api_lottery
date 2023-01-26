@@ -1,7 +1,7 @@
 import { InputType, Field, PartialType } from '@nestjs/graphql';
+import { IsUUID } from 'class-validator';
 
 //Prooio
-import { IsUUID } from 'class-validator';
 import { CreateListInput } from './create-list.input';
 
 @InputType()
