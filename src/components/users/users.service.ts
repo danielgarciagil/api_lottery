@@ -15,6 +15,7 @@ import { SignupInput } from './../../auth/dto/signup.input';
 import { MESSAGE } from './../../config/messages';
 import { ValidRoles } from './../../auth/enums/valid-roles.enum';
 import { UpdateUserInput } from './dto/update-user.input';
+import { PaginationArgs } from 'src/common/dto/args';
 
 @Injectable()
 export class UsersService {
@@ -37,18 +38,25 @@ export class UsersService {
     }
   }
 
-  async findAll(roles: ValidRoles[]): Promise<User[]> {
+  async findAll(
+    roles: ValidRoles[],
+    paginationArgs: PaginationArgs,
+  ): Promise<User[]> {
+    const { limit, offset } = paginationArgs;
     // Aqui devulevo el finde si no me manda roles
     if (roles.length === 0)
       return this.userRepository.find({
+        take: limit,
+        skip: offset,
         relations: {
           lastUpdateBy: true,
         },
       });
-
     // Aqui hago mi query en si
-    return this.userRepository
+    return await this.userRepository
       .createQueryBuilder()
+      .take(limit)
+      .offset(offset)
       .andWhere('ARRAY[roles] && ARRAY[:...roles]') // Aqui estoy buscando en el arreglo de roles y tienen que estar en el rol que estoy mandando
       .setParameter('roles', roles) // Aqui defino el parametro que estoy mandnado y defino cual es
       .getMany();

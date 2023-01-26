@@ -45,7 +45,6 @@ export class ItemsService {
       .where(`"user_id" = :userId`, { userId: user.id });
 
     if (search) {
-      console.log('object');
       queryBuilder.andWhere('LOWER(name) like :name', {
         name: `%${search.toLowerCase()}%`,
       });

@@ -39,8 +39,9 @@ export class UsersResolver {
   async findAll(
     @Args() validRoles: ValidRolesArgs,
     @CurrentUser([ValidRoles.ADMIN]) user: User, //Solo los usuarios ADMIN pueden entrar a esta ruta
+    @Args() paginationArgs: PaginationArgs,
   ): Promise<User[]> {
-    return this.usersService.findAll(validRoles.roles);
+    return await this.usersService.findAll(validRoles.roles, paginationArgs);
   }
 
   //TODO example, borrar esto

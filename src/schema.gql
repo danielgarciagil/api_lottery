@@ -48,7 +48,7 @@ type Query {
   revaliteToken: AuthResponse!
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
-  findAllUsers(roles: [ValidRoles!] = []): [User!]!
+  findAllUsers(roles: [ValidRoles!] = [], offset: Int = 0, limit: Int = 10): [User!]!
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
   findUser(id: ID!): User!
