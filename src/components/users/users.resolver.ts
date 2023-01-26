@@ -21,7 +21,7 @@ import { CurrentUser } from './../../auth/decorators/current-user.decorator';
 import { ValidRoles } from './../../auth/enums/valid-roles.enum';
 import { ItemsService } from '../items/items.service';
 import { Item } from '../items/entities/item.entity';
-import { PaginationArgs, SearchArgs } from 'src/common/dto/args';
+import { PaginationArgs, SearchArgs } from './../../common/dto/args';
 
 @Resolver(() => User)
 @UseGuards(JwtAuthGuard)
@@ -102,4 +102,6 @@ export class UsersResolver {
     return await this.itemsService.findAll(user, paginationArgs, searchArgs);
     //return 10;
   }
+
+  //TODO getListByUser
 }

@@ -16,6 +16,12 @@ type AggregationsType {
   totalTodosCompleted: Int! @deprecated(reason: "No usar, mejor use total")
 }
 
+type List {
+  id: ID!
+  name: String!
+  user: User!
+}
+
 type User {
   id: ID!
   fullName: String!
@@ -52,7 +58,7 @@ type Query {
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
   findUser(id: ID!): User!
-  findAllItems(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
+  allItems(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
   findItem(id: ID!): Item!
   allTodos(status: Boolean): [Todo!]!
   findTodo(id: Int!): Todo!
@@ -60,6 +66,8 @@ type Query {
   pendingTodos: Int!
   completedTodos: Int!
   aggregations: AggregationsType!
+  allLists(offset: Int = 0, limit: Int = 10): [List!]!
+  list(id: String!): List!
 }
 
 """Estos son los roles validos"""
@@ -87,6 +95,9 @@ type Mutation {
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
   removeTodo(Id: Int!): Boolean!
+  createLists(createListInput: CreateListInput!): List!
+  updateList(updateListInput: UpdateListInput!): List!
+  removeList(id: String!): List!
 }
 
 input SignupInput {
@@ -134,4 +145,13 @@ input UpdateTodoInput {
   """Descripcion de la tarea"""
   description: String
   done: Boolean
+}
+
+input CreateListInput {
+  name: String!
+}
+
+input UpdateListInput {
+  name: String
+  id: String!
 }

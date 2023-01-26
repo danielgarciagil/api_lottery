@@ -15,6 +15,7 @@ import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './components/users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
+import { ListsModule } from './components/lists/lists.module';
 
 @Module({
   imports: [
@@ -73,6 +74,8 @@ import { CommonModule } from './common/common.module';
     AuthModule,
 
     CommonModule,
+
+    ListsModule,
   ],
   controllers: [],
   providers: [],

@@ -23,6 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: payloadTokenInterface): Promise<User> {
     const { id } = payload;
     const user = await this.authService.validateUser(id);
+    console.log('EMTRO');
     return user; // req.user
   }
 }

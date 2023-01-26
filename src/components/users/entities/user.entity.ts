@@ -10,6 +10,8 @@ import {
 
 //Propios
 import { Item } from './../../../components/items/entities/item.entity';
+import { List } from './../../../components/lists/entities/list.entity';
+
 @Entity({ name: 'users' })
 @ObjectType()
 export class User {
@@ -48,6 +50,9 @@ export class User {
   @OneToMany(() => Item, (item) => item.user, { lazy: true })
   //@Field(() => [Item]) Quite esto para que grapsQl no sepa, para hacerlo de otra manera
   items: Item[];
+
+  @OneToMany(() => List, (list) => list.user, { lazy: true })
+  lists: List[];
 
   //TODO: Relaciones y demas
 }
