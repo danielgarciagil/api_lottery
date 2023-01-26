@@ -32,7 +32,7 @@ export class ListsResolver {
     return this.listsService.findAll(user, paginationArgs);
   }
 
-  @Query(() => List, { name: 'list' })
+  @Query(() => List, { name: 'findList' })
   async findOne(
     @Args('id', { type: () => String }, ParseUUIDPipe) id: string,
     @CurrentUser() user: User,

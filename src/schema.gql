@@ -33,8 +33,14 @@ type User {
   """Cuantos items tiene este usuario"""
   itemCount: Int!
 
-  """Nos mostraras los items del uusario"""
+  """Nos mostraras los items del usario"""
   items(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
+
+  """Cuantas lista tiene este usuario"""
+  listsCount: Int!
+
+  """Nos mostraras las lista de un usuario"""
+  lists(offset: Int = 0, limit: Int = 10): [List!]!
 }
 
 type Item {
@@ -54,20 +60,20 @@ type Query {
   revaliteToken: AuthResponse!
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
-  findAllUsers(roles: [ValidRoles!] = [], offset: Int = 0, limit: Int = 10): [User!]!
+  allUsers(roles: [ValidRoles!] = [], offset: Int = 0, limit: Int = 10): [User!]!
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
   findUser(id: ID!): User!
   allItems(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
   findItem(id: ID!): Item!
+  allLists(offset: Int = 0, limit: Int = 10): [List!]!
+  findList(id: String!): List!
   allTodos(status: Boolean): [Todo!]!
   findTodo(id: Int!): Todo!
   totalTodos: Int!
   pendingTodos: Int!
   completedTodos: Int!
   aggregations: AggregationsType!
-  allLists(offset: Int = 0, limit: Int = 10): [List!]!
-  list(id: String!): List!
 }
 
 """Estos son los roles validos"""
@@ -92,12 +98,12 @@ type Mutation {
   createItem(createItemInput: CreateItemInput!): Item!
   updateItem(updateItemInput: UpdateItemInput!): Item!
   removeItem(id: ID!): Item!
-  createTodo(createTodoInput: CreateTodoInput!): Todo!
-  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
-  removeTodo(Id: Int!): Boolean!
   createLists(createListInput: CreateListInput!): List!
   updateList(updateListInput: UpdateListInput!): List!
   removeList(id: String!): List!
+  createTodo(createTodoInput: CreateTodoInput!): Todo!
+  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
+  removeTodo(Id: Int!): Boolean!
 }
 
 input SignupInput {
@@ -134,6 +140,15 @@ input UpdateItemInput {
   id: ID!
 }
 
+input CreateListInput {
+  name: String!
+}
+
+input UpdateListInput {
+  name: String
+  id: String!
+}
+
 input CreateTodoInput {
   """Descripcion de la tarea"""
   description: String!
@@ -145,13 +160,4 @@ input UpdateTodoInput {
   """Descripcion de la tarea"""
   description: String
   done: Boolean
-}
-
-input CreateListInput {
-  name: String!
-}
-
-input UpdateListInput {
-  name: String
-  id: String!
 }

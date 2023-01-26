@@ -7,4 +7,5 @@ export const MESSAGE = {
   ESTE_ID_NO_EXISTE: 'Este Id no existe',
   PORFAVOR_COMUNICARSE_CON_EL_ADMINISTRADOR:
     'Porfavor comunicrse con el Adm,inistrador',
+  NO_SE_ENCONTRO_ESTA_LISTA: 'No se encontro esta lista',
 };

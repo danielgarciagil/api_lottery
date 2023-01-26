@@ -1,4 +1,4 @@
-import { ParseUUIDPipe, UseGuards } from '@nestjs/common';
+import { BadRequestException, ParseUUIDPipe, UseGuards } from '@nestjs/common';
 import {
   Resolver,
   Query,
@@ -22,6 +22,8 @@ import { ValidRoles } from './../../auth/enums/valid-roles.enum';
 import { ItemsService } from '../items/items.service';
 import { Item } from '../items/entities/item.entity';
 import { PaginationArgs, SearchArgs } from './../../common/dto/args';
+import { ListsService } from '../lists/lists.service';
+import { List } from '../lists/entities/list.entity';
 
 @Resolver(() => User)
 @UseGuards(JwtAuthGuard)
@@ -29,11 +31,12 @@ export class UsersResolver {
   constructor(
     private readonly usersService: UsersService,
     private readonly itemsService: ItemsService,
+    private readonly listsService: ListsService,
   ) {}
 
   //TODO example, borrar esto
   @Query(() => [User], {
-    name: 'findAllUsers',
+    name: 'allUsers',
     description: 'Devolver todos los usuarios,EXAMPLE borrar este Query',
   })
   async findAll(
@@ -91,7 +94,7 @@ export class UsersResolver {
 
   @ResolveField(() => [Item], {
     name: 'items',
-    description: 'Nos mostraras los items del uusario',
+    description: 'Nos mostraras los items del usario',
   })
   async getItemsByUsers(
     @Parent() user: User,
@@ -103,5 +106,26 @@ export class UsersResolver {
     //return 10;
   }
 
-  //TODO getListByUser
+  @ResolveField(() => Int, {
+    name: 'listsCount',
+    description: 'Cuantas lista tiene este usuario',
+  })
+  async listCount(
+    @Parent() user: User,
+    @CurrentUser([ValidRoles.ADMIN]) adminUser: User,
+  ): Promise<number> {
+    return await this.listsService.listCountByUser(user);
+  }
+
+  @ResolveField(() => [List], {
+    name: 'lists',
+    description: 'Nos mostraras las lista de un usuario',
+  })
+  async getListsByUsers(
+    @Parent() user: User,
+    @CurrentUser([ValidRoles.ADMIN]) adminUser: User,
+    @Args() paginationArgs: PaginationArgs,
+  ): Promise<List[]> {
+    return await this.listsService.findAll(user, paginationArgs);
+  }
 }

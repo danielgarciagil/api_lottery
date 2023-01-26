@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -26,13 +30,29 @@ export class ListsService {
   }
 
   async findAll(user: User, paginationArgs: PaginationArgs): Promise<List[]> {
-    throw new BadRequestException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
-    //return `This action returns all lists`;
+    const { limit, offset } = paginationArgs;
+    return await this.listRepo.find({
+      take: limit,
+      skip: offset,
+      where: {
+        user: {
+          id: user.id,
+        },
+      },
+    });
   }
 
   async findOne(id: string, user: User): Promise<List> {
-    throw new BadRequestException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
-    //return `This action returns a #${id} list`;
+    const list = await this.listRepo.findOneBy({
+      id: id,
+      user: {
+        id: user.id,
+      },
+    });
+    if (!list) {
+      throw new NotFoundException(MESSAGE.NO_SE_ENCONTRO_ESTA_LISTA);
+    }
+    return list;
   }
 
   async update(
@@ -40,12 +60,23 @@ export class ListsService {
     updateListInput: UpdateListInput,
     user: User,
   ): Promise<List> {
-    throw new BadRequestException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
-    //return `This action updates a #${id} list`;
+    await this.findOne(id, user);
+    const list = await this.listRepo.preload(updateListInput);
+    return await this.listRepo.save(list);
   }
 
   async remove(id: string, user: User): Promise<List> {
     throw new BadRequestException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
     //return `This action removes a #${id} list`;
+  }
+
+  async listCountByUser(user: User): Promise<number> {
+    return await this.listRepo.count({
+      where: {
+        user: {
+          id: user.id,
+        },
+      },
+    });
   }
 }
