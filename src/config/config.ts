@@ -27,6 +27,8 @@ export const validationENV = () => {
 
     JWT_SECRET: Joi.string().required(),
     JWT_EXPIRE: Joi.string().required(),
+
+    PORT: Joi.number().required(),
   });
 };
 

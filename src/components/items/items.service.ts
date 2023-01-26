@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 //Libreria Propia
@@ -12,6 +12,7 @@ import { UpdateItemInput } from './dto/update-item.input';
 import { Item } from './entities/item.entity';
 import { MESSAGE } from './../../config/messages';
 import { User } from '../users/entities/user.entity';
+import { PaginationArgs, SearchArgs } from 'src/common/dto/args';
 
 @Injectable()
 export class ItemsService {
@@ -29,15 +30,40 @@ export class ItemsService {
   }
 
   //select * from Items where user_id = '1221343442' => Este seria el Query
-  async findAll(user: User): Promise<Item[]> {
-    // TODO: filter, paginar, por usuario
-    return await this.itemRepo.find({
-      where: {
-        user: {
-          id: user.id, //Esto significa que el user_id debe ser igual
-        },
-      },
-    });
+  async findAll(
+    user: User,
+    paginationArgs: PaginationArgs,
+    searchArgs: SearchArgs,
+  ): Promise<Item[]> {
+    const { limit, offset } = paginationArgs;
+    const { search } = searchArgs;
+
+    const queryBuilder = this.itemRepo
+      .createQueryBuilder()
+      .take(limit)
+      .offset(offset)
+      .where(`"user_id" = :userId`, { userId: user.id });
+
+    if (search) {
+      console.log('object');
+      queryBuilder.andWhere('LOWER(name) like :name', {
+        name: `%${search.toLowerCase()}%`,
+      });
+    }
+
+    return queryBuilder.getMany();
+
+    //? Esta es una forma de como hacerlo
+    // return await this.itemRepo.find({
+    //   take: limit, // Limit
+    //   skip: offset, // Skip
+    //   where: {
+    //     user: {
+    //       id: user.id, //Esto significa que el user_id debe ser igual
+    //     },
+    //     name: Like(`%${search}%`), /// seelct * from where name like '%termi%' // COn esto busco terminos que tenga este parecido
+    //   },
+    // });
   }
 
   async findOne(id: string, user: User): Promise<Item> {

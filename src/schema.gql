@@ -23,10 +23,12 @@ type User {
   roles: [String!]!
   isActive: Boolean!
   lastUpdateBy: User
-  items: [Item!]!
 
   """Cuantos items tiene este usuario"""
   itemCount: Int!
+
+  """Nos mostraras los items del uusario"""
+  items(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
 }
 
 type Item {
@@ -50,7 +52,7 @@ type Query {
 
   """Devolver todos los usuarios,EXAMPLE borrar este Query"""
   findUser(id: ID!): User!
-  findAllItems: [Item!]!
+  findAllItems(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
   findItem(id: ID!): Item!
   allTodos(status: Boolean): [Todo!]!
   findTodo(id: Int!): Todo!

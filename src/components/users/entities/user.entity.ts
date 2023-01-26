@@ -46,7 +46,7 @@ export class User {
   lastUpdateBy?: User;
 
   @OneToMany(() => Item, (item) => item.user, { lazy: true })
-  @Field(() => [Item])
+  //@Field(() => [Item]) Quite esto para que grapsQl no sepa, para hacerlo de otra manera
   items: Item[];
 
   //TODO: Relaciones y demas

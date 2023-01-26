@@ -14,6 +14,7 @@ import { config, enviroments, validationENV } from './config/config';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './components/users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -70,6 +71,8 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
 
     AuthModule,
+
+    CommonModule,
   ],
   controllers: [],
   providers: [],
