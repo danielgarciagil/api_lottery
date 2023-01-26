@@ -27,7 +27,8 @@ type List {
   id: ID!
   name: String!
   user: User!
-  listItem: [ListsItem!]!
+  allItemsItems(offset: Int = 0, limit: Int = 10): [ListsItem!]!
+  totalItems: Float!
 }
 
 type User {
@@ -76,13 +77,13 @@ type Query {
   findItem(id: ID!): Item!
   allLists(offset: Int = 0, limit: Int = 10): [List!]!
   findList(id: String!): List!
+  findListsItem(id: String!): ListsItem!
   allTodos(status: Boolean): [Todo!]!
   findTodo(id: Int!): Todo!
   totalTodos: Int!
   pendingTodos: Int!
   completedTodos: Int!
   aggregations: AggregationsType!
-  listsItem(id: Int!): ListsItem!
 }
 
 """Estos son los roles validos"""
@@ -110,12 +111,11 @@ type Mutation {
   createLists(createListInput: CreateListInput!): List!
   updateList(updateListInput: UpdateListInput!): List!
   removeList(id: String!): List!
+  createListsItem(createListsItemInput: CreateListsItemInput!): ListsItem!
+  updateListsItem(updateListsItemInput: UpdateListsItemInput!): ListsItem!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
   removeTodo(Id: Int!): Boolean!
-  createListsItem(createListsItemInput: CreateListsItemInput!): ListsItem!
-  updateListsItem(updateListsItemInput: UpdateListsItemInput!): ListsItem!
-  removeListsItem(id: Int!): ListsItem!
 }
 
 input SignupInput {
@@ -161,6 +161,21 @@ input UpdateListInput {
   id: String!
 }
 
+input CreateListsItemInput {
+  quantity: Float = 0
+  completed: Boolean = false
+  listId: ID!
+  itemId: ID!
+}
+
+input UpdateListsItemInput {
+  quantity: Float = 0
+  completed: Boolean = false
+  listId: ID
+  itemId: ID
+  id: String!
+}
+
 input CreateTodoInput {
   """Descripcion de la tarea"""
   description: String!
@@ -172,15 +187,4 @@ input UpdateTodoInput {
   """Descripcion de la tarea"""
   description: String
   done: Boolean
-}
-
-input CreateListsItemInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateListsItemInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }

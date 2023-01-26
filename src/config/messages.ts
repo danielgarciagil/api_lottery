@@ -8,4 +8,5 @@ export const MESSAGE = {
   PORFAVOR_COMUNICARSE_CON_EL_ADMINISTRADOR:
     'Porfavor comunicrse con el Adm,inistrador',
   NO_SE_ENCONTRO_ESTA_LISTA: 'No se encontro esta lista',
+  No_SE_ENCONTRO_ESTE_LIST_ITEM: 'No se encontro este List Item',
 };
