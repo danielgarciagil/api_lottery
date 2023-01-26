@@ -19,6 +19,8 @@ import { DataSourceOptions } from 'typeorm';
           username: configService.POSTGRES.DB_USER,
           password: configService.POSTGRES.DB_PASSWORD,
           autoLoadEntities: true,
+          //seeds: ['../database/seeds/initialSeed.ts'],
+          //factories: ['../database/factories/user.factory.ts'],
         } as DataSourceOptions),
     }),
   ],

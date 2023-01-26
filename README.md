@@ -26,16 +26,18 @@
 Este es el repositorio de Nest con GraphqQl de Udemy con Fernando Herrera
 
 # Prev
+## Pasos Facil
   Primero clonar el archivo `.env.exmaple` y colocarlo en ```.env```
-  - Luego configurar las variables de entorno
+  - Luego configurar las variables de entorno que nos indica
+  - Y solo ejecutar este comando ```sh init_project.sh``` que se encargaria de todo
 
-# Installation
+## Pasos mas largos
+  Primero clonar el archivo `.env.exmaple` y colocarlo en ```.env```
+  - Luego configurar las variables de entorno que nos indica
+  - Ejecutar ```docker compuse up -d```
+  - Luego ```npm i```
+  - Y ```npm run pg:run-mg```
 
-```bash
-$ npm install
-$ docker-compose up -d
-$ npm pg:run-mg
-```
 
 # Running the app
 
@@ -59,14 +61,16 @@ Carlos Diaz
 - npm i apollo-server-core
 - npm i class-validator class-transformer
 - npm i @nestjs/config
-- npm install --save @nestjs/typeorm typeorm pg
+- npm i --save @nestjs/typeorm typeorm pg
 - npm i joi
 - npm i dotenv
 - npm i bcrypt
 - npm i --save @types/bcrypt
-- npm install --save @nestjs/passport passport
-- npm install --save @nestjs/jwt passport-jwt
-- npm install --save-dev @types/passport-jwt
+- npm i --save @nestjs/passport passport
+- npm i --save @nestjs/jwt passport-jwt
+- npm i --save-dev @types/passport-jwt
+- npm i typeorm-extension --save
+- npm i @faker-js/faker --save-dev
 
 # TODO
 Implementar la seed en NestJs
