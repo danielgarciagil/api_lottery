@@ -6,10 +6,10 @@ export class PaginationArgs {
   @Field(() => Int, { nullable: true })
   @IsOptional()
   @Min(0)
-  offset: number = 0;
+  offset = 0;
 
   @IsOptional()
   @Min(1)
   @Field(() => Int, { nullable: true })
-  limit: number = 10;
+  limit = 10;
 }

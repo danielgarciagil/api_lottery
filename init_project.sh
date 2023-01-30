@@ -8,7 +8,7 @@ sleep 10
 if [ ! -f ./src/database/migrations/*.ts ];
 then
   echo "Generando la Primera Migrations..."
-  npm run typeorm:generate-migration --name=first_migrations
+  npm run pg:generate-mg --name=first_migrations
 fi
 
 npm run pg:run-mg
