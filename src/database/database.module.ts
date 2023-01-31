@@ -10,8 +10,10 @@ import { DataSourceOptions } from 'typeorm';
   imports: [
     TypeOrmModule.forRootAsync({
       inject: [config.KEY],
-      useFactory: (configService: ConfigType<typeof config>) =>
-        ({
+      useFactory: (configService: ConfigType<typeof config>) => {
+        console.log('object');
+        console.log(configService.POSTGRES.DB_NAME);
+        return {
           type: 'postgres',
           host: configService.POSTGRES.DB_HOST,
           port: configService.POSTGRES.DB_PORT,
@@ -21,7 +23,8 @@ import { DataSourceOptions } from 'typeorm';
           autoLoadEntities: true,
           //seeds: ['../database/seeds/initialSeed.ts'],
           //factories: ['../database/factories/user.factory.ts'],
-        } as DataSourceOptions),
+        } as DataSourceOptions;
+      },
     }),
   ],
 })

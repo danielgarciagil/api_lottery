@@ -74,3 +74,7 @@ Carlos Diaz
 
 # TODO
 Implementar la seed en NestJs
+
+## Docker
+
+``` docker build -t prueba . ```
