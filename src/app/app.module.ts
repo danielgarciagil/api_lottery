@@ -12,7 +12,8 @@ import { config, enviroments, validationENV } from '../config/config';
 import { DatabaseModule } from '../database/database.module';
 import { AuthModule } from '../auth/auth.module';
 import { CommonModule } from '../common/common.module';
-import { LoteriaModule, UsersModule } from './../components';
+import { LoteriaModule, UsersModule, RoleModule } from './../components';
+import { AppInit } from './app-init.service';
 
 @Module({
   imports: [
@@ -40,8 +41,9 @@ import { LoteriaModule, UsersModule } from './../components';
     CommonModule,
     UsersModule,
     LoteriaModule,
+    RoleModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppInit],
 })
 export class AppModule {}

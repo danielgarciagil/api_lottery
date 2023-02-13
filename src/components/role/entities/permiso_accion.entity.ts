@@ -9,7 +9,7 @@ import {
 
 //PROPIO
 import {
-  ENTITY,
+  VALID_ENTITY,
   VALID_METHOD,
   VALID_PERMISO_ACCION,
 } from './../../../config/valid-roles';
@@ -35,7 +35,7 @@ export class Permiso_Accion {
   //TODO validar que solo sea un ENUM
   @Field(() => String)
   @Column({ type: 'varchar' })
-  entity: ENTITY;
+  entity: VALID_ENTITY;
 
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: true })

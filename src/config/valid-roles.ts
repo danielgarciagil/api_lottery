@@ -1,6 +1,6 @@
 import { registerEnumType } from '@nestjs/graphql';
 
-export enum ENTITY {
+export enum VALID_ENTITY {
   LOTERIA = 'LOTERIA',
   JUEGO = 'JUEGO',
   SORTEO = 'SORTEO',

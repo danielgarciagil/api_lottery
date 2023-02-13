@@ -5,7 +5,11 @@ import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
 //PROOPIO
 
-import { VALID_METHOD, VALID_PERMISO_ACCION } from './../config/valid-roles';
+import {
+  VALID_ENTITY,
+  VALID_METHOD,
+  VALID_PERMISO_ACCION,
+} from './../config/valid-roles';
 import { Permiso_Accion } from './../components/role/entities/permiso_accion.entity';
 import { RoleService } from './../components/role/role.service';
 import { UsersService } from './../components/users/users.service';
@@ -37,12 +41,27 @@ export class AppInit implements OnModuleInit {
       : VALID_METHOD.VIEW; //TODO
   }
 
+  devolver_enttity_default(enttity: string): VALID_ENTITY {
+    return enttity.includes(VALID_ENTITY.JUEGO)
+      ? VALID_ENTITY.JUEGO
+      : enttity.includes(VALID_ENTITY.LOTERIA)
+      ? VALID_ENTITY.LOTERIA
+      : enttity.includes(VALID_ENTITY.RESULTADOS)
+      ? VALID_ENTITY.RESULTADOS
+      : enttity.includes(VALID_ENTITY.SORTEO)
+      ? VALID_ENTITY.SORTEO
+      : enttity.includes(VALID_ENTITY.USER)
+      ? VALID_ENTITY.SORTEO
+      : VALID_ENTITY.USER; //TODO
+  }
+
   //? Aqui creo todos los permiso accion por default
   async crear_todos_los_permisos_accion() {
     this.logger.debug('Creando todos los permiso accion');
     const roles = Object.values(VALID_PERMISO_ACCION).map((name) => ({
       action: name,
       method: this.devolver_method_default(name),
+      entity: this.devolver_enttity_default(name),
     }));
     for (const role of roles) {
       const verificar = await this.permisoAccionRepository.findOneBy({
@@ -51,7 +70,8 @@ export class AppInit implements OnModuleInit {
       if (!verificar) {
         const newPermiso = this.permisoAccionRepository.create({
           action: role.action,
-          method: role.method as VALID_METHOD,
+          method: role.method,
+          entity: role.entity,
         });
         await this.permisoAccionRepository.save(newPermiso);
       }
