@@ -8,12 +8,12 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 
 import { User } from './../../components/users/entities/user.entity';
 import { MESSAGE } from './../../config/messages';
-import { VALID_ROLES } from './../../config/valid-roles';
+import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 
 //Este decorador me devolverar el user que se encuentra en el Req de la peticion en la propiedad .user ...
 //Siempre y cuando haga pasado por la validacion del token
 export const CurrentUser = createParamDecorator(
-  (roles: VALID_ROLES[], context: ExecutionContext) => {
+  (roles: VALID_PERMISO_ACCION[], context: ExecutionContext) => {
     //console.log(roles);
     const ctx = GqlExecutionContext.create(context);
     const user: User = ctx.getContext().req.user;

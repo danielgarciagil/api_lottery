@@ -10,5 +10,6 @@ import { Permiso_Accion } from './entities/permiso_accion.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Role, Permiso_Accion])],
   providers: [RoleResolver, RoleService],
+  exports: [TypeOrmModule],
 })
 export class RoleModule {}

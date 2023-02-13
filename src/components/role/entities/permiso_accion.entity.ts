@@ -1,12 +1,19 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 //PROPIO
 import {
   ENTITY,
   VALID_METHOD,
-  VALID_ROLES,
+  VALID_PERMISO_ACCION,
 } from './../../../config/valid-roles';
+import { Role } from './role.entity';
 
 @Entity({ name: 'permiso_accion' })
 @ObjectType({ description: 'Entidad de los permisos con las acciones' })
@@ -18,7 +25,7 @@ export class Permiso_Accion {
   //TODO validar que solo sea un ENUM
   @Field(() => String)
   @Column({ type: 'varchar', unique: true })
-  name: VALID_ROLES;
+  action: VALID_PERMISO_ACCION;
 
   //TODO validar que solo sea un ENUM
   @Field(() => String)
@@ -32,5 +39,12 @@ export class Permiso_Accion {
 
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: true })
-  activo: boolean;
+  activo?: boolean;
+
+  @ManyToMany(() => Role, (role) => role.permiso_accion, { lazy: true })
+  @JoinTable({
+    name: 'rol_pe_ac',
+  })
+  @Field(() => [Role])
+  role: Role[];
 }

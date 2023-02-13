@@ -5,8 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import { In, Repository } from 'typeorm';
 
 //Propias
 import { User } from './entities/user.entity';
@@ -14,20 +13,34 @@ import { SignupInput } from './../../auth/dto/signup.input';
 import { MESSAGE } from './../../config/messages';
 import { UpdateUserInput } from './dto/update-user.input';
 import { PaginationArgs } from './../../common/dto/args';
+import { Role } from '../role/entities/role.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Role) private readonly roleRepositoty: Repository<Role>,
   ) {}
 
   private logger: Logger = new Logger('UsersService');
 
   async create(signupInput: SignupInput): Promise<User> {
     try {
+      const { role, ...rest } = signupInput;
+
+      //TODO revisar este codigo feo
+      const roles = await this.roleRepositoty.findBy({
+        id: In(role),
+      });
+
+      if (roles.length == 0) {
+        throw new Error(MESSAGE.ESTOS_IDS_DE_ACTION_NO_SON_VALIDOS);
+      }
+
       const newUser = this.userRepository.create({
-        ...signupInput,
-        password: bcrypt.hashSync(signupInput.password, 10),
+        ...rest,
+        token: null,
+        role: roles,
       });
       return await this.userRepository.save(newUser);
     } catch (error) {
@@ -52,6 +65,16 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException(MESSAGE.MAIL_O_CONTRASENA_INCORRECTA);
     }
+    return user;
+  }
+
+  async findOneByEmailSinError(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { email },
+      relations: {
+        role: true,
+      },
+    });
     return user;
   }
 

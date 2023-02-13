@@ -15,7 +15,7 @@ export enum VALID_METHOD {
   VIEW = 'VIEW',
 }
 
-export enum VALID_ROLES {
+export enum VALID_PERMISO_ACCION {
   //? Permisos Loterias
   LOTERIA_CREAR = 'LOTERIA_CREAR',
   LOTERIA_UPDATE = 'LOTERIA_UPDATE',
@@ -54,7 +54,7 @@ export enum VALID_ROLES {
 }
 
 //Uso esto para registrar el Enmun en GraphQl
-registerEnumType(VALID_ROLES, {
-  name: 'ValidRoles',
-  description: 'Estos son los Permisos Accios=n validos',
+registerEnumType(VALID_PERMISO_ACCION, {
+  name: 'VALID_PERMISO_ACCION',
+  description: 'Estos son los Permisos Accion validos',
 });

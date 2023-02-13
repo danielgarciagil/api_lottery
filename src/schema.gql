@@ -2,12 +2,33 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Entidad de los permisos con las acciones"""
+type Permiso_Accion {
+  id: ID!
+  action: String!
+  method: String!
+  entity: String!
+  activo: Boolean!
+  role: [Role!]!
+}
+
+"""Entidad de Roles"""
+type Role {
+  id: ID!
+  name: String!
+  descripcion: String!
+  activo: Boolean!
+  user: [User!]!
+  permiso_accion: [Permiso_Accion!]!
+}
+
 type User {
   id: ID!
   nickname: String!
   name: String!
   email: String!
   activo: Boolean!
+  role: [Role!]!
 }
 
 type AuthResponse {
@@ -24,18 +45,15 @@ type Query {
   revaliteToken: AuthResponse!
 
   """Devolver todos los usuarios"""
-  allUsers(roles: [ValidRoles!] = [], offset: Int = 0, limit: Int = 10): [User!]!
+  allUser(offset: Int = 0, limit: Int = 10): [User!]!
 
   """Devolver todos los usuarios"""
   findUser(id: ID!): User!
-  loteria(id: Int!): Loteria!
-}
 
-"""Estos son los roles validos"""
-enum ValidRoles {
-  ADMIN
-  USER
-  SUPER_USER
+  """Ver todos los roles"""
+  allRole(offset: Int = 0, limit: Int = 10): [Role!]!
+  role(id: Int!): Role!
+  loteria(id: Int!): Loteria!
 }
 
 type Mutation {
@@ -50,6 +68,11 @@ type Mutation {
 
   """ Para bloquear el estado de un usuario"""
   blockUser(id: ID!): User!
+
+  """Para crear un Rol"""
+  createRol(createRoleInput: CreateRoleInput!): Role!
+  updateRole(updateRoleInput: UpdateRoleInput!): Role!
+  removeRole(id: Int!): Role!
   createLoteria(createLoteriaInput: CreateLoteriaInput!): Loteria!
   updateLoteria(updateLoteriaInput: UpdateLoteriaInput!): Loteria!
   removeLoteria(id: Int!): Loteria!
@@ -57,8 +80,10 @@ type Mutation {
 
 input SignupInput {
   email: String!
-  fullName: String!
+  name: String!
   password: String!
+  role: [Int!]!
+  nickname: String!
 }
 
 input LoginInput {
@@ -71,8 +96,20 @@ input UpdateUserInput {
   name: String
   password: String
   id: ID!
-  roles: [ValidRoles!]
   isActive: Boolean
+}
+
+input CreateRoleInput {
+  descripcion: String!
+  name: String!
+  permiso_accion: [Int!]!
+}
+
+input UpdateRoleInput {
+  descripcion: String
+  name: String
+  permiso_accion: [Int!]
+  id: Int!
 }
 
 input CreateLoteriaInput {

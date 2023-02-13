@@ -5,10 +5,9 @@ import { Resolver, Query, Mutation, Args, ID } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { UpdateUserInput } from './dto/update-user.input';
-import { ValidRolesArgs } from './dto/args/roles.arg';
 import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { CurrentUser } from './../../auth/decorators/current-user.decorator';
-import { ValidRoles } from './../../auth/enums/valid-roles.enum';
+
 import { PaginationArgs, SearchArgs } from './../../common/dto/args';
 
 @Resolver(() => User)
@@ -17,11 +16,10 @@ export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Query(() => [User], {
-    name: 'allUsers',
+    name: 'allUser',
     description: 'Devolver todos los usuarios',
   })
   async findAll(
-    @Args() validRoles: ValidRolesArgs,
     //TODO @CurrentUser([ValidRoles.ADMIN]) user: User, //Solo los usuarios ADMIN pueden entrar a esta ruta
     @Args() paginationArgs: PaginationArgs,
   ): Promise<User[]> {

@@ -4,10 +4,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+
+//PROPIO
+import { Role } from './../../../components/role/entities/role.entity';
 
 @Entity({ name: 'users' })
 @ObjectType()
@@ -31,12 +35,16 @@ export class User {
   @Column({ type: 'varchar' })
   password: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   token: string;
 
   @Column({ type: 'boolean', default: true })
   @Field(() => Boolean)
   activo: boolean;
+
+  @ManyToMany(() => Role, (role) => role.user, { eager: true }) //TODO quite el lazy para no crear una promesa
+  @Field(() => [Role])
+  role: Role[];
 
   @BeforeInsert()
   async passwordEncrypt() {
