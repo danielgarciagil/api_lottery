@@ -26,7 +26,6 @@ export class AuthService {
     return this.jwtService.sign({ id: payloadToken.id });
   }
 
-  //Registrar User
   async signup(signupInput: SignupInput): Promise<AuthResponse> {
     const user = await this.usersService.create(signupInput);
     const token = this.getJwtToken({ id: user.id });
@@ -37,15 +36,16 @@ export class AuthService {
     return response;
   }
 
-  //Iniciar seccion
   async login(loginInput: LoginInput): Promise<AuthResponse> {
     const { email, password } = loginInput;
     const user = await this.usersService.findOneByEmail(email);
+
     if (!bcrypt.compareSync(password, user.password)) {
       throw new BadRequestException(MESSAGE.MAIL_O_CONTRASENA_INCORRECTA);
     }
+
     const token = this.getJwtToken({ id: user.id });
-    delete user.password;
+    //TODO guardar nuevo token
     const response: AuthResponse = {
       token: token,
       user: user,
@@ -65,9 +65,9 @@ export class AuthService {
 
   //Validar que el suuario exista para la strategya del Jwl
   //TODO cambair si mando un uuid mal en el payload me dice que no fue encontrado
-  async validateUser(id: string): Promise<User> {
+  async validateUser(id: number): Promise<User> {
     const user = await this.usersService.findOneById(id);
-    if (!user.isActive) {
+    if (!user.activo) {
       throw new UnauthorizedException(MESSAGE.SU_USUARIO_ESTA_INACTIVO);
     }
     delete user.password;

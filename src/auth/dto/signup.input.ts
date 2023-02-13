@@ -8,7 +8,6 @@ import {
 } from 'class-validator';
 
 //Propios
-import { ValidRoles } from '../enums/valid-roles.enum';
 
 @InputType()
 export class SignupInput {
@@ -24,9 +23,4 @@ export class SignupInput {
   @Field(() => String)
   @MinLength(8)
   password: string;
-
-  @Field(() => [ValidRoles])
-  @IsArray() //TOdo controlar que solo me lleguede validROles
-  @IsEnum(ValidRoles, { each: true })
-  roles: ValidRoles[];
 }

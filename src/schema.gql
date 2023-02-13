@@ -2,62 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Todo {
-  id: Int!
-  description: String!
-  done: Boolean!
-}
-
-"""Todo quick aggregations"""
-type AggregationsType {
-  total: Int!
-  pending: Int!
-  completed: Int!
-  totalTodosCompleted: Int! @deprecated(reason: "No usar, mejor use total")
-}
-
-type ListsItem {
-  id: ID!
-  quantity: Int!
-  completed: Boolean!
-  item: Item!
-}
-
-type List {
-  id: ID!
-  name: String!
-  user: User!
-  allItemsItems(offset: Int = 0, limit: Int = 10): [ListsItem!]!
-  totalItems: Float!
-}
-
 type User {
   id: ID!
-  fullName: String!
-  email: String!
-  roles: [String!]!
-  isActive: Boolean!
-  lastUpdateBy: User
-
-  """Cuantos items tiene este usuario"""
-  itemCount: Int!
-
-  """Nos mostraras los items del usario"""
-  items(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
-
-  """Cuantas lista tiene este usuario"""
-  listsCount: Int!
-
-  """Nos mostraras las lista de un usuario"""
-  lists(offset: Int = 0, limit: Int = 10): [List!]!
-}
-
-type Item {
-  id: ID!
+  nickname: String!
   name: String!
-  quantity: Float!
-  quantityUnits: String!
-  user: User!
+  email: String!
+  activo: Boolean!
 }
 
 type AuthResponse {
@@ -65,25 +15,20 @@ type AuthResponse {
   user: User!
 }
 
+type Loteria {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   revaliteToken: AuthResponse!
 
-  """Devolver todos los usuarios,EXAMPLE borrar este Query"""
+  """Devolver todos los usuarios"""
   allUsers(roles: [ValidRoles!] = [], offset: Int = 0, limit: Int = 10): [User!]!
 
-  """Devolver todos los usuarios,EXAMPLE borrar este Query"""
+  """Devolver todos los usuarios"""
   findUser(id: ID!): User!
-  allItems(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
-  findItem(id: ID!): Item!
-  allLists(offset: Int = 0, limit: Int = 10): [List!]!
-  findList(id: String!): List!
-  findListsItem(id: String!): ListsItem!
-  allTodos(status: Boolean): [Todo!]!
-  findTodo(id: Int!): Todo!
-  totalTodos: Int!
-  pendingTodos: Int!
-  completedTodos: Int!
-  aggregations: AggregationsType!
+  loteria(id: Int!): Loteria!
 }
 
 """Estos son los roles validos"""
@@ -105,24 +50,15 @@ type Mutation {
 
   """ Para bloquear el estado de un usuario"""
   blockUser(id: ID!): User!
-  createItem(createItemInput: CreateItemInput!): Item!
-  updateItem(updateItemInput: UpdateItemInput!): Item!
-  removeItem(id: ID!): Item!
-  createLists(createListInput: CreateListInput!): List!
-  updateList(updateListInput: UpdateListInput!): List!
-  removeList(id: String!): List!
-  createListsItem(createListsItemInput: CreateListsItemInput!): ListsItem!
-  updateListsItem(updateListsItemInput: UpdateListsItemInput!): ListsItem!
-  createTodo(createTodoInput: CreateTodoInput!): Todo!
-  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
-  removeTodo(Id: Int!): Boolean!
+  createLoteria(createLoteriaInput: CreateLoteriaInput!): Loteria!
+  updateLoteria(updateLoteriaInput: UpdateLoteriaInput!): Loteria!
+  removeLoteria(id: Int!): Loteria!
 }
 
 input SignupInput {
   email: String!
   fullName: String!
   password: String!
-  roles: [ValidRoles!]!
 }
 
 input LoginInput {
@@ -132,59 +68,20 @@ input LoginInput {
 
 input UpdateUserInput {
   email: String
-  fullName: String
+  name: String
   password: String
-  roles: [ValidRoles!]
   id: ID!
+  roles: [ValidRoles!]
   isActive: Boolean
 }
 
-input CreateItemInput {
-  name: String!
-  quantity: Float!
-  quantityUnits: String
+input CreateLoteriaInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
 
-input UpdateItemInput {
-  name: String
-  quantity: Float
-  quantityUnits: String
-  id: ID!
-}
-
-input CreateListInput {
-  name: String!
-}
-
-input UpdateListInput {
-  name: String
-  id: String!
-}
-
-input CreateListsItemInput {
-  quantity: Float = 0
-  completed: Boolean = false
-  listId: ID!
-  itemId: ID!
-}
-
-input UpdateListsItemInput {
-  quantity: Float = 0
-  completed: Boolean = false
-  listId: ID
-  itemId: ID
-  id: String!
-}
-
-input CreateTodoInput {
-  """Descripcion de la tarea"""
-  description: String!
-}
-
-input UpdateTodoInput {
+input UpdateLoteriaInput {
+  """Example field (placeholder)"""
+  exampleField: Int
   id: Int!
-
-  """Descripcion de la tarea"""
-  description: String
-  done: Boolean
 }

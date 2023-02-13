@@ -5,14 +5,15 @@ import {
   createParamDecorator,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { ValidRoles } from '../enums/valid-roles.enum';
+
 import { User } from './../../components/users/entities/user.entity';
 import { MESSAGE } from './../../config/messages';
+import { VALID_ROLES } from './../../config/valid-roles';
 
 //Este decorador me devolverar el user que se encuentra en el Req de la peticion en la propiedad .user ...
 //Siempre y cuando haga pasado por la validacion del token
 export const CurrentUser = createParamDecorator(
-  (roles: ValidRoles[] = [], context: ExecutionContext) => {
+  (roles: VALID_ROLES[], context: ExecutionContext) => {
     //console.log(roles);
     const ctx = GqlExecutionContext.create(context);
     const user: User = ctx.getContext().req.user;
@@ -26,15 +27,6 @@ export const CurrentUser = createParamDecorator(
       return user;
     }
 
-    for (const role of user.roles) {
-      //TODO eliminar validRoles
-      if (roles.includes(role as ValidRoles)) {
-        return user;
-      }
-    }
-    throw new ForbiddenException(
-      `${MESSAGE.NO_TIENE_EL_ROL_PARA_ESTA_ACCION} => ${roles}`,
-    );
-    //return user;
+    return user;
   },
 );

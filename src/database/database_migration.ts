@@ -14,8 +14,8 @@ const database_migrations = new DataSource({
   password: configService.get('DB_PASSWORD'),
   synchronize: false,
   logging: true,
-  entities: ['src/components/**/**/*.entity.ts'],
-  migrations: ['src/database/migrations/*.ts'],
+  entities: ['src/components/**/**/*.entity{.ts,.js}'],
+  migrations: ['src/database/migrations/*{.ts,.js}'],
 });
 
 export default database_migrations;

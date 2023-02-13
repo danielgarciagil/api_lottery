@@ -1,58 +1,45 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import {
+  BeforeInsert,
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-
-//Propios
-import { Item } from './../../../components/items/entities/item.entity';
-import { List } from './../../../components/lists/entities/list.entity';
+import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'users' })
 @ObjectType()
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   @Field(() => ID)
-  id: string;
+  id: number;
 
-  @Column({ type: 'varchar', name: 'full_name' })
+  @Column({ type: 'varchar', unique: true })
   @Field(() => String)
-  fullName: string;
+  nickname: string;
+
+  @Column({ type: 'varchar' })
+  @Field(() => String)
+  name: string;
 
   @Column({ type: 'varchar', unique: true })
   @Field(() => String)
   email: string;
 
   @Column({ type: 'varchar' })
-  //@Field(() => String)
   password: string;
 
-  @Column({ type: 'text', array: true, default: [] })
-  @Field(() => [String])
-  roles: string[];
+  @Column({ type: 'varchar' })
+  token: string;
 
   @Column({ type: 'boolean', default: true })
   @Field(() => Boolean)
-  isActive: boolean;
+  activo: boolean;
 
-  @ManyToOne(() => User, (user) => user.lastUpdateBy, {
-    nullable: true,
-    lazy: true, // Use lazy para que la relacion cargue sola
-  })
-  @JoinColumn({ name: 'last_update_by_id' })
-  @Field(() => User, { nullable: true })
-  lastUpdateBy?: User;
-
-  @OneToMany(() => Item, (item) => item.user, { lazy: true })
-  //@Field(() => [Item]) Quite esto para que grapsQl no sepa, para hacerlo de otra manera
-  items: Item[];
-
-  @OneToMany(() => List, (list) => list.user, { lazy: true })
-  lists: List[];
-
-  //TODO: Relaciones y demas
+  @BeforeInsert()
+  async passwordEncrypt() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }

@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Injectable,
-  InternalServerErrorException,
   Logger,
   NotFoundException,
 } from '@nestjs/common';
@@ -13,9 +12,8 @@ import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { SignupInput } from './../../auth/dto/signup.input';
 import { MESSAGE } from './../../config/messages';
-import { ValidRoles } from './../../auth/enums/valid-roles.enum';
 import { UpdateUserInput } from './dto/update-user.input';
-import { PaginationArgs } from 'src/common/dto/args';
+import { PaginationArgs } from './../../common/dto/args';
 
 @Injectable()
 export class UsersService {
@@ -38,31 +36,18 @@ export class UsersService {
     }
   }
 
-  async findAll(
-    roles: ValidRoles[],
-    paginationArgs: PaginationArgs,
-  ): Promise<User[]> {
+  async findAll(paginationArgs: PaginationArgs): Promise<User[]> {
     const { limit, offset } = paginationArgs;
     // Aqui devulevo el finde si no me manda roles
-    if (roles.length === 0)
-      return this.userRepository.find({
-        take: limit,
-        skip: offset,
-        relations: {
-          lastUpdateBy: true,
-        },
-      });
+
+    return this.userRepository.find({
+      take: limit,
+      skip: offset,
+    });
     // Aqui hago mi query en si
-    return await this.userRepository
-      .createQueryBuilder()
-      .take(limit)
-      .offset(offset)
-      .andWhere('ARRAY[roles] && ARRAY[:...roles]') // Aqui estoy buscando en el arreglo de roles y tienen que estar en el rol que estoy mandando
-      .setParameter('roles', roles) // Aqui defino el parametro que estoy mandnado y defino cual es
-      .getMany();
   }
 
-  async findOneById(id: string): Promise<User> {
+  async findOneById(id: number): Promise<User> {
     const user = await this.userRepository.findOneBy({ id: id });
     if (!user) {
       throw new NotFoundException(MESSAGE.MAIL_O_CONTRASENA_INCORRECTA);
@@ -79,18 +64,12 @@ export class UsersService {
   }
 
   // TODO: update by
-  async update(
-    id: string,
-    updateUserInput: UpdateUserInput,
-    updateByUser: User,
-  ): Promise<User> {
+  async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
     try {
       const userUpdate = await this.userRepository.preload({
         ...updateUserInput,
         id: id,
-        lastUpdateBy: updateByUser,
       });
-      userUpdate.lastUpdateBy = updateByUser;
       if (!userUpdate) {
         throw new Error(MESSAGE.ESTE_ID_NO_EXISTE); //TODO controlar errrores
       }
@@ -101,10 +80,9 @@ export class UsersService {
     }
   }
 
-  async block(id: string, user: User): Promise<User> {
+  async block(id: number): Promise<User> {
     const userToBlock = await this.findOneById(id);
-    userToBlock.isActive = false;
-    userToBlock.lastUpdateBy = user;
+    userToBlock.activo = false;
     return this.userRepository.save(userToBlock);
   }
 }

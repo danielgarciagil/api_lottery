@@ -1,4 +1,4 @@
-import { BadRequestException, Inject } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigType } from '@nestjs/config';
@@ -23,7 +23,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: payloadTokenInterface): Promise<User> {
     const { id } = payload;
     const user = await this.authService.validateUser(id);
-    //console.log('EMTRO');
     return user; // req.user
   }
 }

@@ -15,7 +15,7 @@ import { ValidRoles } from './../../../auth/enums/valid-roles.enum';
 export class UpdateUserInput extends PartialType(CreateUserInput) {
   @Field(() => ID)
   @IsUUID()
-  id: string;
+  id: number;
 
   @Field(() => [ValidRoles], { nullable: true })
   @IsOptional()
