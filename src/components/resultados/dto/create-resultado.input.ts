@@ -2,7 +2,6 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 import {
   ArrayMinSize,
   IsArray,
-  //IsDate,
   IsDateString,
   IsNotEmpty,
   IsNumber,
@@ -18,7 +17,7 @@ export class CreateResultadoInput {
   @IsNumber({}, { each: true })
   numeros_ganadores: number[];
 
-  @Field(() => Date)
+  @Field(() => String)
   @IsDateString()
   fecha: Date;
 

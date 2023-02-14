@@ -9,5 +9,6 @@ import { Juego } from './entities/juego.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Juego])],
   providers: [JuegoResolver, JuegoService],
+  exports: [JuegoService],
 })
 export class JuegoModule {}

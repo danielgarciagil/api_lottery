@@ -28,7 +28,6 @@ export class RoleService {
     try {
       const { permiso_accion, ...rest } = createRoleInput;
 
-      //TODO revisar este codigo feo
       const permisos = await this.permiso_accionRepository.find({
         where: {
           id: In(permiso_accion),

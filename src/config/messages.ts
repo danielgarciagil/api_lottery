@@ -22,4 +22,7 @@ export enum MESSAGE {
   ESTE_ROL_ESTA_INACTIVO = 'ESTE_ROL_ESTA_INACTIVO',
 
   NO_TIENE_EL_ROL_PARA_ESTA_ACCION = 'No tiene el rol para esta accion',
+
+  NO_CUMPLE_CON_LOS_REQUISITOS_DEL_JUEGO = 'No cumple con los requisitos del Juego',
+  YA_ESTA_PUBLICADO_ESTE_RESULTADO_PARA_ESTA_FECHA = 'Ya esta publicado este resultado para esta fecha',
 }

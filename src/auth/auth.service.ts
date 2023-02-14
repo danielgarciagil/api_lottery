@@ -72,7 +72,6 @@ export class AuthService {
     return response;
   }
 
-  //TODO cambair si mando un uuid mal en el payload me dice que no fue encontrado
   async validateUser(id: number): Promise<User> {
     const user = await this.usersService.findOneById(id);
     if (!user.activo) {

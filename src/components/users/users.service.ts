@@ -30,7 +30,6 @@ export class UsersService {
     try {
       const { role, ...rest } = signupInput;
 
-      //TODO revisar este codigo feo
       const roles = await this.roleRepositoty.findBy({
         id: In(role),
       });

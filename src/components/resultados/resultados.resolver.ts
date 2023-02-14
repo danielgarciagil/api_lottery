@@ -12,6 +12,7 @@ import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { CurrentUser } from './../../auth/decorators/current-user.decorator';
 import { User } from '../users/entities/user.entity';
 import { VALID_PERMISO_ACCION } from 'src/config/valid-roles';
+import { FilterResultado } from './dto/filter-resultado.input';
 
 @UseGuards(JwtAuthGuard)
 @Resolver(() => Resultado)
@@ -36,8 +37,9 @@ export class ResultadosResolver {
   async findAll(
     @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_VIEW]) user: User,
     @Args() paginationArgs: PaginationArgs,
+    @Args() filterResultado: FilterResultado,
   ): Promise<Resultado[]> {
-    return this.resultadosService.findAll(paginationArgs);
+    return this.resultadosService.findAll(paginationArgs, filterResultado);
   }
 
   @Query(() => Resultado, {

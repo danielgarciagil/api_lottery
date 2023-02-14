@@ -29,6 +29,7 @@ export class SorteoService {
         juego: { id: id_juego },
         dia_semana: { id: id_dia_semana },
       });
+
       await this.sorteoRepository.save(newSorteo);
       return await this.findOne(newSorteo.id);
     } catch (error) {

@@ -11,5 +11,6 @@ import { DiaInit } from './dia-init.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Sorteo, Dias])],
   providers: [SorteoResolver, SorteoService, DiaInit],
+  exports: [SorteoService],
 })
 export class SorteoModule {}

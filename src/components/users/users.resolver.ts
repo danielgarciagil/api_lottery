@@ -34,7 +34,6 @@ export class UsersResolver {
   async findOne(
     @CurrentUser([VALID_PERMISO_ACCION.USER_VIEW]) user: User,
     @Args('id', { type: () => ID }, ParseIntPipe) id: number,
-    //TODO @CurrentUser([ValidRoles.ADMIN]) user: User,
   ): Promise<User> {
     return this.usersService.findOneById(id);
   }

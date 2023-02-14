@@ -41,7 +41,7 @@ export class Sorteo {
   hora: string;
 
   @Field(() => Juego)
-  @ManyToOne(() => Juego, (juego) => juego.sorteo, { lazy: true })
+  @ManyToOne(() => Juego, (juego) => juego.sorteo, { eager: true }) //todo lazy
   @JoinColumn({ name: 'id_juego' })
   juego: Juego;
 
