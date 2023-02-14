@@ -1,8 +1,8 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 //PROPIO
-
+import { Juego } from './../../../components/juego/entities/juego.entity';
 @Entity({ name: 'loteria' })
 @ObjectType()
 export class Loteria {
@@ -29,4 +29,8 @@ export class Loteria {
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: true })
   activo: boolean;
+
+  @Field(() => [Juego])
+  @OneToMany(() => Juego, (juego) => juego.loteria, { lazy: true })
+  juego: Juego[];
 }

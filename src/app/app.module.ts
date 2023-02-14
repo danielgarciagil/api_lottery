@@ -12,7 +12,13 @@ import { config, enviroments, validationENV } from '../config/config';
 import { DatabaseModule } from '../database/database.module';
 import { AuthModule } from '../auth/auth.module';
 import { CommonModule } from '../common/common.module';
-import { LoteriaModule, UsersModule, RoleModule } from './../components';
+import {
+  UsersModule,
+  RoleModule,
+  LoteriaModule,
+  JuegoModule,
+  SorteoModule,
+} from './../components';
 import { AppInit } from './app-init.service';
 
 @Module({
@@ -37,11 +43,15 @@ import { AppInit } from './app-init.service';
     //Base de Datos
     DatabaseModule,
 
+    //Compoenntes de User
+    UsersModule,
+    RoleModule,
+
     //Componentes Propio
     CommonModule,
-    UsersModule,
     LoteriaModule,
-    RoleModule,
+    JuegoModule,
+    SorteoModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppInit],

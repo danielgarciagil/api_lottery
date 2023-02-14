@@ -36,6 +36,34 @@ type AuthResponse {
   user: User!
 }
 
+type Dias {
+  id: ID!
+  name: String!
+}
+
+type Sorteo {
+  id: ID!
+  name: String!
+  abreviatura: String!
+  img_url: String!
+  descripcion: String!
+  hora: String!
+  juego: Juego!
+  dia_semana: Dias!
+}
+
+type Juego {
+  id: ID!
+  name: String!
+  abreviatura: String!
+  descripcion: String!
+  posiciones: Int!
+  rango_minimo: Int!
+  rango_maximo: Int!
+  loteria: Loteria!
+  sorteo: [Sorteo!]!
+}
+
 type Loteria {
   id: ID!
   name: String!
@@ -43,6 +71,7 @@ type Loteria {
   img_url: String!
   descripcion: String!
   activo: Boolean!
+  juego: [Juego!]!
 }
 
 type ResponsePropioGQl {
@@ -70,6 +99,18 @@ type Query {
 
   """Para buscar una loteria en especifico"""
   findLoteria(id: Int!): Loteria!
+
+  """Para ver todos los Juegos"""
+  allJuego(offset: Int = 0, limit: Int = 10): [Juego!]!
+
+  """Para ver un juego especifico"""
+  findJuego(id: Int!): Juego!
+
+  """Para ver todos los sorteos"""
+  allSorteo: [Sorteo!]!
+
+  """Para bsucar un sorteo"""
+  findSorteo(id: Int!): Sorteo!
 }
 
 type Mutation {
@@ -102,6 +143,24 @@ type Mutation {
 
   """Para eliminar una loteria"""
   removeLoteria(id: Int!): ResponsePropioGQl!
+
+  """Para crear un Juego"""
+  createJuego(createJuegoInput: CreateJuegoInput!): Juego!
+
+  """Para actualizar un Juego"""
+  updateJuego(updateJuegoInput: UpdateJuegoInput!): Juego!
+
+  """Para eliminar un Juego"""
+  removeJuego(id: Int!): ResponsePropioGQl!
+
+  """para crear un Sorteo"""
+  createSorteo(createSorteoInput: CreateSorteoInput!): Sorteo!
+
+  """Para actualizar un SOrteo"""
+  updateSorteo(updateSorteoInput: UpdateSorteoInput!): Sorteo!
+
+  """Remover un sorteo"""
+  removeSorteo(id: Int!): ResponsePropioGQl!
 }
 
 input SignupInput {
@@ -153,5 +212,44 @@ input UpdateLoteriaInput {
   img_url: String
   descripcion: String
   activo: Boolean
+  id: Int!
+}
+
+input CreateJuegoInput {
+  name: String!
+  abreviatura: String!
+  descripcion: String!
+  posiciones: Int!
+  rango_minimo: Int!
+  rango_maximo: Int!
+  id_loteria: Int!
+}
+
+input UpdateJuegoInput {
+  name: String
+  abreviatura: String
+  descripcion: String
+  posiciones: Int
+  rango_minimo: Int
+  rango_maximo: Int
+  id: Int!
+}
+
+input CreateSorteoInput {
+  name: String!
+  abreviatura: String!
+  img_url: String!
+  descripcion: String!
+  hora: String!
+  id_dia_semana: Int!
+  id_juego: Int!
+}
+
+input UpdateSorteoInput {
+  name: String
+  abreviatura: String
+  img_url: String
+  descripcion: String
+  hora: String
   id: Int!
 }
