@@ -122,7 +122,7 @@ export class UsersService {
       await queryRunner.release();
       console.log(error);
       throw new UnprocessableEntityException(
-        MESSAGE.NO_SE_PUDO_ACTUALIZAR_ESTE_ROL,
+        MESSAGE.COMUN_NO_SE_PUDO_ACTUALIZAR,
       );
     }
   }

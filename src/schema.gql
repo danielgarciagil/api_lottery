@@ -37,8 +37,17 @@ type AuthResponse {
 }
 
 type Loteria {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: ID!
+  name: String!
+  abreviatura: String!
+  img_url: String!
+  descripcion: String!
+  activo: Boolean!
+}
+
+type ResponsePropioGQl {
+  status: String!
+  message: String!
 }
 
 type Query {
@@ -55,7 +64,12 @@ type Query {
 
   """Ver un rol especifico"""
   findRole(id: Int!): Role!
-  loteria(id: Int!): Loteria!
+
+  """Para ver todas las loterias"""
+  allLoteria(offset: Int = 0, limit: Int = 10): [Loteria!]!
+
+  """Para buscar una loteria en especifico"""
+  findLoteria(id: Int!): Loteria!
 }
 
 type Mutation {
@@ -79,9 +93,15 @@ type Mutation {
 
   """Eliminar un Rol"""
   removeRole(id: Int!): Role!
+
+  """Para crear una Loteria"""
   createLoteria(createLoteriaInput: CreateLoteriaInput!): Loteria!
+
+  """Para actualizar una loteria"""
   updateLoteria(updateLoteriaInput: UpdateLoteriaInput!): Loteria!
-  removeLoteria(id: Int!): Loteria!
+
+  """Para eliminar una loteria"""
+  removeLoteria(id: Int!): ResponsePropioGQl!
 }
 
 input SignupInput {
@@ -120,12 +140,18 @@ input UpdateRoleInput {
 }
 
 input CreateLoteriaInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  abreviatura: String!
+  img_url: String!
+  descripcion: String!
+  activo: Boolean
 }
 
 input UpdateLoteriaInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  name: String
+  abreviatura: String
+  img_url: String
+  descripcion: String
+  activo: Boolean
   id: Int!
 }

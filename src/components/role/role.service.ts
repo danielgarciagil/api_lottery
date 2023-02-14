@@ -58,10 +58,9 @@ export class RoleService {
   }
 
   async findOne(id: number): Promise<Role> {
-    console.log(id);
     const role = await this.roleRepository.findOneBy({ id });
     if (!role) {
-      throw new NotFoundException(MESSAGE.No_SE_ENCONTRO_ESTE_ROL);
+      throw new NotFoundException(MESSAGE.COMUN_ESTE_ID_NO_EXISTE);
     }
     return role;
   }
@@ -99,7 +98,7 @@ export class RoleService {
       await queryRunner.rollbackTransaction();
       await queryRunner.release();
       throw new UnprocessableEntityException(
-        MESSAGE.NO_SE_PUDO_ACTUALIZAR_ESTE_ROL,
+        MESSAGE.COMUN_NO_SE_PUDO_ACTUALIZAR,
       );
     }
   }
