@@ -8,10 +8,11 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { CurrentUser } from './../../auth/decorators/current-user.decorator';
 
-import { PaginationArgs, SearchArgs } from './../../common/dto/args';
+import { PaginationArgs } from './../../common/dto/args';
+import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 
 @Resolver(() => User)
-//TODO @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
@@ -20,18 +21,18 @@ export class UsersResolver {
     description: 'Devolver todos los usuarios',
   })
   async findAll(
-    //TODO @CurrentUser([ValidRoles.ADMIN]) user: User, //Solo los usuarios ADMIN pueden entrar a esta ruta
+    @CurrentUser([VALID_PERMISO_ACCION.USER_VIEW]) user: User,
     @Args() paginationArgs: PaginationArgs,
   ): Promise<User[]> {
     return await this.usersService.findAll(paginationArgs);
   }
 
-  //TODO example, borrar esto
   @Query(() => User, {
     name: 'findUser',
     description: 'Devolver todos los usuarios',
   })
   async findOne(
+    @CurrentUser([VALID_PERMISO_ACCION.USER_VIEW]) user: User,
     @Args('id', { type: () => ID }, ParseIntPipe) id: number,
     //TODO @CurrentUser([ValidRoles.ADMIN]) user: User,
   ): Promise<User> {
@@ -43,8 +44,8 @@ export class UsersResolver {
     description: 'Con este query actualiza el usuario',
   })
   async updateUser(
+    @CurrentUser([VALID_PERMISO_ACCION.USER_UPDATE]) user: User,
     @Args('updateUserInput') updateUserInput: UpdateUserInput,
-    //TODO @CurrentUser([ValidRoles.ADMIN]) user: User,
   ): Promise<User> {
     return this.usersService.update(updateUserInput.id, updateUserInput);
   }
@@ -55,7 +56,7 @@ export class UsersResolver {
   })
   async blockUser(
     @Args('id', { type: () => ID }, ParseIntPipe) id: number,
-    //TODO @CurrentUser([ValidRoles.ADMIN]) user: User,
+    @CurrentUser([VALID_PERMISO_ACCION.USER_VIEW]) user: User,
   ): Promise<User> {
     return this.usersService.block(id);
   }

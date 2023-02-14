@@ -3,9 +3,10 @@ import {
   Injectable,
   Logger,
   NotFoundException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { In, Repository, DataSource } from 'typeorm';
 
 //Propias
 import { User } from './entities/user.entity';
@@ -20,6 +21,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Role) private readonly roleRepositoty: Repository<Role>,
+    private readonly dataSource: DataSource,
   ) {}
 
   private logger: Logger = new Logger('UsersService');
@@ -34,7 +36,7 @@ export class UsersService {
       });
 
       if (roles.length == 0) {
-        throw new Error(MESSAGE.ESTOS_IDS_DE_ACTION_NO_SON_VALIDOS);
+        throw new Error(MESSAGE.ESTOS_ID_DE_ROLES_NO_SON_Validos);
       }
 
       const newUser = this.userRepository.create({
@@ -47,6 +49,12 @@ export class UsersService {
       this.logger.error(error);
       throw new BadRequestException(error?.detail);
     }
+  }
+
+  async updateToken(id: number, token: string): Promise<User> {
+    const user = await this.findOneById(id);
+    user.token = token;
+    return await this.userRepository.save(user);
   }
 
   async findAll(paginationArgs: PaginationArgs): Promise<User[]> {
@@ -88,18 +96,34 @@ export class UsersService {
 
   // TODO: update by
   async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
+    const { role, ...toUpdate } = updateUserInput;
+    const user = await this.findOneById(id);
+    this.userRepository.merge(user, toUpdate);
+
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
     try {
-      const userUpdate = await this.userRepository.preload({
-        ...updateUserInput,
-        id: id,
-      });
-      if (!userUpdate) {
-        throw new Error(MESSAGE.ESTE_ID_NO_EXISTE); //TODO controlar errrores
+      if (role) {
+        const roles = await this.roleRepositoty.find({
+          where: { id: In(role) },
+        });
+        if (roles.length == 0) {
+          throw new NotFoundException(MESSAGE.ESTOS_ID_DE_ROLES_NO_SON_Validos);
+        }
+        user.role = roles;
       }
-      return await this.userRepository.save(userUpdate);
+      await queryRunner.manager.save(user);
+      await queryRunner.commitTransaction();
+      await queryRunner.release();
+      return user;
     } catch (error) {
-      this.logger.error(error);
-      throw new BadRequestException(error?.detail);
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      console.log(error);
+      throw new UnprocessableEntityException(
+        MESSAGE.NO_SE_PUDO_ACTUALIZAR_ESTE_ROL,
+      );
     }
   }
 

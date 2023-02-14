@@ -1,23 +1,11 @@
-import {
-  IsArray,
-  IsBoolean,
-  IsEnum,
-  IsOptional,
-  IsUUID,
-} from 'class-validator';
-import { InputType, Field, PartialType, ID } from '@nestjs/graphql';
-
-//Poropias
-import { CreateUserInput } from './create-user.input';
+import { IsNumber, Min } from 'class-validator';
+import { InputType, Field, PartialType, Int } from '@nestjs/graphql';
+import { SignupInput } from './../../../auth/dto/signup.input';
 
 @InputType()
-export class UpdateUserInput extends PartialType(CreateUserInput) {
-  @Field(() => ID)
-  @IsUUID()
+export class UpdateUserInput extends PartialType(SignupInput) {
+  @Field(() => Int)
+  @IsNumber()
+  @Min(1)
   id: number;
-
-  @Field(() => Boolean, { nullable: true })
-  @IsOptional()
-  @IsBoolean()
-  isActive?: boolean;
 }

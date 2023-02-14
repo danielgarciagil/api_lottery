@@ -14,6 +14,7 @@ import { LoginInput } from './dto/login.input';
 import { payloadTokenInterface } from './interface/token-payload.interface';
 import { User } from './../components/users/entities/user.entity';
 import { MESSAGE } from './../config/messages';
+import { ResponsePropioGQl } from './../common/response';
 
 @Injectable()
 export class AuthService {
@@ -28,9 +29,8 @@ export class AuthService {
 
   async signup(signupInput: SignupInput): Promise<AuthResponse> {
     const user = await this.usersService.create(signupInput);
-    const token = this.getJwtToken({ id: user.id });
     const response: AuthResponse = {
-      token: token,
+      token: null,
       user: user,
     };
     return response;
@@ -45,12 +45,21 @@ export class AuthService {
     }
 
     const token = this.getJwtToken({ id: user.id });
-    //TODO guardar nuevo token
+    await this.usersService.updateToken(user.id, token);
     const response: AuthResponse = {
       token: token,
       user: user,
     };
     return response;
+  }
+
+  async logout(id: number): Promise<ResponsePropioGQl> {
+    const token = null;
+    await this.usersService.updateToken(id, token);
+    return {
+      message: MESSAGE.SE_CERRO_CORRECTAMENTE_SU_SESION,
+      status: 200,
+    };
   }
 
   //Revalidar el token del que es enviado, generar uno nuevo
@@ -63,7 +72,6 @@ export class AuthService {
     return response;
   }
 
-  //Validar que el suuario exista para la strategya del Jwl
   //TODO cambair si mando un uuid mal en el payload me dice que no fue encontrado
   async validateUser(id: number): Promise<User> {
     const user = await this.usersService.findOneById(id);

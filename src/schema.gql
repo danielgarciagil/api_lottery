@@ -32,7 +32,7 @@ type User {
 }
 
 type AuthResponse {
-  token: String!
+  token: String
   user: User!
 }
 
@@ -52,7 +52,9 @@ type Query {
 
   """Ver todos los roles"""
   allRole(offset: Int = 0, limit: Int = 10): [Role!]!
-  role(id: Int!): Role!
+
+  """Ver un rol especifico"""
+  findRole(id: Int!): Role!
   loteria(id: Int!): Loteria!
 }
 
@@ -71,7 +73,11 @@ type Mutation {
 
   """Para crear un Rol"""
   createRol(createRoleInput: CreateRoleInput!): Role!
+
+  """Actualizar un Rol"""
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
+
+  """Eliminar un Rol"""
   removeRole(id: Int!): Role!
   createLoteria(createLoteriaInput: CreateLoteriaInput!): Loteria!
   updateLoteria(updateLoteriaInput: UpdateLoteriaInput!): Loteria!
@@ -95,8 +101,9 @@ input UpdateUserInput {
   email: String
   name: String
   password: String
-  id: ID!
-  isActive: Boolean
+  role: [Int!]
+  nickname: String
+  id: Int!
 }
 
 input CreateRoleInput {

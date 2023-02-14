@@ -1,5 +1,3 @@
-import { registerEnumType } from '@nestjs/graphql';
-
 export enum VALID_ENTITY {
   LOTERIA = 'LOTERIA',
   JUEGO = 'JUEGO',
@@ -52,9 +50,3 @@ export enum VALID_PERMISO_ACCION {
   ROLE_VIEW = 'ROLE_VIEW',
   ROLE_DELETE = 'ROLE_DELETE',
 }
-
-//Uso esto para registrar el Enmun en GraphQl
-registerEnumType(VALID_PERMISO_ACCION, {
-  name: 'VALID_PERMISO_ACCION',
-  description: 'Estos son los Permisos Accion validos',
-});

@@ -5,7 +5,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
+import { Repository, In, DataSource } from 'typeorm';
 
 //PROPIO
 import { CreateRoleInput } from './dto/create-role.input';
@@ -21,6 +21,7 @@ export class RoleService {
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     @InjectRepository(Permiso_Accion)
     private readonly permiso_accionRepository: Repository<Permiso_Accion>,
+    private readonly dataSource: DataSource,
   ) {}
 
   async create(createRoleInput: CreateRoleInput): Promise<Role> {
@@ -57,6 +58,7 @@ export class RoleService {
   }
 
   async findOne(id: number): Promise<Role> {
+    console.log(id);
     const role = await this.roleRepository.findOneBy({ id });
     if (!role) {
       throw new NotFoundException(MESSAGE.No_SE_ENCONTRO_ESTE_ROL);
@@ -70,7 +72,36 @@ export class RoleService {
   }
 
   async update(id: number, updateRoleInput: UpdateRoleInput): Promise<Role> {
-    throw new BadRequestException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
+    const { permiso_accion, ...toUpdate } = updateRoleInput;
+    const role = await this.findOne(id);
+    this.roleRepository.merge(role, toUpdate);
+
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      if (permiso_accion) {
+        const permisos = await this.permiso_accionRepository.find({
+          where: {
+            id: In(permiso_accion),
+          },
+        });
+        if (permisos.length == 0) {
+          throw new Error(MESSAGE.ESTOS_IDS_DE_ACTION_NO_SON_VALIDOS);
+        }
+        role.permiso_accion = permisos;
+      }
+      await queryRunner.manager.save(role);
+      await queryRunner.commitTransaction();
+      await queryRunner.release();
+      return role;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      throw new UnprocessableEntityException(
+        MESSAGE.NO_SE_PUDO_ACTUALIZAR_ESTE_ROL,
+      );
+    }
   }
 
   async remove(id: number): Promise<Role> {

@@ -10,7 +10,7 @@ export interface ResponsePropio {
 @ObjectType()
 export class ResponsePropioGQl {
   @Field(() => String)
-  status: string;
+  status: number;
 
   @Field(() => String)
   message: string;

@@ -1,4 +1,4 @@
-import { BadGatewayException, UseGuards } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 //Propios
@@ -9,6 +9,7 @@ import { LoginInput } from './dto/login.input';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from './../components/users/entities/user.entity';
+import { VALID_PERMISO_ACCION } from 'src/config/valid-roles';
 
 @Resolver(() => AuthResolver)
 export class AuthResolver {
@@ -18,8 +19,10 @@ export class AuthResolver {
     name: 'signup',
     description: 'Para registrar un usuario',
   })
+  @UseGuards(JwtAuthGuard)
   async signup(
     @Args('signupInput') signupInput: SignupInput,
+    @CurrentUser([VALID_PERMISO_ACCION.USER_CREATE]) user: User,
   ): Promise<AuthResponse> {
     return await this.authService.signup(signupInput);
   }
@@ -35,7 +38,7 @@ export class AuthResolver {
   }
 
   @Query(() => AuthResponse, { name: 'revaliteToken' })
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   revalidateToken(@CurrentUser() user: User): AuthResponse {
     return this.authService.revalidateToken(user);
   }
