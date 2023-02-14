@@ -1,0 +1,78 @@
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { ParseIntPipe, UseGuards } from '@nestjs/common';
+
+//PROPIO
+import { ResultadosService } from './resultados.service';
+import { Resultado } from './entities/resultado.entity';
+import { CreateResultadoInput } from './dto/create-resultado.input';
+import { UpdateResultadoInput } from './dto/update-resultado.input';
+import { PaginationArgs } from './../../common/dto/args';
+import { ResponsePropioGQl } from './../../common/response';
+import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
+import { CurrentUser } from './../../auth/decorators/current-user.decorator';
+import { User } from '../users/entities/user.entity';
+import { VALID_PERMISO_ACCION } from 'src/config/valid-roles';
+
+@UseGuards(JwtAuthGuard)
+@Resolver(() => Resultado)
+export class ResultadosResolver {
+  constructor(private readonly resultadosService: ResultadosService) {}
+
+  @Mutation(() => Resultado, {
+    name: 'createResultados',
+    description: 'Para crear un Resultado',
+  })
+  async createResultado(
+    @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_CREATE]) user: User,
+    @Args('createResultadoInput') createResultadoInput: CreateResultadoInput,
+  ): Promise<Resultado> {
+    return this.resultadosService.create(createResultadoInput);
+  }
+
+  @Query(() => [Resultado], {
+    name: 'allResultados',
+    description: 'Ver todos los resultados',
+  })
+  async findAll(
+    @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_VIEW]) user: User,
+    @Args() paginationArgs: PaginationArgs,
+  ): Promise<Resultado[]> {
+    return this.resultadosService.findAll(paginationArgs);
+  }
+
+  @Query(() => Resultado, {
+    name: 'findResultados',
+    description: 'Ver un resultado especifico',
+  })
+  async findOne(
+    @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_VIEW]) user: User,
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<Resultado> {
+    return this.resultadosService.findOne(id);
+  }
+
+  @Mutation(() => Resultado, {
+    name: 'updateResultados',
+    description: 'Actualizar un Resultado',
+  })
+  async updateResultado(
+    @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_UPDATE]) user: User,
+    @Args('updateResultadoInput') updateResultadoInput: UpdateResultadoInput,
+  ): Promise<Resultado> {
+    return this.resultadosService.update(
+      updateResultadoInput.id,
+      updateResultadoInput,
+    );
+  }
+
+  @Mutation(() => ResponsePropioGQl, {
+    name: 'removeResultados',
+    description: 'Remover un resultados',
+  })
+  async removeResultado(
+    @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_DELETE]) user: User,
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<ResponsePropioGQl> {
+    return this.resultadosService.remove(id);
+  }
+}

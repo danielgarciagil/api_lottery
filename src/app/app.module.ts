@@ -18,6 +18,7 @@ import {
   LoteriaModule,
   JuegoModule,
   SorteoModule,
+  ResultadosModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -52,6 +53,7 @@ import { AppInit } from './app-init.service';
     LoteriaModule,
     JuegoModule,
     SorteoModule,
+    ResultadosModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppInit],

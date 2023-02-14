@@ -6,6 +6,16 @@ export enum VALID_ENTITY {
   RESULTADOS = 'RESULTADOS',
 }
 
+export enum VALID_DIAS {
+  DOMINGO = 'DOMINGO',
+  LUNES = 'LUNES',
+  MARTES = 'MARTES',
+  MIERCOLES = 'MIERCOLES',
+  JUEVES = 'JUEVES',
+  VIERNES = 'VIERNES',
+  SABADO = 'SABADO',
+}
+
 export enum VALID_METHOD {
   CREATE = 'CREATE',
   UPDATE = 'UPDATE',

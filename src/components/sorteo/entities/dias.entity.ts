@@ -12,6 +12,7 @@ export class Dias {
   id: number;
 
   @Field(() => String)
+  //@Column({ type: 'set', unique: true, enum: VALID_DIAS })
   @Column({ type: 'varchar', unique: true })
   name: string;
 

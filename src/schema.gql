@@ -41,6 +41,18 @@ type Dias {
   name: String!
 }
 
+type Resultado {
+  id: ID!
+  numeros_ganadores: [Int!]!
+  fecha: DateTime!
+  sorteo: Sorteo!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Sorteo {
   id: ID!
   name: String!
@@ -50,6 +62,7 @@ type Sorteo {
   hora: String!
   juego: Juego!
   dia_semana: Dias!
+  resultados: [Resultado!]!
 }
 
 type Juego {
@@ -107,10 +120,16 @@ type Query {
   findJuego(id: Int!): Juego!
 
   """Para ver todos los sorteos"""
-  allSorteo: [Sorteo!]!
+  allSorteo(offset: Int = 0, limit: Int = 10): [Sorteo!]!
 
   """Para bsucar un sorteo"""
   findSorteo(id: Int!): Sorteo!
+
+  """Ver todos los resultados"""
+  allResultados(offset: Int = 0, limit: Int = 10): [Resultado!]!
+
+  """Ver un resultado especifico"""
+  findResultados(id: Int!): Resultado!
 }
 
 type Mutation {
@@ -161,6 +180,15 @@ type Mutation {
 
   """Remover un sorteo"""
   removeSorteo(id: Int!): ResponsePropioGQl!
+
+  """Para crear un Resultado"""
+  createResultados(createResultadoInput: CreateResultadoInput!): Resultado!
+
+  """Actualizar un Resultado"""
+  updateResultados(updateResultadoInput: UpdateResultadoInput!): Resultado!
+
+  """Remover un resultados"""
+  removeResultados(id: Int!): ResponsePropioGQl!
 }
 
 input SignupInput {
@@ -251,5 +279,18 @@ input UpdateSorteoInput {
   img_url: String
   descripcion: String
   hora: String
+  id: Int!
+}
+
+input CreateResultadoInput {
+  numeros_ganadores: [Int!]!
+  fecha: DateTime!
+  id_sorteo: Int!
+}
+
+input UpdateResultadoInput {
+  numeros_ganadores: [Int!]
+  fecha: DateTime
+  id_sorteo: Int
   id: Int!
 }

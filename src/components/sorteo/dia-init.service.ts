@@ -2,18 +2,9 @@ import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Dias } from './entities/dias.entity';
+import { VALID_DIAS } from './../../config/valid-roles';
 
 //PROOPIO
-
-enum VALID_DIAS {
-  DOMINGO = 'DOMINGO',
-  LUNES = 'LUNES',
-  MARTES = 'MARTES',
-  MIERCOLES = 'MIERCOLES',
-  JUEVES = 'JUEVES',
-  VIERNES = 'VIERNES',
-  SABADO = 'SABADO',
-}
 
 @Injectable()
 export class DiaInit implements OnModuleInit {

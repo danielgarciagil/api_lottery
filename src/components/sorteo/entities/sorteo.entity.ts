@@ -4,12 +4,14 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 //PROPIO
 import { Juego } from './../../../components/juego/entities/juego.entity';
 import { Dias } from './dias.entity';
+import { Resultado } from './../../../components/resultados/entities/resultado.entity';
 
 @Entity({ name: 'sorteo' })
 @ObjectType()
@@ -47,4 +49,8 @@ export class Sorteo {
   @ManyToOne(() => Dias, (dias) => dias.sorteo, { lazy: true })
   @JoinColumn({ name: 'id_dia_semana' })
   dia_semana: Dias;
+
+  @Field(() => [Resultado])
+  @OneToMany(() => Resultado, (resultado) => resultado.sorteo, { lazy: true })
+  resultados: Resultado[];
 }

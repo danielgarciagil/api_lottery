@@ -5,3 +5,4 @@ export { RoleModule } from './role/role.module';
 export { LoteriaModule } from './loteria/loteria.module';
 export { JuegoModule } from './juego/juego.module';
 export { SorteoModule } from './sorteo/sorteo.module';
+export { ResultadosModule } from './resultados/resultados.module';
