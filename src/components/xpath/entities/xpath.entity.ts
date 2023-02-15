@@ -28,4 +28,8 @@ export class Xpath {
   @OneToOne(() => Sorteo, (sorteo) => sorteo.xpath, { eager: true })
   @JoinColumn({ name: 'id_sorteo' })
   sorteo: Sorteo;
+
+  @Field(() => Boolean)
+  @Column({ type: 'boolean', default: true })
+  activo: boolean;
 }

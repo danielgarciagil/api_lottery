@@ -28,4 +28,6 @@ export enum MESSAGE {
   YA_EXISTE_UN_XPATH_ASOCIADO_A_ESTE_SORTEO = 'Ya existe un Xpath aosciado a este sorteo',
   BUSCANDO_EL_XPATH_DIO_UN_ERROR = 'Buscando el XPATH dio un error',
   SE_PUBLICO_CORRECTAMENTE_EL_XPATHL = 'Se publico correctamente el xpath',
+
+  ESTOS_ID_DE_DIAS_NO_SON_VALIDOS = 'Estos ID de dias no son validos',
 }

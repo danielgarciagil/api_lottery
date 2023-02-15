@@ -3,6 +3,8 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -49,10 +51,12 @@ export class Sorteo {
   juego: Juego;
 
   //TODO cambiar que esta relacion sea de miucho a mucho
-  @Field(() => Dias)
-  @ManyToOne(() => Dias, (dias) => dias.sorteo, { lazy: true })
-  @JoinColumn({ name: 'id_dia_semana' })
-  dia_semana: Dias;
+  @Field(() => [Dias])
+  @ManyToMany(() => Dias, (dias) => dias.sorteo, { lazy: true })
+  @JoinTable({
+    name: 'sor_dia',
+  })
+  dia_semana: Dias[];
 
   @Field(() => [Resultado])
   @OneToMany(() => Resultado, (resultado) => resultado.sorteo, { lazy: true })
@@ -66,4 +70,8 @@ export class Sorteo {
   //TODO no lo puse en el graphql
   @OneToOne(() => Xpath, (xpath) => xpath.sorteo)
   xpath: Xpath;
+
+  @Field(() => Boolean)
+  @Column({ type: 'boolean', default: true })
+  activo: boolean;
 }

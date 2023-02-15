@@ -1,5 +1,7 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
 import {
+  ArrayMinSize,
+  IsArray,
   IsNumber,
   IsOptional,
   IsString,
@@ -39,10 +41,12 @@ export class CreateSorteoInput {
   hora: string;
 
   @Field(() => Int)
-  @IsNumber()
+  @IsArray()
+  @IsNumber({}, { each: true })
   @Min(1)
   @Max(8)
-  id_dia_semana: number;
+  @ArrayMinSize(1)
+  ids_dia_semana: number[];
 
   @Field(() => Int)
   @IsNumber()

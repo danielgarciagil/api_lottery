@@ -11,6 +11,7 @@ type Juego {
   rango_minimo: Int!
   rango_maximo: Int!
   sorteo: [Sorteo!]!
+  activo: Boolean!
 }
 
 type Dias {
@@ -48,9 +49,10 @@ type Sorteo {
   descripcion: String!
   hora: String!
   juego: Juego!
-  dia_semana: Dias!
+  dia_semana: [Dias!]!
   resultados: [Resultado!]!
   loteria: Loteria!
+  activo: Boolean!
 }
 
 type Xpath {
@@ -58,6 +60,7 @@ type Xpath {
   urls: [String!]!
   xpath_digitos: [[String!]!]!
   sorteo: Sorteo!
+  activo: Boolean!
 }
 
 """Entidad de los permisos con las acciones"""
@@ -293,7 +296,7 @@ input CreateSorteoInput {
   img_url: String
   descripcion: String!
   hora: String!
-  id_dia_semana: Int!
+  ids_dia_semana: Int!
   id_juego: Int!
   id_loteria: Int!
 }

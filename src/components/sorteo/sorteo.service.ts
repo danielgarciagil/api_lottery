@@ -3,6 +3,8 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 //PROPIo
 import { CreateSorteoInput } from './dto/create-sorteo.input';
@@ -10,25 +12,36 @@ import { UpdateSorteoInput } from './dto/update-sorteo.input';
 import { Sorteo } from './entities/sorteo.entity';
 import { ResponsePropioGQl } from './../../common/response';
 import { PaginationArgs } from './../../common/dto/args';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { MESSAGE } from 'src/config/messages';
+import { MESSAGE } from './../../config/messages';
+import { Dias } from './entities/dias.entity';
+import { In } from 'typeorm/find-options/operator/In';
 
 @Injectable()
 export class SorteoService {
   constructor(
     @InjectRepository(Sorteo)
     private readonly sorteoRepository: Repository<Sorteo>,
+    @InjectRepository(Dias) private readonly diaRepository: Repository<Dias>,
   ) {}
 
   async create(createSorteoInput: CreateSorteoInput): Promise<Sorteo> {
     try {
-      const { id_dia_semana, id_juego, id_loteria, ...rest } =
+      const { ids_dia_semana, id_juego, id_loteria, ...rest } =
         createSorteoInput;
+
+      const dias = await this.diaRepository.find({
+        where: {
+          id: In(ids_dia_semana),
+        },
+      });
+      if (dias.length == 0) {
+        throw new Error(MESSAGE.ESTOS_ID_DE_DIAS_NO_SON_VALIDOS);
+      }
+
       const newSorteo = this.sorteoRepository.create({
         ...rest,
         juego: { id: id_juego },
-        dia_semana: { id: id_dia_semana },
+        dia_semana: dias,
         loteria: { id: id_loteria },
       });
 
@@ -56,6 +69,7 @@ export class SorteoService {
   }
 
   //todo solo permito cambiar propeidades de sorteo sin modificar padres
+  //todo saber como cmabiar los dias
   async update(
     id: number,
     updateSorteoInput: UpdateSorteoInput,

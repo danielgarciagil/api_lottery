@@ -6,7 +6,7 @@ import { InputType, Field, Int, PartialType, OmitType } from '@nestjs/graphql';
 export class UpdateSorteoInput extends PartialType(
   OmitType(CreateSorteoInput, [
     'id_juego',
-    'id_dia_semana',
+    'ids_dia_semana',
     'id_loteria',
   ] as const),
 ) {

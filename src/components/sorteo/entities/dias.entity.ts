@@ -1,5 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 //PROPIO
 import { Sorteo } from './sorteo.entity';
@@ -16,6 +16,6 @@ export class Dias {
   @Column({ type: 'varchar', unique: true })
   name: string;
 
-  @OneToMany(() => Sorteo, (sorteo) => sorteo.dia_semana, { lazy: true })
+  @ManyToMany(() => Sorteo, (sorteo) => sorteo.dia_semana, { lazy: true })
   sorteo: Sorteo[];
 }
