@@ -43,7 +43,7 @@ export class WebScrapingXpathService {
       throw new BadGatewayException(MESSAGE.BUSCANDO_EL_XPATH_DIO_UN_ERROR);
     }
   }
-  //TODO quede aqui
+  //TODO quede aqui61` =-0tyars
   async buscar_numeros(
     urls: string[],
     xpath_numeros: string[][],
