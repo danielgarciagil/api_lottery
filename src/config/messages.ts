@@ -25,4 +25,5 @@ export enum MESSAGE {
 
   NO_CUMPLE_CON_LOS_REQUISITOS_DEL_JUEGO = 'No cumple con los requisitos del Juego',
   YA_ESTA_PUBLICADO_ESTE_RESULTADO_PARA_ESTA_FECHA = 'Ya esta publicado este resultado para esta fecha',
+  YA_EXISTE_UN_XPATH_ASOCIADO_A_ESTE_SORTEO = 'Ya existe un Xpath aosciado a este sorteo',
 }

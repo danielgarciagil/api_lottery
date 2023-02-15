@@ -1,6 +1,14 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
+//PROPIO
+import { Sorteo } from './../../../components/sorteo/entities/sorteo.entity';
 @Entity({ name: 'xpath' })
 @ObjectType()
 export class Xpath {
@@ -12,7 +20,12 @@ export class Xpath {
   @Column({ type: 'varchar', array: true })
   urls: string[];
 
-  @Field(() => [String])
+  @Field(() => [[String]])
   @Column({ type: 'varchar', array: true })
   xpath_digitos: string[][];
+
+  @Field(() => Sorteo)
+  @OneToOne(() => Sorteo, (sorteo) => sorteo.xpath, { eager: true })
+  @JoinColumn({ name: 'id_sorteo' })
+  sorteo: Sorteo;
 }

@@ -52,7 +52,9 @@ export class AppInit implements OnModuleInit {
       ? VALID_ENTITY.SORTEO
       : enttity.includes(VALID_ENTITY.USER)
       ? VALID_ENTITY.SORTEO
-      : VALID_ENTITY.USER; //TODO
+      : enttity.includes(VALID_ENTITY.XPATH)
+      ? VALID_ENTITY.XPATH
+      : VALID_ENTITY.XPATH; //TODO
   }
 
   //? Aqui creo todos los permiso accion por default
@@ -95,17 +97,25 @@ export class AppInit implements OnModuleInit {
     name_rol: string,
     ids_permiso_accion: number[],
   ): Promise<number> {
-    const roolRoot = await this.roleService.findOneByName(name_rol);
-    if (!roolRoot) {
+    const verificar_rol = await this.roleService.findOneByName(name_rol);
+    if (!verificar_rol) {
       this.logger.debug(`Creando el Rol: ${name_rol}`);
-      const role_root = await this.roleService.create({
+      const rol = await this.roleService.create({
         descripcion: name_rol,
         name: name_rol,
         permiso_accion: ids_permiso_accion,
       });
-      return role_root.id;
+      return rol.id;
+    } else {
+      //todo
+      await this.roleService.update(verificar_rol.id, {
+        permiso_accion: ids_permiso_accion,
+        descripcion: verificar_rol.descripcion,
+        name: verificar_rol.name,
+        id: verificar_rol.id,
+      });
     }
-    return roolRoot.id;
+    return verificar_rol.id;
   }
 
   //? Esta funcion crear un user por Default y se le mando sus roles
@@ -160,7 +170,7 @@ export class AppInit implements OnModuleInit {
 
   async crear_rol_USER_devulve_su_id(): Promise<number> {
     const TODOS_IDS: number[] = [];
-    const NAME_USER = 'USE';
+    const NAME_USER = 'USER';
 
     const IDS_VIEW = await this.ids_Accion_ByMethod(VALID_METHOD.VIEW);
 

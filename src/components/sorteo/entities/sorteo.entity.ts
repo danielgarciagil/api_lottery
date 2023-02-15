@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -13,6 +14,7 @@ import { Juego } from './../../../components/juego/entities/juego.entity';
 import { Dias } from './dias.entity';
 import { Resultado } from './../../../components/resultados/entities/resultado.entity';
 import { Loteria } from './../../../components/loteria/entities/loteria.entity';
+import { Xpath } from './../../../components/xpath/entities/xpath.entity';
 
 @Entity({ name: 'sorteo' })
 @ObjectType()
@@ -59,4 +61,8 @@ export class Sorteo {
   @ManyToOne(() => Loteria, (loteria) => loteria.sorteo, { lazy: true })
   @JoinColumn({ name: 'id_loteria' })
   loteria: Loteria;
+
+  //TODO no lo puse en el graphql
+  @OneToOne(() => Xpath, (xpath) => xpath.sorteo)
+  xpath: Xpath;
 }

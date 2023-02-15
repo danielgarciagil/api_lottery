@@ -64,6 +64,13 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Xpath {
+  id: ID!
+  urls: [String!]!
+  xpath_digitos: [[String!]!]!
+  sorteo: Sorteo!
+}
+
 type Sorteo {
   id: ID!
   name: String!
@@ -130,6 +137,12 @@ type Query {
 
   """Ver un resultado especifico"""
   findResultados(id: Int!): Resultado!
+
+  """Para ver todos los xpath"""
+  allXpath(offset: Int = 0, limit: Int = 10): [Xpath!]!
+
+  """Para ver un Xpath especifico"""
+  findXpath(id: Int!): Xpath!
 }
 
 type Mutation {
@@ -189,6 +202,15 @@ type Mutation {
 
   """Remover un resultados"""
   removeResultados(id: Int!): ResponsePropioGQl!
+
+  """Para crear el Xpath"""
+  createXpath(createXpathInput: CreateXpathInput!): Xpath!
+
+  """Para actualizar un Xpath"""
+  updateXpath(updateXpathInput: UpdateXpathInput!): Xpath!
+
+  """Para eliminar un Xpath"""
+  removeXpath(id: Int!): ResponsePropioGQl!
 }
 
 input SignupInput {
@@ -291,6 +313,19 @@ input CreateResultadoInput {
 input UpdateResultadoInput {
   numeros_ganadores: [Int!]
   fecha: String
+  id_sorteo: Int
+  id: Int!
+}
+
+input CreateXpathInput {
+  urls: [String!]!
+  xpath_digitos: [[String!]!]!
+  id_sorteo: Int!
+}
+
+input UpdateXpathInput {
+  urls: [String!]
+  xpath_digitos: [[String!]!]
   id_sorteo: Int
   id: Int!
 }
