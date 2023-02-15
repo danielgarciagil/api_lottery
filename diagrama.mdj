@@ -167,7 +167,7 @@
 									"font": "Arial;13;1",
 									"left": 264,
 									"top": 37,
-									"width": 175.20263671875,
+									"width": 178.08447265625,
 									"height": 13,
 									"text": "Juego"
 								},
@@ -193,7 +193,7 @@
 											"font": "Arial;13;0",
 											"left": 269,
 											"top": 60,
-											"width": 165.20263671875,
+											"width": 168.08447265625,
 											"height": 13
 										},
 										{
@@ -208,7 +208,7 @@
 											"font": "Arial;13;0",
 											"left": 269,
 											"top": 75,
-											"width": 165.20263671875,
+											"width": 168.08447265625,
 											"height": 13
 										},
 										{
@@ -223,7 +223,7 @@
 											"font": "Arial;13;0",
 											"left": 269,
 											"top": 90,
-											"width": 165.20263671875,
+											"width": 168.08447265625,
 											"height": 13
 										},
 										{
@@ -238,7 +238,7 @@
 											"font": "Arial;13;0",
 											"left": 269,
 											"top": 105,
-											"width": 165.20263671875,
+											"width": 168.08447265625,
 											"height": 13
 										},
 										{
@@ -253,7 +253,7 @@
 											"font": "Arial;13;0",
 											"left": 269,
 											"top": 120,
-											"width": 165.20263671875,
+											"width": 168.08447265625,
 											"height": 13
 										},
 										{
@@ -268,7 +268,7 @@
 											"font": "Arial;13;0",
 											"left": 269,
 											"top": 135,
-											"width": 165.20263671875,
+											"width": 168.08447265625,
 											"height": 13
 										},
 										{
@@ -283,22 +283,37 @@
 											"font": "Arial;13;0",
 											"left": 269,
 											"top": 150,
-											"width": 165.20263671875,
+											"width": 168.08447265625,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGV1aXgY8Qu6g=",
+											"_parent": {
+												"$ref": "AAAAAAGGS4E2aUU/7kk="
+											},
+											"model": {
+												"$ref": "AAAAAAGGV1aXc48Nc4M="
+											},
+											"font": "Arial;13;0",
+											"left": 269,
+											"top": 165,
+											"width": 168.08447265625,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 264,
 									"top": 55,
-									"width": 175.20263671875,
-									"height": 113
+									"width": 178.08447265625,
+									"height": 128
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 264,
 							"top": 32,
-							"width": 175.20263671875,
-							"height": 136,
+							"width": 178.08447265625,
+							"height": 151,
 							"nameLabel": {
 								"$ref": "AAAAAAGGS4E2aUU+PVU="
 							},
@@ -325,7 +340,7 @@
 									"font": "Arial;13;1",
 									"left": 224,
 									"top": 245,
-									"width": 172.365234375,
+									"width": 175.9453125,
 									"height": 13,
 									"text": "Sorteo"
 								},
@@ -351,7 +366,7 @@
 											"font": "Arial;13;0",
 											"left": 229,
 											"top": 268,
-											"width": 162.365234375,
+											"width": 165.9453125,
 											"height": 13
 										},
 										{
@@ -366,7 +381,7 @@
 											"font": "Arial;13;0",
 											"left": 229,
 											"top": 283,
-											"width": 162.365234375,
+											"width": 165.9453125,
 											"height": 13
 										},
 										{
@@ -381,7 +396,7 @@
 											"font": "Arial;13;0",
 											"left": 229,
 											"top": 298,
-											"width": 162.365234375,
+											"width": 165.9453125,
 											"height": 13
 										},
 										{
@@ -396,7 +411,7 @@
 											"font": "Arial;13;0",
 											"left": 229,
 											"top": 313,
-											"width": 162.365234375,
+											"width": 165.9453125,
 											"height": 13
 										},
 										{
@@ -411,7 +426,7 @@
 											"font": "Arial;13;0",
 											"left": 229,
 											"top": 328,
-											"width": 162.365234375,
+											"width": 165.9453125,
 											"height": 13
 										},
 										{
@@ -427,7 +442,7 @@
 											"font": "Arial;13;0",
 											"left": 213,
 											"top": 71,
-											"width": 162.365234375,
+											"width": 165.9453125,
 											"height": 13
 										},
 										{
@@ -442,7 +457,7 @@
 											"font": "Arial;13;0",
 											"left": 229,
 											"top": 343,
-											"width": 162.365234375,
+											"width": 165.9453125,
 											"height": 13
 										},
 										{
@@ -457,7 +472,7 @@
 											"font": "Arial;13;0",
 											"left": 229,
 											"top": 358,
-											"width": 162.365234375,
+											"width": 165.9453125,
 											"height": 13
 										},
 										{
@@ -472,22 +487,37 @@
 											"font": "Arial;13;0",
 											"left": 229,
 											"top": 373,
-											"width": 162.365234375,
+											"width": 165.9453125,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGV1bC4Y8XquM=",
+											"_parent": {
+												"$ref": "AAAAAAGGS4tLRUYVirY="
+											},
+											"model": {
+												"$ref": "AAAAAAGGV1bC2o8U+8g="
+											},
+											"font": "Arial;13;0",
+											"left": 229,
+											"top": 388,
+											"width": 165.9453125,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 224,
 									"top": 263,
-									"width": 172.365234375,
-									"height": 128
+									"width": 175.9453125,
+									"height": 143
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 224,
 							"top": 240,
-							"width": 172.365234375,
-							"height": 151,
+							"width": 175.9453125,
+							"height": 166,
 							"nameLabel": {
 								"$ref": "AAAAAAGGS4tLRUYUfeo="
 							},
@@ -582,7 +612,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 365,
-									"top": 196,
+									"top": 204,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -599,7 +629,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 366,
-									"top": 186,
+									"top": 201,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -633,7 +663,7 @@
 								"$ref": "AAAAAAGGS4E2aUU9BVg="
 							},
 							"lineStyle": 2,
-							"points": "351:167;351:240",
+							"points": "351:182;351:240",
 							"nameLabel": {
 								"$ref": "AAAAAAGGS5CB5UbRZak="
 							},
@@ -1605,7 +1635,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 318,
-									"top": 420,
+									"top": 427,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -1622,7 +1652,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 319,
-									"top": 409,
+									"top": 424,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -1656,7 +1686,7 @@
 								"$ref": "AAAAAAGGS4tLRUYTuBo="
 							},
 							"lineStyle": 2,
-							"points": "304:390;304:464",
+							"points": "304:405;304:464",
 							"nameLabel": {
 								"$ref": "AAAAAAGGUZByhorg4MY="
 							},
@@ -1879,7 +1909,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 461,
+									"left": 463,
 									"top": 362,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -1896,7 +1926,7 @@
 										"$ref": "AAAAAAGGVe2qfGJtJlc="
 									},
 									"font": "Arial;13;0",
-									"left": 420,
+									"left": 424,
 									"top": 362,
 									"height": 13,
 									"alpha": 0.5235987755982988,
@@ -1931,7 +1961,7 @@
 								"$ref": "AAAAAAGGS4tLRUYTuBo="
 							},
 							"lineStyle": 2,
-							"points": "395:383;528:383",
+							"points": "399:383;528:383",
 							"nameLabel": {
 								"$ref": "AAAAAAGGVe2qfGJuw14="
 							},
@@ -2442,6 +2472,16 @@
 							"name": "ID_Loteria",
 							"type": "FK",
 							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGGV1aXc48Nc4M=",
+							"_parent": {
+								"$ref": "AAAAAAGGS4E2aUU7T3s="
+							},
+							"name": "activo",
+							"type": "Boolean",
+							"length": 0
 						}
 					]
 				},
@@ -2709,6 +2749,16 @@
 							},
 							"name": "ID_loteria",
 							"type": "FK",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGGV1bC2o8U+8g=",
+							"_parent": {
+								"$ref": "AAAAAAGGS4tLRUYR4J4="
+							},
+							"name": "activo",
+							"type": "Boolean",
 							"length": 0
 						}
 					]
