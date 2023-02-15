@@ -12,6 +12,7 @@ import {
 import { Juego } from './../../../components/juego/entities/juego.entity';
 import { Dias } from './dias.entity';
 import { Resultado } from './../../../components/resultados/entities/resultado.entity';
+import { Loteria } from './../../../components/loteria/entities/loteria.entity';
 
 @Entity({ name: 'sorteo' })
 @ObjectType()
@@ -28,9 +29,9 @@ export class Sorteo {
   @Column({ type: 'varchar' })
   abreviatura: string;
 
-  @Field(() => String)
-  @Column({ type: 'varchar' })
-  img_url: string;
+  @Field(() => String, { nullable: true })
+  @Column({ type: 'varchar', nullable: true })
+  img_url?: string;
 
   @Field(() => String)
   @Column({ type: 'varchar' })
@@ -53,4 +54,9 @@ export class Sorteo {
   @Field(() => [Resultado])
   @OneToMany(() => Resultado, (resultado) => resultado.sorteo, { lazy: true })
   resultados: Resultado[];
+
+  @Field(() => Loteria)
+  @ManyToOne(() => Loteria, (loteria) => loteria.sorteo, { lazy: true })
+  @JoinColumn({ name: 'id_loteria' })
+  loteria: Loteria;
 }

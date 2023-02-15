@@ -71,6 +71,7 @@ Carlos Diaz
 - npm i --save-dev @types/passport-jwt
 - npm i typeorm-extension --save
 - npm i @faker-js/faker --save-dev
+- npm install --save cron
 
 # TODO
 Implementar la seed en NestJs

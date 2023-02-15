@@ -4,7 +4,11 @@ import { InputType, Field, Int, PartialType, OmitType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateSorteoInput extends PartialType(
-  OmitType(CreateSorteoInput, ['id_juego', 'id_dia_semana'] as const),
+  OmitType(CreateSorteoInput, [
+    'id_juego',
+    'id_dia_semana',
+    'id_loteria',
+  ] as const),
 ) {
   @Field(() => Int)
   @IsNumber()

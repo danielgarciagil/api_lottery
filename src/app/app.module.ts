@@ -19,6 +19,8 @@ import {
   JuegoModule,
   SorteoModule,
   ResultadosModule,
+  CronModule,
+  XpathModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -54,6 +56,10 @@ import { AppInit } from './app-init.service';
     JuegoModule,
     SorteoModule,
     ResultadosModule,
+    XpathModule,
+
+    //AUTOMATICO
+    CronModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppInit],

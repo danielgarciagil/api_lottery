@@ -92,7 +92,6 @@ export class ResultadosService {
   ): Promise<Resultado[]> {
     const { limit, offset } = paginationArgs;
     const { id_sorteo } = filterResultado;
-    console.log(id_sorteo);
     return await this.resultadoRepository.find({
       take: limit,
       skip: offset,

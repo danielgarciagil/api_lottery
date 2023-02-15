@@ -23,11 +23,13 @@ export class SorteoService {
 
   async create(createSorteoInput: CreateSorteoInput): Promise<Sorteo> {
     try {
-      const { id_dia_semana, id_juego, ...rest } = createSorteoInput;
+      const { id_dia_semana, id_juego, id_loteria, ...rest } =
+        createSorteoInput;
       const newSorteo = this.sorteoRepository.create({
         ...rest,
         juego: { id: id_juego },
         dia_semana: { id: id_dia_semana },
+        loteria: { id: id_loteria },
       });
 
       await this.sorteoRepository.save(newSorteo);
@@ -53,6 +55,7 @@ export class SorteoService {
     return sorteo;
   }
 
+  //todo solo permito cambiar propeidades de sorteo sin modificar padres
   async update(
     id: number,
     updateSorteoInput: UpdateSorteoInput,

@@ -36,6 +36,17 @@ type AuthResponse {
   user: User!
 }
 
+type Juego {
+  id: ID!
+  name: String!
+  abreviatura: String!
+  descripcion: String!
+  posiciones: Int!
+  rango_minimo: Int!
+  rango_maximo: Int!
+  sorteo: [Sorteo!]!
+}
+
 type Dias {
   id: ID!
   name: String!
@@ -57,24 +68,13 @@ type Sorteo {
   id: ID!
   name: String!
   abreviatura: String!
-  img_url: String!
+  img_url: String
   descripcion: String!
   hora: String!
   juego: Juego!
   dia_semana: Dias!
   resultados: [Resultado!]!
-}
-
-type Juego {
-  id: ID!
-  name: String!
-  abreviatura: String!
-  descripcion: String!
-  posiciones: Int!
-  rango_minimo: Int!
-  rango_maximo: Int!
   loteria: Loteria!
-  sorteo: [Sorteo!]!
 }
 
 type Loteria {
@@ -84,7 +84,7 @@ type Loteria {
   img_url: String!
   descripcion: String!
   activo: Boolean!
-  juego: [Juego!]!
+  sorteo: [Sorteo!]!
 }
 
 type ResponsePropioGQl {
@@ -229,7 +229,7 @@ input UpdateRoleInput {
 input CreateLoteriaInput {
   name: String!
   abreviatura: String!
-  img_url: String!
+  img_url: String
   descripcion: String!
   activo: Boolean
 }
@@ -250,7 +250,6 @@ input CreateJuegoInput {
   posiciones: Int!
   rango_minimo: Int!
   rango_maximo: Int!
-  id_loteria: Int!
 }
 
 input UpdateJuegoInput {
@@ -266,11 +265,12 @@ input UpdateJuegoInput {
 input CreateSorteoInput {
   name: String!
   abreviatura: String!
-  img_url: String!
+  img_url: String
   descripcion: String!
   hora: String!
   id_dia_semana: Int!
   id_juego: Int!
+  id_loteria: Int!
 }
 
 input UpdateSorteoInput {

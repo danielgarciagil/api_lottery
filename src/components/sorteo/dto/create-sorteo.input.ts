@@ -1,6 +1,7 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
 import {
   IsNumber,
+  IsOptional,
   IsString,
   Matches,
   Max,
@@ -20,10 +21,11 @@ export class CreateSorteoInput {
   @MinLength(2)
   abreviatura: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @IsString()
   @MinLength(3)
-  img_url: string;
+  @IsOptional()
+  img_url?: string;
 
   @Field(() => String)
   @IsString()
@@ -46,4 +48,9 @@ export class CreateSorteoInput {
   @IsNumber()
   @Min(1)
   id_juego: number;
+
+  @Field(() => Int)
+  @IsNumber()
+  @Min(1)
+  id_loteria: number;
 }

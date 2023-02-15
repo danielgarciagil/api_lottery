@@ -24,11 +24,10 @@ export class JuegoService {
 
   async create(createJuegoInput: CreateJuegoInput): Promise<Juego> {
     try {
-      const { id_loteria, ...rest } = createJuegoInput;
+      const { ...rest } = createJuegoInput;
 
       const newJuego = this.juegoRepository.create({
         ...rest,
-        loteria: { id: id_loteria },
       });
       await this.juegoRepository.save(newJuego);
       return this.findOne(newJuego.id);

@@ -1,15 +1,8 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 //PROPIO
-import { Loteria } from './../../../components/loteria/entities/loteria.entity';
+
 import { Sorteo } from './../../../components/sorteo/entities/sorteo.entity';
 
 @Entity({ name: 'juego' })
@@ -42,11 +35,6 @@ export class Juego {
   @Field(() => Int)
   @Column({ type: 'int' })
   rango_maximo: number;
-
-  @Field(() => Loteria)
-  @ManyToOne(() => Loteria, (loteria) => loteria.juego, { lazy: true })
-  @JoinColumn({ name: 'id_loteria' })
-  loteria: Loteria;
 
   @Field(() => [Sorteo])
   @OneToMany(() => Sorteo, (sorteo) => sorteo.juego, { lazy: true })

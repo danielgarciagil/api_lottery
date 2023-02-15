@@ -32,9 +32,4 @@ export class CreateJuegoInput {
   @IsNumber()
   @Min(0)
   rango_maximo: number;
-
-  @Field(() => Int)
-  @IsNumber()
-  @Min(0)
-  id_loteria: number;
 }

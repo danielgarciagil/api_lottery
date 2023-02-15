@@ -2,7 +2,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 //PROPIO
-import { Juego } from './../../../components/juego/entities/juego.entity';
+import { Sorteo } from './../../../components/sorteo/entities/sorteo.entity';
 @Entity({ name: 'loteria' })
 @ObjectType()
 export class Loteria {
@@ -18,9 +18,9 @@ export class Loteria {
   @Column({ type: 'varchar', unique: true })
   abreviatura: string;
 
-  @Field(() => String)
-  @Column({ type: 'varchar' })
-  img_url: string;
+  @Field(() => String, { nullable: null })
+  @Column({ type: 'varchar', nullable: true })
+  img_url?: string;
 
   @Field(() => String)
   @Column({ type: 'varchar' })
@@ -30,7 +30,7 @@ export class Loteria {
   @Column({ type: 'boolean', default: true })
   activo: boolean;
 
-  @Field(() => [Juego])
-  @OneToMany(() => Juego, (juego) => juego.loteria, { lazy: true })
-  juego: Juego[];
+  @Field(() => [Sorteo])
+  @OneToMany(() => Sorteo, (sorteo) => sorteo.loteria, { lazy: true })
+  sorteo: Sorteo[];
 }

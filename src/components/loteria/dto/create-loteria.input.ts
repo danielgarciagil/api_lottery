@@ -13,10 +13,11 @@ export class CreateLoteriaInput {
   @MinLength(2)
   abreviatura: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @IsString()
   @MinLength(3)
-  img_url: string;
+  @IsOptional()
+  img_url?: string;
 
   @Field(() => String)
   @IsString()
