@@ -21,6 +21,7 @@ import {
   ResultadosModule,
   CronModule,
   XpathModule,
+  WebScrapingModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -57,6 +58,7 @@ import { AppInit } from './app-init.service';
     SorteoModule,
     ResultadosModule,
     XpathModule,
+    WebScrapingModule,
 
     //AUTOMATICO
     CronModule,

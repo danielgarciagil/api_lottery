@@ -72,6 +72,10 @@ Carlos Diaz
 - npm i typeorm-extension --save
 - npm i @faker-js/faker --save-dev
 - npm install --save cron
+- npm i selenium-webdriver
+- npm i selenium-webdriver/chrome
+- npm i --save-dev @types/selenium-webdriver
+- npm i -g chromedriver --save
 
 # TODO
 Implementar la seed en NestJs

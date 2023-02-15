@@ -48,6 +48,7 @@ export class Sorteo {
   @JoinColumn({ name: 'id_juego' })
   juego: Juego;
 
+  //TODO cambiar que esta relacion sea de miucho a mucho
   @Field(() => Dias)
   @ManyToOne(() => Dias, (dias) => dias.sorteo, { lazy: true })
   @JoinColumn({ name: 'id_dia_semana' })

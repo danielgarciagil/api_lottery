@@ -4,6 +4,8 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 //PROPIO
 import { CreateXpathInput } from './dto/create-xpath.input';
@@ -11,9 +13,7 @@ import { UpdateXpathInput } from './dto/update-xpath.input';
 import { Xpath } from './entities/xpath.entity';
 import { PaginationArgs } from './../../common/dto/args';
 import { ResponsePropioGQl } from './../../common/response';
-import { MESSAGE } from 'src/config/messages';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MESSAGE } from './../../config/messages';
 
 @Injectable()
 export class XpathService {

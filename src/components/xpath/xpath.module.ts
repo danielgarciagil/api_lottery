@@ -9,5 +9,6 @@ import { Xpath } from './entities/xpath.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Xpath])],
   providers: [XpathResolver, XpathService],
+  exports: [XpathService],
 })
 export class XpathModule {}

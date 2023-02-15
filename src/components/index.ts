@@ -7,6 +7,7 @@ export { JuegoModule } from './juego/juego.module';
 export { SorteoModule } from './sorteo/sorteo.module';
 export { ResultadosModule } from './resultados/resultados.module';
 export { XpathModule } from './xpath/xpath.module';
+export { WebScrapingModule } from './web-scraping/web-scraping.module';
 
 //COMPONNETES CRON
 export { CronModule } from './cron/cron.module';

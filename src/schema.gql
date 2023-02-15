@@ -2,6 +2,64 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Juego {
+  id: ID!
+  name: String!
+  abreviatura: String!
+  descripcion: String!
+  posiciones: Int!
+  rango_minimo: Int!
+  rango_maximo: Int!
+  sorteo: [Sorteo!]!
+}
+
+type Dias {
+  id: ID!
+  name: String!
+}
+
+type Resultado {
+  id: ID!
+  numeros_ganadores: [Int!]!
+  fecha: DateTime!
+  sorteo: Sorteo!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Loteria {
+  id: ID!
+  name: String!
+  abreviatura: String!
+  img_url: String!
+  descripcion: String!
+  activo: Boolean!
+  sorteo: [Sorteo!]!
+}
+
+type Sorteo {
+  id: ID!
+  name: String!
+  abreviatura: String!
+  img_url: String
+  descripcion: String!
+  hora: String!
+  juego: Juego!
+  dia_semana: Dias!
+  resultados: [Resultado!]!
+  loteria: Loteria!
+}
+
+type Xpath {
+  id: ID!
+  urls: [String!]!
+  xpath_digitos: [[String!]!]!
+  sorteo: Sorteo!
+}
+
 """Entidad de los permisos con las acciones"""
 type Permiso_Accion {
   id: ID!
@@ -34,64 +92,6 @@ type User {
 type AuthResponse {
   token: String
   user: User!
-}
-
-type Juego {
-  id: ID!
-  name: String!
-  abreviatura: String!
-  descripcion: String!
-  posiciones: Int!
-  rango_minimo: Int!
-  rango_maximo: Int!
-  sorteo: [Sorteo!]!
-}
-
-type Dias {
-  id: ID!
-  name: String!
-}
-
-type Resultado {
-  id: ID!
-  numeros_ganadores: [Int!]!
-  fecha: DateTime!
-  sorteo: Sorteo!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-type Xpath {
-  id: ID!
-  urls: [String!]!
-  xpath_digitos: [[String!]!]!
-  sorteo: Sorteo!
-}
-
-type Sorteo {
-  id: ID!
-  name: String!
-  abreviatura: String!
-  img_url: String
-  descripcion: String!
-  hora: String!
-  juego: Juego!
-  dia_semana: Dias!
-  resultados: [Resultado!]!
-  loteria: Loteria!
-}
-
-type Loteria {
-  id: ID!
-  name: String!
-  abreviatura: String!
-  img_url: String!
-  descripcion: String!
-  activo: Boolean!
-  sorteo: [Sorteo!]!
 }
 
 type ResponsePropioGQl {
@@ -211,6 +211,9 @@ type Mutation {
 
   """Para eliminar un Xpath"""
   removeXpath(id: Int!): ResponsePropioGQl!
+
+  """Para Buscar los numeros ganadores de un Sorteo"""
+  buscarByXpath(buscarByXpathInput: BuscarByXpathInput!): ResponsePropioGQl!
 }
 
 input SignupInput {
@@ -328,4 +331,8 @@ input UpdateXpathInput {
   xpath_digitos: [[String!]!]
   id_sorteo: Int
   id: Int!
+}
+
+input BuscarByXpathInput {
+  id_xpath: Int!
 }
