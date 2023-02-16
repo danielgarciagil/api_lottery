@@ -3,12 +3,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 //PROPIO
-import { Sorteo } from './../../../components/sorteo/entities/sorteo.entity';
+import { SorteoABuscar } from './../../../components/sorteo/entities/sorteo_a_buscar.entity';
+
 @Entity({ name: 'xpath' })
 @ObjectType()
 export class Xpath {
@@ -16,24 +18,34 @@ export class Xpath {
   @Field(() => ID)
   id: number;
 
-  @Field(() => [String])
-  @Column({ type: 'varchar', array: true })
-  urls: string[];
+  @Field(() => String)
+  @Column({ type: 'varchar' })
+  name: string;
+
+  @Field(() => String)
+  @Column({ type: 'varchar' })
+  descripcion: string;
+
+  @Field(() => Boolean)
+  @Column({ type: 'boolean', default: true })
+  activo: boolean;
 
   @Field(() => [[String]])
   @Column({ type: 'varchar', array: true })
   xpath_digitos: string[][];
 
-  @Field(() => String)
-  @Column({ type: 'varchar' })
-  xpath_fecha: string;
+  @Field(() => [[String]])
+  @Column({ type: 'varchar', array: true })
+  xpath_urls_by_digitos: string[][];
 
-  @Field(() => Sorteo)
-  @OneToOne(() => Sorteo, (sorteo) => sorteo.xpath, { eager: true })
-  @JoinColumn({ name: 'id_sorteo' })
-  sorteo: Sorteo;
+  @Field(() => [[String]])
+  @Column({ type: 'varchar', array: true })
+  xpath_fecha_by_digitos: string[][];
 
-  @Field(() => Boolean)
-  @Column({ type: 'boolean', default: true })
-  activo: boolean;
+  @Field(() => SorteoABuscar)
+  @ManyToOne(() => SorteoABuscar, (sorteoABuscar) => sorteoABuscar.xpath, {
+    lazy: true,
+  })
+  @JoinColumn({ name: 'id_sorteo_a_buscar' })
+  sorteo_a_buscar: SorteoABuscar;
 }

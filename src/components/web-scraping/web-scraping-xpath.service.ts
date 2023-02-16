@@ -36,15 +36,15 @@ export class WebScrapingXpathService {
       throw new BadGatewayException(MESSAGE.BUSCANDO_EL_XPATH_DIO_UN_ERROR);
     }
     try {
-      const { urls, xpath_digitos, xpath_fecha } = xpath;
-      console.log(xpath_fecha);
+      const { xpath_digitos, xpath_fecha_by_digito, xpath_urls_by_digitos } =
+        xpath;
       const ALLS_XPATH: ALLS_XPATH = {
-        xpath_fecha,
+        xpath_fecha_by_digito: xpath_fecha_by_digito,
         xpath_digitos: xpath_digitos,
+        xpath_urls_by_digitos: xpath_urls_by_digitos,
       };
 
       const data_by_xpath: RESPONSE_ALLS_XPATH = await this.buscar_numeros(
-        urls,
         ALLS_XPATH,
       );
       console.log(data_by_xpath);
@@ -60,20 +60,17 @@ export class WebScrapingXpathService {
     }
   }
 
-  async buscar_numeros(
-    urls: string[],
-    ALLS_XPATH: ALLS_XPATH,
-  ): Promise<RESPONSE_ALLS_XPATH> {
+  async buscar_numeros(ALLS_XPATH: ALLS_XPATH): Promise<RESPONSE_ALLS_XPATH> {
     await this.startDriver();
     const driverActual = this.getDriver();
 
     const data_xpath_digitos: number[] = [];
 
-    //? Aqui visito las URL
-    for (const url of urls) {
-      driverActual.manage().setTimeouts({ implicit: 500 });
-      await this.driver.get(url);
-    }
+    //TODO //? Aqui visito las URL
+    //TODO for (const url of urls) {
+    //TODO   driverActual.manage().setTimeouts({ implicit: 500 });
+    //TODO   await this.driver.get(url);
+    //TODO }
 
     //? Aqui Buscos los datos de los XPATH de los digitos
     for (const posicion_actual of ALLS_XPATH.xpath_digitos) {
@@ -90,19 +87,19 @@ export class WebScrapingXpathService {
       }
       data_xpath_digitos.push(Number(digito));
     }
-    console.log('AAA');
+
     //? Aqui busco el string de la data de la fecha
-    const xpath_fecha = await driverActual.wait(
-      until.elementLocated(By.xpath(ALLS_XPATH.xpath_fecha)),
-      10000,
-      'Se agoto el tiempo para encontrar el xpath',
-      2000,
-    );
-    const value_fecha = await xpath_fecha.getText();
+    //TODO const xpath_fecha = await driverActual.wait(
+    //TODO   until.elementLocated(By.xpath(ALLS_XPATH.xpath_fecha)),
+    //TODO   10000,
+    //TODO   'Se agoto el tiempo para encontrar el xpath',
+    //TODO   2000,
+    //TODO );
+    //TODOconst value_fecha = await xpath_fecha.getText();
 
     return {
       xpath_digitos: data_xpath_digitos,
-      xpath_fecha: value_fecha,
+      xpath_fecha: 'value_fecha', //TODO
     };
   }
 }

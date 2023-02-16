@@ -53,15 +53,24 @@ type Sorteo {
   resultados: [Resultado!]!
   loteria: Loteria!
   activo: Boolean!
+  sorteo_a_buscar: SorteoABuscar!
+}
+
+type SorteoABuscar {
+  id: ID!
+  activo: Boolean!
+  buscando: Boolean!
+  xpath: [Xpath!]!
 }
 
 type Xpath {
   id: ID!
-  urls: [String!]!
-  xpath_digitos: [[String!]!]!
-  xpath_fecha: String!
-  sorteo: Sorteo!
+  name: String!
+  descripcion: String!
   activo: Boolean!
+  xpath_digitos: [[String!]!]!
+  xpath_urls_by_digitos: [[String!]!]!
+  xpath_fecha_by_digito: [[String!]!]!
 }
 
 """Entidad de los permisos con las acciones"""

@@ -24,10 +24,10 @@ export class XpathService {
 
   async create(createXpathInput: CreateXpathInput): Promise<Xpath> {
     try {
-      const { id_sorteo, ...rest } = createXpathInput;
+      const { id_sorteo_a_buscar, ...rest } = createXpathInput;
       const newXpath = this.xpathRepository.create({
         ...rest,
-        sorteo: { id: id_sorteo },
+        sorteo_a_buscar: { id: id_sorteo_a_buscar },
       });
 
       await this.xpathRepository.save(newXpath);

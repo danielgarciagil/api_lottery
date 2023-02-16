@@ -16,7 +16,7 @@ import { Juego } from './../../../components/juego/entities/juego.entity';
 import { Dias } from './dias.entity';
 import { Resultado } from './../../../components/resultados/entities/resultado.entity';
 import { Loteria } from './../../../components/loteria/entities/loteria.entity';
-import { Xpath } from './../../../components/xpath/entities/xpath.entity';
+import { SorteoABuscar } from './sorteo_a_buscar.entity';
 
 @Entity({ name: 'sorteo' })
 @ObjectType()
@@ -67,11 +67,13 @@ export class Sorteo {
   @JoinColumn({ name: 'id_loteria' })
   loteria: Loteria;
 
-  //TODO no lo puse en el graphql
-  @OneToOne(() => Xpath, (xpath) => xpath.sorteo)
-  xpath: Xpath;
-
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: true })
   activo: boolean;
+
+  @Field(() => SorteoABuscar)
+  @OneToOne(() => SorteoABuscar, (sorteoABuscar) => sorteoABuscar.sorteo, {
+    lazy: true,
+  })
+  sorteo_a_buscar: SorteoABuscar;
 }
