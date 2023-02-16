@@ -24,6 +24,10 @@ export class Xpath {
   @Column({ type: 'varchar', array: true })
   xpath_digitos: string[][];
 
+  @Field(() => String)
+  @Column({ type: 'varchar' })
+  xpath_fecha: string;
+
   @Field(() => Sorteo)
   @OneToOne(() => Sorteo, (sorteo) => sorteo.xpath, { eager: true })
   @JoinColumn({ name: 'id_sorteo' })

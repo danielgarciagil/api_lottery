@@ -59,6 +59,7 @@ type Xpath {
   id: ID!
   urls: [String!]!
   xpath_digitos: [[String!]!]!
+  xpath_fecha: String!
   sorteo: Sorteo!
   activo: Boolean!
 }
@@ -296,7 +297,7 @@ input CreateSorteoInput {
   img_url: String
   descripcion: String!
   hora: String!
-  ids_dia_semana: Int!
+  ids_dia_semana: [Int!]!
   id_juego: Int!
   id_loteria: Int!
 }

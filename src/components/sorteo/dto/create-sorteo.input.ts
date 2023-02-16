@@ -6,7 +6,6 @@ import {
   IsOptional,
   IsString,
   Matches,
-  Max,
   Min,
   MinLength,
 } from 'class-validator';
@@ -40,11 +39,9 @@ export class CreateSorteoInput {
   @Matches(/^([01]\d|2[0-3]):([0-5]\d)$/) // Expresion regular para recibir la hora en formato HH:mm
   hora: string;
 
-  @Field(() => Int)
+  @Field(() => [Int])
   @IsArray()
   @IsNumber({}, { each: true })
-  @Min(1)
-  @Max(8)
   @ArrayMinSize(1)
   ids_dia_semana: number[];
 

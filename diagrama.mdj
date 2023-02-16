@@ -1843,12 +1843,12 @@
 										},
 										{
 											"_type": "ERDColumnView",
-											"_id": "AAAAAAGGVe29aGKAfGg=",
+											"_id": "AAAAAAGGWDrlNePOv3M=",
 											"_parent": {
 												"$ref": "AAAAAAGGVewdoGJQYZ4="
 											},
 											"model": {
-												"$ref": "AAAAAAGGVe29XmJ91ow="
+												"$ref": "AAAAAAGGWDrlJOPLmV0="
 											},
 											"font": "Arial;13;0",
 											"left": 533,
@@ -1870,20 +1870,35 @@
 											"top": 449,
 											"width": 169.50634765625,
 											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGVe29aGKAfGg=",
+											"_parent": {
+												"$ref": "AAAAAAGGVewdoGJQYZ4="
+											},
+											"model": {
+												"$ref": "AAAAAAGGVe29XmJ91ow="
+											},
+											"font": "Arial;13;0",
+											"left": 533,
+											"top": 464,
+											"width": 169.50634765625,
+											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 528,
 									"top": 399,
 									"width": 179.50634765625,
-									"height": 68
+									"height": 83
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 528,
 							"top": 376,
 							"width": 179.50634765625,
-							"height": 91,
+							"height": 106,
 							"nameLabel": {
 								"$ref": "AAAAAAGGVewdoGJPQu8="
 							},
@@ -3371,12 +3386,12 @@
 						},
 						{
 							"_type": "ERDColumn",
-							"_id": "AAAAAAGGVe29XmJ91ow=",
+							"_id": "AAAAAAGGWDrlJOPLmV0=",
 							"_parent": {
 								"$ref": "AAAAAAGGVewdmmJM5xE="
 							},
-							"name": "ID_sorteo",
-							"type": "FK",
+							"name": "xpath_fecha",
+							"type": "VARCHAR",
 							"length": 0
 						},
 						{
@@ -3387,6 +3402,16 @@
 							},
 							"name": "activo",
 							"type": "BOOLEAN",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGGVe29XmJ91ow=",
+							"_parent": {
+								"$ref": "AAAAAAGGVewdmmJM5xE="
+							},
+							"name": "ID_sorteo",
+							"type": "FK",
 							"length": 0
 						}
 					]

@@ -6,6 +6,7 @@ import {
   IsNumber,
   IsString,
   Min,
+  MinLength,
 } from 'class-validator';
 
 @InputType()
@@ -22,6 +23,10 @@ export class CreateXpathInput {
   @IsNotEmpty()
   @ArrayMinSize(1)
   xpath_digitos: string[][];
+
+  @IsString()
+  @MinLength(1)
+  xpath_fecha: string;
 
   @Field(() => Int)
   @IsNumber()
