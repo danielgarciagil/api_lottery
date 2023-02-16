@@ -30,4 +30,5 @@ export enum MESSAGE {
   SE_PUBLICO_CORRECTAMENTE_EL_XPATHL = 'Se publico correctamente el xpath',
 
   ESTOS_ID_DE_DIAS_NO_SON_VALIDOS = 'Estos ID de dias no son validos',
+  ESTE_XPATH_ESTA_INACTIVO = 'Este xpath esta inactivo',
 }

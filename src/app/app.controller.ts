@@ -14,7 +14,6 @@ export class AppController {
 
   @Get('healthcheck')
   async healthcheck(): Promise<ResponsePropio> {
-    console.log('object');
     await this.webScraping.startDriver();
     return this.appService.healthcheck();
   }

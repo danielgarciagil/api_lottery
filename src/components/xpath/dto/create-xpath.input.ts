@@ -24,6 +24,7 @@ export class CreateXpathInput {
   @ArrayMinSize(1)
   xpath_digitos: string[][];
 
+  @Field(() => String)
   @IsString()
   @MinLength(1)
   xpath_fecha: string;

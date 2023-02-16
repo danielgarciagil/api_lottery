@@ -327,12 +327,14 @@ input UpdateResultadoInput {
 input CreateXpathInput {
   urls: [String!]!
   xpath_digitos: [[String!]!]!
+  xpath_fecha: String!
   id_sorteo: Int!
 }
 
 input UpdateXpathInput {
   urls: [String!]
   xpath_digitos: [[String!]!]
+  xpath_fecha: String
   id_sorteo: Int
   id: Int!
 }
