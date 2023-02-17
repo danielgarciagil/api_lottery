@@ -19,6 +19,7 @@ import { config } from '../config/config';
           username: configService.POSTGRES.DB_USER,
           password: configService.POSTGRES.DB_PASSWORD,
           autoLoadEntities: true,
+          synchronize: true,
         } as DataSourceOptions;
       },
     }),

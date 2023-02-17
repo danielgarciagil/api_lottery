@@ -14,11 +14,6 @@ type Juego {
   activo: Boolean!
 }
 
-type Dias {
-  id: ID!
-  name: String!
-}
-
 type Resultado {
   id: ID!
   numeros_ganadores: [Int!]!
@@ -41,25 +36,37 @@ type Loteria {
   sorteo: [Sorteo!]!
 }
 
+type Dias {
+  id: ID!
+  name: String!
+}
+
+type SorteoDias {
+  id: ID!
+  hora: String!
+  dias: Dias!
+}
+
 type Sorteo {
   id: ID!
   name: String!
   abreviatura: String!
   img_url: String
   descripcion: String!
-  hora: String!
   juego: Juego!
-  dia_semana: [Dias!]!
   resultados: [Resultado!]!
   loteria: Loteria!
   activo: Boolean!
   sorteo_a_buscar: SorteoABuscar!
+  sorteo_dias: [SorteoDias!]!
 }
 
 type SorteoABuscar {
   id: ID!
   activo: Boolean!
   buscando: Boolean!
+  numeros_intentos: Int!
+  tiempo_de_espera_segundos: Int!
   xpath: [Xpath!]!
 }
 
@@ -70,7 +77,8 @@ type Xpath {
   activo: Boolean!
   xpath_digitos: [[String!]!]!
   xpath_urls_by_digitos: [[String!]!]!
-  xpath_fecha_by_digito: [[String!]!]!
+  xpath_fecha_by_digitos: [[String!]!]!
+  sorteo_a_buscar: SorteoABuscar!
 }
 
 """Entidad de los permisos con las acciones"""
@@ -306,7 +314,6 @@ input CreateSorteoInput {
   img_url: String
   descripcion: String!
   hora: String!
-  ids_dia_semana: [Int!]!
   id_juego: Int!
   id_loteria: Int!
 }
@@ -334,17 +341,23 @@ input UpdateResultadoInput {
 }
 
 input CreateXpathInput {
-  urls: [String!]!
+  name: String!
+  descripcion: String!
+  activo: Boolean
   xpath_digitos: [[String!]!]!
-  xpath_fecha: String!
-  id_sorteo: Int!
+  xpath_urls_by_digitos: [[String!]!]!
+  xpath_fecha_by_digitos: [[String!]!]!
+  id_sorteo_a_buscar: Int!
 }
 
 input UpdateXpathInput {
-  urls: [String!]
+  name: String
+  descripcion: String
+  activo: Boolean
   xpath_digitos: [[String!]!]
-  xpath_fecha: String
-  id_sorteo: Int
+  xpath_urls_by_digitos: [[String!]!]
+  xpath_fecha_by_digitos: [[String!]!]
+  id_sorteo_a_buscar: Int
   id: Int!
 }
 

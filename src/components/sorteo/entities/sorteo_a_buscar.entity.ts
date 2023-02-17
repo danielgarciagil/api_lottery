@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   Entity,
@@ -26,6 +26,14 @@ export class SorteoABuscar {
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: false })
   buscando: boolean;
+
+  @Field(() => Int)
+  @Column({ type: 'int' })
+  numeros_intentos: number;
+
+  @Field(() => Int)
+  @Column({ type: 'int' })
+  tiempo_de_espera_segundos: number;
 
   @OneToOne(() => Sorteo, (sorteo) => sorteo.sorteo_a_buscar, { eager: true })
   @JoinColumn({ name: 'id_sorteo' })

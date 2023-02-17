@@ -36,10 +36,10 @@ export class WebScrapingXpathService {
       throw new BadGatewayException(MESSAGE.BUSCANDO_EL_XPATH_DIO_UN_ERROR);
     }
     try {
-      const { xpath_digitos, xpath_fecha_by_digito, xpath_urls_by_digitos } =
+      const { xpath_digitos, xpath_urls_by_digitos, xpath_fecha_by_digitos } =
         xpath;
       const ALLS_XPATH: ALLS_XPATH = {
-        xpath_fecha_by_digito: xpath_fecha_by_digito,
+        xpath_fecha_by_digito: xpath_fecha_by_digitos,
         xpath_digitos: xpath_digitos,
         xpath_urls_by_digitos: xpath_urls_by_digitos,
       };

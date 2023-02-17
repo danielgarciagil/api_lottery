@@ -17,6 +17,7 @@ import { Dias } from './dias.entity';
 import { Resultado } from './../../../components/resultados/entities/resultado.entity';
 import { Loteria } from './../../../components/loteria/entities/loteria.entity';
 import { SorteoABuscar } from './sorteo_a_buscar.entity';
+import { SorteoDias } from './sorteo_dias.entity';
 
 @Entity({ name: 'sorteo' })
 @ObjectType()
@@ -41,22 +42,10 @@ export class Sorteo {
   @Column({ type: 'varchar' })
   descripcion: string;
 
-  @Field(() => String)
-  @Column({ type: 'time' })
-  hora: string;
-
   @Field(() => Juego)
   @ManyToOne(() => Juego, (juego) => juego.sorteo, { eager: true }) //todo lazy
   @JoinColumn({ name: 'id_juego' })
   juego: Juego;
-
-  //TODO cambiar que esta relacion sea de miucho a mucho
-  @Field(() => [Dias])
-  @ManyToMany(() => Dias, (dias) => dias.sorteo, { lazy: true })
-  @JoinTable({
-    name: 'sor_dia',
-  })
-  dia_semana: Dias[];
 
   @Field(() => [Resultado])
   @OneToMany(() => Resultado, (resultado) => resultado.sorteo, { lazy: true })
@@ -76,4 +65,11 @@ export class Sorteo {
     lazy: true,
   })
   sorteo_a_buscar: SorteoABuscar;
+
+  //todo field
+  @Field(() => [SorteoDias])
+  @OneToMany(() => SorteoDias, (sorteoDias) => sorteoDias.sorteo, {
+    lazy: true,
+  })
+  sorteo_dias: SorteoDias[];
 }

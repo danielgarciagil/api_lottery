@@ -1,8 +1,9 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 //PROPIO
-import { Sorteo } from './sorteo.entity';
+import { VALID_DIAS } from './../../../config/valid-roles';
+import { SorteoDias } from './sorteo_dias.entity';
 
 @Entity({ name: 'dias' })
 @ObjectType()
@@ -12,10 +13,10 @@ export class Dias {
   id: number;
 
   @Field(() => String)
-  //@Column({ type: 'set', unique: true, enum: VALID_DIAS })
-  @Column({ type: 'varchar', unique: true })
-  name: string;
+  @Column({ type: 'enum', unique: true, enum: VALID_DIAS })
+  name: VALID_DIAS;
 
-  @ManyToMany(() => Sorteo, (sorteo) => sorteo.dia_semana, { lazy: true })
-  sorteo: Sorteo[];
+  @OneToMany(() => SorteoDias, (sorteoDias) => sorteoDias.dias)
+  //@JoinTable()
+  sorteo_dias: SorteoDias[];
 }
