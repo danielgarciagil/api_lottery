@@ -448,6 +448,21 @@
 										},
 										{
 											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGV1bC4Y8XquM=",
+											"_parent": {
+												"$ref": "AAAAAAGGS4tLRUYVirY="
+											},
+											"model": {
+												"$ref": "AAAAAAGGV1bC2o8U+8g="
+											},
+											"font": "Arial;13;0",
+											"left": 253,
+											"top": 320,
+											"width": 165.9453125,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
 											"_id": "AAAAAAGGS5CdcUbkwS4=",
 											"_parent": {
 												"$ref": "AAAAAAGGS4tLRUYVirY="
@@ -457,7 +472,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 253,
-											"top": 320,
+											"top": 335,
 											"width": 165.9453125,
 											"height": 13
 										},
@@ -470,6 +485,7 @@
 											"model": {
 												"$ref": "AAAAAAGGUIKYpIqbp1M="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 253,
 											"top": 335,
@@ -490,28 +506,13 @@
 											"top": 350,
 											"width": 165.9453125,
 											"height": 13
-										},
-										{
-											"_type": "ERDColumnView",
-											"_id": "AAAAAAGGV1bC4Y8XquM=",
-											"_parent": {
-												"$ref": "AAAAAAGGS4tLRUYVirY="
-											},
-											"model": {
-												"$ref": "AAAAAAGGV1bC2o8U+8g="
-											},
-											"font": "Arial;13;0",
-											"left": 253,
-											"top": 365,
-											"width": 165.9453125,
-											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 248,
 									"top": 255,
 									"width": 175.9453125,
-									"height": 128
+									"height": 113
 								}
 							],
 							"font": "Arial;13;0",
@@ -4059,6 +4060,16 @@
 						},
 						{
 							"_type": "ERDColumn",
+							"_id": "AAAAAAGGV1bC2o8U+8g=",
+							"_parent": {
+								"$ref": "AAAAAAGGS4tLRUYR4J4="
+							},
+							"name": "activo",
+							"type": "Boolean",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
 							"_id": "AAAAAAGGS5Cda0bhD4M=",
 							"_parent": {
 								"$ref": "AAAAAAGGS4tLRUYR4J4="
@@ -4085,16 +4096,6 @@
 							},
 							"name": "ID_loteria",
 							"type": "FK",
-							"length": 0
-						},
-						{
-							"_type": "ERDColumn",
-							"_id": "AAAAAAGGV1bC2o8U+8g=",
-							"_parent": {
-								"$ref": "AAAAAAGGS4tLRUYR4J4="
-							},
-							"name": "activo",
-							"type": "Boolean",
 							"length": 0
 						}
 					]
