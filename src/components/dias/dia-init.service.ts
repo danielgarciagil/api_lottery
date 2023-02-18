@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Dias } from './entities/dias.entity';
+import { Dias } from '../dias/entity/dias.entity';
 import { VALID_DIAS } from './../../config/valid-roles';
 
 //PROOPIO

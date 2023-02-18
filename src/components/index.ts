@@ -8,6 +8,9 @@ export { SorteoModule } from './sorteo/sorteo.module';
 export { ResultadosModule } from './resultados/resultados.module';
 export { XpathModule } from './xpath/xpath.module';
 export { WebScrapingModule } from './web-scraping/web-scraping.module';
+export { SorteoDiasModule } from './sorteo_dias/sorteo_dias.module';
+export { DiasModule } from './dias/dias.module';
+export { SorteoABuscarModule } from './sorteo_a_buscar/sorteo_a_buscar.module';
 
 //COMPONNETES CRON
 export { CronModule } from './cron/cron.module';

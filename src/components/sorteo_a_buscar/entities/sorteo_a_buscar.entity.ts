@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 //PROPIO
-import { Sorteo } from './sorteo.entity';
+import { Sorteo } from './../../sorteo/entities/sorteo.entity';
 import { Xpath } from './../../../components/xpath/entities/xpath.entity';
 
 @Entity({ name: 'so_a_bu' })

@@ -22,6 +22,9 @@ import {
   CronModule,
   XpathModule,
   WebScrapingModule,
+  SorteoDiasModule,
+  DiasModule,
+  SorteoABuscarModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -55,10 +58,13 @@ import { AppInit } from './app-init.service';
     CommonModule,
     LoteriaModule,
     JuegoModule,
-    SorteoModule,
     ResultadosModule,
     XpathModule,
     WebScrapingModule,
+    DiasModule,
+    SorteoModule,
+    SorteoDiasModule,
+    SorteoABuscarModule,
 
     //AUTOMATICO
     CronModule,

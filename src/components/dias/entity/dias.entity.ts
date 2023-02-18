@@ -2,8 +2,8 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 //PROPIO
-import { VALID_DIAS } from './../../../config/valid-roles';
-import { SorteoDias } from './sorteo_dias.entity';
+import { VALID_DIAS } from '../../../config/valid-roles';
+import { SorteoDias } from './../../sorteo_dias/entities/sorteo_dia.entity';
 
 @Entity({ name: 'dias' })
 @ObjectType()
@@ -17,6 +17,5 @@ export class Dias {
   name: VALID_DIAS;
 
   @OneToMany(() => SorteoDias, (sorteoDias) => sorteoDias.dias)
-  //@JoinTable()
   sorteo_dias: SorteoDias[];
 }

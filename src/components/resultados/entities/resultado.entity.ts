@@ -32,6 +32,10 @@ export class Resultado {
   @JoinColumn({ name: 'id_sorteo' })
   sorteo: Sorteo;
 
+  @Field(() => Boolean)
+  @Column({ type: 'boolean', default: true })
+  activo: boolean;
+
   @CreateDateColumn({
     name: 'create_at',
     type: 'timestamptz',

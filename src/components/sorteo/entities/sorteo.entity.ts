@@ -3,8 +3,6 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -13,11 +11,10 @@ import {
 
 //PROPIO
 import { Juego } from './../../../components/juego/entities/juego.entity';
-import { Dias } from './dias.entity';
 import { Resultado } from './../../../components/resultados/entities/resultado.entity';
 import { Loteria } from './../../../components/loteria/entities/loteria.entity';
-import { SorteoABuscar } from './sorteo_a_buscar.entity';
-import { SorteoDias } from './sorteo_dias.entity';
+import { SorteoABuscar } from './../../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
+import { SorteoDias } from './../../sorteo_dias/entities/sorteo_dia.entity';
 
 @Entity({ name: 'sorteo' })
 @ObjectType()

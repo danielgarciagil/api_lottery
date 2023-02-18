@@ -3,13 +3,11 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  JoinTable,
   ManyToOne,
-  OneToMany,
   JoinColumn,
 } from 'typeorm';
-import { Sorteo } from './sorteo.entity';
-import { Dias } from './dias.entity';
+import { Sorteo } from './../../sorteo/entities/sorteo.entity';
+import { Dias } from './../../dias/entity/dias.entity';
 
 //PROPIO
 

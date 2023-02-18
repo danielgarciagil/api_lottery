@@ -13,32 +13,17 @@ import { Sorteo } from './entities/sorteo.entity';
 import { ResponsePropioGQl } from './../../common/response';
 import { PaginationArgs } from './../../common/dto/args';
 import { MESSAGE } from './../../config/messages';
-import { Dias } from './entities/dias.entity';
-import { In } from 'typeorm/find-options/operator/In';
-import { SorteoDias } from './entities/sorteo_dias.entity';
 
 @Injectable()
 export class SorteoService {
   constructor(
     @InjectRepository(Sorteo)
     private readonly sorteoRepository: Repository<Sorteo>,
-    @InjectRepository(Dias) private readonly diaRepository: Repository<Dias>,
-    @InjectRepository(SorteoDias)
-    private readonly sorteoDias: Repository<SorteoDias>,
   ) {}
 
   async create(createSorteoInput: CreateSorteoInput): Promise<Sorteo> {
     try {
       const { id_juego, id_loteria, hora, ...rest } = createSorteoInput;
-
-      //const dias = await this.diaRepository.find({
-      //  where: {
-      //    id: In(ids_dia_semanas),
-      //  },
-      //});
-      //if (dias.length == 0) {
-      //  throw new Error(MESSAGE.ESTOS_ID_DE_DIAS_NO_SON_VALIDOS);
-      //}
 
       const newSorteo = this.sorteoRepository.create({
         ...rest,
@@ -46,7 +31,7 @@ export class SorteoService {
         loteria: { id: id_loteria },
       });
 
-      const sorteo = await this.sorteoRepository.save(newSorteo);
+      await this.sorteoRepository.save(newSorteo);
       return await this.findOne(newSorteo.id);
     } catch (error) {
       throw new UnprocessableEntityException(error?.message);
