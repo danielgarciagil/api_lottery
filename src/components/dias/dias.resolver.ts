@@ -8,19 +8,23 @@ import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 import { User } from '../users/entities/user.entity';
 import { PaginationArgs } from './../../common/dto/args';
 import { Dias } from './entity/dias.entity';
-import { DiaService } from './dia.service';
+import { DiasService } from './dia.service';
 
 @UseGuards(JwtAuthGuard)
 @Resolver(() => Dias)
 export class DiasResolver {
-  constructor(private readonly diaService: DiaService) {}
+  constructor(private readonly diasService: DiasService) {}
 
   @Query(() => [Dias], {
     name: 'allDias',
     description: 'Para ver todos los Dias',
   })
-  async findAll(@Args() paginationArgs: PaginationArgs): Promise<Dias[]> {
-    return this.diaService.findAll(paginationArgs);
+  async findAll(
+    @CurrentUser([VALID_PERMISO_ACCION.DIA_VIEW]) user: User,
+    @Args()
+    paginationArgs: PaginationArgs,
+  ): Promise<Dias[]> {
+    return this.diasService.findAll(paginationArgs);
   }
 
   @Query(() => Dias, {
@@ -28,8 +32,10 @@ export class DiasResolver {
     description: 'Para buscar un Dia en especifico',
   })
   async findOne(
-    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+    @CurrentUser([VALID_PERMISO_ACCION.DIA_VIEW]) user: User,
+    @Args('id', { type: () => Int }, ParseIntPipe)
+    id: number,
   ): Promise<Dias> {
-    return this.diaService.findOne(id);
+    return this.diasService.findOne(id);
   }
 }

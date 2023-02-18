@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
@@ -14,6 +13,7 @@ import { Role } from './entities/role.entity';
 import { MESSAGE } from './../../config/messages';
 import { PaginationArgs } from './../../common/dto/args/pagination.args';
 import { Permiso_Accion } from './entities/permiso_accion.entity';
+import { ResponsePropioGQl } from './../../common/response';
 
 @Injectable()
 export class RoleService {
@@ -102,9 +102,19 @@ export class RoleService {
     }
   }
 
-  async remove(id: number): Promise<Role> {
+  async remove(id: number): Promise<ResponsePropioGQl> {
     const role = await this.findOne(id);
-    await this.roleRepository.remove(role);
-    return { ...role, id };
+    try {
+      await this.roleRepository.remove(role);
+      return {
+        message: MESSAGE.COMUN_SE_ELIMINO_CORRECTAMENTE,
+        status: 200,
+      };
+    } catch (error) {
+      return {
+        message: MESSAGE.COMUN_NO_SE_PUDO_ELIMINAR,
+        status: 401,
+      };
+    }
   }
 }

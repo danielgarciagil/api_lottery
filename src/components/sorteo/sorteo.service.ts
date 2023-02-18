@@ -23,7 +23,7 @@ export class SorteoService {
 
   async create(createSorteoInput: CreateSorteoInput): Promise<Sorteo> {
     try {
-      const { id_juego, id_loteria, hora, ...rest } = createSorteoInput;
+      const { id_juego, id_loteria, ...rest } = createSorteoInput;
 
       const newSorteo = this.sorteoRepository.create({
         ...rest,

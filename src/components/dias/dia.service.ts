@@ -8,7 +8,7 @@ import { PaginationArgs } from './../../common/dto/args';
 import { MESSAGE } from './../../config/messages';
 
 @Injectable()
-export class DiaService {
+export class DiasService {
   constructor(
     @InjectRepository(Dias) private readonly diasRepository: Repository<Dias>,
   ) {}

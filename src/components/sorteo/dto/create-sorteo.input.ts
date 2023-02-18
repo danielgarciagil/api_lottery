@@ -33,13 +33,6 @@ export class CreateSorteoInput {
   @MinLength(3)
   descripcion: string;
 
-  //todo, por el momento esa hora se aplica todos los dias, poner luego que sea dinamico
-  @Field(() => String)
-  @IsString()
-  @MinLength(3)
-  @Matches(/^([01]\d|2[0-3]):([0-5]\d)$/) // Expresion regular para recibir la hora en formato HH:mm
-  hora: string;
-
   //@Field(() => [Int])
   //@IsArray()
   //@IsNumber({}, { each: true })

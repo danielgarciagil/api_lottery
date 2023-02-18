@@ -11,6 +11,7 @@ import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { CurrentUser } from './../../auth/decorators/current-user.decorator';
 import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 import { User } from '../users/entities/user.entity';
+import { ResponsePropioGQl } from 'src/common/response';
 
 @UseGuards(JwtAuthGuard)
 @Resolver(() => Role)
@@ -24,7 +25,7 @@ export class RoleResolver {
   async createRole(
     @CurrentUser([VALID_PERMISO_ACCION.ROLE_CREATE]) user: User,
     @Args('createRoleInput') createRoleInput: CreateRoleInput,
-  ) {
+  ): Promise<Role> {
     return this.roleService.create(createRoleInput);
   }
 
@@ -32,7 +33,7 @@ export class RoleResolver {
   async findAll(
     @CurrentUser([VALID_PERMISO_ACCION.ROLE_VIEW]) user: User,
     @Args() paginationArgs: PaginationArgs,
-  ) {
+  ): Promise<Role[]> {
     return this.roleService.findAll(paginationArgs);
   }
 
@@ -40,7 +41,7 @@ export class RoleResolver {
   async findOne(
     @CurrentUser([VALID_PERMISO_ACCION.ROLE_VIEW]) user: User,
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
-  ) {
+  ): Promise<Role> {
     return this.roleService.findOne(id);
   }
 
@@ -51,15 +52,18 @@ export class RoleResolver {
   async updateRole(
     @CurrentUser([VALID_PERMISO_ACCION.ROLE_UPDATE]) user: User,
     @Args('updateRoleInput') updateRoleInput: UpdateRoleInput,
-  ) {
+  ): Promise<Role> {
     return this.roleService.update(updateRoleInput.id, updateRoleInput);
   }
 
-  @Mutation(() => Role, { name: 'removeRole', description: 'Eliminar un Rol' })
+  @Mutation(() => ResponsePropioGQl, {
+    name: 'removeRole',
+    description: 'Eliminar un Rol',
+  })
   async removeRole(
     @CurrentUser([VALID_PERMISO_ACCION.ROLE_DELETE]) user: User,
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
-  ) {
+  ): Promise<ResponsePropioGQl> {
     return this.roleService.remove(id);
   }
 }

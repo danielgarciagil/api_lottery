@@ -165,8 +165,18 @@ type Query {
 
   """Para ver un Xpath especifico"""
   findXpath(id: Int!): Xpath!
-  sorteoDias: [SorteoDias!]!
-  sorteoDia(id: Int!): SorteoDias!
+
+  """Para ver todos los Dias"""
+  allDias(offset: Int = 0, limit: Int = 10): [Dias!]!
+
+  """Para buscar un Dia en especifico"""
+  findDias(id: Int!): Dias!
+
+  """Ver todos los dias y la hora de los sorteos"""
+  allSorteoDias(offset: Int = 0, limit: Int = 10): [SorteoDias!]!
+
+  """Para ver en un dia especificio los sorteo que hay"""
+  findSorteoDia(id: Int!): SorteoDias!
   sorteoABuscar(id: Int!): SorteoABuscar!
 }
 
@@ -190,7 +200,7 @@ type Mutation {
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
 
   """Eliminar un Rol"""
-  removeRole(id: Int!): Role!
+  removeRole(id: Int!): ResponsePropioGQl!
 
   """Para crear una Loteria"""
   createLoteria(createLoteriaInput: CreateLoteriaInput!): Loteria!
@@ -222,10 +232,10 @@ type Mutation {
   """para crear un Sorteo"""
   createSorteo(createSorteoInput: CreateSorteoInput!): Sorteo!
 
-  """Para actualizar un SOrteo"""
-  updateSorteo(updateSorteoInput: UpdateSorteoInput!): Sorteo!
+  """Para actualizar un Sorteo"""
+  updateSorteo(updateSorteoDiaInput: UpdateSorteoDiaInput!): SorteoDias!
 
-  """Remover un sorteo"""
+  """Para eliminar un Sorteo"""
   removeSorteo(id: Int!): ResponsePropioGQl!
 
   """Para crear el Xpath"""
@@ -239,9 +249,9 @@ type Mutation {
 
   """Para Buscar los numeros ganadores de un Sorteo"""
   buscarByXpath(buscarByXpathInput: BuscarByXpathInput!): ResponsePropioGQl!
+
+  """Para crear los dias que tendra un sorteo con su hora"""
   createSorteoDia(createSorteoDiaInput: CreateSorteoDiaInput!): SorteoDias!
-  updateSorteoDia(updateSorteoDiaInput: UpdateSorteoDiaInput!): SorteoDias!
-  removeSorteoDia(id: Int!): SorteoDias!
   createSorteoABuscar(createSorteoABuscarInput: CreateSorteoABuscarInput!): SorteoABuscar!
   updateSorteoABuscar(updateSorteoABuscarInput: UpdateSorteoABuscarInput!): SorteoABuscar!
   removeSorteoABuscar(id: Int!): SorteoABuscar!
@@ -322,12 +332,14 @@ input CreateResultadoInput {
   numeros_ganadores: [Int!]!
   fecha: String!
   id_sorteo: Int!
+  activo: Boolean
 }
 
 input UpdateResultadoInput {
   numeros_ganadores: [Int!]
   fecha: String
   id_sorteo: Int
+  activo: Boolean
   id: Int!
 }
 
@@ -336,17 +348,14 @@ input CreateSorteoInput {
   abreviatura: String!
   img_url: String
   descripcion: String!
-  hora: String!
   id_juego: Int!
   id_loteria: Int!
 }
 
-input UpdateSorteoInput {
-  name: String
-  abreviatura: String
-  img_url: String
-  descripcion: String
+input UpdateSorteoDiaInput {
   hora: String
+  id_sorteo: Int
+  id_dia: Int
   id: Int!
 }
 
@@ -376,14 +385,9 @@ input BuscarByXpathInput {
 }
 
 input CreateSorteoDiaInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateSorteoDiaInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  hora: String!
+  id_sorteo: Int!
+  id_dia: Int!
 }
 
 input CreateSorteoABuscarInput {
