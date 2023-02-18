@@ -4,8 +4,9 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 //PROPIO
 
 import { Sorteo } from './../../../components/sorteo/entities/sorteo.entity';
+import { VALID_ENTITY } from './../../../config/valid-roles';
 
-@Entity({ name: 'juego' })
+@Entity({ name: VALID_ENTITY.JUEGO })
 @ObjectType()
 export class Juego {
   @PrimaryGeneratedColumn()

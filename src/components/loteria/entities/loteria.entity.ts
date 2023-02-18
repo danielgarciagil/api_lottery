@@ -3,7 +3,8 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 //PROPIO
 import { Sorteo } from './../../../components/sorteo/entities/sorteo.entity';
-@Entity({ name: 'loteria' })
+import { VALID_ENTITY } from './../../../config/valid-roles';
+@Entity({ name: VALID_ENTITY.LOTERIA })
 @ObjectType()
 export class Loteria {
   @PrimaryGeneratedColumn()

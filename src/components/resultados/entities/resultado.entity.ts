@@ -11,8 +11,9 @@ import {
 
 //PROPIO
 import { Sorteo } from './../../../components/sorteo/entities/sorteo.entity';
+import { VALID_ENTITY } from './../../../config/valid-roles';
 
-@Entity({ name: 'resultados' })
+@Entity({ name: VALID_ENTITY.RESULTADO })
 @ObjectType()
 export class Resultado {
   @PrimaryGeneratedColumn()

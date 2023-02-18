@@ -3,17 +3,16 @@ import {
   BeforeInsert,
   Column,
   Entity,
-  JoinColumn,
   ManyToMany,
-  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 //PROPIO
 import { Role } from './../../../components/role/entities/role.entity';
+import { VALID_ENTITY } from './../../../config/valid-roles';
 
-@Entity({ name: 'users' })
+@Entity({ name: VALID_ENTITY.USER })
 @ObjectType()
 export class User {
   @PrimaryGeneratedColumn()

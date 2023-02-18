@@ -10,7 +10,7 @@ import { ResponsePropioGQl } from './../../common/response';
 import { PaginationArgs } from './../../common/dto/args';
 import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { CurrentUser } from './../../auth/decorators/current-user.decorator';
-import { VALID_PERMISO_ACCION } from 'src/config/valid-roles';
+import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 import { User } from '../users/entities/user.entity';
 
 @UseGuards(JwtAuthGuard)

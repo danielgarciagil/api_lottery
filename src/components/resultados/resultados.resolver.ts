@@ -11,7 +11,7 @@ import { ResponsePropioGQl } from './../../common/response';
 import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { CurrentUser } from './../../auth/decorators/current-user.decorator';
 import { User } from '../users/entities/user.entity';
-import { VALID_PERMISO_ACCION } from 'src/config/valid-roles';
+import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 import { FilterResultado } from './dto/filter-resultado.input';
 
 @UseGuards(JwtAuthGuard)
@@ -24,7 +24,7 @@ export class ResultadosResolver {
     description: 'Para crear un Resultado',
   })
   async createResultado(
-    @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_CREATE]) user: User,
+    @CurrentUser([VALID_PERMISO_ACCION.RESULTADO_CREATE]) user: User,
     @Args('createResultadoInput') createResultadoInput: CreateResultadoInput,
   ): Promise<Resultado> {
     return this.resultadosService.create(createResultadoInput);
@@ -35,7 +35,7 @@ export class ResultadosResolver {
     description: 'Ver todos los resultados',
   })
   async findAll(
-    @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_VIEW]) user: User,
+    @CurrentUser([VALID_PERMISO_ACCION.RESULTADO_VIEW]) user: User,
     @Args() paginationArgs: PaginationArgs,
     @Args() filterResultado: FilterResultado,
   ): Promise<Resultado[]> {
@@ -47,7 +47,7 @@ export class ResultadosResolver {
     description: 'Ver un resultado especifico',
   })
   async findOne(
-    @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_VIEW]) user: User,
+    @CurrentUser([VALID_PERMISO_ACCION.RESULTADO_VIEW]) user: User,
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
   ): Promise<Resultado> {
     return this.resultadosService.findOne(id);
@@ -58,7 +58,7 @@ export class ResultadosResolver {
     description: 'Actualizar un Resultado',
   })
   async updateResultado(
-    @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_UPDATE]) user: User,
+    @CurrentUser([VALID_PERMISO_ACCION.RESULTADO_UPDATE]) user: User,
     @Args('updateResultadoInput') updateResultadoInput: UpdateResultadoInput,
   ): Promise<Resultado> {
     return this.resultadosService.update(
@@ -72,7 +72,7 @@ export class ResultadosResolver {
     description: 'Remover un resultados',
   })
   async removeResultado(
-    @CurrentUser([VALID_PERMISO_ACCION.RESULTADOS_DELETE]) user: User,
+    @CurrentUser([VALID_PERMISO_ACCION.RESULTADO_DELETE]) user: User,
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
   ): Promise<ResponsePropioGQl> {
     return this.resultadosService.remove(id);

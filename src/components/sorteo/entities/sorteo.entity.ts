@@ -15,8 +15,9 @@ import { Resultado } from './../../../components/resultados/entities/resultado.e
 import { Loteria } from './../../../components/loteria/entities/loteria.entity';
 import { SorteoABuscar } from './../../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
 import { SorteoDias } from './../../sorteo_dias/entities/sorteo_dia.entity';
+import { VALID_ENTITY } from './../../../config/valid-roles';
 
-@Entity({ name: 'sorteo' })
+@Entity({ name: VALID_ENTITY.SORTEO })
 @ObjectType()
 export class Sorteo {
   @PrimaryGeneratedColumn()

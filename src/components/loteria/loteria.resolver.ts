@@ -23,7 +23,7 @@ export class LoteriaResolver {
     description: 'Para crear una Loteria',
   })
   async createLoteria(
-    @CurrentUser([VALID_PERMISO_ACCION.LOTERIA_CREAR]) user: User,
+    @CurrentUser([VALID_PERMISO_ACCION.LOTERIA_CREATE]) user: User,
     @Args('createLoteriaInput') createLoteriaInput: CreateLoteriaInput,
   ): Promise<Loteria> {
     return this.loteriaService.create(createLoteriaInput);

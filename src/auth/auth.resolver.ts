@@ -9,7 +9,7 @@ import { LoginInput } from './dto/login.input';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from './../components/users/entities/user.entity';
-import { VALID_PERMISO_ACCION } from 'src/config/valid-roles';
+import { VALID_PERMISO_ACCION } from './../config/valid-roles';
 
 @Resolver(() => AuthResolver)
 export class AuthResolver {

@@ -4,8 +4,9 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 //PROPIO
 import { VALID_DIAS } from '../../../config/valid-roles';
 import { SorteoDias } from './../../sorteo_dias/entities/sorteo_dia.entity';
+import { VALID_ENTITY } from '../../../config/valid-roles';
 
-@Entity({ name: 'dias' })
+@Entity({ name: VALID_ENTITY.DIA })
 @ObjectType()
 export class Dias {
   @PrimaryGeneratedColumn()

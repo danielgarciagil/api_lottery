@@ -4,14 +4,14 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 //PROPIO
 import { SorteoABuscar } from './../../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
+import { VALID_ENTITY } from './../../../config/valid-roles';
 
-@Entity({ name: 'xpath' })
+@Entity({ name: VALID_ENTITY.XPATH })
 @ObjectType()
 export class Xpath {
   @PrimaryGeneratedColumn()

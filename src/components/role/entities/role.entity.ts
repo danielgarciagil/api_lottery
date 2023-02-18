@@ -10,8 +10,9 @@ import {
 //PROPIO
 import { User } from './../../../components/users/entities/user.entity';
 import { Permiso_Accion } from './permiso_accion.entity';
+import { VALID_ENTITY } from './../../../config/valid-roles';
 
-@Entity({ name: 'role' })
+@Entity({ name: VALID_ENTITY.ROLE })
 @ObjectType({ description: 'Entidad de Roles' })
 export class Role {
   @Field(() => ID)

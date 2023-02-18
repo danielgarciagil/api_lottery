@@ -46,15 +46,19 @@ export class AppInit implements OnModuleInit {
       ? VALID_ENTITY.JUEGO
       : enttity.includes(VALID_ENTITY.LOTERIA)
       ? VALID_ENTITY.LOTERIA
-      : enttity.includes(VALID_ENTITY.RESULTADOS)
-      ? VALID_ENTITY.RESULTADOS
+      : enttity.includes(VALID_ENTITY.RESULTADO)
+      ? VALID_ENTITY.RESULTADO
       : enttity.includes(VALID_ENTITY.SORTEO)
       ? VALID_ENTITY.SORTEO
       : enttity.includes(VALID_ENTITY.USER)
       ? VALID_ENTITY.SORTEO
       : enttity.includes(VALID_ENTITY.XPATH)
       ? VALID_ENTITY.XPATH
-      : VALID_ENTITY.XPATH; //TODO
+      : enttity.includes(VALID_ENTITY.SORTEO_A_BUSCAR)
+      ? VALID_ENTITY.SORTEO_A_BUSCAR
+      : enttity.includes(VALID_ENTITY.SORTEO_DIAS)
+      ? VALID_ENTITY.SORTEO_DIAS
+      : VALID_ENTITY.FALTA; //TODO
   }
 
   //? Aqui creo todos los permiso accion por default
