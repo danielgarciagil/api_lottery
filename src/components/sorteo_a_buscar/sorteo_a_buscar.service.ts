@@ -64,6 +64,12 @@ export class SorteoABuscarService {
     throw new BadGatewayException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO); // todo
   }
 
+  async cambiar_estado__de_buscando(id: number, estado: boolean) {
+    const sorteo_a_buscar = await this.findOne(id);
+    sorteo_a_buscar.buscando = estado;
+    await this.sorteoABuscarRepository.save(sorteo_a_buscar);
+  }
+
   async remove(id: number): Promise<ResponsePropioGQl> {
     const sorteo_a_buscar = await this.findOne(id);
     try {

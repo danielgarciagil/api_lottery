@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { WebScrapingXpathService } from './web-scraping-xpath.service';
+import { WebScrapingXpathService } from './proceso_de_sorteo_a_buscar.service';
 
 describe('WebScrapingXpathService', () => {
   let service: WebScrapingXpathService;

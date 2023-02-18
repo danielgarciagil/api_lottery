@@ -3,6 +3,7 @@ export enum MESSAGE {
   COMUN_NO_SE_PUDO_ACTUALIZAR = 'No se pudo actualizar',
   COMUN_No_se_Pudo_CREAR = 'No se pudo crear',
   COMUN_ESTE_ID_NO_EXISTE = 'Este ID no existe',
+  COMUN_ESTE_ELEMENTO_ESTA_INACTIVO = 'Este Elemento esta inactivo',
 
   COMUN_SE_ELIMINO_CORRECTAMENTE = 'Se elimino Correctamente',
   COMUN_SE_ACTUALIZO_CORRECTAMENTE = 'Se actualizar Correctamente',
@@ -31,4 +32,8 @@ export enum MESSAGE {
 
   ESTOS_ID_DE_DIAS_NO_SON_VALIDOS = 'Estos ID de dias no son validos',
   ESTE_XPATH_ESTA_INACTIVO = 'Este xpath esta inactivo',
+
+  EL_ARREGLO_NO_TIENE_LA_MISMA_POSICIONES = 'El arreglo no tiene la misma posiicones',
+  ESTE_XPATH_NO_ES_NUMERO = 'Este XPOATH no es de un numero',
+  YA_SE_ESTA_BUSCANDO_AUTOMATICAMENTE_ESTE_SORTEO = 'Ya se esta buscando automaticamente este sorteo',
 }

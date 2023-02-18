@@ -23,10 +23,30 @@ export class XpathService {
   ) {}
 
   async create(createXpathInput: CreateXpathInput): Promise<Xpath> {
+    const {
+      id_sorteo_a_buscar,
+      xpath_digitos,
+      xpath_fecha_by_digitos,
+      xpath_urls_by_digitos,
+      ...rest
+    } = createXpathInput;
+
+    if (
+      !(
+        xpath_digitos.length == xpath_fecha_by_digitos.length &&
+        xpath_digitos.length == xpath_urls_by_digitos.length
+      )
+    ) {
+      throw new UnprocessableEntityException(
+        MESSAGE.EL_ARREGLO_NO_TIENE_LA_MISMA_POSICIONES,
+      );
+    }
     try {
-      const { id_sorteo_a_buscar, ...rest } = createXpathInput;
       const newXpath = this.xpathRepository.create({
         ...rest,
+        xpath_digitos: xpath_digitos,
+        xpath_fecha_by_digitos: xpath_fecha_by_digitos,
+        xpath_urls_by_digitos: xpath_urls_by_digitos,
         sorteo_a_buscar: { id: id_sorteo_a_buscar },
       });
 
@@ -53,7 +73,7 @@ export class XpathService {
     return xpath;
   }
 
-  //TODO
+  //TODO tener cuenta los arreglos deben de ser iguales
   async update(id: number, updateXpathInput: UpdateXpathInput): Promise<Xpath> {
     throw new BadGatewayException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
   }

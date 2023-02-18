@@ -2,87 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Juego {
-  id: ID!
-  name: String!
-  abreviatura: String!
-  descripcion: String!
-  posiciones: Int!
-  rango_minimo: Int!
-  rango_maximo: Int!
-  sorteo: [Sorteo!]!
-  activo: Boolean!
-}
-
-type Resultado {
-  id: ID!
-  numeros_ganadores: [Int!]!
-  fecha: DateTime!
-  sorteo: Sorteo!
-  activo: Boolean!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-type Loteria {
-  id: ID!
-  name: String!
-  abreviatura: String!
-  img_url: String!
-  descripcion: String!
-  activo: Boolean!
-  sorteo: [Sorteo!]!
-}
-
-type Dias {
-  id: ID!
-  name: String!
-}
-
-type SorteoDias {
-  id: ID!
-  hora: String!
-  dias: Dias!
-}
-
-type Sorteo {
-  id: ID!
-  name: String!
-  abreviatura: String!
-  img_url: String
-  descripcion: String!
-  juego: Juego!
-  resultados: [Resultado!]!
-  loteria: Loteria!
-  activo: Boolean!
-  sorteo_a_buscar: SorteoABuscar!
-  sorteo_dias: [SorteoDias!]!
-}
-
-type SorteoABuscar {
-  id: ID!
-  name: String!
-  activo: Boolean!
-  buscando: Boolean!
-  numeros_intentos: Int!
-  tiempo_de_espera_segundos: Int!
-  xpath: [Xpath!]!
-}
-
-type Xpath {
-  id: ID!
-  name: String!
-  descripcion: String!
-  activo: Boolean!
-  xpath_digitos: [[String!]!]!
-  xpath_urls_by_digitos: [[String!]!]!
-  xpath_fecha_by_digitos: [[String!]!]!
-  sorteo_a_buscar: SorteoABuscar!
-}
-
 """Entidad de los permisos con las acciones"""
 type Permiso_Accion {
   id: ID!
@@ -120,6 +39,87 @@ type AuthResponse {
 type ResponsePropioGQl {
   status: String!
   message: String!
+}
+
+type Juego {
+  id: ID!
+  name: String!
+  abreviatura: String!
+  descripcion: String!
+  posiciones: Int!
+  rango_minimo: Int!
+  rango_maximo: Int!
+  sorteo: [Sorteo!]!
+  activo: Boolean!
+}
+
+type Resultado {
+  id: ID!
+  numeros_ganadores: [Int!]!
+  fecha: DateTime!
+  sorteo: Sorteo!
+  activo: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Xpath {
+  id: ID!
+  name: String!
+  descripcion: String!
+  activo: Boolean!
+  xpath_digitos: [[String!]!]!
+  xpath_urls_by_digitos: [[String!]!]!
+  xpath_fecha_by_digitos: [[String!]!]!
+  sorteo_a_buscar: SorteoABuscar!
+}
+
+type SorteoABuscar {
+  id: ID!
+  name: String!
+  activo: Boolean!
+  buscando: Boolean!
+  numeros_intentos: Int!
+  tiempo_de_espera_segundos: Int!
+  xpath: [Xpath!]!
+}
+
+type Dias {
+  id: ID!
+  name: String!
+}
+
+type SorteoDias {
+  id: ID!
+  hora: String!
+  dias: Dias!
+}
+
+type Sorteo {
+  id: ID!
+  name: String!
+  abreviatura: String!
+  img_url: String
+  descripcion: String!
+  juego: Juego!
+  resultados: [Resultado!]!
+  loteria: Loteria!
+  activo: Boolean!
+  sorteo_a_buscar: SorteoABuscar!
+  sorteo_dias: [SorteoDias!]!
+}
+
+type Loteria {
+  id: ID!
+  name: String!
+  abreviatura: String!
+  img_url: String!
+  descripcion: String!
+  activo: Boolean!
+  sorteo: [Sorteo!]!
 }
 
 type Query {
@@ -167,6 +167,14 @@ type Query {
   """Para ver un Xpath especifico"""
   findXpath(id: Int!): Xpath!
 
+  """
+  Para ver la configuracion de todos los script automatico de buscar premios
+  """
+  allSorteoABuscar(offset: Int = 0, limit: Int = 10): [SorteoABuscar!]!
+
+  """Para buscar la configuracion de un sorteo especifico"""
+  findSorteoABuscar(id: Int!): SorteoABuscar!
+
   """Para ver todos los Dias"""
   allDias(offset: Int = 0, limit: Int = 10): [Dias!]!
 
@@ -178,14 +186,6 @@ type Query {
 
   """Para ver en un dia especificio los sorteo que hay"""
   findSorteoDia(id: Int!): SorteoDias!
-
-  """
-  Para ver la configuracion de todos los script automatico de buscar premios
-  """
-  allSorteoABuscar(offset: Int = 0, limit: Int = 10): [SorteoABuscar!]!
-
-  """Para buscar la configuracion de un sorteo especifico"""
-  findSorteoABuscar(id: Int!): SorteoABuscar!
 }
 
 type Mutation {
@@ -255,11 +255,8 @@ type Mutation {
   """Para eliminar un Xpath"""
   removeXpath(id: Int!): ResponsePropioGQl!
 
-  """Para Buscar los numeros ganadores de un Sorteo"""
-  buscarByXpath(buscarByXpathInput: BuscarByXpathInput!): ResponsePropioGQl!
-
-  """Para crear los dias que tendra un sorteo con su hora"""
-  createSorteoDia(createSorteoDiaInput: CreateSorteoDiaInput!): SorteoDias!
+  """Para Buscar los numeros ganadores de un Sorteo en forma Autoamtica"""
+  buscarBySorteoAutomatico(buscarBySorteoWebScrapingInput: BuscarBySorteoWebScrapingInput!): ResponsePropioGQl!
 
   """Para crear un Sctipt que busque solo el premio mediante webscraping"""
   createSorteoABuscar(createSorteoABuscarInput: CreateSorteoABuscarInput!): SorteoABuscar!
@@ -269,6 +266,9 @@ type Mutation {
 
   """Eliminar el script de sorteo a buscar"""
   removeSorteoABuscar(id: Int!): ResponsePropioGQl!
+
+  """Para crear los dias que tendra un sorteo con su hora"""
+  createSorteoDia(createSorteoDiaInput: CreateSorteoDiaInput!): SorteoDias!
 }
 
 input SignupInput {
@@ -394,14 +394,8 @@ input UpdateXpathInput {
   id: Int!
 }
 
-input BuscarByXpathInput {
+input BuscarBySorteoWebScrapingInput {
   id_xpath: Int!
-}
-
-input CreateSorteoDiaInput {
-  hora: String!
-  id_sorteo: Int!
-  id_dia: Int!
 }
 
 input CreateSorteoABuscarInput {
@@ -419,4 +413,10 @@ input UpdateSorteoABuscarInput {
   tiempo_de_espera_segundos: Int
   id_sorteo: Int
   id: Int!
+}
+
+input CreateSorteoDiaInput {
+  hora: String!
+  id_sorteo: Int!
+  id_dia: Int!
 }

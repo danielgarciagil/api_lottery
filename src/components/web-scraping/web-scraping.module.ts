@@ -1,13 +1,19 @@
 import { Module } from '@nestjs/common';
 
 //PROPIO
-import { WebScrapingXpathService } from './web-scraping-xpath.service';
-import { WebScrapingResolver } from './web-scraping.resolver';
-import { XpathModule } from './../xpath/xpath.module';
 
+import { XpathModule } from './../xpath/xpath.module';
+import { SorteoABuscarModule } from '../sorteo_a_buscar/sorteo_a_buscar.module';
+import { ProcesoDeSorteoABuscarResolver } from './proceso_de_sorteo_a_buscar.resolver';
+import { ProcesoDeSorteoBuscarService } from './proceso_de_sorteo_a_buscar.service';
+import { WebScrapingXpathService } from './WebScrapingXpath.service';
 @Module({
-  imports: [XpathModule],
-  providers: [WebScrapingResolver, WebScrapingXpathService],
-  exports: [WebScrapingXpathService],
+  imports: [XpathModule, SorteoABuscarModule],
+  providers: [
+    ProcesoDeSorteoABuscarResolver,
+    ProcesoDeSorteoBuscarService,
+    WebScrapingXpathService,
+  ],
+  exports: [],
 })
 export class WebScrapingModule {}

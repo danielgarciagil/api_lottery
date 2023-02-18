@@ -5,11 +5,11 @@ import { BadGatewayException } from '@nestjs/common';
 export async function createDriver(): Promise<WebDriver> {
   try {
     const options = new ChromeOptions();
-    options.addArguments('--disable-extensions');
-    options.addArguments('--disable-gpu');
-    options.addArguments('--no-sandbox');
-    options.addArguments('--disable-dev-shm-usage');
-    options.headless();
+    //options.addArguments('--disable-extensions');
+    //options.addArguments('--disable-gpu');
+    //options.addArguments('--no-sandbox');
+    //options.addArguments('--disable-dev-shm-usage');
+    //options.headless();
 
     return await new Builder()
       .forBrowser('chrome')
