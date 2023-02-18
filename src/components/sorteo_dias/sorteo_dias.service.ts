@@ -6,13 +6,14 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 //PROPIO
 import { CreateSorteoDiaInput } from './dto/create-sorteo_dia.input';
 import { UpdateSorteoDiaInput } from './dto/update-sorteo_dia.input';
 import { SorteoDias } from './entities/sorteo_dia.entity';
-import { PaginationArgs } from 'src/common/dto/args';
-import { ResponsePropioGQl } from 'src/common/response';
-import { MESSAGE } from 'src/config/messages';
+import { PaginationArgs } from './../../common/dto/args';
+import { ResponsePropioGQl } from './../../common/response';
+import { MESSAGE } from './../../config/messages';
 
 @Injectable()
 export class SorteoDiasService {

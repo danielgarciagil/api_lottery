@@ -41,6 +41,7 @@ import { AppInit } from './app-init.service';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: false,
+      //todo una vez en producion queitar de aqui y revisar comos eria la forma correcta
       plugins: [ApolloServerPluginLandingPageLocalDefault],
     }),
 

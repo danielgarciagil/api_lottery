@@ -19,6 +19,10 @@ export class SorteoABuscar {
   @Field(() => ID)
   id: number;
 
+  @Field(() => String)
+  @Column({ type: 'varchar' })
+  name: string;
+
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: true })
   activo: boolean;

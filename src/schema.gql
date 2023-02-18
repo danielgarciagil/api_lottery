@@ -64,6 +64,7 @@ type Sorteo {
 
 type SorteoABuscar {
   id: ID!
+  name: String!
   activo: Boolean!
   buscando: Boolean!
   numeros_intentos: Int!
@@ -177,7 +178,14 @@ type Query {
 
   """Para ver en un dia especificio los sorteo que hay"""
   findSorteoDia(id: Int!): SorteoDias!
-  sorteoABuscar(id: Int!): SorteoABuscar!
+
+  """
+  Para ver la configuracion de todos los script automatico de buscar premios
+  """
+  allSorteoABuscar(offset: Int = 0, limit: Int = 10): [SorteoABuscar!]!
+
+  """Para buscar la configuracion de un sorteo especifico"""
+  findSorteoABuscar(id: Int!): SorteoABuscar!
 }
 
 type Mutation {
@@ -252,9 +260,15 @@ type Mutation {
 
   """Para crear los dias que tendra un sorteo con su hora"""
   createSorteoDia(createSorteoDiaInput: CreateSorteoDiaInput!): SorteoDias!
+
+  """Para crear un Sctipt que busque solo el premio mediante webscraping"""
   createSorteoABuscar(createSorteoABuscarInput: CreateSorteoABuscarInput!): SorteoABuscar!
+
+  """Editar la configuracion del script de busqueda de un sorteo"""
   updateSorteoABuscar(updateSorteoABuscarInput: UpdateSorteoABuscarInput!): SorteoABuscar!
-  removeSorteoABuscar(id: Int!): SorteoABuscar!
+
+  """Eliminar el script de sorteo a buscar"""
+  removeSorteoABuscar(id: Int!): ResponsePropioGQl!
 }
 
 input SignupInput {
@@ -391,12 +405,18 @@ input CreateSorteoDiaInput {
 }
 
 input CreateSorteoABuscarInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  activo: Boolean
+  numeros_intentos: Int!
+  tiempo_de_espera_segundos: Int!
+  id_sorteo: Int!
 }
 
 input UpdateSorteoABuscarInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  name: String
+  activo: Boolean
+  numeros_intentos: Int
+  tiempo_de_espera_segundos: Int
+  id_sorteo: Int
   id: Int!
 }
