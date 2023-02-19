@@ -65,9 +65,15 @@ export class SorteoABuscarService {
   }
 
   async cambiar_estado__de_buscando(id: number, estado: boolean) {
-    const sorteo_a_buscar = await this.findOne(id);
-    sorteo_a_buscar.buscando = estado;
-    await this.sorteoABuscarRepository.save(sorteo_a_buscar);
+    try {
+      const sorteo_a_buscar = await this.findOne(id);
+      sorteo_a_buscar.buscando = estado;
+      await this.sorteoABuscarRepository.save(sorteo_a_buscar);
+    } catch (error) {
+      throw new UnprocessableEntityException(
+        MESSAGE.COMUN_NO_SE_PUDO_ACTUALIZAR,
+      );
+    }
   }
 
   async remove(id: number): Promise<ResponsePropioGQl> {

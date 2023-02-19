@@ -36,4 +36,6 @@ export enum MESSAGE {
   EL_ARREGLO_NO_TIENE_LA_MISMA_POSICIONES = 'El arreglo no tiene la misma posiicones',
   ESTE_XPATH_NO_ES_NUMERO = 'Este XPOATH no es de un numero',
   YA_SE_ESTA_BUSCANDO_AUTOMATICAMENTE_ESTE_SORTEO = 'Ya se esta buscando automaticamente este sorteo',
+
+  EL_NAVEGADOR_NO_PUEDE_ABRIR = 'El navegador no puede abrir',
 }

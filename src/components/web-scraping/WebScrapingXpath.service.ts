@@ -10,6 +10,7 @@ import { createDriver } from './selenium-webdriver';
 import { XpathService } from '../xpath/xpath.service';
 import { MESSAGE } from '../../config/messages';
 import { ALLS_XPATH, RESPONSE_ALLS_XPATH } from './types/xpath.type';
+import { validarFecha } from 'src/common/validar_fechas';
 
 @Injectable()
 export class WebScrapingXpathService {
@@ -35,14 +36,10 @@ export class WebScrapingXpathService {
   //Esta sera la funcion padre para bsucar el numero al relaizar el webscraping
   async buscar(id_xpath: number): Promise<RESPONSE_ALLS_XPATH> {
     const xpath = await this.xpathService.findOne(id_xpath);
-
     if (!xpath.activo) {
-      return {
-        error: true,
-        message: MESSAGE.COMUN_ESTE_ELEMENTO_ESTA_INACTIVO,
-        xpath_digitos: [],
-        xpath_fecha: '',
-      };
+      throw new UnprocessableEntityException(
+        MESSAGE.COMUN_ESTE_ELEMENTO_ESTA_INACTIVO,
+      );
     }
 
     const ALLS_XPATH: ALLS_XPATH = {
@@ -69,12 +66,13 @@ export class WebScrapingXpathService {
     await this.startDriver();
     const driverActual = this.getDriver();
     const data_xpath_digitos: number[] = [];
+    const data_xpath_fechas: string[] = [];
     let digito = '';
+    let fecha_final = '';
     for (let index = 0; index < ALLS_XPATH.longitud_arr; index++) {
       //? Aqui visito las URL
       for (const url of ALLS_XPATH.xpath_urls_by_digitos[index]) {
         driverActual.manage().setTimeouts({ implicit: 500 });
-        console.log(url);
         await this.driver.get(url);
       }
 
@@ -84,7 +82,7 @@ export class WebScrapingXpathService {
         const message = await driverActual.wait(
           until.elementLocated(By.xpath(xpath_actual)),
           10000,
-          'Se agoto el tiempo para encontrar el xpath',
+          'Se agoto el tiempo para encontrar el xpath de la posicion',
           2000,
         );
         const value = await message.getText();
@@ -92,22 +90,39 @@ export class WebScrapingXpathService {
       }
       this.validar_que_es_un_numero(digito);
       data_xpath_digitos.push(Number(digito));
-    }
 
-    //? Aqui busco el string de la data de la fecha
-    //TODO const xpath_fecha = await driverActual.wait(
-    //TODO   until.elementLocated(By.xpath(ALLS_XPATH.xpath_fecha)),
-    //TODO   10000,
-    //TODO   'Se agoto el tiempo para encontrar el xpath',
-    //TODO   2000,
-    //TODO );
-    //TODOconst value_fecha = await xpath_fecha.getText();
+      //? Aqui busco el string de la data de la fecha
+      for (const xpath_Actual_fecha of ALLS_XPATH.xpath_fecha_by_digito[
+        index
+      ]) {
+        const xpath_fecha = await driverActual.wait(
+          until.elementLocated(By.xpath(xpath_Actual_fecha)),
+          10000,
+          'Se agoto el tiempo para encontrar el xpath del tiempo',
+          2000,
+        );
+        const value_fecha = await xpath_fecha.getText();
+        const newFechaFormart = validarFecha(value_fecha);
+        data_xpath_fechas.push(newFechaFormart);
+      }
+      const todas_fechas_iguales = data_xpath_fechas.every(
+        (elemento, indice, arr) => {
+          return elemento === arr[0];
+        },
+      );
+      if (todas_fechas_iguales) {
+        fecha_final = data_xpath_fechas[0].slice(0, 10);
+      } else {
+        console.log('Una de las fechas eran diferentes');
+        throw Error('Una de las fechas eran diferentes');
+      }
+    }
 
     return {
       xpath_digitos: data_xpath_digitos,
-      xpath_fecha: 'value_fecha', //TODO
+      xpath_fecha: fecha_final, //TODO
       error: false,
-      message: '',
+      message: 'Se encontro Bien en el XPATH',
     };
   }
 
@@ -115,7 +130,15 @@ export class WebScrapingXpathService {
     if (!isNaN(Number(numero))) {
       return numero;
     } else {
+      console.log('ESTE XPATH NO PERTENECE A UN NUMERO');
       throw new UnprocessableEntityException(MESSAGE.ESTE_XPATH_NO_ES_NUMERO);
     }
   }
 }
+
+//await this.bloquearPrograma(2);
+//async bloquearPrograma(time: number) {
+//  console.log('Inicio');
+//  await new Promise((resolve) => setTimeout(resolve, time * 1000));
+//  console.log('Después de 5 segundos');
+//}
