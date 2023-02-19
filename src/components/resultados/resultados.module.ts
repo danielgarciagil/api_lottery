@@ -10,5 +10,6 @@ import { SorteoModule } from '../sorteo/sorteo.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Resultado]), SorteoModule],
   providers: [ResultadosResolver, ResultadosService],
+  exports: [ResultadosService],
 })
 export class ResultadosModule {}

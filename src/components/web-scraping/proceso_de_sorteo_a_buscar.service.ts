@@ -8,12 +8,15 @@ import { SorteoABuscarService } from '../sorteo_a_buscar/sorteo_a_buscar.service
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
 import { WebScrapingXpathService } from './WebScrapingXpath.service';
 import { RESPONSE_ALLS_XPATH } from './types/xpath.type';
+import { ResultadosService } from '../resultados/resultados.service';
+import { CreateResultadoInput } from '../resultados/dto/create-resultado.input';
 
 @Injectable()
 export class ProcesoDeSorteoBuscarService {
   constructor(
     private readonly sorteoABuscarService: SorteoABuscarService,
     private readonly webScrapingXpathService: WebScrapingXpathService,
+    private readonly resultadosServiceE: ResultadosService,
   ) {}
 
   async buscarBySorteoWebScraping(
@@ -73,22 +76,33 @@ export class ProcesoDeSorteoBuscarService {
     try {
       const resultados = await Promise.all(elementos_a_instanciar);
 
+      const preResultados = {
+        fecha: new Date(resultados[0].xpath_fecha),
+        numeros_ganadores: resultados[0].xpath_digitos,
+      };
+
       const sonIguales = resultados.every((elem, index, array) =>
         isEqual(elem, array[0]),
       );
+
       if (sonIguales) {
+        console.log('VOY A PUBL:ICAR');
+        await this.resultadosServiceE.create({
+          ...preResultados,
+          id_sorteo: sorteo_a_buscar.sorteo.id,
+        });
         return {
-          xpath_digitos: resultados[0].xpath_digitos, //todo que pasa si no tiene
-          xpath_fecha: resultados[0].xpath_fecha,
+          xpath_digitos: preResultados.numeros_ganadores, //todo que pasa si no tiene
+          xpath_fecha: preResultados.fecha.toISOString(),
           error: false,
-          message: 'Resultados Iguales',
+          message: 'SE PUBLICO BIEN EN EL SORTEO',
         };
       } else {
         return {
           xpath_digitos: [],
           xpath_fecha: '',
           error: true,
-          message: 'NO SON IGUALES LOS RESULTADOS',
+          message: 'NO SON IGUALES LOS RESULTADOS NO SE PUBLICO',
         };
       }
     } catch (error) {

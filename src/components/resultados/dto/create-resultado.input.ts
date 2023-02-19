@@ -33,5 +33,5 @@ export class CreateResultadoInput {
   @Field(() => Boolean, { nullable: true })
   @IsOptional()
   @IsBoolean()
-  activo: boolean;
+  activo?: boolean;
 }
