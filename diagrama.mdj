@@ -2395,6 +2395,22 @@
 											"top": 328,
 											"width": 267.787109375,
 											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGZkLPdX59h5o=",
+											"_parent": {
+												"$ref": "AAAAAAGGWnHre/Sh+Lc="
+											},
+											"model": {
+												"$ref": "AAAAAAGGZkLPXn56E18="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"left": 661,
+											"top": 343,
+											"width": 267.787109375,
+											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
@@ -2408,7 +2424,7 @@
 							"left": 656,
 							"top": 240,
 							"width": 277.787109375,
-							"height": 106,
+							"height": 121,
 							"nameLabel": {
 								"$ref": "AAAAAAGGWnHre/Sg9Mw="
 							},
@@ -4991,6 +5007,14 @@
 							"name": "tiempo_de_espera_segundos",
 							"type": "Int",
 							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGGZkLPXn56E18=",
+							"_parent": {
+								"$ref": "AAAAAAGGWnHrevSdKQU="
+							},
+							"name": "Column3"
 						}
 					]
 				},
