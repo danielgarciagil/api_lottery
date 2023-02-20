@@ -30,6 +30,10 @@ export class Xpath {
   @Column({ type: 'boolean', default: true })
   activo: boolean;
 
+  @Field(() => Boolean)
+  @Column({ type: 'boolean', default: true })
+  buscando: boolean;
+
   @Field(() => [[String]])
   @Column({ type: 'varchar', array: true })
   xpath_digitos: string[][];

@@ -71,6 +71,7 @@ type Xpath {
   name: String!
   descripcion: String!
   activo: Boolean!
+  buscando: Boolean!
   xpath_digitos: [[String!]!]!
   xpath_urls_by_digitos: [[String!]!]!
   xpath_fecha_by_digitos: [[String!]!]!

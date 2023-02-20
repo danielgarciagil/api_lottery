@@ -10,13 +10,21 @@ import { createDriver } from './selenium-webdriver';
 import { XpathService } from '../xpath/xpath.service';
 import { MESSAGE } from '../../config/messages';
 import { ALLS_XPATH, RESPONSE_ALLS_XPATH } from './types/xpath.type';
-import { validarFecha } from 'src/common/validar_fechas';
+import { validarFecha } from './../../common/validar_fechas';
 
 @Injectable()
 export class WebScrapingXpathService {
   private driver: WebDriver;
+  intentos: number;
+  private tiempo_de_espera: number;
 
-  constructor(private readonly xpathService: XpathService) {}
+  constructor(
+    private readonly xpathService: XpathService,
+    intentos, //tiempo_de_espera,
+  ) {
+    //this.intentos = intentos;
+    //this.tiempo_de_espera = tiempo_de_espera;
+  }
 
   async startDriver() {
     this.driver = await createDriver();
@@ -35,6 +43,8 @@ export class WebScrapingXpathService {
 
   //Esta sera la funcion padre para bsucar el numero al relaizar el webscraping
   async buscar(id_xpath: number): Promise<RESPONSE_ALLS_XPATH> {
+    console.log(this.intentos);
+    console.log(this.tiempo_de_espera);
     const xpath = await this.xpathService.findOne(id_xpath);
     if (!xpath.activo) {
       throw new UnprocessableEntityException(
