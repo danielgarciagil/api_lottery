@@ -31,7 +31,7 @@ export class Xpath {
   activo: boolean;
 
   @Field(() => Boolean)
-  @Column({ type: 'boolean', default: true })
+  @Column({ type: 'boolean', default: false })
   buscando: boolean;
 
   @Field(() => [[String]])

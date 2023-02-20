@@ -13,6 +13,8 @@ import { CreateResultadoInput } from '../resultados/dto/create-resultado.input';
 
 @Injectable()
 export class ProcesoDeSorteoBuscarService {
+  private intentos: number;
+  private tiempo_de_espera: number;
   constructor(
     private readonly sorteoABuscarService: SorteoABuscarService,
     private readonly webScrapingXpathService: WebScrapingXpathService,
@@ -47,6 +49,7 @@ export class ProcesoDeSorteoBuscarService {
       return {
         message: message.message,
         status: 200,
+        error: false,
       };
     } catch (error) {
       await this.sorteoABuscarService.cambiar_estado__de_buscando(
@@ -66,8 +69,10 @@ export class ProcesoDeSorteoBuscarService {
 
     //? Comienzo el proceso de buscar los diferentes XPATH
     for (const xpath_actual of sorteo_a_buscar.xpath) {
+      //si el xpath esta inactivo no madnarlo
       //todo no colocr una wait para no aprar el procesoy ver varios xpath del mismo sorteo al mismo tiempo
-      const instancia = await this.webScrapingXpathService.buscar(xpath_actual);
+      const instancia =
+        await this.webScrapingXpathService.iniciar_proceso_xpath(xpath_actual);
 
       elementos_a_instanciar.push(instancia);
     }
@@ -84,6 +89,7 @@ export class ProcesoDeSorteoBuscarService {
       );
 
       if (sonIguales) {
+        //todo controlar error
         console.log('VOY A PUBL:ICAR');
         await this.resultadosServiceE.create({
           ...preResultados,
@@ -108,3 +114,10 @@ export class ProcesoDeSorteoBuscarService {
     }
   }
 }
+
+//await this.bloquearPrograma(2);
+//async bloquearPrograma(time: number) {
+//  console.log('Inicio');
+//  await new Promise((resolve) => setTimeout(resolve, time * 1000));
+//  console.log('Después de 5 segundos');
+//}

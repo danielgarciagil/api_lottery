@@ -55,10 +55,11 @@ export class AuthService {
 
   async logout(id: number): Promise<ResponsePropioGQl> {
     const token = null;
-    await this.usersService.updateToken(id, token);
+    await this.usersService.updateToken(id, token); //todo controlar error
     return {
       message: MESSAGE.SE_CERRO_CORRECTAMENTE_SU_SESION,
       status: 200,
+      error: false,
     };
   }
 

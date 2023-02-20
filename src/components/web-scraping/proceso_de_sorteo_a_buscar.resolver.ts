@@ -22,13 +22,14 @@ export class ProcesoDeSorteoABuscarResolver {
     description:
       'Para Buscar los numeros ganadores de un Sorteo en forma Autoamtica',
   })
+  //todo revisar permiso
   async init_buscar_sorteo_automatico(
     @CurrentUser([VALID_PERMISO_ACCION.SORTEO_CREATE]) user: User,
     @Args('buscarBySorteoWebScrapingInput')
     buscarBySorteoWebScrapingInput: BuscarBySorteoWebScrapingInput,
   ): Promise<ResponsePropioGQl> {
     return this.procesoDeSorteoBuscarService.buscarBySorteoWebScraping(
-      buscarBySorteoWebScrapingInput.id_xpath,
+      buscarBySorteoWebScrapingInput.id_sorteo_a_buscar,
     );
   }
 }

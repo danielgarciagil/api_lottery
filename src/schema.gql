@@ -39,6 +39,7 @@ type AuthResponse {
 type ResponsePropioGQl {
   status: String!
   message: String!
+  error: Boolean!
 }
 
 type Juego {
@@ -419,5 +420,5 @@ input UpdateSorteoABuscarInput {
 }
 
 input BuscarBySorteoWebScrapingInput {
-  id_xpath: Int!
+  id_sorteo_a_buscar: Int!
 }

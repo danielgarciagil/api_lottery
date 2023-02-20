@@ -6,5 +6,5 @@ export class BuscarBySorteoWebScrapingInput {
   @Field(() => Int)
   @IsNumber()
   @Min(1)
-  id_xpath: number;
+  id_sorteo_a_buscar: number;
 }

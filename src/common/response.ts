@@ -14,4 +14,7 @@ export class ResponsePropioGQl {
 
   @Field(() => String)
   message: string;
+
+  @Field(() => Boolean)
+  error: boolean;
 }
