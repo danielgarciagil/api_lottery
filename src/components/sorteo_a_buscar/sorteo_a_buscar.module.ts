@@ -9,6 +9,6 @@ import { SorteoABuscar } from './entities/sorteo_a_buscar.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([SorteoABuscar])],
   providers: [SorteoABuscarResolver, SorteoABuscarService],
-  exports: [SorteoABuscarService],
+  exports: [TypeOrmModule, SorteoABuscarService],
 })
 export class SorteoABuscarModule {}

@@ -67,9 +67,7 @@ export class ProcesoDeSorteoBuscarService {
     //? Comienzo el proceso de buscar los diferentes XPATH
     for (const xpath_actual of sorteo_a_buscar.xpath) {
       //todo no colocr una wait para no aprar el procesoy ver varios xpath del mismo sorteo al mismo tiempo
-      const instancia = await this.webScrapingXpathService.buscar(
-        xpath_actual.id,
-      );
+      const instancia = await this.webScrapingXpathService.buscar(xpath_actual);
 
       elementos_a_instanciar.push(instancia);
     }

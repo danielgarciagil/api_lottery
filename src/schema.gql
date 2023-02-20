@@ -168,14 +168,6 @@ type Query {
   """Para ver un Xpath especifico"""
   findXpath(id: Int!): Xpath!
 
-  """
-  Para ver la configuracion de todos los script automatico de buscar premios
-  """
-  allSorteoABuscar(offset: Int = 0, limit: Int = 10): [SorteoABuscar!]!
-
-  """Para buscar la configuracion de un sorteo especifico"""
-  findSorteoABuscar(id: Int!): SorteoABuscar!
-
   """Para ver todos los Dias"""
   allDias(offset: Int = 0, limit: Int = 10): [Dias!]!
 
@@ -187,6 +179,14 @@ type Query {
 
   """Para ver en un dia especificio los sorteo que hay"""
   findSorteoDia(id: Int!): SorteoDias!
+
+  """
+  Para ver la configuracion de todos los script automatico de buscar premios
+  """
+  allSorteoABuscar(offset: Int = 0, limit: Int = 10): [SorteoABuscar!]!
+
+  """Para buscar la configuracion de un sorteo especifico"""
+  findSorteoABuscar(id: Int!): SorteoABuscar!
 }
 
 type Mutation {
@@ -256,8 +256,8 @@ type Mutation {
   """Para eliminar un Xpath"""
   removeXpath(id: Int!): ResponsePropioGQl!
 
-  """Para Buscar los numeros ganadores de un Sorteo en forma Autoamtica"""
-  buscarBySorteoAutomatico(buscarBySorteoWebScrapingInput: BuscarBySorteoWebScrapingInput!): ResponsePropioGQl!
+  """Para crear los dias que tendra un sorteo con su hora"""
+  createSorteoDia(createSorteoDiaInput: CreateSorteoDiaInput!): SorteoDias!
 
   """Para crear un Sctipt que busque solo el premio mediante webscraping"""
   createSorteoABuscar(createSorteoABuscarInput: CreateSorteoABuscarInput!): SorteoABuscar!
@@ -268,8 +268,8 @@ type Mutation {
   """Eliminar el script de sorteo a buscar"""
   removeSorteoABuscar(id: Int!): ResponsePropioGQl!
 
-  """Para crear los dias que tendra un sorteo con su hora"""
-  createSorteoDia(createSorteoDiaInput: CreateSorteoDiaInput!): SorteoDias!
+  """Para Buscar los numeros ganadores de un Sorteo en forma Autoamtica"""
+  buscarBySorteoAutomatico(buscarBySorteoWebScrapingInput: BuscarBySorteoWebScrapingInput!): ResponsePropioGQl!
 }
 
 input SignupInput {
@@ -395,8 +395,10 @@ input UpdateXpathInput {
   id: Int!
 }
 
-input BuscarBySorteoWebScrapingInput {
-  id_xpath: Int!
+input CreateSorteoDiaInput {
+  hora: String!
+  id_sorteo: Int!
+  id_dia: Int!
 }
 
 input CreateSorteoABuscarInput {
@@ -416,8 +418,6 @@ input UpdateSorteoABuscarInput {
   id: Int!
 }
 
-input CreateSorteoDiaInput {
-  hora: String!
-  id_sorteo: Int!
-  id_dia: Int!
+input BuscarBySorteoWebScrapingInput {
+  id_xpath: Int!
 }

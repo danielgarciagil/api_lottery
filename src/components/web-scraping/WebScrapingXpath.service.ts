@@ -11,20 +11,15 @@ import { XpathService } from '../xpath/xpath.service';
 import { MESSAGE } from '../../config/messages';
 import { ALLS_XPATH, RESPONSE_ALLS_XPATH } from './types/xpath.type';
 import { validarFecha } from './../../common/validar_fechas';
+import { Xpath } from '../xpath/entities/xpath.entity';
 
 @Injectable()
 export class WebScrapingXpathService {
   private driver: WebDriver;
-  intentos: number;
+  private intentos: number;
   private tiempo_de_espera: number;
 
-  constructor(
-    private readonly xpathService: XpathService,
-    intentos, //tiempo_de_espera,
-  ) {
-    //this.intentos = intentos;
-    //this.tiempo_de_espera = tiempo_de_espera;
-  }
+  constructor(private readonly xpathService: XpathService) {}
 
   async startDriver() {
     this.driver = await createDriver();
@@ -37,15 +32,11 @@ export class WebScrapingXpathService {
     }
   }
 
-  getDriver() {
-    return this.driver;
-  }
-
   //Esta sera la funcion padre para bsucar el numero al relaizar el webscraping
-  async buscar(id_xpath: number): Promise<RESPONSE_ALLS_XPATH> {
+  async buscar(xpath: Xpath): Promise<RESPONSE_ALLS_XPATH> {
     console.log(this.intentos);
     console.log(this.tiempo_de_espera);
-    const xpath = await this.xpathService.findOne(id_xpath);
+    //const xpath = await this.xpathService.findOne(id_xpath);
     if (!xpath.activo) {
       throw new UnprocessableEntityException(
         MESSAGE.COMUN_ESTE_ELEMENTO_ESTA_INACTIVO,
@@ -74,7 +65,7 @@ export class WebScrapingXpathService {
 
   async buscar_numeros(ALLS_XPATH: ALLS_XPATH): Promise<RESPONSE_ALLS_XPATH> {
     await this.startDriver();
-    const driverActual = this.getDriver();
+    const driverActual = this.driver;
     const data_xpath_digitos: number[] = [];
     const data_xpath_fechas: string[] = [];
     let digito = '';

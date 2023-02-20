@@ -61,11 +61,11 @@ import { AppInit } from './app-init.service';
     JuegoModule,
     ResultadosModule,
     XpathModule,
-    WebScrapingModule,
     DiasModule,
     SorteoModule,
     SorteoDiasModule,
     SorteoABuscarModule,
+    WebScrapingModule,
 
     //AUTOMATICO
     CronModule,
