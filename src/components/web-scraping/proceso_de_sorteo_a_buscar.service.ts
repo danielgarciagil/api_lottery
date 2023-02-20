@@ -1,123 +1,92 @@
 import { BadGatewayException, Injectable } from '@nestjs/common';
-import { isEqual } from 'lodash';
 
 //PROPIO
 import { ResponsePropioGQl } from '../../common/response';
 import { MESSAGE } from '../../config/messages';
 import { SorteoABuscarService } from '../sorteo_a_buscar/sorteo_a_buscar.service';
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
-import { WebScrapingXpathService } from './WebScrapingXpath.service';
-import { RESPONSE_ALLS_XPATH } from './types/xpath.type';
+import { RESPONSE_BY_XPATH } from './../../common/response';
 import { ResultadosService } from '../resultados/resultados.service';
-import { CreateResultadoInput } from '../resultados/dto/create-resultado.input';
+import { BuscarAutomaticoService } from './buscar-automatico.service';
+import { XpathService } from '../xpath/xpath.service';
+import { WebScrapingXpathService } from './WebScrapingXpath.service';
 
 @Injectable()
 export class ProcesoDeSorteoBuscarService {
-  private intentos: number;
-  private tiempo_de_espera: number;
   constructor(
     private readonly sorteoABuscarService: SorteoABuscarService,
-    private readonly webScrapingXpathService: WebScrapingXpathService,
     private readonly resultadosServiceE: ResultadosService,
+    private readonly xpathService: XpathService,
   ) {}
 
-  async buscarBySorteoWebScraping(
+  async validar_xpath_individual(id_xpath: number): Promise<RESPONSE_BY_XPATH> {
+    const xpath = await this.xpathService.findOne(id_xpath);
+    const test = new WebScrapingXpathService();
+    return await test.iniciar_proceso_xpath(xpath);
+  }
+
+  async iniciar_proceso_sorteo_a_buscar(
     id_sorteo_a_buscar: number,
   ): Promise<ResponsePropioGQl> {
+    const sorteo = await this.combrobar_status_sorteo_a_buscar(
+      id_sorteo_a_buscar,
+    );
+    this.init(sorteo);
+
+    //todo si se esta buscando avisar
+    return {
+      message: 'COMENZO EL PROCESO AUTOMATICO',
+      error: false,
+      status: 200,
+    };
+  }
+
+  async init(sorteo_a_buscar: SorteoABuscar): Promise<ResponsePropioGQl> {
+    try {
+      const sorteo = new BuscarAutomaticoService();
+      const response = await sorteo.iniciar_busqueda(sorteo_a_buscar);
+
+      await this.publicar(sorteo_a_buscar, response);
+
+      return {
+        error: false,
+        message: 'SE PUBLICO BIEN',
+        status: 200,
+      };
+    } catch (error) {
+      return {
+        error: true,
+        message: error,
+        status: 400,
+      };
+    }
+  }
+
+  async combrobar_status_sorteo_a_buscar(
+    id_sorteo_a_buscar: number,
+  ): Promise<SorteoABuscar> {
     const sorteo_a_buscar = await this.sorteoABuscarService.findOne(
       id_sorteo_a_buscar,
     );
     if (!sorteo_a_buscar.activo) {
       throw new BadGatewayException(MESSAGE.COMUN_ESTE_ELEMENTO_ESTA_INACTIVO);
     }
-
     if (sorteo_a_buscar.buscando) {
       throw new BadGatewayException(
         MESSAGE.YA_SE_ESTA_BUSCANDO_AUTOMATICAMENTE_ESTE_SORTEO,
       );
     }
-    await this.sorteoABuscarService.cambiar_estado__de_buscando(
-      sorteo_a_buscar.id,
-      true,
-    );
-    try {
-      const message = await this.comenzar_web_scraping(sorteo_a_buscar);
-      await this.sorteoABuscarService.cambiar_estado__de_buscando(
-        id_sorteo_a_buscar,
-        false,
-      );
-      return {
-        message: message.message,
-        status: 200,
-        error: false,
-      };
-    } catch (error) {
-      await this.sorteoABuscarService.cambiar_estado__de_buscando(
-        id_sorteo_a_buscar,
-        false,
-      );
-      console.log(error);
-      throw new BadGatewayException();
-    }
+    return sorteo_a_buscar;
   }
 
-  async comenzar_web_scraping(
+  async publicar(
     sorteo_a_buscar: SorteoABuscar,
-  ): Promise<RESPONSE_ALLS_XPATH> {
-    //? Aqui instancio todos los xpath de un sorteo
-    const elementos_a_instanciar: RESPONSE_ALLS_XPATH[] = [];
-
-    //? Comienzo el proceso de buscar los diferentes XPATH
-    for (const xpath_actual of sorteo_a_buscar.xpath) {
-      //si el xpath esta inactivo no madnarlo
-      //todo no colocr una wait para no aprar el procesoy ver varios xpath del mismo sorteo al mismo tiempo
-      const instancia =
-        await this.webScrapingXpathService.iniciar_proceso_xpath(xpath_actual);
-
-      elementos_a_instanciar.push(instancia);
-    }
-    try {
-      const resultados = await Promise.all(elementos_a_instanciar);
-
-      const preResultados = {
-        fecha: new Date(resultados[0].xpath_fecha),
-        numeros_ganadores: resultados[0].xpath_digitos,
-      };
-
-      const sonIguales = resultados.every((elem, index, array) =>
-        isEqual(elem, array[0]),
-      );
-
-      if (sonIguales) {
-        //todo controlar error
-        console.log('VOY A PUBL:ICAR');
-        await this.resultadosServiceE.create({
-          ...preResultados,
-          id_sorteo: sorteo_a_buscar.sorteo.id,
-        });
-        return {
-          xpath_digitos: preResultados.numeros_ganadores, //todo que pasa si no tiene
-          xpath_fecha: preResultados.fecha.toISOString(),
-          error: false,
-          message: 'SE PUBLICO BIEN EN EL SORTEO',
-        };
-      } else {
-        return {
-          xpath_digitos: [],
-          xpath_fecha: '',
-          error: true,
-          message: 'NO SON IGUALES LOS RESULTADOS NO SE PUBLICO',
-        };
-      }
-    } catch (error) {
-      throw new BadGatewayException();
-    }
+    response_xpath: RESPONSE_BY_XPATH,
+  ) {
+    await this.resultadosServiceE.create({
+      numeros_ganadores: response_xpath.data_by_xpath_digitos,
+      fecha: new Date(response_xpath.data_by_xpath_fecha),
+      id_sorteo: sorteo_a_buscar.sorteo.id,
+    });
   }
 }
-
-//await this.bloquearPrograma(2);
-//async bloquearPrograma(time: number) {
-//  console.log('Inicio');
-//  await new Promise((resolve) => setTimeout(resolve, time * 1000));
-//  console.log('Después de 5 segundos');
-//}

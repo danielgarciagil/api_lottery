@@ -42,6 +42,13 @@ type ResponsePropioGQl {
   error: Boolean!
 }
 
+type RESPONSE_BY_XPATH {
+  data_by_xpath_digitos: [Int!]!
+  data_by_xpath_fecha: String!
+  message: String!
+  error: Boolean!
+}
+
 type Juego {
   id: ID!
   name: String!
@@ -270,7 +277,10 @@ type Mutation {
   removeSorteoABuscar(id: Int!): ResponsePropioGQl!
 
   """Para Buscar los numeros ganadores de un Sorteo en forma Autoamtica"""
-  buscarBySorteoAutomatico(buscarBySorteoWebScrapingInput: BuscarBySorteoWebScrapingInput!): ResponsePropioGQl!
+  buscarBySorteoAutomatico(buscarBySorteoaBuscarInput: BuscarBySorteoaBuscarInput!): ResponsePropioGQl!
+
+  """Para verificar que el Xpath esta bien"""
+  validarXpathIndividual(buscarByXpathWebScrapingInput: BuscarByXpathWebScrapingInput!): RESPONSE_BY_XPATH!
 }
 
 input SignupInput {
@@ -419,6 +429,10 @@ input UpdateSorteoABuscarInput {
   id: Int!
 }
 
-input BuscarBySorteoWebScrapingInput {
+input BuscarBySorteoaBuscarInput {
   id_sorteo_a_buscar: Int!
+}
+
+input BuscarByXpathWebScrapingInput {
+  id_xpath_a_buscar: Int!
 }

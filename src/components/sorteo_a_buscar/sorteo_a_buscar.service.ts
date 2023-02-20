@@ -64,7 +64,7 @@ export class SorteoABuscarService {
     throw new BadGatewayException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO); // todo
   }
 
-  async cambiar_estado__de_buscando(id: number, estado: boolean) {
+  async cambiar_estado_de_buscando(id: number, estado: boolean) {
     try {
       const sorteo_a_buscar = await this.findOne(id);
       sorteo_a_buscar.buscando = estado;

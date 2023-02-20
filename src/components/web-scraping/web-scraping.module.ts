@@ -8,6 +8,7 @@ import { ProcesoDeSorteoABuscarResolver } from './proceso_de_sorteo_a_buscar.res
 import { ProcesoDeSorteoBuscarService } from './proceso_de_sorteo_a_buscar.service';
 import { WebScrapingXpathService } from './WebScrapingXpath.service';
 import { ResultadosModule } from '../resultados/resultados.module';
+
 @Module({
   imports: [XpathModule, SorteoABuscarModule, ResultadosModule],
   providers: [

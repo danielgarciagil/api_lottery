@@ -78,6 +78,8 @@ export class XpathService {
     throw new BadGatewayException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);
   }
 
+  //todo crear funcion apra cambair el estado del xpath al ser buscado
+
   async remove(id: number): Promise<ResponsePropioGQl> {
     const xpath = await this.findOne(id);
     try {

@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { By, WebDriver, until } from 'selenium-webdriver';
+import { By, WebDriver, until, Builder } from 'selenium-webdriver';
+import { Options as ChromeOptions } from 'selenium-webdriver/chrome';
 
 //PROPIO
-import { createDriver } from './selenium-webdriver';
-import { XpathService } from '../xpath/xpath.service';
-import { RESPONSE_ALLS_XPATH } from './types/xpath.type';
+import { RESPONSE_BY_XPATH } from './../../common/response';
 import { validarFecha } from './../../common/validar_fechas';
 import { Xpath } from '../xpath/entities/xpath.entity';
 
@@ -12,10 +11,22 @@ import { Xpath } from '../xpath/entities/xpath.entity';
 export class WebScrapingXpathService {
   private driver: WebDriver;
 
-  constructor(private readonly xpathService: XpathService) {}
-
   async startDriver() {
-    this.driver = await createDriver();
+    try {
+      const options = new ChromeOptions();
+      options.addArguments('--disable-extensions');
+      options.addArguments('--disable-gpu');
+      options.addArguments('--no-sandbox');
+      options.addArguments('--disable-dev-shm-usage');
+      options.headless();
+
+      this.driver = await new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(options)
+        .build();
+    } catch (error) {
+      this.driver = null;
+    }
   }
 
   async stopDriver() {
@@ -45,10 +56,10 @@ export class WebScrapingXpathService {
   }
 
   //Esta sera la funcion padre para bsucar toda la data de un xpath valido
-  async iniciar_proceso_xpath(xpath: Xpath): Promise<RESPONSE_ALLS_XPATH> {
+  async iniciar_proceso_xpath(xpath: Xpath): Promise<RESPONSE_BY_XPATH> {
     try {
-      //todo cambair status de xpath a true buscando
       await this.startDriver();
+      this.validar_driver();
       const data_xpath_digitos: number[] = [];
       const data_xpath_fechas: string[] = [];
       let fecha_final = '';
@@ -74,8 +85,8 @@ export class WebScrapingXpathService {
       this.stopDriver();
       return {
         message: 'SE ENCONTRO LA DATA DEL XPATH',
-        xpath_digitos: data_xpath_digitos,
-        xpath_fecha: fecha_final,
+        data_by_xpath_digitos: data_xpath_digitos,
+        data_by_xpath_fecha: fecha_final,
         error: false,
       };
     } catch (error) {
@@ -83,8 +94,8 @@ export class WebScrapingXpathService {
       return {
         error: true,
         message: error,
-        xpath_digitos: [],
-        xpath_fecha: '',
+        data_by_xpath_digitos: [],
+        data_by_xpath_fecha: '',
       };
     }
   }
@@ -95,15 +106,20 @@ export class WebScrapingXpathService {
     arr_xpath_fechas: string[][],
   ): Promise<string> {
     const driverActual = this.driver;
+    this.validar_driver();
     for (const xpath_Actual_fecha of arr_xpath_fechas[index_actual]) {
-      const xpath_fecha = await driverActual.wait(
-        until.elementLocated(By.xpath(xpath_Actual_fecha)),
-        10000,
-        'Se agoto el tiempo para encontrar el xpath del tiempo',
-        2000,
-      );
-      const value_fecha = await xpath_fecha.getText();
-      return validarFecha(value_fecha);
+      try {
+        const xpath_fecha = await driverActual.wait(
+          until.elementLocated(By.xpath(xpath_Actual_fecha)),
+          10000,
+          '',
+          2000,
+        );
+        const value_fecha = await xpath_fecha.getText();
+        return validarFecha(value_fecha);
+      } catch (error) {
+        throw new Error('ESTE XPATH DE FECHA NO PUEDE SER ENCONTRADO');
+      }
     }
   }
 
@@ -114,16 +130,20 @@ export class WebScrapingXpathService {
   ): Promise<number> {
     let digito = '';
     const driverActual = this.driver;
-
+    this.validar_driver();
     for (const xpath_digito_actual of arr_xpath_digitos[index_actual]) {
-      const message = await driverActual.wait(
-        until.elementLocated(By.xpath(xpath_digito_actual)),
-        10000,
-        'Se agoto el tiempo para encontrar el xpath de la posicion',
-        2000,
-      );
-      const value = await message.getText();
-      digito += value;
+      try {
+        const message = await driverActual.wait(
+          until.elementLocated(By.xpath(xpath_digito_actual)),
+          10000,
+          '',
+          2000,
+        );
+        const value = await message.getText();
+        digito += value;
+      } catch (error) {
+        throw new Error('ESTE XPATH DE DIGITO NO PUEDE SER ENCONTRADO');
+      }
     }
     return this.validar_que_es_un_numero(digito);
   }
@@ -131,9 +151,16 @@ export class WebScrapingXpathService {
   //? Aqui visito las diferentes URL por digitos
   async for_urls_digitos(index_actual: number, arr_urls_digitos: string[][]) {
     const driverActual = this.driver;
+    this.validar_driver();
     for (const url of arr_urls_digitos[index_actual]) {
       driverActual.manage().setTimeouts({ implicit: 500 });
       await this.driver.get(url);
+    }
+  }
+
+  validar_driver() {
+    if (!this.driver) {
+      throw Error('El driver no existe');
     }
   }
 }

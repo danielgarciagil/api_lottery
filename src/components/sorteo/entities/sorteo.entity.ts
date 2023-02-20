@@ -67,7 +67,7 @@ export class Sorteo {
   //todo field
   @Field(() => [SorteoDias])
   @OneToMany(() => SorteoDias, (sorteoDias) => sorteoDias.sorteo, {
-    lazy: true,
+    eager: true,
   })
   sorteo_dias: SorteoDias[];
 }
