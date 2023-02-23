@@ -19,12 +19,15 @@ export class CronService {
     );
     console.log(res);
   }
-
+  //TODO crear un cron que cada dia a las 12:00, me apre los cron vieos y me cargues los nuevos,
+  //Pero solo me cargaria los cron que pertenecen a ese dia especifico, no me lo cargaria todos
   async testCron() {
     cron.validate('');
-    cron.schedule('55 21 * * * ', () => {
+    cron.getTasks();
+    const tarea = cron.schedule('26 23 * * * ', () => {
       console.log('ENTTTRO');
     });
+    tarea.stop();
   }
 }
 
