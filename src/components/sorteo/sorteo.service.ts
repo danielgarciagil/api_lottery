@@ -46,6 +46,18 @@ export class SorteoService {
     });
   }
 
+  async findAllByDays(idDay: number): Promise<Sorteo[]> {
+    return await this.sorteoRepository.find({
+      where: {
+        sorteo_dias: {
+          dias: {
+            id: idDay,
+          },
+        },
+      },
+    });
+  }
+
   async findOne(id: number): Promise<Sorteo> {
     const sorteo = await this.sorteoRepository.findOneBy({ id });
     if (!sorteo) {

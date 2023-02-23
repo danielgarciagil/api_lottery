@@ -93,6 +93,7 @@ type SorteoABuscar {
   buscando: Boolean!
   numeros_intentos: Int!
   tiempo_de_espera_segundos: Int!
+  sorteo: Sorteo!
   xpath: [Xpath!]!
 }
 

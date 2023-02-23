@@ -39,6 +39,7 @@ export class SorteoABuscar {
   @Column({ type: 'int' })
   tiempo_de_espera_segundos: number;
 
+  @Field(() => Sorteo) //todo
   @OneToOne(() => Sorteo, (sorteo) => sorteo.sorteo_a_buscar, { eager: true })
   @JoinColumn({ name: 'id_sorteo' })
   sorteo: Sorteo;
