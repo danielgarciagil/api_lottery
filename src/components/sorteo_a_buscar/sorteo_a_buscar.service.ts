@@ -47,6 +47,20 @@ export class SorteoABuscarService {
     });
   }
 
+  async findAllByDays(idDay: number): Promise<SorteoABuscar[]> {
+    return await this.sorteoABuscarRepository.find({
+      where: {
+        sorteo: {
+          sorteo_dias: {
+            dias: {
+              id: idDay,
+            },
+          },
+        },
+      },
+    });
+  }
+
   async findOne(id: number): Promise<SorteoABuscar> {
     const sorteo_a_buscar = await this.sorteoABuscarRepository.findOneBy({
       id,
@@ -54,6 +68,13 @@ export class SorteoABuscarService {
     if (!sorteo_a_buscar) {
       throw new NotFoundException(MESSAGE.COMUN_ESTE_ID_NO_EXISTE);
     }
+    return sorteo_a_buscar;
+  }
+
+  async findOneSinError(id: number): Promise<SorteoABuscar> {
+    const sorteo_a_buscar = await this.sorteoABuscarRepository.findOneBy({
+      id,
+    });
     return sorteo_a_buscar;
   }
 

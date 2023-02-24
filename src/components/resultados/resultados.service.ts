@@ -25,27 +25,39 @@ export class ResultadosService {
     private readonly sorteoService: SorteoService,
   ) {}
 
+  async prevCreate(
+    createResultadoInput: CreateResultadoInput,
+  ): Promise<Resultado> {
+    const { id_sorteo, fecha, numeros_ganadores } = createResultadoInput;
+
+    //! Aqui validos los numeros a publicar con las reglas del juego
+    await this.verificar_reglas_sorteo(id_sorteo, numeros_ganadores);
+
+    //! Aqui valido que no exista un resultado con la misma fecha y el mismo sorteo
+    await this.verificar_que_no_se_duplique(id_sorteo, fecha);
+
+    const newResultado = this.resultadoRepository.create({
+      fecha: fecha,
+      numeros_ganadores: numeros_ganadores,
+      sorteo: { id: id_sorteo },
+    });
+
+    await this.resultadoRepository.save(newResultado);
+    return this.findOne(newResultado.id);
+  }
+
   async create(createResultadoInput: CreateResultadoInput): Promise<Resultado> {
     try {
-      const { id_sorteo, fecha, numeros_ganadores } = createResultadoInput;
-
-      //! Aqui validos los numeros a publicar con las reglas del juego
-      await this.verificar_reglas_sorteo(id_sorteo, numeros_ganadores);
-
-      //! Aqui valido que no exista un resultado con la misma fecha y el mismo sorteo
-      await this.verificar_que_no_se_duplique(id_sorteo, fecha);
-
-      const newResultado = this.resultadoRepository.create({
-        fecha: fecha,
-        numeros_ganadores: numeros_ganadores,
-        sorteo: { id: id_sorteo },
-      });
-
-      await this.resultadoRepository.save(newResultado);
-      return this.findOne(newResultado.id);
+      return await this.prevCreate(createResultadoInput);
     } catch (error) {
       throw new UnprocessableEntityException(error?.message);
     }
+  }
+
+  async createSinError(
+    createResultadoInput: CreateResultadoInput,
+  ): Promise<Resultado> {
+    return await this.prevCreate(createResultadoInput);
   }
 
   async verificar_que_no_se_duplique(id_sorteo: number, fecha: Date) {

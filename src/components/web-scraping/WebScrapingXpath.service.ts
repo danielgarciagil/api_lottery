@@ -12,21 +12,17 @@ export class WebScrapingXpathService {
   private driver: WebDriver;
 
   async startDriver() {
-    try {
-      const options = new ChromeOptions();
-      options.addArguments('--disable-extensions');
-      options.addArguments('--disable-gpu');
-      options.addArguments('--no-sandbox');
-      options.addArguments('--disable-dev-shm-usage');
-      options.headless();
+    const options = new ChromeOptions();
+    options.addArguments('--disable-extensions');
+    options.addArguments('--disable-gpu');
+    options.addArguments('--no-sandbox');
+    options.addArguments('--disable-dev-shm-usage');
+    options.headless();
 
-      this.driver = await new Builder()
-        .forBrowser('chrome')
-        .setChromeOptions(options)
-        .build();
-    } catch (error) {
-      this.driver = null;
-    }
+    this.driver = await new Builder()
+      .forBrowser('chrome')
+      .setChromeOptions(options)
+      .build();
   }
 
   async stopDriver() {
@@ -36,7 +32,7 @@ export class WebScrapingXpathService {
     }
   }
 
-  validar_que_es_un_numero(numero): number {
+  validar_que_es_un_numero(numero: any): number {
     if (!isNaN(Number(numero))) {
       return numero;
     } else {
@@ -152,9 +148,13 @@ export class WebScrapingXpathService {
   async for_urls_digitos(index_actual: number, arr_urls_digitos: string[][]) {
     const driverActual = this.driver;
     this.validar_driver();
-    for (const url of arr_urls_digitos[index_actual]) {
-      driverActual.manage().setTimeouts({ implicit: 500 });
-      await this.driver.get(url);
+    try {
+      for (const url of arr_urls_digitos[index_actual]) {
+        driverActual.manage().setTimeouts({ implicit: 500 });
+        await this.driver.get(url);
+      }
+    } catch (error) {
+      throw Error('NO SE PUDO ACEDER A LA URL');
     }
   }
 

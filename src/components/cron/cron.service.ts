@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import * as cron from 'node-cron';
 
-import { SorteoService } from '../sorteo/sorteo.service';
-import { Sorteo } from '../sorteo/entities/sorteo.entity';
 import { cronExpression } from './../../common/funciones/cronExpresion';
-import { ProcesoDeSorteoBuscarService } from '../web-scraping/proceso_de_sorteo_a_buscar.service';
+import { GenerarResultadosService } from '../web-scraping/generar-resultados.service';
+import { SorteoABuscarService } from '../sorteo_a_buscar/sorteo_a_buscar.service';
+import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
+
 @Injectable()
 export class CronService {
   constructor(
-    private readonly sorteoService: SorteoService,
-    private readonly procesoDeSorteoBuscarService: ProcesoDeSorteoBuscarService,
+    private readonly sorteoABuscarService: SorteoABuscarService,
+    private readonly generarResultadosService: GenerarResultadosService,
   ) {}
   private tareas: cron.ScheduledTask[] = [];
 
@@ -19,11 +20,11 @@ export class CronService {
   }
 
   //Devulvo todos los sorteos del dia en Curso
-  async consultar_sorteos(): Promise<Sorteo[]> {
+  async consultar_sorteosABuscar(): Promise<SorteoABuscar[]> {
     const id_fecha_hoy = this.id_fecha_hoy();
-    const todos_los_sorteos = await this.sorteoService.findAllByDays(
+    const todos_los_sorteos = await this.sorteoABuscarService.findAllByDays(
       id_fecha_hoy,
-    ); //TODO
+    );
     return todos_los_sorteos;
   }
 
@@ -37,8 +38,8 @@ export class CronService {
 
   //Borro los cron existentes y creo nuevos
   borrar_cron_cargar_nuevos() {
-    this.tareas.forEach((tareacron) => {
-      tareacron.stop();
+    this.tareas.forEach((tareaCron) => {
+      tareaCron.stop();
     });
     this.tareas = [];
     this.crear_tareas_automaticas();
@@ -46,19 +47,20 @@ export class CronService {
 
   //Creo los cron individuales y lo agregoa un Array
   async crear_tareas_automaticas() {
-    const sorteos = await this.consultar_sorteos();
-    for (const sorteo of sorteos) {
+    const arrSorteosABuscars = await this.consultar_sorteosABuscar();
+    for (const sorteoABuscar of arrSorteosABuscars) {
+      const sorteo = sorteoABuscar.sorteo;
       for (let i = 0; i < sorteo.sorteo_dias.length; i++) {
         const cron_expresion = cronExpression(
           sorteo.sorteo_dias[i].id,
           sorteo.sorteo_dias[i].hora,
         );
-        const tarea = cron.schedule(cron_expresion, () => {
+        const tarea = cron.schedule(cron_expresion, async () => {
           console.log(`Esta buscando este sorteo ${sorteo.name}`);
-          console.log(sorteo);
-          this.procesoDeSorteoBuscarService.iniciar_proceso_sorteo_a_buscar(
-            sorteo.sorteo_a_buscar.id,
+          const res = await this.generarResultadosService.init_generar(
+            sorteoABuscar,
           );
+          console.log(res);
         });
         this.tareas.push(tarea);
       }

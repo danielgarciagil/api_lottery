@@ -66,7 +66,7 @@ import { AppInit } from './app-init.service';
     SorteoModule,
     SorteoDiasModule,
     SorteoABuscarModule,
-    ResponseSorteoABuscarModule,
+    //ResponseSorteoABuscarModule,
     WebScrapingModule,
 
     //AUTOMATICO

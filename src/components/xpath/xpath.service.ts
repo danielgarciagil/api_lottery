@@ -73,6 +73,11 @@ export class XpathService {
     return xpath;
   }
 
+  async findOneSinError(id: number): Promise<Xpath> {
+    const xpath = await this.xpathRepository.findOneBy({ id });
+    return xpath;
+  }
+
   //TODO tener cuenta los arreglos deben de ser iguales
   async update(id: number, updateXpathInput: UpdateXpathInput): Promise<Xpath> {
     throw new BadGatewayException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO);

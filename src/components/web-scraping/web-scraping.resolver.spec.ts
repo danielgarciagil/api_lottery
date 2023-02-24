@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Proceso_de_Sorteo_a_Buscar } from './proceso_de_sorteo_a_buscar.resolver';
+import { Proceso_de_Sorteo_a_Buscar } from './generar-automaticos.resolver';
 
 describe('WebScrapingResolver', () => {
   let resolver: Proceso_de_Sorteo_a_Buscar;
