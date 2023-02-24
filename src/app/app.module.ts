@@ -25,6 +25,7 @@ import {
   SorteoDiasModule,
   DiasModule,
   SorteoABuscarModule,
+  ResponseSorteoABuscarModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -65,6 +66,7 @@ import { AppInit } from './app-init.service';
     SorteoModule,
     SorteoDiasModule,
     SorteoABuscarModule,
+    ResponseSorteoABuscarModule,
     WebScrapingModule,
 
     //AUTOMATICO

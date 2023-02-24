@@ -11,9 +11,6 @@ export class CronServiceInit implements OnModuleInit {
 
   async onModuleInit() {
     this.logger.debug('INICIO EL MODULO DE CRON');
-    await this.cronService.crear_tareas_automaticas();
     this.cronService.iniciar_tareas();
-    console.log('TESTTT');
-    this.cronService.test_probar_arr_tareas();
   }
 }

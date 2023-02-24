@@ -11,6 +11,7 @@ import {
 //PROPIO
 import { Sorteo } from './../../sorteo/entities/sorteo.entity';
 import { Xpath } from './../../../components/xpath/entities/xpath.entity';
+import { ResponseSorteoABuscar } from './../../../components/response_sorteo_a_buscar/entities/response_sorteo_a_buscar.entity';
 
 @Entity({ name: 'so_a_bu' })
 @ObjectType()
@@ -47,4 +48,12 @@ export class SorteoABuscar {
   @Field(() => [Xpath])
   @OneToMany(() => Xpath, (xpath) => xpath.sorteo_a_buscar, { eager: true })
   xpath: Xpath[];
+
+  //todo falta field
+  @OneToMany(
+    () => ResponseSorteoABuscar,
+    (responseSorteoABuscar) => responseSorteoABuscar.sorteo_a_buscar,
+    { eager: true },
+  )
+  response_sorteo_a_buscar: ResponseSorteoABuscar;
 }

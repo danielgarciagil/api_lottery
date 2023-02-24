@@ -16,6 +16,6 @@ import { ResultadosModule } from '../resultados/resultados.module';
     ProcesoDeSorteoBuscarService,
     WebScrapingXpathService,
   ],
-  exports: [],
+  exports: [ProcesoDeSorteoBuscarService],
 })
 export class WebScrapingModule {}

@@ -3,9 +3,14 @@ import * as cron from 'node-cron';
 
 import { SorteoService } from '../sorteo/sorteo.service';
 import { Sorteo } from '../sorteo/entities/sorteo.entity';
+import { cronExpression } from './../../common/funciones/cronExpresion';
+import { ProcesoDeSorteoBuscarService } from '../web-scraping/proceso_de_sorteo_a_buscar.service';
 @Injectable()
 export class CronService {
-  constructor(private readonly sorteoService: SorteoService) {}
+  constructor(
+    private readonly sorteoService: SorteoService,
+    private readonly procesoDeSorteoBuscarService: ProcesoDeSorteoBuscarService,
+  ) {}
   private tareas: cron.ScheduledTask[] = [];
 
   id_fecha_hoy(): number {
@@ -13,6 +18,7 @@ export class CronService {
     return fecha_actual.getDay() + 1; //todo
   }
 
+  //Devulvo todos los sorteos del dia en Curso
   async consultar_sorteos(): Promise<Sorteo[]> {
     const id_fecha_hoy = this.id_fecha_hoy();
     const todos_los_sorteos = await this.sorteoService.findAllByDays(
@@ -21,22 +27,24 @@ export class CronService {
     return todos_los_sorteos;
   }
 
+  // A las 12:00 AM cargos los nuevos cron y borros los anteriores
   iniciar_tareas() {
-    //this.tareas.forEach((tareacron) => {
-    //  tareacron.start();
-    //});
-    console.log(this.tareas);
+    this.borrar_cron_cargar_nuevos();
+    cron.schedule('0 0 * * *', () => {
+      this.borrar_cron_cargar_nuevos();
+    });
   }
 
-  //ttodod qeude aqui para eliminar todo
-  test_probar_arr_tareas() {
+  //Borro los cron existentes y creo nuevos
+  borrar_cron_cargar_nuevos() {
     this.tareas.forEach((tareacron) => {
       tareacron.stop();
     });
     this.tareas = [];
-    console.log(this.tareas);
+    this.crear_tareas_automaticas();
   }
 
+  //Creo los cron individuales y lo agregoa un Array
   async crear_tareas_automaticas() {
     const sorteos = await this.consultar_sorteos();
     for (const sorteo of sorteos) {
@@ -45,43 +53,15 @@ export class CronService {
           sorteo.sorteo_dias[i].id,
           sorteo.sorteo_dias[i].hora,
         );
-        console.log(cron_expresion);
         const tarea = cron.schedule(cron_expresion, () => {
-          console.log('AQUI MAND TAREA');
+          console.log(`Esta buscando este sorteo ${sorteo.name}`);
+          console.log(sorteo);
+          this.procesoDeSorteoBuscarService.iniciar_proceso_sorteo_a_buscar(
+            sorteo.sorteo_a_buscar.id,
+          );
         });
         this.tareas.push(tarea);
       }
     }
   }
-
-  //TODO crear un cron que cada dia a las 12:00, me apre los cron vieos y me cargues los nuevos,
-  //Pero solo me cargaria los cron que pertenecen a ese dia especifico, no me lo cargaria todos
-  // async testCron() {
-  //   cron.validate('');
-  //   cron.getTasks();
-  //   const tarea = cron.schedule('26 23 * * * ', () => {
-  //     console.log('ENTTTRO');
-  //   });
-  //   tarea.stop();
-  // }
 }
-
-const cronExpression = (date: number, time: string): string => {
-  // Obtenemos los valores de hora y minutos de la hora especificada
-  const [hora, minuto] = time.split(':');
-
-  // Configuramos la fecha para que coincida con la fecha especificada, y establecemos la hora y minutos
-  const cronDate = new Date();
-  cronDate.setHours(parseInt(hora, 10));
-  cronDate.setMinutes(parseInt(minuto, 10));
-
-  // Obtenemos los valores de segundo, minuto, hora, día del mes, mes y día de la semana
-  const minuteCron = cronDate.getMinutes();
-  const hourCron = cronDate.getHours();
-
-  // Componemos la expresión de cron con los valores obtenidos
-  //const cronExpression = `* ${minuteCron} ${hourCron} * * ${date - 1}`; //todo;
-  const cronExpression = `${minuteCron} ${hourCron} * * *`; //todo;
-
-  return cronExpression;
-};
