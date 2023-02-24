@@ -21,9 +21,8 @@ export class ProcesoDeSorteoABuscarResolver {
   ) {}
 
   @Mutation(() => ResponsePropioGQl, {
-    name: 'buscarBySorteoAutomatico',
-    description:
-      'Para Buscar los numeros ganadores de un Sorteo en forma Autoamtica',
+    name: 'generarResultadoAutomatico',
+    description: 'Para generar los reusltados de un Sorteo en forma Autoamtica',
   })
   async init_buscar_sorteo_automatico(
     @CurrentUser([VALID_PERMISO_ACCION.SORTEO_CREATE]) user: User, //todo revisar permiso

@@ -1,7 +1,11 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
+import { IsNumber, IsString } from 'class-validator';
 
 @InputType()
 export class CreateResponseSorteoABuscarInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @IsString()
+  message: string;
+
+  @IsNumber()
+  id_sorteo_a_buscar: number;
 }

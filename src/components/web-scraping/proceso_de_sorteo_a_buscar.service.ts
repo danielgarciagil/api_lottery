@@ -28,17 +28,19 @@ export class ProcesoDeSorteoBuscarService {
   async iniciar_proceso_sorteo_a_buscar(
     id_sorteo_a_buscar: number,
   ): Promise<ResponsePropioGQl> {
-    const sorteo = await this.combrobar_status_sorteo_a_buscar(
-      id_sorteo_a_buscar,
-    );
-    this.init(sorteo);
-
-    //todo si se esta buscando avisar
-    return {
-      message: 'COMENZO EL PROCESO AUTOMATICO',
-      error: false,
-      status: 200,
-    };
+    try {
+      const responseSorteo = await this.combrobar_status_sorteo_a_buscar(
+        id_sorteo_a_buscar,
+      );
+      this.init(responseSorteo);
+      return responseSorteo;
+    } catch (error) {
+      return {
+        error: true,
+        message: error,
+        status: 400,
+      };
+    }
   }
 
   async init(sorteo_a_buscar: SorteoABuscar): Promise<ResponsePropioGQl> {
@@ -62,21 +64,35 @@ export class ProcesoDeSorteoBuscarService {
     }
   }
 
+  //todo quede aqui
   async combrobar_status_sorteo_a_buscar(
     id_sorteo_a_buscar: number,
   ): Promise<SorteoABuscar> {
-    const sorteo_a_buscar = await this.sorteoABuscarService.findOne(
-      id_sorteo_a_buscar,
-    );
-    if (!sorteo_a_buscar.activo) {
-      throw new BadGatewayException(MESSAGE.COMUN_ESTE_ELEMENTO_ESTA_INACTIVO);
-    }
-    if (sorteo_a_buscar.buscando) {
-      throw new BadGatewayException(
-        MESSAGE.YA_SE_ESTA_BUSCANDO_AUTOMATICAMENTE_ESTE_SORTEO,
+    try {
+      const sorteo_a_buscar = await this.sorteoABuscarService.findOne(
+        id_sorteo_a_buscar,
       );
+      if (!sorteo_a_buscar.activo) {
+        return {
+          error: true,
+          message: MESSAGE.COMUN_ESTE_ELEMENTO_ESTA_INACTIVO,
+          status: 400,
+        };
+      }
+      if (sorteo_a_buscar.buscando) {
+        return {
+          error: true,
+          message: MESSAGE.COMUN_ESTE_ELEMENTO_ESTA_INACTIVO,
+          status: 400,
+        };
+      }
+    } catch (error) {
+      return {
+        error: true,
+        message: error,
+        status: 400,
+      };
     }
-    return sorteo_a_buscar;
   }
 
   async publicar(
