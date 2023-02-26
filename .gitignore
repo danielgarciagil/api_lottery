@@ -39,6 +39,7 @@ lerna-debug.log*
 .env.prod
 .env.dev
 .prod.env
+.env.DEV
 
 #Data base
 /postgres

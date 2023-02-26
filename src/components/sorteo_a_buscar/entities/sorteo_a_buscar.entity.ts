@@ -28,10 +28,6 @@ export class SorteoABuscar {
   @Column({ type: 'boolean', default: true })
   activo: boolean;
 
-  @Field(() => Boolean)
-  @Column({ type: 'boolean', default: false })
-  buscando: boolean;
-
   @Field(() => Int)
   @Column({ type: 'int' })
   numeros_intentos: number;

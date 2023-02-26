@@ -1,10 +1,11 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, Int } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
+
 import { ResponseSorteoABuscarService } from './response_sorteo_a_buscar.service';
 import { ResponseSorteoABuscar } from './entities/response_sorteo_a_buscar.entity';
-import { CreateResponseSorteoABuscarInput } from './dto/create-response_sorteo_a_buscar.input';
-import { UpdateResponseSorteoABuscarInput } from './dto/update-response_sorteo_a_buscar.input';
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+
+import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
+import { PaginationArgs } from './../../common/dto/args';
 
 //TODO este Resolver a Futuro agregar roels y todos
 @UseGuards(JwtAuthGuard)
@@ -29,15 +30,19 @@ export class ResponseSorteoABuscarResolver {
     name: 'allResponseSorteoABuscar',
     description: 'Obtener todos los Response de SOrteo a Buscar',
   })
-  findAll() {
-    return this.responseSorteoABuscarService.findAll();
+  findAll(
+    @Args() paginationArgs: PaginationArgs,
+  ): Promise<ResponseSorteoABuscar[]> {
+    return this.responseSorteoABuscarService.findAll(paginationArgs);
   }
 
   @Query(() => ResponseSorteoABuscar, {
     name: 'findResponseSorteoABuscar',
     description: 'Obtener un Response especifico',
   })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<ResponseSorteoABuscar> {
     return this.responseSorteoABuscarService.findOne(id);
   }
 

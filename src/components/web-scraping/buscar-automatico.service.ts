@@ -7,6 +7,7 @@ import { WebScrapingXpathService } from './WebScrapingXpath.service';
 
 @Injectable()
 export class BuscarAutomaticoService {
+  private logger: Logger = new Logger('Buscar-Automatico-Services');
   fecha_actual(): string {
     const fecha = new Date().toISOString();
     return fecha.slice(0, 10);
@@ -43,23 +44,28 @@ export class BuscarAutomaticoService {
     let numero_a_publicar: number[];
     let fecha_a_publicar: string;
     let message_error: string;
-    console.log('VOY POR AQUI');
+
     for (let i = 0; i < sorteo_a_buscar.numeros_intentos; i++) {
       try {
         const data_xpath = await this.web_scraping_by_xpath(sorteo_a_buscar);
         const data_xpath_1 = data_xpath[0];
+
         if (!data_xpath_1.error) {
           if (fecha_a_buscar == data_xpath_1.data_by_xpath_fecha) {
             numero_a_publicar = data_xpath_1.data_by_xpath_digitos;
             fecha_a_publicar = data_xpath_1.data_by_xpath_fecha;
             break;
           } else {
-            message_error = 'LAS FECHAS NO SON IGUALES';
+            message_error = 'NO ES LA FECHA A BUSCAR';
           }
+        } else {
+          message_error = data_xpath_1.message;
         }
       } catch (error) {
         message_error = error;
+        this.logger.log(`ERROR => ${message_error}`);
       }
+      this.logger.log(`STATUS => ${message_error}`);
       await this.bloquearPrograma(sorteo_a_buscar.tiempo_de_espera_segundos);
     }
     if (numero_a_publicar && fecha_a_publicar) {
@@ -87,8 +93,10 @@ export class BuscarAutomaticoService {
 
     for (const xpath_actual of sorteo_a_buscar.xpath) {
       const instancia = new WebScrapingXpathService();
-      const init = await instancia.iniciar_proceso_xpath(xpath_actual);
-      elementos_a_instanciar.push(init);
+      if (xpath_actual.activo) {
+        const init = await instancia.iniciar_proceso_xpath(xpath_actual);
+        elementos_a_instanciar.push(init);
+      }
     }
     const data = await Promise.all(elementos_a_instanciar);
     this.comprobar_arreglos_iguales_sin_errores(data);

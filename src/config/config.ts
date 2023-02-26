@@ -31,8 +31,3 @@ export const validationENV = () => {
     PORT: Joi.number().required(),
   });
 };
-
-export const enviroments = {
-  dev: '.env',
-  pro: '.prod.env',
-};

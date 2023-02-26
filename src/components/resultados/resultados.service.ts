@@ -68,9 +68,7 @@ export class ResultadosService {
       },
     });
     if (sorteo) {
-      throw new UnprocessableEntityException(
-        MESSAGE.YA_ESTA_PUBLICADO_ESTE_RESULTADO_PARA_ESTA_FECHA,
-      );
+      throw Error(MESSAGE.YA_ESTA_PUBLICADO_ESTE_RESULTADO_PARA_ESTA_FECHA);
     }
   }
 
@@ -82,16 +80,12 @@ export class ResultadosService {
     const { posiciones, rango_minimo, rango_maximo } = sorteo.juego;
 
     if (numeros_ganadores.length != posiciones) {
-      throw new UnprocessableEntityException(
-        MESSAGE.NO_CUMPLE_CON_LOS_REQUISITOS_DEL_JUEGO,
-      );
+      throw Error(MESSAGE.NO_CUMPLE_CON_LOS_REQUISITOS_DEL_JUEGO);
     }
 
     for (const numero of numeros_ganadores) {
       if (numero < rango_minimo || numero > rango_maximo) {
-        throw new UnprocessableEntityException(
-          MESSAGE.NO_CUMPLE_CON_LOS_REQUISITOS_DEL_JUEGO,
-        );
+        throw Error(MESSAGE.NO_CUMPLE_CON_LOS_REQUISITOS_DEL_JUEGO);
       }
     }
 

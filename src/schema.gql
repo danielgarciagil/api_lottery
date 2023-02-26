@@ -79,18 +79,26 @@ type Xpath {
   name: String!
   descripcion: String!
   activo: Boolean!
-  buscando: Boolean!
   xpath_digitos: [[String!]!]!
   xpath_urls_by_digitos: [[String!]!]!
   xpath_fecha_by_digitos: [[String!]!]!
   sorteo_a_buscar: SorteoABuscar!
 }
 
+type ResponseSorteoABuscar {
+  id: Int!
+  message: String!
+  completed: Boolean!
+  is_error: Boolean!
+  activo: Boolean!
+  create_at: DateTime!
+  update_at: DateTime!
+}
+
 type SorteoABuscar {
   id: ID!
   name: String!
   activo: Boolean!
-  buscando: Boolean!
   numeros_intentos: Int!
   tiempo_de_espera_segundos: Int!
   sorteo: Sorteo!
@@ -196,6 +204,12 @@ type Query {
 
   """Para buscar la configuracion de un sorteo especifico"""
   findSorteoABuscar(id: Int!): SorteoABuscar!
+
+  """Obtener todos los Response de SOrteo a Buscar"""
+  allResponseSorteoABuscar(offset: Int = 0, limit: Int = 10): [ResponseSorteoABuscar!]!
+
+  """Obtener un Response especifico"""
+  findResponseSorteoABuscar(id: Int!): ResponseSorteoABuscar!
 }
 
 type Mutation {

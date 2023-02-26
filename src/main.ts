@@ -14,9 +14,9 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(process.env.PORT || 3001, () => {
+  await app.listen(process.env.PORT || 9999, () => {
     console.log(
-      `👍El server esta arriba en el puerto: ${process.env.PORT || 3001} 👍💪`,
+      `👍El server esta arriba en el puerto: ${process.env.PORT || 9999} 👍💪`,
     );
   });
 }

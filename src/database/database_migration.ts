@@ -1,8 +1,17 @@
 import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
+import * as path from 'path';
 
-config();
+// Especifica la ruta al archivo .env
+const envPath = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  `.env.${process.env.NODE_ENV || 'DEV'}`,
+);
+console.log(envPath);
+config({ path: envPath });
 const configService = new ConfigService();
 
 const database_migrations = new DataSource({

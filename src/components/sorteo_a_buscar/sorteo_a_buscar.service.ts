@@ -85,18 +85,6 @@ export class SorteoABuscarService {
     throw new BadGatewayException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO); // todo
   }
 
-  async cambiar_estado_de_buscando(id: number, estado: boolean) {
-    try {
-      const sorteo_a_buscar = await this.findOne(id);
-      sorteo_a_buscar.buscando = estado;
-      await this.sorteoABuscarRepository.save(sorteo_a_buscar);
-    } catch (error) {
-      throw new UnprocessableEntityException(
-        MESSAGE.COMUN_NO_SE_PUDO_ACTUALIZAR,
-      );
-    }
-  }
-
   async remove(id: number): Promise<ResponsePropioGQl> {
     const sorteo_a_buscar = await this.findOne(id);
     try {

@@ -8,7 +8,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 // Modulos Propios
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { config, enviroments, validationENV } from '../config/config';
+import { config, validationENV } from '../config/config';
 import { DatabaseModule } from '../database/database.module';
 import { AuthModule } from '../auth/auth.module';
 import { CommonModule } from '../common/common.module';
@@ -32,7 +32,7 @@ import { AppInit } from './app-init.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: enviroments[process.env.STATE] || '.env',
+      envFilePath: [`.env.${process.env.NODE_ENV || 'DEV'}`],
       load: [config],
       isGlobal: true,
       validationSchema: validationENV(),
@@ -66,7 +66,7 @@ import { AppInit } from './app-init.service';
     SorteoModule,
     SorteoDiasModule,
     SorteoABuscarModule,
-    //ResponseSorteoABuscarModule,
+    ResponseSorteoABuscarModule,
     WebScrapingModule,
 
     //AUTOMATICO

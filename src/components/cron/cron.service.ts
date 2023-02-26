@@ -1,18 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as cron from 'node-cron';
 
 import { cronExpression } from './../../common/funciones/cronExpresion';
 import { GenerarResultadosService } from '../web-scraping/generar-resultados.service';
 import { SorteoABuscarService } from '../sorteo_a_buscar/sorteo_a_buscar.service';
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
+import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.service';
 
 @Injectable()
 export class CronService {
   constructor(
     private readonly sorteoABuscarService: SorteoABuscarService,
     private readonly generarResultadosService: GenerarResultadosService,
+    private readonly responseSorteoABuscar: ResponseSorteoABuscarService,
   ) {}
   private tareas: cron.ScheduledTask[] = [];
+  private logger: Logger = new Logger('Cron-Services');
 
   id_fecha_hoy(): number {
     const fecha_actual = new Date();
@@ -49,20 +52,31 @@ export class CronService {
   async crear_tareas_automaticas() {
     const arrSorteosABuscars = await this.consultar_sorteosABuscar();
     for (const sorteoABuscar of arrSorteosABuscars) {
-      const sorteo = sorteoABuscar.sorteo;
-      for (let i = 0; i < sorteo.sorteo_dias.length; i++) {
-        const cron_expresion = cronExpression(
-          sorteo.sorteo_dias[i].id,
-          sorteo.sorteo_dias[i].hora,
-        );
-        const tarea = cron.schedule(cron_expresion, async () => {
-          console.log(`Esta buscando este sorteo ${sorteo.name}`);
-          const res = await this.generarResultadosService.init_generar(
-            sorteoABuscar,
+      if (sorteoABuscar.activo) {
+        const sorteo = sorteoABuscar.sorteo;
+        for (let i = 0; i < sorteo.sorteo_dias.length; i++) {
+          const cron_expresion = cronExpression(
+            sorteo.sorteo_dias[i].id,
+            sorteo.sorteo_dias[i].hora,
           );
-          console.log(res);
-        });
-        this.tareas.push(tarea);
+
+          this.logger.log(
+            `HOY SE BUSCARAN =>  ${sorteo.name} a las => ${cron_expresion}`,
+          );
+          const responseSorteo = await this.responseSorteoABuscar.create({
+            id_sorteo_a_buscar: sorteoABuscar.id,
+            message: 'Se instancio un nuevo response de Sorteo a Buscar',
+          });
+          const tarea = cron.schedule(cron_expresion, async () => {
+            this.logger.log(`Comenzo el Cron de este sorteo ${sorteo.name}`);
+            const res = await this.generarResultadosService.init_generar(
+              sorteoABuscar,
+              responseSorteo.id,
+            );
+            console.log(res); // todo manejar esto por telegram por el momento
+          });
+          this.tareas.push(tarea);
+        }
       }
     }
   }

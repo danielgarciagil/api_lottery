@@ -9,12 +9,17 @@ import { ProcesoDeSorteoABuscarResolver } from './generar-automaticos.resolver';
 import { WebScrapingXpathService } from './WebScrapingXpath.service';
 import { ResultadosModule } from '../resultados/resultados.module';
 import { GenerarResultadosService } from './generar-resultados.service';
+import { ResponseSorteoABuscarModule } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.module';
 
 @Module({
-  imports: [XpathModule, SorteoABuscarModule, ResultadosModule],
+  imports: [
+    XpathModule,
+    SorteoABuscarModule,
+    ResultadosModule,
+    ResponseSorteoABuscarModule,
+  ],
   providers: [
     ProcesoDeSorteoABuscarResolver,
-
     WebScrapingXpathService,
     GenerarResultadosService,
   ],

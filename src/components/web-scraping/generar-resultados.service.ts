@@ -9,6 +9,7 @@ import { SorteoABuscarService } from '../sorteo_a_buscar/sorteo_a_buscar.service
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
 import { BuscarAutomaticoService } from './buscar-automatico.service';
 import { ResultadosService } from '../resultados/resultados.service';
+import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.service';
 
 @Injectable()
 export class GenerarResultadosService {
@@ -17,6 +18,7 @@ export class GenerarResultadosService {
     private readonly xpathService: XpathService,
     private readonly sorteoABuscarService: SorteoABuscarService,
     private readonly resultadosServiceE: ResultadosService,
+    private readonly responseSorteoABuscarService: ResponseSorteoABuscarService,
   ) {}
 
   async validar_xpath_individual(id_xpath: number): Promise<RESPONSE_BY_XPATH> {
@@ -40,7 +42,12 @@ export class GenerarResultadosService {
       const responseSorteo = await this.combrobar_status_sorteo_a_buscar(
         id_sorteo_a_buscar,
       );
-      this.init_generar(responseSorteo); //todo
+      const responseSorteoABuscar =
+        await this.responseSorteoABuscarService.create({
+          id_sorteo_a_buscar: responseSorteo.id,
+          message: 'Se instancio un nuevo response de Sorteo a Buscar',
+        });
+      this.init_generar(responseSorteo, responseSorteoABuscar.id); //todo
       return {
         error: false,
         message: 'INICIO EL GENERADOR',
@@ -55,23 +62,38 @@ export class GenerarResultadosService {
     }
   }
 
-  async init_generar(sorteoABuscar: SorteoABuscar): Promise<ResponsePropioGQl> {
+  async init_generar(
+    sorteoABuscar: SorteoABuscar,
+    id_response_sorteo: number,
+  ): Promise<ResponsePropioGQl> {
     try {
       this.logger.log(
         `Se Instancio una clase nueva de Buscar para: ${sorteoABuscar.name}`,
       );
       const sorteo = new BuscarAutomaticoService();
       const response = await sorteo.iniciar_busqueda(sorteoABuscar);
-      await this.publicar(sorteoABuscar, response);
+
+      if (!response.error) {
+        await this.publicar(sorteoABuscar, response);
+        //todo me falta manjear todas las respuesttas de sorteoabuscar
+        await this.responseSorteoABuscarService.update(id_response_sorteo, {
+          message: 'Se publico bien',
+        });
+        return {
+          error: false,
+          message: `SE PUBLICO BIEN => ${sorteoABuscar.name}`,
+          status: 200,
+        };
+      }
       return {
-        error: false,
-        message: 'SE PUBLICO BIEBN',
+        error: true,
+        message: `NO SE PUBLICO => ${sorteoABuscar.name}`,
         status: 200,
       };
     } catch (error) {
       return {
         error: true,
-        message: error,
+        message: `NO SE PUBLICO => ${sorteoABuscar.name} ERROR => ${error}`,
         status: 400,
       };
     }

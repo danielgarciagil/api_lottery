@@ -6,8 +6,8 @@ import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 export class UpdateResponseSorteoABuscarInput extends PartialType(
   CreateResponseSorteoABuscarInput,
 ) {
-  @Field(() => Int)
-  id: number;
+  //@Field(() => Int)
+  //id: number;
 
   @IsOptional()
   message?: string;
