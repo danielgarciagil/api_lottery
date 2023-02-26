@@ -19,19 +19,19 @@ export class ProcesoDeSorteoABuscarResolver {
   constructor(
     private readonly generaeResultadosServices: GenerarResultadosService,
   ) {}
-  //@Mutation(() => ResponsePropioGQl, {
-  //  name: 'generarResultadoAutomatico',
-  //  description: 'Para generar los reusltados de un Sorteo en forma Autoamtica',
-  //})
-  //async generar_sorteo_automatico(
-  //  @CurrentUser([VALID_PERMISO_ACCION.SORTEO_CREATE]) user: User, //todo revisar permiso
-  //  @Args('buscarBySorteoaBuscarInput')
-  //  buscarBySorteoaBuscarInput: BuscarBySorteoaBuscarInput,
-  //): Promise<ResponsePropioGQl> {
-  //  return this.procesoDeSorteoBuscarService.ininiciar_generador_resultados(
-  //    buscarBySorteoaBuscarInput.id_sorteo_a_buscar,
-  //  );
-  //}
+  @Mutation(() => ResponsePropioGQl, {
+    name: 'generarResultadoAutomatico',
+    description: 'Para generar los resultados de un Sorteo en forma Autoamtica',
+  })
+  async generar_sorteo_automatico(
+    @CurrentUser([VALID_PERMISO_ACCION.SORTEO_CREATE]) user: User, //todo revisar permiso
+    @Args('buscarBySorteoaBuscarInput')
+    buscarBySorteoaBuscarInput: BuscarBySorteoaBuscarInput,
+  ): Promise<ResponsePropioGQl> {
+    return this.generaeResultadosServices.generar_resultados(
+      buscarBySorteoaBuscarInput.id_sorteo_a_buscar,
+    );
+  }
 
   @Mutation(() => RESPONSE_BY_XPATH, {
     name: 'validarXpathIndividual',
