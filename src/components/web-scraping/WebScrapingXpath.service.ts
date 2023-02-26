@@ -40,6 +40,7 @@ export class WebScrapingXpathService {
     }
   }
 
+  //TODO ESTO ESTA MALO
   validar_fechas_iguales(arr_fecha: string[]): string {
     const todas_fechas_iguales = arr_fecha.every((elemento, indice, arr) => {
       return elemento === arr[0];
