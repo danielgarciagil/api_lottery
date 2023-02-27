@@ -291,6 +291,9 @@ type Mutation {
   """Eliminar el script de sorteo a buscar"""
   removeSorteoABuscar(id: Int!): ResponsePropioGQl!
 
+  """Para generar los resultados de un Sorteo en forma Autoamtica"""
+  generarResultadoAutomatico(buscarBySorteoaBuscarInput: BuscarBySorteoaBuscarInput!): ResponsePropioGQl!
+
   """Para verificar que el Xpath esta bien"""
   validarXpathIndividual(buscarByXpathWebScrapingInput: BuscarByXpathWebScrapingInput!): RESPONSE_BY_XPATH!
 }
@@ -439,6 +442,10 @@ input UpdateSorteoABuscarInput {
   tiempo_de_espera_segundos: Int
   id_sorteo: Int
   id: Int!
+}
+
+input BuscarBySorteoaBuscarInput {
+  id_sorteo_a_buscar: Int!
 }
 
 input BuscarByXpathWebScrapingInput {
