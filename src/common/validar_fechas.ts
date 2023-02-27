@@ -9,6 +9,7 @@ export const validarFecha = (fecha: string): string => {
     'dddd, DD [de] MMMM [de] YYYY',
     'YYYY-MM-DD',
     'DD-MM-YYYY',
+    'ddd MM/DD/YY',
   ];
 
   // Intentamos parsear la fecha en español e inglés
@@ -19,9 +20,9 @@ export const validarFecha = (fecha: string): string => {
 
   // Verificamos si alguna de las dos fechas es válida y si es igual a la fecha original
   if (fechaParseadaEs.isValid()) {
-    return fechaParseadaEs.toISOString();
+    return fechaParseadaEs.toISOString().slice(0, 10);
   } else if (fechaParseadaEn.isValid()) {
-    return fechaParseadaEn.toISOString();
+    return fechaParseadaEn.toISOString().slice(0, 10);
   } else {
     throw new Error('La fecha no es válida');
   }

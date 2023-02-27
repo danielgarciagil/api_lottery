@@ -218,20 +218,20 @@ export class AppInit implements OnModuleInit {
 
   //Consultar si existte un admin
   async onModuleInit() {
-    this.logger.debug('INICIO DEL MODULO SEEDS - APP_INIT');
-
-    //Creo todos los permisos accion
-    await this.crear_todos_los_permisos_accion();
-
-    //Creo el rol ROOT y user ROOT
-    await this.crear_rol_root_and_user_root();
-
-    //Creo el rol ADMIN y user ADMIN
-    await this.crear_rol_admin_and_user_admin();
-
-    //Creo el rol USER y user USER
-    await this.crear_rol_user_and_user_user();
-
-    this.logger.debug('FIN DEL MODULO SEEDS - APP_INIT');
+    //todo  this.logger.debug('INICIO DEL MODULO SEEDS - APP_INIT');
+    //todo
+    //todo  //Creo todos los permisos accion
+    //todo  await this.crear_todos_los_permisos_accion();
+    //todo
+    //todo  //Creo el rol ROOT y user ROOT
+    //todo  await this.crear_rol_root_and_user_root();
+    //todo
+    //todo  //Creo el rol ADMIN y user ADMIN
+    //todo  await this.crear_rol_admin_and_user_admin();
+    //todo
+    //todo  //Creo el rol USER y user USER
+    //todo  await this.crear_rol_user_and_user_user();
+    //todo
+    //todo  this.logger.debug('FIN DEL MODULO SEEDS - APP_INIT');
   }
 }

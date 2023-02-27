@@ -9,9 +9,9 @@ import { WebScrapingXpathService } from './WebScrapingXpath.service';
 export class BuscarAutomaticoService {
   private logger: Logger = new Logger('Buscar-Automatico-Services');
   fecha_actual(): string {
-    const fecha = new Date().toString();
-    console.log(fecha); //TODO quede con la fecha
-    return fecha.slice(0, 10);
+    const fecha = new Date().toISOString().slice(0, 10);
+    //console.log(fecha); //TODO quede con la fecha
+    return fecha;
   }
 
   async bloquearPrograma(time: number) {
@@ -57,8 +57,6 @@ export class BuscarAutomaticoService {
             fecha_a_publicar = data_xpath_1.data_by_xpath_fecha;
             break;
           } else {
-            console.log(fecha_a_buscar);
-            console.log(data_xpath_1.data_by_xpath_fecha);
             message_error = 'NO ES LA FECHA A BUSCAR';
           }
         } else {

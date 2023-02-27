@@ -10,7 +10,7 @@ const envPath = path.resolve(
   '..',
   `.env.${process.env.NODE_ENV || 'DEV'}`,
 );
-console.log(envPath);
+
 config({ path: envPath });
 const configService = new ConfigService();
 

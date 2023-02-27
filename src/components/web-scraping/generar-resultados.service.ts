@@ -76,6 +76,7 @@ export class GenerarResultadosService {
       if (!response.error) {
         await this.publicar(sorteoABuscar, response);
         //todo me falta manjear todas las respuesttas de sorteoabuscar
+        console.log(`SE PUBLICO BIEN => ${sorteoABuscar.name}`);
         await this.responseSorteoABuscarService.update(id_response_sorteo, {
           message: 'Se publico bien',
         });
@@ -85,12 +86,14 @@ export class GenerarResultadosService {
           status: 200,
         };
       }
+      console.log(response);
       return {
         error: true,
         message: `NO SE PUBLICO => ${sorteoABuscar.name}`,
         status: 200,
       };
     } catch (error) {
+      console.log(error);
       return {
         error: true,
         message: `NO SE PUBLICO => ${sorteoABuscar.name} ERROR => ${error}`,

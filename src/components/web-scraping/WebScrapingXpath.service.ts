@@ -46,7 +46,7 @@ export class WebScrapingXpathService {
       return elemento === arr[0];
     });
     if (todas_fechas_iguales) {
-      return arr_fecha[0].slice(0, 10); //aqui corto la longitud de la fecha
+      return arr_fecha[0]; //aqui corto la longitud de la fecha
     } else {
       throw Error('Una de las fechas eran diferentes');
     }
@@ -108,13 +108,14 @@ export class WebScrapingXpathService {
       try {
         const xpath_fecha = await driverActual.wait(
           until.elementLocated(By.xpath(xpath_Actual_fecha)),
-          10000,
+          30000,
           '',
-          2000,
+          30000,
         );
         const value_fecha = await xpath_fecha.getText();
         return validarFecha(value_fecha);
       } catch (error) {
+        console.log(error);
         throw new Error('ESTE XPATH DE FECHA NO PUEDE SER ENCONTRADO');
       }
     }
@@ -132,13 +133,14 @@ export class WebScrapingXpathService {
       try {
         const message = await driverActual.wait(
           until.elementLocated(By.xpath(xpath_digito_actual)),
-          10000,
+          30000,
           '',
-          2000,
+          30000,
         );
-        const value = await message.getText();
-        digito += value;
+        const value = this.quitar_palabras_de_digitos(await message.getText());
+        digito += value; //todo
       } catch (error) {
+        console.log(error);
         throw new Error('ESTE XPATH DE DIGITO NO PUEDE SER ENCONTRADO');
       }
     }
@@ -163,5 +165,12 @@ export class WebScrapingXpathService {
     if (!this.driver) {
       throw Error('El driver no existe');
     }
+  }
+
+  quitar_palabras_de_digitos(digito: string): string {
+    digito = digito.replace('1er.\n', '');
+    digito = digito.replace('2do.', '');
+    digito = digito.replace('3er.', '');
+    return digito;
   }
 }
