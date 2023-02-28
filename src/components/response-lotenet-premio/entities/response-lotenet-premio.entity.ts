@@ -3,18 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-//Propio
-import { SorteoABuscar } from './../../../components/sorteo_a_buscar/entities/sorteo_a_buscar.entity';
-
-@Entity({ name: 'res_sor_bus' })
+@Entity({ name: 'res_lot_pre' })
 @ObjectType()
-export class ResponseSorteoABuscar {
+export class ResponseLotenetPremio {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
@@ -50,13 +45,4 @@ export class ResponseSorteoABuscar {
     default: () => 'CURRENT_TIMESTAMP',
   })
   update_at: Date;
-
-  @Field(() => SorteoABuscar, { nullable: true })
-  @ManyToOne(
-    () => SorteoABuscar,
-    (sorteoABuscar) => sorteoABuscar.response_sorteo_a_buscar,
-    { lazy: true },
-  )
-  @JoinColumn({ name: 'id_sorteo_a_bsucar' })
-  sorteo_a_buscar: SorteoABuscar;
 }

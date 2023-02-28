@@ -123,7 +123,7 @@ export class WebScrapingXpathService {
         const value_fecha = await xpath_fecha.getText();
         return validarFecha(value_fecha);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw new Error('ESTE XPATH DE FECHA NO PUEDE SER ENCONTRADO');
       }
     }
@@ -148,7 +148,7 @@ export class WebScrapingXpathService {
         const value = this.quitar_palabras_de_digitos(await message.getText());
         digito += value; //todo
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw new Error('ESTE XPATH DE DIGITO NO PUEDE SER ENCONTRADO');
       }
     }

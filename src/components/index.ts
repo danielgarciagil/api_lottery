@@ -13,6 +13,9 @@ export { DiasModule } from './dias/dias.module';
 export { SorteoABuscarModule } from './sorteo_a_buscar/sorteo_a_buscar.module';
 export { ResponseSorteoABuscarModule } from './response_sorteo_a_buscar/response_sorteo_a_buscar.module';
 export { PasarDataModule } from './pasar-data/pasar-data.module';
+export { LotenetPremiosModule } from './lotenet-premios/lotenet-premios.module';
+export { ResponseLotenetPremioModule } from './response-lotenet-premio/response-lotenet-premio.module';
+export { PlataformaModule } from './plataforma/plataforma.module';
 
 //COMPONNETES CRON
 export { CronModule } from './cron/cron.module';

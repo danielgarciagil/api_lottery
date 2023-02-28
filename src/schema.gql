@@ -63,6 +63,7 @@ type ResponseSorteoABuscar {
   activo: Boolean!
   create_at: DateTime!
   update_at: DateTime!
+  sorteo_a_buscar: SorteoABuscar
 }
 
 """
@@ -141,6 +142,16 @@ type RESPONSE_BY_XPATH {
   error: Boolean!
 }
 
+type LotenetPremio {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type PlataformaPremio {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   revaliteToken: AuthResponse!
 
@@ -211,6 +222,10 @@ type Query {
 
   """Obtener un Response especifico"""
   findResponseSorteoABuscar(id: Int!): ResponseSorteoABuscar!
+  lotenetPremios: [LotenetPremio!]!
+  lotenetPremio(id: Int!): LotenetPremio!
+  plataformaPremios: [PlataformaPremio!]!
+  plataformaPremio(id: Int!): PlataformaPremio!
 }
 
 type Mutation {
@@ -297,6 +312,12 @@ type Mutation {
 
   """Para verificar que el Xpath esta bien"""
   validarXpathIndividual(buscarByXpathWebScrapingInput: BuscarByXpathWebScrapingInput!): RESPONSE_BY_XPATH!
+  createLotenetPremio(createLotenetPremioInput: CreateLotenetPremioInput!): LotenetPremio!
+  updateLotenetPremio(updateLotenetPremioInput: UpdateLotenetPremioInput!): LotenetPremio!
+  removeLotenetPremio(id: Int!): LotenetPremio!
+  createPlataformaPremio(createPlataformaPremioInput: CreatePlataformaPremioInput!): PlataformaPremio!
+  updatePlataformaPremio(updatePlataformaPremioInput: UpdatePlataformaPremioInput!): PlataformaPremio!
+  removePlataformaPremio(id: Int!): PlataformaPremio!
 }
 
 input SignupInput {
@@ -453,4 +474,26 @@ input BuscarBySorteoaBuscarInput {
 
 input BuscarByXpathWebScrapingInput {
   id_xpath_a_buscar: Int!
+}
+
+input CreateLotenetPremioInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateLotenetPremioInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreatePlataformaPremioInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdatePlataformaPremioInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

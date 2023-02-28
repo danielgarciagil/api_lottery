@@ -58,10 +58,14 @@ export class AppInit implements OnModuleInit {
       ? VALID_ENTITY.SORTEO_A_BUSCAR
       : enttity.includes(VALID_ENTITY.SORTEO_DIAS)
       ? VALID_ENTITY.SORTEO_DIAS
+      : enttity.includes(VALID_ENTITY.LOTENET_PREMIO)
+      ? VALID_ENTITY.LOTENET_PREMIO
+      : enttity.includes(VALID_ENTITY.PLATAFORMA)
+      ? VALID_ENTITY.PLATAFORMA
       : VALID_ENTITY.FALTA; //TODO
   }
 
-  //? Aqui creo todos los permiso accion por default
+  //? Aqui creo todos los permiso accion por default //quede aqui
   async crear_todos_los_permisos_accion() {
     this.logger.debug('Creando todos los permiso accion');
     const roles = Object.values(VALID_PERMISO_ACCION).map((name) => ({
@@ -218,20 +222,20 @@ export class AppInit implements OnModuleInit {
 
   //Consultar si existte un admin
   async onModuleInit() {
-    //todo  this.logger.debug('INICIO DEL MODULO SEEDS - APP_INIT');
-    //todo
-    //todo  //Creo todos los permisos accion
-    //todo  await this.crear_todos_los_permisos_accion();
-    //todo
-    //todo  //Creo el rol ROOT y user ROOT
-    //todo  await this.crear_rol_root_and_user_root();
-    //todo
-    //todo  //Creo el rol ADMIN y user ADMIN
-    //todo  await this.crear_rol_admin_and_user_admin();
-    //todo
-    //todo  //Creo el rol USER y user USER
-    //todo  await this.crear_rol_user_and_user_user();
-    //todo
-    //todo  this.logger.debug('FIN DEL MODULO SEEDS - APP_INIT');
+    this.logger.debug('INICIO DEL MODULO SEEDS - APP_INIT');
+
+    //TODO //Creo todos los permisos accion
+    //TODO await this.crear_todos_los_permisos_accion();
+    //TODO
+    //TODO //Creo el rol ROOT y user ROOT
+    //TODO await this.crear_rol_root_and_user_root();
+    //TODO
+    //TODO //Creo el rol ADMIN y user ADMIN
+    //TODO await this.crear_rol_admin_and_user_admin();
+    //TODO
+    //TODO //Creo el rol USER y user USER
+    //TODO await this.crear_rol_user_and_user_user();
+    //TODO
+    //TODO this.logger.debug('FIN DEL MODULO SEEDS - APP_INIT');
   }
 }

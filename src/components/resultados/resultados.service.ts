@@ -106,6 +106,9 @@ export class ResultadosService {
       where: {
         sorteo: { id: id_sorteo },
       },
+      order: {
+        fecha: 'DESC', //todo
+      },
     });
   }
 
