@@ -125,6 +125,7 @@ export class GenerarResultadosService {
       numeros_ganadores: response_xpath.data_by_xpath_digitos,
       fecha: new Date(response_xpath.data_by_xpath_fecha),
       id_sorteo: sorteo_a_buscar.sorteo.id,
+      id_user: 1, //todo modificar por el momento todo se va a vincular al user 1
     });
   }
 }

@@ -28,7 +28,8 @@ export class ResultadosService {
   async prevCreate(
     createResultadoInput: CreateResultadoInput,
   ): Promise<Resultado> {
-    const { id_sorteo, fecha, numeros_ganadores } = createResultadoInput;
+    const { id_sorteo, fecha, numeros_ganadores, id_user } =
+      createResultadoInput;
 
     //! Aqui validos los numeros a publicar con las reglas del juego
     await this.verificar_reglas_sorteo(id_sorteo, numeros_ganadores);
@@ -40,6 +41,7 @@ export class ResultadosService {
       fecha: fecha,
       numeros_ganadores: numeros_ganadores,
       sorteo: { id: id_sorteo },
+      user: { id: id_user },
     });
 
     await this.resultadoRepository.save(newResultado);

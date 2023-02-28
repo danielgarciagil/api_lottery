@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { isEqual } from 'lodash';
+import * as moment from 'moment';
 
 import { RESPONSE_BY_XPATH } from './../../common/response';
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
@@ -9,9 +10,8 @@ import { WebScrapingXpathService } from './WebScrapingXpath.service';
 export class BuscarAutomaticoService {
   private logger: Logger = new Logger('Buscar-Automatico-Services');
   fecha_actual(): string {
-    const fecha = new Date().toISOString().slice(0, 10);
-    //console.log(fecha); //TODO quede con la fecha
-    return fecha;
+    const fechaActual = moment().format('YYYY-MM-DD');
+    return fechaActual;
   }
 
   async bloquearPrograma(time: number) {
@@ -28,6 +28,7 @@ export class BuscarAutomaticoService {
         throw Error(response.message);
       }
     });
+    console.log(arr);
 
     const arr_iguales = arr.every((elem, index, array) =>
       isEqual(elem, array[0]),

@@ -22,33 +22,6 @@ type Role {
   permiso_accion: [Permiso_Accion!]!
 }
 
-type User {
-  id: ID!
-  nickname: String!
-  name: String!
-  email: String!
-  activo: Boolean!
-  role: [Role!]!
-}
-
-type AuthResponse {
-  token: String
-  user: User!
-}
-
-type ResponsePropioGQl {
-  status: String!
-  message: String!
-  error: Boolean!
-}
-
-type RESPONSE_BY_XPATH {
-  data_by_xpath_digitos: [Int!]!
-  data_by_xpath_fecha: String!
-  message: String!
-  error: Boolean!
-}
-
 type Juego {
   id: ID!
   name: String!
@@ -61,18 +34,15 @@ type Juego {
   activo: Boolean!
 }
 
-type Resultado {
+type Loteria {
   id: ID!
-  numeros_ganadores: [Int!]!
-  fecha: DateTime!
-  sorteo: Sorteo!
+  name: String!
+  abreviatura: String!
+  img_url: String!
+  descripcion: String!
   activo: Boolean!
+  sorteo: [Sorteo!]!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type Xpath {
   id: ID!
@@ -94,6 +64,11 @@ type ResponseSorteoABuscar {
   create_at: DateTime!
   update_at: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type SorteoABuscar {
   id: ID!
@@ -130,14 +105,40 @@ type Sorteo {
   sorteo_dias: [SorteoDias!]!
 }
 
-type Loteria {
+type Resultado {
   id: ID!
-  name: String!
-  abreviatura: String!
-  img_url: String!
-  descripcion: String!
+  numeros_ganadores: [Int!]!
+  fecha: DateTime!
+  sorteo: Sorteo!
   activo: Boolean!
-  sorteo: [Sorteo!]!
+  user: User!
+}
+
+type User {
+  id: ID!
+  nickname: String!
+  name: String!
+  email: String!
+  activo: Boolean!
+  role: [Role!]!
+}
+
+type AuthResponse {
+  token: String
+  user: User!
+}
+
+type ResponsePropioGQl {
+  status: String!
+  message: String!
+  error: Boolean!
+}
+
+type RESPONSE_BY_XPATH {
+  data_by_xpath_digitos: [Int!]!
+  data_by_xpath_fecha: String!
+  message: String!
+  error: Boolean!
 }
 
 type Query {
@@ -373,6 +374,7 @@ input CreateResultadoInput {
   numeros_ganadores: [Int!]!
   fecha: String!
   id_sorteo: Int!
+  id_user: Int!
   activo: Boolean
 }
 
@@ -380,6 +382,7 @@ input UpdateResultadoInput {
   numeros_ganadores: [Int!]
   fecha: String
   id_sorteo: Int
+  id_user: Int
   activo: Boolean
   id: Int!
 }

@@ -26,6 +26,7 @@ import {
   DiasModule,
   SorteoABuscarModule,
   ResponseSorteoABuscarModule,
+  PasarDataModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -68,6 +69,7 @@ import { AppInit } from './app-init.service';
     SorteoABuscarModule,
     ResponseSorteoABuscarModule,
     WebScrapingModule,
+    PasarDataModule,
 
     //AUTOMATICO
     CronModule,

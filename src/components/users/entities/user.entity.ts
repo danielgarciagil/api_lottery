@@ -4,6 +4,7 @@ import {
   Column,
   Entity,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -11,6 +12,7 @@ import * as bcrypt from 'bcrypt';
 //PROPIO
 import { Role } from './../../../components/role/entities/role.entity';
 import { VALID_ENTITY } from './../../../config/valid-roles';
+import { Resultado } from './../../../components/resultados/entities/resultado.entity';
 
 @Entity({ name: VALID_ENTITY.USER })
 @ObjectType()
@@ -49,4 +51,8 @@ export class User {
   async passwordEncrypt() {
     this.password = await bcrypt.hash(this.password, 10);
   }
+
+  //Entidades externas //todo no coloque el fiel
+  @OneToMany(() => Resultado, (resultado) => resultado.user)
+  resultados: Resultado[];
 }

@@ -30,6 +30,12 @@ export class CreateResultadoInput {
   @Min(0)
   id_sorteo: number;
 
+  //todo esto no va por aqui viene por el Req
+  @Field(() => Int)
+  @IsNumber()
+  @Min(0)
+  id_user: number;
+
   @Field(() => Boolean, { nullable: true })
   @IsOptional()
   @IsBoolean()

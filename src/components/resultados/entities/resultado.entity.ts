@@ -12,6 +12,7 @@ import {
 //PROPIO
 import { Sorteo } from './../../../components/sorteo/entities/sorteo.entity';
 import { VALID_ENTITY } from './../../../config/valid-roles';
+import { User } from './../../../components/users/entities/user.entity';
 
 @Entity({ name: VALID_ENTITY.RESULTADO })
 @ObjectType()
@@ -36,6 +37,11 @@ export class Resultado {
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: true })
   activo: boolean;
+
+  @Field(() => User)
+  @ManyToOne(() => User, (usuario) => usuario.resultados, { eager: true })
+  @JoinColumn({ name: 'id_user' })
+  user: User;
 
   @CreateDateColumn({
     name: 'create_at',

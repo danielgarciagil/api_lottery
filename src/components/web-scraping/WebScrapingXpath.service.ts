@@ -17,6 +17,14 @@ export class WebScrapingXpathService {
     options.addArguments('--disable-gpu');
     options.addArguments('--no-sandbox');
     options.addArguments('--disable-dev-shm-usage');
+    options.addArguments('ignore-certificate-errors');
+    options.addArguments('--disable-notifications');
+    options.addArguments('--disable-popup-blocking');
+    options.addArguments('--disable-infobars');
+    options.addArguments('--disable-default-apps');
+    options.addArguments('--disable-background-networking');
+    options.addArguments('--disable-geolocation');
+    options.addArguments('--disable-client-side-phishing-detection');
     options.headless();
 
     this.driver = await new Builder()
@@ -168,9 +176,16 @@ export class WebScrapingXpathService {
   }
 
   quitar_palabras_de_digitos(digito: string): string {
-    digito = digito.replace('1er.\n', '');
-    digito = digito.replace('2do.', '');
-    digito = digito.replace('3er.', '');
+    if (digito.includes('1er.')) {
+      digito = digito.replace('1er.', '');
+    }
+    if (digito.includes('2do.')) {
+      digito = digito.replace('2do.', '');
+    }
+    if (digito.includes('3er.')) {
+      digito = digito.replace('3er.', '');
+    }
+
     return digito;
   }
 }

@@ -12,6 +12,7 @@ export { SorteoDiasModule } from './sorteo_dias/sorteo_dias.module';
 export { DiasModule } from './dias/dias.module';
 export { SorteoABuscarModule } from './sorteo_a_buscar/sorteo_a_buscar.module';
 export { ResponseSorteoABuscarModule } from './response_sorteo_a_buscar/response_sorteo_a_buscar.module';
+export { PasarDataModule } from './pasar-data/pasar-data.module';
 
 //COMPONNETES CRON
 export { CronModule } from './cron/cron.module';
