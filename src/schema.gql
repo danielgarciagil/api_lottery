@@ -81,6 +81,27 @@ type SorteoABuscar {
   xpath: [Xpath!]!
 }
 
+type Plataforma {
+  id: ID!
+  name: String!
+  password: String!
+  url: String!
+  descripcion: String!
+  img_url: String!
+  lotenet_premio: [LotenetPremio!]!
+}
+
+type LotenetPremio {
+  id: ID!
+  name: String!
+  activo: Boolean!
+  lotenet_id_lottery: Int!
+  lotenet_name_sorteo: Int!
+  sorteo: Sorteo!
+  premio_dia: [PremiosDia!]!
+  plataforma: Plataforma!
+}
+
 type PremiosDia {
   id: ID!
   hora: String!
@@ -96,15 +117,6 @@ type SorteoDias {
   id: ID!
   hora: String!
   dias: Dias!
-}
-
-type LotenetPremio {
-  id: ID!
-  name: String!
-  activo: Boolean!
-  lotenet_id_lottery: Int!
-  lotenet_name_sorteo: Int!
-  sorteo: Sorteo!
 }
 
 type Sorteo {
@@ -165,15 +177,6 @@ type ResponseLotenetPremio {
   activo: Boolean!
   create_at: DateTime!
   update_at: DateTime!
-}
-
-type Plataforma {
-  id: ID!
-  name: String!
-  password: String!
-  url: String!
-  descripcion: String!
-  img_url: String!
 }
 
 type Query {

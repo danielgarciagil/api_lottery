@@ -3,9 +3,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
+//PROPIO
+import { LotenetPremio } from './../../../components/lotenet-premios/entities/lotenet-premio.entity';
 
 @Entity({ name: 'res_lot_pre' })
 @ObjectType()
@@ -29,6 +34,15 @@ export class ResponseLotenetPremio {
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: true })
   activo: boolean;
+
+  @Field(() => LotenetPremio, { nullable: true })
+  @ManyToOne(
+    () => LotenetPremio,
+    (lotenetPremio) => lotenetPremio.response_lotenet_premio,
+    { lazy: true },
+  )
+  @JoinColumn({ name: 'id_lotenet_premio' })
+  lotenet_premio: LotenetPremio;
 
   @Field(() => Date)
   @CreateDateColumn({

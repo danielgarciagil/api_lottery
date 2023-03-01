@@ -1,8 +1,9 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 //PROPIA
 import { VALID_ENTITY } from './../../../config/valid-roles';
+import { LotenetPremio } from './../../../components/lotenet-premios/entities/lotenet-premio.entity';
 
 @Entity({ name: VALID_ENTITY.PLATAFORMA })
 @ObjectType()
@@ -30,4 +31,11 @@ export class Plataforma {
   @Field(() => String)
   @Column({ type: 'varchar' })
   img_url: string;
+
+  //todo revisar este lazy
+  @Field(() => [LotenetPremio])
+  @OneToMany(() => LotenetPremio, (lotenetPremio) => lotenetPremio.plataforma, {
+    lazy: true,
+  })
+  lotenet_premio: LotenetPremio[];
 }

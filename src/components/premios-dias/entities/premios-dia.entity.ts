@@ -27,5 +27,7 @@ export class PremiosDia {
   @JoinColumn({ name: 'id_dias' })
   dias: Dias;
 
+  //todo no tiene FIELD
+  @ManyToOne(() => LotenetPremio, (lotenetPremio) => lotenetPremio.premio_dia)
   lotenet_premio: LotenetPremio;
 }
