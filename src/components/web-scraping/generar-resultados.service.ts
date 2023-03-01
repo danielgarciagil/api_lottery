@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import * as moment from 'moment';
 
 //PROPIO
 import { XpathService } from '../xpath/xpath.service';
@@ -14,6 +15,10 @@ import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/respon
 @Injectable()
 export class GenerarResultadosService {
   private logger: Logger = new Logger('Generar-Resultados-Services');
+  fecha_actual(): string {
+    const fechaActual = moment().format('YYYY-MM-DD');
+    return fechaActual;
+  }
   constructor(
     private readonly xpathService: XpathService,
     private readonly sorteoABuscarService: SorteoABuscarService,
@@ -32,7 +37,8 @@ export class GenerarResultadosService {
         message: MESSAGE.COMUN_ESTE_ID_NO_EXISTE,
       };
     }
-    return await test_xpath.iniciar_proceso_xpath(xpath);
+    const fecha_a_buscar = this.fecha_actual();
+    return await test_xpath.iniciar_proceso_xpath(xpath, fecha_a_buscar);
   }
 
   async generar_resultados(

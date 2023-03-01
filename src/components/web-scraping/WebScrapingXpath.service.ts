@@ -65,7 +65,10 @@ export class WebScrapingXpathService {
   }
 
   //Esta sera la funcion padre para bsucar toda la data de un xpath valido
-  async iniciar_proceso_xpath(xpath: Xpath): Promise<RESPONSE_BY_XPATH> {
+  async iniciar_proceso_xpath(
+    xpath: Xpath,
+    fecha_a_buscar: string,
+  ): Promise<RESPONSE_BY_XPATH> {
     try {
       await this.startDriver();
       this.validar_driver();
@@ -85,6 +88,7 @@ export class WebScrapingXpathService {
         const fecha_xpath = await this.for_fechas_xpath(
           index,
           xpath.xpath_fecha_by_digitos,
+          fecha_a_buscar,
         );
         data_xpath_fechas.push(fecha_xpath);
       }
@@ -113,6 +117,7 @@ export class WebScrapingXpathService {
   async for_fechas_xpath(
     index_actual: number,
     arr_xpath_fechas: string[][],
+    fecha_a_buscar: string,
   ): Promise<string> {
     const driverActual = this.driver;
     this.validar_driver();
@@ -125,9 +130,8 @@ export class WebScrapingXpathService {
           30000,
         );
         const value_fecha = await xpath_fecha.getText();
-        return validarFecha(value_fecha);
+        return validarFecha(value_fecha, fecha_a_buscar);
       } catch (error) {
-        //console.log(error);
         throw new Error('ESTE XPATH DE FECHA NO PUEDE SER ENCONTRADO');
       }
     }
@@ -180,6 +184,9 @@ export class WebScrapingXpathService {
   }
 
   quitar_palabras_de_digitos(digito: string): string {
+    if (digito.includes('1er.')) digito = digito.replace('1er.', '');
+    if (digito.includes('2do.')) digito = digito.replace('2do.', '');
+    if (digito.includes('3er.')) digito = digito.replace('3er.', '');
     const newDigito = digito.replace(/\D/g, '');
     return newDigito;
   }

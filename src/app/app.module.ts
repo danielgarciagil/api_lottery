@@ -31,6 +31,7 @@ import {
   PlataformaModule,
   ResponseLotenetPremioModule,
   PremiosDiasModule,
+  PremiosAutomaticoLotenetModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -73,11 +74,12 @@ import { AppInit } from './app-init.service';
     SorteoABuscarModule,
     ResponseSorteoABuscarModule,
     WebScrapingModule,
-    PasarDataModule,
+    //PasarDataModule,
     LotenetPremiosModule,
     PlataformaModule,
     ResponseLotenetPremioModule,
     PremiosDiasModule,
+    PremiosAutomaticoLotenetModule,
 
     //AUTOMATICO
     CronModule,

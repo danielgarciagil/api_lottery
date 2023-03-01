@@ -49,7 +49,10 @@ export class BuscarAutomaticoService {
 
     for (let i = 0; i < sorteo_a_buscar.numeros_intentos; i++) {
       try {
-        const data_xpath = await this.web_scraping_by_xpath(sorteo_a_buscar);
+        const data_xpath = await this.web_scraping_by_xpath(
+          sorteo_a_buscar,
+          fecha_a_buscar,
+        );
         const data_xpath_1 = data_xpath[0];
 
         if (!data_xpath_1.error) {
@@ -90,13 +93,17 @@ export class BuscarAutomaticoService {
   //? Aqui instancio todos los xpath de un sorteo
   async web_scraping_by_xpath(
     sorteo_a_buscar: SorteoABuscar,
+    fecha_a_buscar: string,
   ): Promise<RESPONSE_BY_XPATH[]> {
     const elementos_a_instanciar: RESPONSE_BY_XPATH[] = [];
 
     for (const xpath_actual of sorteo_a_buscar.xpath) {
       const instancia = new WebScrapingXpathService();
       if (xpath_actual.activo) {
-        const init = await instancia.iniciar_proceso_xpath(xpath_actual);
+        const init = await instancia.iniciar_proceso_xpath(
+          xpath_actual,
+          fecha_a_buscar,
+        );
         elementos_a_instanciar.push(init);
       }
     }

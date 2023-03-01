@@ -1,29 +1,40 @@
 import * as moment from 'moment';
-//import 'moment/';
-//import 'moment/locale/en';
 
 //TODO agregar todas las fechas
-export const validarFecha = (fecha: string): string => {
+export const validarFecha = (
+  fechaXpath: string,
+  fecha_a_buscar: string,
+): string => {
   const formatosDeFecha = [
     'dddd, MMMM DD, YYYY',
     'dddd, DD [de] MMMM [de] YYYY',
     'YYYY-MM-DD',
     'DD-MM-YYYY',
     'ddd MM/DD/YY',
+    'dddd, DD-MM-YYYY',
   ];
-
+  //console.log(fecha_a_buscar);
   // Intentamos parsear la fecha en español e inglés
   moment.locale('es');
-  const fechaParseadaEs = moment(fecha, formatosDeFecha);
+  const fechaParseadaEs = moment(fechaXpath, formatosDeFecha);
   moment.locale('en');
-  const fechaParseadaEn = moment(fecha, formatosDeFecha);
+  const fechaParseadaEn = moment(fechaXpath, formatosDeFecha);
 
   // Verificamos si alguna de las dos fechas es válida y si es igual a la fecha original
   if (fechaParseadaEs.isValid()) {
-    return fechaParseadaEs.toISOString().slice(0, 10);
-  } else if (fechaParseadaEn.isValid()) {
-    return fechaParseadaEn.toISOString().slice(0, 10);
+    const fechaXpath = fechaParseadaEs.toISOString().slice(0, 10);
+    if (fechaXpath == fecha_a_buscar) {
+      return fechaXpath;
+    }
+  }
+
+  if (fechaParseadaEn.isValid()) {
+    const fechaXpath = fechaParseadaEn.toISOString().slice(0, 10);
+    if (fechaXpath == fecha_a_buscar) {
+      return fechaXpath;
+    }
   } else {
+    console.log('LA FECHA NO ES VALIDA');
     throw new Error('La fecha no es válida');
   }
 };

@@ -17,6 +17,7 @@ export { LotenetPremiosModule } from './lotenet-premios/lotenet-premios.module';
 export { ResponseLotenetPremioModule } from './response-lotenet-premio/response-lotenet-premio.module';
 export { PlataformaModule } from './plataforma/plataforma.module';
 export { PremiosDiasModule } from './premios-dias/premios-dias.module';
+export { PremiosAutomaticoLotenetModule } from './premios-automatico-lotenet/premios-automatico-lotenet.module';
 
 //COMPONNETES CRON
 export { CronModule } from './cron/cron.module';
