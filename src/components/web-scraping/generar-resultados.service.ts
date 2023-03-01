@@ -138,5 +138,8 @@ export class GenerarResultadosService {
         break;
       }
     }
+    if (!publicar) {
+      throw new Error('NO SE PUBLICO SE INTENTO 10 VECES');
+    }
   }
 }

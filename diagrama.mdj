@@ -3503,20 +3503,35 @@
 											"top": 121,
 											"width": 228.39599609375,
 											"height": 15
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGmYk46YZk/5o=",
+											"_parent": {
+												"$ref": "AAAAAAGGgOp21L335EU="
+											},
+											"model": {
+												"$ref": "AAAAAAGGmYk42IZhumM="
+											},
+											"font": "Arial;15;0",
+											"left": 749,
+											"top": 138,
+											"width": 228.39599609375,
+											"height": 15
 										}
 									],
 									"font": "Arial;15;0",
 									"left": 744,
 									"top": 65,
 									"width": 238.39599609375,
-									"height": 76
+									"height": 93
 								}
 							],
 							"font": "Arial;15;0",
 							"left": 744,
 							"top": 40,
 							"width": 238.39599609375,
-							"height": 101,
+							"height": 118,
 							"nameLabel": {
 								"$ref": "AAAAAAGGgOp21L32I8M="
 							},
@@ -3543,7 +3558,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 779,
-									"top": 183,
+									"top": 191,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -3577,7 +3592,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 779,
-									"top": 159,
+									"top": 176,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -3594,7 +3609,7 @@
 								"$ref": "AAAAAAGGWnHre/Sfcg8="
 							},
 							"lineStyle": 2,
-							"points": "794:240;794:140",
+							"points": "794:240;794:157",
 							"nameLabel": {
 								"$ref": "AAAAAAGGgPBmY75EpBA="
 							},
@@ -3778,20 +3793,35 @@
 											"top": 721,
 											"width": 204.19677734375,
 											"height": 15
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGmYlsOIZrcTA=",
+											"_parent": {
+												"$ref": "AAAAAAGGmXC8OYXV2j4="
+											},
+											"model": {
+												"$ref": "AAAAAAGGmYlsJoZo9uU="
+											},
+											"font": "Arial;15;0",
+											"left": 677,
+											"top": 738,
+											"width": 204.19677734375,
+											"height": 15
 										}
 									],
 									"font": "Arial;15;0",
 									"left": 672,
 									"top": 665,
 									"width": 214.19677734375,
-									"height": 76
+									"height": 93
 								}
 							],
 							"font": "Arial;15;0",
 							"left": 672,
 							"top": 640,
 							"width": 214.19677734375,
-							"height": 101,
+							"height": 118,
 							"nameLabel": {
 								"$ref": "AAAAAAGGmXC8OYXU1V0="
 							},
@@ -5984,6 +6014,16 @@
 							"name": "ID_Sorteo_A_Buscar",
 							"type": "FK",
 							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGGmYk42IZhumM=",
+							"_parent": {
+								"$ref": "AAAAAAGGgOp21L3zWLY="
+							},
+							"name": "completed",
+							"type": "Boolean",
+							"length": 0
 						}
 					]
 				},
@@ -6033,6 +6073,16 @@
 							},
 							"name": "ID_lotenet_pemio",
 							"type": "FK",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGGmYlsJoZo9uU=",
+							"_parent": {
+								"$ref": "AAAAAAGGmXC8OIXRUsI="
+							},
+							"name": "completed",
+							"type": "Boolean",
 							"length": 0
 						}
 					]
