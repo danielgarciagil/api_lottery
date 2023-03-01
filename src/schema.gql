@@ -263,8 +263,12 @@ type Query {
   """Buscar una plataforma espeficifica"""
   findPlataforma(id: Int!): Plataforma!
   responseLotenetPremio(id: Int!): ResponseLotenetPremio!
-  premiosDias: [PremiosDia!]!
-  premiosDia(id: Int!): PremiosDia!
+
+  """Ver todos los dias de los premios"""
+  allPremiosDias(offset: Int = 0, limit: Int = 10): [PremiosDia!]!
+
+  """Ver un dia especifico de premio"""
+  findPremiosDia(id: Int!): PremiosDia!
 }
 
 type Mutation {
@@ -372,9 +376,15 @@ type Mutation {
   createResponseLotenetPremio(createResponseLotenetPremioInput: CreateResponseLotenetPremioInput!): ResponseLotenetPremio!
   updateResponseLotenetPremio(updateResponseLotenetPremioInput: UpdateResponseLotenetPremioInput!): ResponseLotenetPremio!
   removeResponseLotenetPremio(id: Int!): ResponseLotenetPremio!
-  createPremiosDia(createPremiosDiaInput: CreatePremiosDiaInput!): PremiosDia!
-  updatePremiosDia(updatePremiosDiaInput: UpdatePremiosDiaInput!): PremiosDia!
-  removePremiosDia(id: Int!): PremiosDia!
+
+  """Para crear el dia de un Premio Automatico de Lotenet"""
+  createPremisoDias(createPremiosDiaInput: CreatePremiosDiaInput!): PremiosDia!
+
+  """Actualizar el dia de un premio"""
+  updatePremiosDias(updatePremiosDiaInput: UpdatePremiosDiaInput!): PremiosDia!
+
+  """Eliminar el dia de un Premio"""
+  removePremioDias(id: Int!): ResponsePropioGQl!
 }
 
 input SignupInput {
@@ -581,12 +591,14 @@ input UpdateResponseLotenetPremioInput {
 }
 
 input CreatePremiosDiaInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  hora: String!
+  id_lotenet_premio: Int!
+  id_dia: Int!
 }
 
 input UpdatePremiosDiaInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  hora: String
+  id_lotenet_premio: Int
+  id_dia: Int
   id: Int!
 }
