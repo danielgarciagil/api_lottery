@@ -16,6 +16,7 @@ export class Plataforma {
   @Column({ type: 'varchar' })
   name: string;
 
+  //todo encriptar esta contrasena
   @Field(() => String)
   @Column({ type: 'varchar' })
   password: string;
@@ -28,8 +29,8 @@ export class Plataforma {
   @Column({ type: 'varchar' })
   descripcion: string;
 
-  @Field(() => String)
-  @Column({ type: 'varchar' })
+  @Field(() => String, { nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   img_url: string;
 
   //todo revisar este lazy

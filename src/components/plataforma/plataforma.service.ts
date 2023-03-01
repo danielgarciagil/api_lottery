@@ -1,26 +1,83 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+//PROPIO
 import { CreatePlataformaInput } from './dto/create-plataforma.input';
 import { UpdatePlataformaInput } from './dto/update-plataforma.input';
+import { Plataforma } from './entities/plataforma.entity';
+import { PaginationArgs } from './../../common/dto/args';
+import { MESSAGE } from './../../config/messages';
+import { ResponsePropioGQl } from './../../common/response';
 
 @Injectable()
 export class PlataformaService {
-  create(createPlataformaInput: CreatePlataformaInput) {
-    return 'This action adds a new plataforma';
+  constructor(
+    @InjectRepository(Plataforma)
+    private readonly plataformaRepository: Repository<Plataforma>,
+  ) {}
+
+  async create(
+    createPlataformaInput: CreatePlataformaInput,
+  ): Promise<Plataforma> {
+    try {
+      const newPlataforma = this.plataformaRepository.create(
+        createPlataformaInput,
+      );
+      return await this.plataformaRepository.save(newPlataforma);
+    } catch (error) {
+      throw new UnprocessableEntityException(error?.message);
+    }
   }
 
-  findAll() {
-    return `This action returns all plataforma`;
+  async findAll(paginationArgs: PaginationArgs): Promise<Plataforma[]> {
+    const { limit, offset } = paginationArgs;
+    return await this.plataformaRepository.find({
+      take: limit,
+      skip: offset,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} plataforma`;
+  async findOne(id: number): Promise<Plataforma> {
+    const plataforma = await this.plataformaRepository.findOneBy({ id });
+    if (!plataforma) {
+      throw new NotFoundException(MESSAGE.COMUN_ESTE_ID_NO_EXISTE);
+    }
+    return plataforma;
   }
 
-  update(id: number, updatePlataformaInput: UpdatePlataformaInput) {
-    return `This action updates a #${id} plataforma`;
+  async update(
+    id: number,
+    updatePlataformaInput: UpdatePlataformaInput,
+  ): Promise<Plataforma> {
+    const plataforma = await this.findOne(id);
+    try {
+      this.plataformaRepository.merge(plataforma, updatePlataformaInput);
+      return await this.plataformaRepository.save(plataforma);
+    } catch (error) {
+      throw new UnprocessableEntityException(error?.message);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} plataforma`;
+  async remove(id: number): Promise<ResponsePropioGQl> {
+    const plataforma = await this.findOne(id);
+    try {
+      await this.plataformaRepository.remove(plataforma);
+      return {
+        message: MESSAGE.COMUN_SE_ELIMINO_CORRECTAMENTE,
+        status: 200,
+        error: false,
+      };
+    } catch (error) {
+      return {
+        message: MESSAGE.COMUN_NO_SE_PUDO_ELIMINAR,
+        status: 401,
+        error: true,
+      };
+    }
   }
 }

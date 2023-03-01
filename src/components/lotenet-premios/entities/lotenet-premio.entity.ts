@@ -33,14 +33,16 @@ export class LotenetPremio {
 
   @Field(() => Int)
   @Column({ type: 'int' })
-  lotenet_id_lottery: number;
+  data_lotenet_id_lottery: number;
 
-  @Field(() => Int)
-  @Column({ type: 'int' })
-  lotenet_name_sorteo: number;
+  @Field(() => String)
+  @Column({ type: 'varchar' })
+  data_lotenet_name_sorteo: string;
 
   @Field(() => Sorteo)
-  @OneToOne(() => Sorteo, (sorteo) => sorteo.lotenet_premio)
+  @OneToOne(() => Sorteo, (sorteo) => sorteo.lotenet_premio, {
+    eager: true,
+  })
   @JoinColumn({ name: 'id_sorteo' })
   sorteo: Sorteo;
 

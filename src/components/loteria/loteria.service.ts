@@ -51,8 +51,12 @@ export class LoteriaService {
     updateLoteriaInput: UpdateLoteriaInput,
   ): Promise<Loteria> {
     const loteria = await this.findOne(id);
-    this.loteriaRepository.merge(loteria, updateLoteriaInput);
-    return await this.loteriaRepository.save(loteria);
+    try {
+      this.loteriaRepository.merge(loteria, updateLoteriaInput);
+      return await this.loteriaRepository.save(loteria);
+    } catch (error) {
+      throw new UnprocessableEntityException(error?.message);
+    }
   }
 
   async remove(id: number): Promise<ResponsePropioGQl> {

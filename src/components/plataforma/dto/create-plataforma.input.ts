@@ -1,7 +1,36 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
+import { IsOptional, IsString, MinLength } from 'class-validator';
 
 @InputType()
 export class CreatePlataformaInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String)
+  @IsString()
+  @MinLength(3)
+  name: string;
+
+  @Field(() => String)
+  @IsString()
+  @MinLength(3)
+  user: string;
+
+  @Field(() => String)
+  @IsString()
+  @MinLength(3)
+  password: string;
+
+  @Field(() => String)
+  @IsString()
+  @MinLength(3)
+  url: string;
+
+  @Field(() => String)
+  @IsString()
+  @MinLength(3)
+  descripcion: string;
+
+  @Field(() => String)
+  @IsString()
+  @MinLength(3)
+  @IsOptional()
+  img_url: string;
 }

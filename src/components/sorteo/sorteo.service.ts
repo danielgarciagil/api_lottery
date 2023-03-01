@@ -61,8 +61,12 @@ export class SorteoService {
     updateSorteoInput: UpdateSorteoInput,
   ): Promise<Sorteo> {
     const sorteo = await this.findOne(id);
-    this.sorteoRepository.merge(sorteo, updateSorteoInput);
-    return await this.sorteoRepository.save(sorteo);
+    try {
+      this.sorteoRepository.merge(sorteo, updateSorteoInput);
+      return await this.sorteoRepository.save(sorteo);
+    } catch (error) {
+      throw new UnprocessableEntityException(error?.message);
+    }
   }
 
   async remove(id: number): Promise<ResponsePropioGQl> {

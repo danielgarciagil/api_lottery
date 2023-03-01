@@ -87,16 +87,27 @@ type Plataforma {
   password: String!
   url: String!
   descripcion: String!
-  img_url: String!
+  img_url: String
   lotenet_premio: [LotenetPremio!]!
+}
+
+type ResponseLotenetPremio {
+  id: Int!
+  message: String!
+  completed: Boolean!
+  is_error: Boolean!
+  activo: Boolean!
+  lotenet_premio: LotenetPremio
+  create_at: DateTime!
+  update_at: DateTime!
 }
 
 type LotenetPremio {
   id: ID!
   name: String!
   activo: Boolean!
-  lotenet_id_lottery: Int!
-  lotenet_name_sorteo: Int!
+  data_lotenet_id_lottery: Int!
+  data_lotenet_name_sorteo: String!
   sorteo: Sorteo!
   premio_dia: [PremiosDia!]!
   plataforma: Plataforma!
@@ -169,16 +180,6 @@ type RESPONSE_BY_XPATH {
   error: Boolean!
 }
 
-type ResponseLotenetPremio {
-  id: Int!
-  message: String!
-  completed: Boolean!
-  is_error: Boolean!
-  activo: Boolean!
-  create_at: DateTime!
-  update_at: DateTime!
-}
-
 type Query {
   revaliteToken: AuthResponse!
 
@@ -249,9 +250,18 @@ type Query {
 
   """Obtener un Response especifico"""
   findResponseSorteoABuscar(id: Int!): ResponseSorteoABuscar!
-  lotenetPremios: [LotenetPremio!]!
-  lotenetPremio(id: Int!): LotenetPremio!
-  plataforma(id: Int!): Plataforma!
+
+  """Para ver todos los premios configurados"""
+  allLotenetPremios(offset: Int = 0, limit: Int = 10): [LotenetPremio!]!
+
+  """Ver un premio especifico de lotenet"""
+  findLotenetPremio(id: Int!): LotenetPremio!
+
+  """Para ver todas las plataformas de LOTENET"""
+  allPlataforma(offset: Int = 0, limit: Int = 10): [Plataforma!]!
+
+  """Buscar una plataforma espeficifica"""
+  findPlataforma(id: Int!): Plataforma!
   responseLotenetPremio(id: Int!): ResponseLotenetPremio!
   premiosDias: [PremiosDia!]!
   premiosDia(id: Int!): PremiosDia!
@@ -341,12 +351,24 @@ type Mutation {
 
   """Para verificar que el Xpath esta bien"""
   validarXpathIndividual(buscarByXpathWebScrapingInput: BuscarByXpathWebScrapingInput!): RESPONSE_BY_XPATH!
+
+  """Para crear un Premio Automatico en Lotenet"""
   createLotenetPremio(createLotenetPremioInput: CreateLotenetPremioInput!): LotenetPremio!
+
+  """Actualizar una configuracion de premio de Lotenet"""
   updateLotenetPremio(updateLotenetPremioInput: UpdateLotenetPremioInput!): LotenetPremio!
-  removeLotenetPremio(id: Int!): LotenetPremio!
+
+  """Eliminar un LotenetPremio"""
+  removeLotenetPremio(id: Int!): ResponsePropioGQl!
+
+  """Para crear una nueva plataforma en el modelo de LOTENET"""
   createPlataforma(createPlataformaInput: CreatePlataformaInput!): Plataforma!
+
+  """Editar una plataforma de Lotenet"""
   updatePlataforma(updatePlataformaInput: UpdatePlataformaInput!): Plataforma!
-  removePlataforma(id: Int!): Plataforma!
+
+  """Eliminar una paltaforma de LOTENEt"""
+  removePlataforma(id: Int!): ResponsePropioGQl!
   createResponseLotenetPremio(createResponseLotenetPremioInput: CreateResponseLotenetPremioInput!): ResponseLotenetPremio!
   updateResponseLotenetPremio(updateResponseLotenetPremioInput: UpdateResponseLotenetPremioInput!): ResponseLotenetPremio!
   removeResponseLotenetPremio(id: Int!): ResponseLotenetPremio!
@@ -512,24 +534,38 @@ input BuscarByXpathWebScrapingInput {
 }
 
 input CreateLotenetPremioInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  activo: Boolean
+  id_sorteo: Int!
+  id_plataforma: Int!
+  data_lotenet_id_lottery: Int!
+  data_lotenet_name_sorteo: String!
 }
 
 input UpdateLotenetPremioInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  name: String
+  activo: Boolean
+  data_lotenet_id_lottery: Int
+  data_lotenet_name_sorteo: String
   id: Int!
 }
 
 input CreatePlataformaInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  user: String!
+  password: String!
+  url: String!
+  descripcion: String!
+  img_url: String!
 }
 
 input UpdatePlataformaInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  name: String
+  user: String
+  password: String
+  url: String
+  descripcion: String
+  img_url: String
   id: Int!
 }
 

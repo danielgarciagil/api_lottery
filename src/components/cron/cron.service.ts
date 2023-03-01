@@ -34,7 +34,7 @@ export class CronService {
   // A las 12:00 AM cargos los nuevos cron y borros los anteriores
   iniciar_tareas() {
     if (process.env.NODE_ENV === 'PROD') {
-      this.borrar_cron_cargar_nuevos();
+      //todo this.borrar_cron_cargar_nuevos();
       cron.schedule('0 0 * * *', () => {
         this.borrar_cron_cargar_nuevos();
       });
