@@ -81,6 +81,12 @@ type SorteoABuscar {
   xpath: [Xpath!]!
 }
 
+type PremiosDia {
+  id: ID!
+  hora: String!
+  dias: Dias!
+}
+
 type Dias {
   id: ID!
   name: String!
@@ -90,6 +96,15 @@ type SorteoDias {
   id: ID!
   hora: String!
   dias: Dias!
+}
+
+type LotenetPremio {
+  id: ID!
+  name: String!
+  activo: Boolean!
+  lotenet_id_lottery: Int!
+  lotenet_name_sorteo: Int!
+  sorteo: Sorteo!
 }
 
 type Sorteo {
@@ -142,14 +157,23 @@ type RESPONSE_BY_XPATH {
   error: Boolean!
 }
 
-type LotenetPremio {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type ResponseLotenetPremio {
+  id: Int!
+  message: String!
+  completed: Boolean!
+  is_error: Boolean!
+  activo: Boolean!
+  create_at: DateTime!
+  update_at: DateTime!
 }
 
-type PlataformaPremio {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type Plataforma {
+  id: ID!
+  name: String!
+  password: String!
+  url: String!
+  descripcion: String!
+  img_url: String!
 }
 
 type Query {
@@ -224,8 +248,10 @@ type Query {
   findResponseSorteoABuscar(id: Int!): ResponseSorteoABuscar!
   lotenetPremios: [LotenetPremio!]!
   lotenetPremio(id: Int!): LotenetPremio!
-  plataformaPremios: [PlataformaPremio!]!
-  plataformaPremio(id: Int!): PlataformaPremio!
+  plataforma(id: Int!): Plataforma!
+  responseLotenetPremio(id: Int!): ResponseLotenetPremio!
+  premiosDias: [PremiosDia!]!
+  premiosDia(id: Int!): PremiosDia!
 }
 
 type Mutation {
@@ -315,9 +341,15 @@ type Mutation {
   createLotenetPremio(createLotenetPremioInput: CreateLotenetPremioInput!): LotenetPremio!
   updateLotenetPremio(updateLotenetPremioInput: UpdateLotenetPremioInput!): LotenetPremio!
   removeLotenetPremio(id: Int!): LotenetPremio!
-  createPlataformaPremio(createPlataformaPremioInput: CreatePlataformaPremioInput!): PlataformaPremio!
-  updatePlataformaPremio(updatePlataformaPremioInput: UpdatePlataformaPremioInput!): PlataformaPremio!
-  removePlataformaPremio(id: Int!): PlataformaPremio!
+  createPlataforma(createPlataformaInput: CreatePlataformaInput!): Plataforma!
+  updatePlataforma(updatePlataformaInput: UpdatePlataformaInput!): Plataforma!
+  removePlataforma(id: Int!): Plataforma!
+  createResponseLotenetPremio(createResponseLotenetPremioInput: CreateResponseLotenetPremioInput!): ResponseLotenetPremio!
+  updateResponseLotenetPremio(updateResponseLotenetPremioInput: UpdateResponseLotenetPremioInput!): ResponseLotenetPremio!
+  removeResponseLotenetPremio(id: Int!): ResponseLotenetPremio!
+  createPremiosDia(createPremiosDiaInput: CreatePremiosDiaInput!): PremiosDia!
+  updatePremiosDia(updatePremiosDiaInput: UpdatePremiosDiaInput!): PremiosDia!
+  removePremiosDia(id: Int!): PremiosDia!
 }
 
 input SignupInput {
@@ -487,12 +519,34 @@ input UpdateLotenetPremioInput {
   id: Int!
 }
 
-input CreatePlataformaPremioInput {
+input CreatePlataformaInput {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
-input UpdatePlataformaPremioInput {
+input UpdatePlataformaInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateResponseLotenetPremioInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateResponseLotenetPremioInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreatePremiosDiaInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdatePremiosDiaInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!

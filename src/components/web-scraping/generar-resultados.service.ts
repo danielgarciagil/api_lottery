@@ -121,11 +121,22 @@ export class GenerarResultadosService {
     sorteo_a_buscar: SorteoABuscar,
     response_xpath: RESPONSE_BY_XPATH,
   ) {
-    await this.resultadosServiceE.createSinError({
-      numeros_ganadores: response_xpath.data_by_xpath_digitos,
-      fecha: new Date(response_xpath.data_by_xpath_fecha),
-      id_sorteo: sorteo_a_buscar.sorteo.id,
-      id_user: 1, //todo modificar por el momento todo se va a vincular al user 1
-    });
+    let publicar = false;
+    for (let i = 0; i < 10; i++) {
+      try {
+        await this.resultadosServiceE.createSinError({
+          numeros_ganadores: response_xpath.data_by_xpath_digitos,
+          fecha: new Date(response_xpath.data_by_xpath_fecha),
+          id_sorteo: sorteo_a_buscar.sorteo.id,
+          id_user: 1, //todo modificar por el momento todo se va a vincular al user 1
+        });
+        publicar = true;
+      } catch (error) {
+        console.log(error);
+      }
+      if (publicar) {
+        break;
+      }
+    }
   }
 }

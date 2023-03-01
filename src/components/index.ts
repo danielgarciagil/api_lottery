@@ -16,6 +16,7 @@ export { PasarDataModule } from './pasar-data/pasar-data.module';
 export { LotenetPremiosModule } from './lotenet-premios/lotenet-premios.module';
 export { ResponseLotenetPremioModule } from './response-lotenet-premio/response-lotenet-premio.module';
 export { PlataformaModule } from './plataforma/plataforma.module';
+export { PremiosDiasModule } from './premios-dias/premios-dias.module';
 
 //COMPONNETES CRON
 export { CronModule } from './cron/cron.module';

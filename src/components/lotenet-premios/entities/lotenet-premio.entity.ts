@@ -1,8 +1,15 @@
 import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 //PROPIO
 import { VALID_ENTITY } from './../../../config/valid-roles';
+import { Sorteo } from './../../../components/sorteo/entities/sorteo.entity';
 
 @Entity({ name: VALID_ENTITY.LOTENET_PREMIO })
 @ObjectType()
@@ -26,4 +33,9 @@ export class LotenetPremio {
   @Field(() => Int)
   @Column({ type: 'int' })
   lotenet_name_sorteo: number;
+
+  @Field(() => Sorteo)
+  @OneToOne(() => Sorteo, (sorteo) => sorteo.lotenet_premio)
+  @JoinColumn({ name: 'id_sorteo' })
+  sorteo: Sorteo;
 }

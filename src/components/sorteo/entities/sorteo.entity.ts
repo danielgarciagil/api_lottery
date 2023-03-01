@@ -16,6 +16,7 @@ import { Loteria } from './../../../components/loteria/entities/loteria.entity';
 import { SorteoABuscar } from './../../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
 import { SorteoDias } from './../../sorteo_dias/entities/sorteo_dia.entity';
 import { VALID_ENTITY } from './../../../config/valid-roles';
+import { LotenetPremio } from './../../../components/lotenet-premios/entities/lotenet-premio.entity';
 
 @Entity({ name: VALID_ENTITY.SORTEO })
 @ObjectType()
@@ -70,4 +71,10 @@ export class Sorteo {
     eager: true,
   })
   sorteo_dias: SorteoDias[];
+
+  //TODO no tiene FIELD
+  @OneToOne(() => LotenetPremio, (lotenetPremio) => lotenetPremio.sorteo, {
+    lazy: true,
+  })
+  lotenet_premio: LotenetPremio;
 }

@@ -41,10 +41,14 @@ export class WebScrapingXpathService {
   }
 
   validar_que_es_un_numero(numero: any): number {
-    if (!isNaN(Number(numero))) {
-      return numero;
-    } else {
+    const newNumeroo = parseInt(numero);
+    if (isNaN(newNumeroo)) {
       throw new Error('ESTE XPATH NO ES UN NUMERO');
+    }
+    if (newNumeroo >= 0) {
+      return newNumeroo;
+    } else {
+      throw new Error('ESTE XPATH DIO UN NUMERO INFERIOOR A 0');
     }
   }
 
@@ -176,16 +180,7 @@ export class WebScrapingXpathService {
   }
 
   quitar_palabras_de_digitos(digito: string): string {
-    if (digito.includes('1er.')) {
-      digito = digito.replace('1er.', '');
-    }
-    if (digito.includes('2do.')) {
-      digito = digito.replace('2do.', '');
-    }
-    if (digito.includes('3er.')) {
-      digito = digito.replace('3er.', '');
-    }
-
-    return digito;
+    const newDigito = digito.replace(/\D/g, '');
+    return newDigito;
   }
 }
