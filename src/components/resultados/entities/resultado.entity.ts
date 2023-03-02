@@ -41,7 +41,7 @@ export class Resultado {
   @Field(() => User)
   @ManyToOne(() => User, (usuario) => usuario.resultados, { eager: true })
   @JoinColumn({ name: 'id_user' })
-  user?: User;
+  user: User;
 
   @CreateDateColumn({
     name: 'create_at',

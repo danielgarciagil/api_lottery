@@ -22,7 +22,7 @@ export class CreateResultadoInput {
 
   @Field(() => String)
   @IsDateString()
-  @Matches(/^\d{4}-\d{2}-\d{2}$/) // Expresion regular para recibir la fecha en AAAA:MM:DD  2022-10-10
+  @Matches(/^\d{4}-\d{2}-\d{2}$/) // Expresion regular para recibir la fecha en AAAA:MM:DD  2022-10-19
   fecha: Date;
 
   @Field(() => Int)

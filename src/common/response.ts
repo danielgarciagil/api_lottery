@@ -11,9 +11,6 @@ export interface ResponsePropio {
 @ObjectType()
 export class ResponsePropioGQl {
   @Field(() => String)
-  status: number;
-
-  @Field(() => String)
   message: string;
 
   @Field(() => Boolean)

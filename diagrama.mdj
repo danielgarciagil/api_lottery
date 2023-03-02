@@ -28,7 +28,7 @@
 							},
 							"fillColor": "#ffd6ad",
 							"font": "Arial;13;0",
-							"left": 8,
+							"left": 16,
 							"top": 576,
 							"width": 889,
 							"height": 456
@@ -2983,20 +2983,50 @@
 											"top": 748,
 											"width": 228.38134765625,
 											"height": 15
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGo8Vhq5rgwDI=",
+											"_parent": {
+												"$ref": "AAAAAAGGWv8lJ/Xo3vo="
+											},
+											"model": {
+												"$ref": "AAAAAAGGo8VhhJrdFtk="
+											},
+											"font": "Arial;15;0",
+											"left": 381,
+											"top": 765,
+											"width": 228.38134765625,
+											"height": 15
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGo8WZr5rnWhI=",
+											"_parent": {
+												"$ref": "AAAAAAGGWv8lJ/Xo3vo="
+											},
+											"model": {
+												"$ref": "AAAAAAGGo8WZoprk51I="
+											},
+											"font": "Arial;15;0",
+											"left": 381,
+											"top": 782,
+											"width": 228.38134765625,
+											"height": 15
 										}
 									],
 									"font": "Arial;15;0",
 									"left": 376,
 									"top": 641,
 									"width": 238.38134765625,
-									"height": 127
+									"height": 161
 								}
 							],
 							"font": "Arial;15;0",
 							"left": 376,
 							"top": 616,
 							"width": 238.38134765625,
-							"height": 166,
+							"height": 186,
 							"nameLabel": {
 								"$ref": "AAAAAAGGWv8lJ/XnodQ="
 							},
@@ -3317,7 +3347,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 420,
-									"top": 800,
+									"top": 820,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -3334,7 +3364,7 @@
 								"$ref": "AAAAAAGGWvPB2fWMwIA="
 							},
 							"lineStyle": 2,
-							"points": "271:882;435:882;435:781",
+							"points": "271:882;435:882;435:801",
 							"nameLabel": {
 								"$ref": "AAAAAAGGWxzt0vb/oMg="
 							},
@@ -5941,6 +5971,24 @@
 							"name": "lotenet_name_loteria",
 							"type": "varchar",
 							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGGo8VhhJrdFtk=",
+							"_parent": {
+								"$ref": "AAAAAAGGWv8lJvXk3WA="
+							},
+							"name": "numeros_intentos",
+							"type": "Int",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGGo8WZoprk51I=",
+							"_parent": {
+								"$ref": "AAAAAAGGWv8lJvXk3WA="
+							},
+							"name": "Column1"
 						}
 					]
 				},

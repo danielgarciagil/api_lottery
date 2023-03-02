@@ -7,7 +7,8 @@ import { LOTENET_XPATH } from './lotenet.enum';
 import { Plataforma } from '../plataforma/entities/plataforma.entity';
 import { LotenetPremio } from '../lotenet-premios/entities/lotenet-premio.entity';
 import { Resultado } from '../resultados/entities/resultado.entity';
-import { convertir_formato_date } from 'src/common/validar_fechas';
+import { convertir_formato_date } from './../../common/validar_fechas';
+import { ResponsePropioGQl } from 'src/common/response';
 
 @Injectable()
 export class ApiLotenetService {
@@ -101,7 +102,7 @@ export class ApiLotenetService {
     await this.bloquearPrograma(2);
 
     const inputfecha = await this.buscar_xpath(LOTENET_XPATH.input_fecha);
-    const fecha = convertir_formato_date(resultado.fecha);
+    const fecha = convertir_formato_date(resultado.fecha.toISOString());
     await inputfecha.sendKeys(fecha);
     await this.bloquearPrograma(2);
 
@@ -167,7 +168,10 @@ export class ApiLotenetService {
     }
   }
 
-  async iniciar_premio(resultado: Resultado, lotenetPremio: LotenetPremio) {
+  async iniciar_premio(
+    resultado: Resultado,
+    lotenetPremio: LotenetPremio,
+  ): Promise<ResponsePropioGQl> {
     try {
       await this.startDriver();
       this.validar_driver();
@@ -183,8 +187,11 @@ export class ApiLotenetService {
       this.validar_driver();
 
       await this.colocar_premio(lotenetPremio, resultado);
+      return {
+        error: false,
+        message: 'SE PREMIO CORRECTAMENTE',
+      };
     } catch (error) {
-      console.log(error);
       throw Error(error);
     } finally {
       this.stopDriver();

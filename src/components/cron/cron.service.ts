@@ -63,7 +63,7 @@ export class CronService {
             sorteo.sorteo_dias[i].hora,
           );
 
-          this.logger.log(
+          this.logger.debug(
             `HOY SE BUSCARAN =>  ${sorteo.name} a las => ${cron_expresion}`,
           );
           const responseSorteo = await this.responseSorteoABuscar.create({
@@ -71,12 +71,12 @@ export class CronService {
             message: 'Se instancio un nuevo response de Sorteo a Buscar',
           });
           const tarea = cron.schedule(cron_expresion, async () => {
-            this.logger.log(`Comenzo el Cron de este sorteo ${sorteo.name}`);
+            this.logger.debug(`Comenzo el Cron de este sorteo ${sorteo.name}`);
             let res = await this.generarResultadosService.init_generar(
               sorteoABuscar,
               responseSorteo.id,
             );
-            console.log(res); // todo manejar esto por telegram por el momento
+            this.logger.debug(res); // todo manejar esto por telegram por el momento
             res = null;
           });
           this.tareas.push(tarea);

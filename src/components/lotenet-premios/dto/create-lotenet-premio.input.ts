@@ -54,4 +54,14 @@ export class CreateLotenetPremioInput {
   @IsNumber()
   @Min(1)
   lotenet_numero_digitos_premio: number;
+
+  @Field(() => Int)
+  @IsNumber()
+  @Min(1)
+  numeros_intentos: number;
+
+  @Field(() => Int)
+  @IsNumber()
+  @Min(1)
+  tiempo_de_espera_segundos: number;
 }

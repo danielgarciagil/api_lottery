@@ -30,7 +30,6 @@ export class ResultadosService {
   ): Promise<Resultado> {
     const { id_sorteo, fecha, numeros_ganadores, id_user } =
       createResultadoInput;
-
     //! Aqui validos los numeros a publicar con las reglas del juego
     await this.verificar_reglas_sorteo(id_sorteo, numeros_ganadores);
 

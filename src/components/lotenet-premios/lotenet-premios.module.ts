@@ -9,5 +9,6 @@ import { LotenetPremio } from './entities/lotenet-premio.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([LotenetPremio])],
   providers: [LotenetPremiosResolver, LotenetPremiosService],
+  exports: [LotenetPremiosService],
 })
 export class LotenetPremiosModule {}

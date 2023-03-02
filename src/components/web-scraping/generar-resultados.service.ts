@@ -72,7 +72,7 @@ export class GenerarResultadosService {
     id_response_sorteo: number,
   ): Promise<ResponsePropioGQl> {
     try {
-      this.logger.log(
+      this.logger.debug(
         `Se Instancio una clase nueva de Buscar para: ${sorteoABuscar.name}`,
       );
       let sorteo = new BuscarAutomaticoService();
@@ -81,7 +81,8 @@ export class GenerarResultadosService {
       if (!response.error) {
         await this.publicar(sorteoABuscar, response);
         //todo me falta manjear todas las respuesttas de sorteoabuscar
-        console.log(`SE PUBLICO BIEN => ${sorteoABuscar.name}`);
+
+        this.logger.debug(`SE PUBLICO BIEN => ${sorteoABuscar.name}`);
         await this.responseSorteoABuscarService.update(id_response_sorteo, {
           message: 'Se publico bien',
         });
@@ -91,14 +92,15 @@ export class GenerarResultadosService {
           status: 200,
         };
       }
-      console.log(response);
+      this.logger.debug(response);
+
       return {
         error: true,
         message: `NO SE PUBLICO => ${sorteoABuscar.name}`,
         status: 200,
       };
     } catch (error) {
-      console.log(error);
+      this.logger.error(error);
       return {
         error: true,
         message: `NO SE PUBLICO => ${sorteoABuscar.name} ERROR => ${error}`,
@@ -137,7 +139,7 @@ export class GenerarResultadosService {
         });
         publicar = true;
       } catch (error) {
-        console.log(error);
+        this.logger.error(error);
       }
       if (publicar) {
         break;

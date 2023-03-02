@@ -26,7 +26,6 @@ export class BuscarAutomaticoService {
         throw Error(response.message);
       }
     });
-    console.log(arr);
 
     const arr_iguales = arr.every((elem, index, array) =>
       isEqual(elem, array[0]),
@@ -66,9 +65,9 @@ export class BuscarAutomaticoService {
         }
       } catch (error) {
         message_error = error;
-        this.logger.log(`ERROR => ${message_error}`);
+        this.logger.error(`ERROR => ${message_error}`);
       }
-      this.logger.log(`STATUS => ${message_error}`);
+      this.logger.debug(`STATUS => ${message_error}`);
       await this.bloquearPrograma(sorteo_a_buscar.tiempo_de_espera_segundos);
     }
     if (numero_a_publicar && fecha_a_publicar) {

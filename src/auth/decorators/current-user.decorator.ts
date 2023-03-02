@@ -15,7 +15,6 @@ import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 //Siempre y cuando haga pasado por la validacion del token
 export const CurrentUser = createParamDecorator(
   (roles: VALID_PERMISO_ACCION[], context: ExecutionContext) => {
-    //console.log(roles);
     const ctx = GqlExecutionContext.create(context);
     const user: User = ctx.getContext().req.user;
     if (!user) {

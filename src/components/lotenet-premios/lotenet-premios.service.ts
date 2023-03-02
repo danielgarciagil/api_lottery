@@ -56,6 +56,11 @@ export class LotenetPremiosService {
     return lotenetPremio;
   }
 
+  async findOneSinError(id: number): Promise<LotenetPremio> {
+    const lotenetPremio = await this.lotenetPremioRepository.findOneBy({ id });
+    return lotenetPremio;
+  }
+
   //TODO no cambio los id de los padres
   async update(
     id: number,
@@ -79,13 +84,11 @@ export class LotenetPremiosService {
       await this.lotenetPremioRepository.remove(lotenetPremio);
       return {
         message: MESSAGE.COMUN_SE_ELIMINO_CORRECTAMENTE,
-        status: 200,
         error: false,
       };
     } catch (error) {
       return {
         message: MESSAGE.COMUN_NO_SE_PUDO_ELIMINAR,
-        status: 401,
         error: true,
       };
     }

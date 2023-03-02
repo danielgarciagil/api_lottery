@@ -95,7 +95,6 @@ export class WebScrapingXpathService {
 
       fecha_final = this.validar_fechas_iguales(data_xpath_fechas);
 
-      this.stopDriver();
       return {
         message: 'SE ENCONTRO LA DATA DEL XPATH',
         data_by_xpath_digitos: data_xpath_digitos,
@@ -103,13 +102,14 @@ export class WebScrapingXpathService {
         error: false,
       };
     } catch (error) {
-      this.stopDriver();
       return {
         error: true,
         message: error,
         data_by_xpath_digitos: [],
         data_by_xpath_fecha: '',
       };
+    } finally {
+      this.stopDriver();
     }
   }
 
@@ -156,7 +156,6 @@ export class WebScrapingXpathService {
         const value = this.quitar_palabras_de_digitos(await message.getText());
         digito += value; //todo
       } catch (error) {
-        //console.log(error);
         throw new Error('ESTE XPATH DE DIGITO NO PUEDE SER ENCONTRADO');
       }
     }
