@@ -10,6 +10,7 @@ import { WebScrapingXpathService } from './WebScrapingXpath.service';
 import { ResultadosModule } from '../resultados/resultados.module';
 import { GenerarResultadosService } from './generar-resultados.service';
 import { ResponseSorteoABuscarModule } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.module';
+import { BuscarAutomaticoService } from './buscar-automatico.service';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ResponseSorteoABuscarModule } from '../response_sorteo_a_buscar/respons
     ProcesoDeSorteoABuscarResolver,
     WebScrapingXpathService,
     GenerarResultadosService,
+    BuscarAutomaticoService,
   ],
   exports: [GenerarResultadosService],
 })

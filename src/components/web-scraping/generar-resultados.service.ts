@@ -4,13 +4,13 @@ import { Injectable, Logger } from '@nestjs/common';
 import { XpathService } from '../xpath/xpath.service';
 import { WebScrapingXpathService } from './WebScrapingXpath.service';
 import { RESPONSE_BY_XPATH, ResponsePropioGQl } from './../../common/response';
-import { MESSAGE } from 'src/config/messages';
+import { MESSAGE } from './../../config/messages';
 import { SorteoABuscarService } from '../sorteo_a_buscar/sorteo_a_buscar.service';
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
 import { BuscarAutomaticoService } from './buscar-automatico.service';
 import { ResultadosService } from '../resultados/resultados.service';
 import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.service';
-import { fecha_actual } from 'src/common/validar_fechas';
+import { fecha_actual } from './../../common/validar_fechas';
 
 @Injectable()
 export class GenerarResultadosService {
@@ -23,10 +23,11 @@ export class GenerarResultadosService {
     private readonly sorteoABuscarService: SorteoABuscarService,
     private readonly resultadosServiceE: ResultadosService,
     private readonly responseSorteoABuscarService: ResponseSorteoABuscarService,
+    private readonly buscarAutomaticoService: BuscarAutomaticoService,
+    private readonly webScrapingXpathService: WebScrapingXpathService,
   ) {}
 
   async validar_xpath_individual(id_xpath: number): Promise<RESPONSE_BY_XPATH> {
-    const test_xpath = new WebScrapingXpathService();
     const xpath = await this.xpathService.findOneSinError(id_xpath);
     if (!xpath) {
       return {
@@ -37,7 +38,10 @@ export class GenerarResultadosService {
       };
     }
     const fecha_a_buscar = this.fecha_actual;
-    return await test_xpath.iniciar_proceso_xpath(xpath, fecha_a_buscar);
+    return await this.webScrapingXpathService.iniciar_proceso_xpath(
+      xpath,
+      fecha_a_buscar,
+    );
   }
 
   async generar_resultados(
@@ -73,9 +77,10 @@ export class GenerarResultadosService {
       this.logger.debug(
         `Se Instancio una clase nueva de Buscar para: ${sorteoABuscar.name}`,
       );
-      let sorteo = new BuscarAutomaticoService();
-      const response = await sorteo.iniciar_busqueda(sorteoABuscar);
-      sorteo = null;
+      const response = await this.buscarAutomaticoService.iniciar_busqueda(
+        sorteoABuscar,
+      );
+
       if (!response.error) {
         await this.publicar(sorteoABuscar, response);
         //todo me falta manjear todas las respuesttas de sorteoabuscar
