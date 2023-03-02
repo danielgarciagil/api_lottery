@@ -45,6 +45,7 @@ export class CronService {
   borrar_cron_cargar_nuevos() {
     this.tareas.forEach((tareaCron) => {
       tareaCron.stop();
+      tareaCron = null;
     });
     this.tareas = [];
     this.crear_tareas_automaticas();
@@ -71,11 +72,12 @@ export class CronService {
           });
           const tarea = cron.schedule(cron_expresion, async () => {
             this.logger.log(`Comenzo el Cron de este sorteo ${sorteo.name}`);
-            const res = await this.generarResultadosService.init_generar(
+            let res = await this.generarResultadosService.init_generar(
               sorteoABuscar,
               responseSorteo.id,
             );
             console.log(res); // todo manejar esto por telegram por el momento
+            res = null;
           });
           this.tareas.push(tarea);
         }

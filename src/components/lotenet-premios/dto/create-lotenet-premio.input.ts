@@ -44,4 +44,14 @@ export class CreateLotenetPremioInput {
   @IsString()
   @MinLength(3)
   data_lotenet_name_loteria: string;
+
+  @Field(() => Int)
+  @IsNumber()
+  @Min(1)
+  lotenet_numero_posiciones_premio: number;
+
+  @Field(() => Int)
+  @IsNumber()
+  @Min(1)
+  lotenet_numero_digitos_premio: number;
 }

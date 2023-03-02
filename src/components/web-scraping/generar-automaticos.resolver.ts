@@ -33,6 +33,7 @@ export class ProcesoDeSorteoABuscarResolver {
     );
   }
 
+  //TODO PONER QUE LA FFECHA SE TENGA QUE ENVIAR PARA VALIDAR QUE ES LA RECIBIDA
   @Mutation(() => RESPONSE_BY_XPATH, {
     name: 'validarXpathIndividual',
     description: 'Para verificar que el Xpath esta bien',

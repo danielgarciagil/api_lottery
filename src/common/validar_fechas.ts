@@ -22,7 +22,7 @@ export const validarFecha = (
 
   // Verificamos si alguna de las dos fechas es válida y si es igual a la fecha original
   if (fechaParseadaEs.isValid()) {
-    const fechaXpath = fechaParseadaEs.toISOString().slice(0, 10);
+    const fechaXpath = fechaParseadaEs.toISOString().slice(0, 10); //todo revisar si no me cambia la fecha al dia siguinte
     if (fechaXpath == fecha_a_buscar) {
       return fechaXpath;
     }
@@ -37,4 +37,14 @@ export const validarFecha = (
     console.log('LA FECHA NO ES VALIDA');
     throw new Error('La fecha no es válida');
   }
+};
+
+export const fecha_actual = (): string => {
+  const fechaActual = moment().format('YYYY-MM-DD');
+  return fechaActual;
+};
+
+export const convertir_formato_date = (date: Date): string => {
+  const fechaActual = moment(date).format('DD-MM-YYYY');
+  return fechaActual;
 };

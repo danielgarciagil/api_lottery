@@ -1,18 +1,16 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { isEqual } from 'lodash';
-import * as moment from 'moment';
 
 import { RESPONSE_BY_XPATH } from './../../common/response';
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
 import { WebScrapingXpathService } from './WebScrapingXpath.service';
+import { fecha_actual } from 'src/common/validar_fechas';
 
 @Injectable()
 export class BuscarAutomaticoService {
   private logger: Logger = new Logger('Buscar-Automatico-Services');
-  fecha_actual(): string {
-    const fechaActual = moment().format('YYYY-MM-DD');
-    return fechaActual;
-  }
+
+  fecha_actual = fecha_actual();
 
   async bloquearPrograma(time: number) {
     await new Promise((resolve) => setTimeout(resolve, time * 1000));
@@ -42,7 +40,7 @@ export class BuscarAutomaticoService {
   async iniciar_busqueda(
     sorteo_a_buscar: SorteoABuscar,
   ): Promise<RESPONSE_BY_XPATH> {
-    const fecha_a_buscar = this.fecha_actual();
+    const fecha_a_buscar = this.fecha_actual;
     let numero_a_publicar: number[];
     let fecha_a_publicar: string;
     let message_error: string;

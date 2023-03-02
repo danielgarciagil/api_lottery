@@ -43,19 +43,27 @@ export class LotenetPremio {
   @Column({ type: 'varchar' })
   data_lotenet_name_loteria: string;
 
+  @Field(() => Number)
+  @Column({ type: 'int' })
+  lotenet_numero_posiciones_premio: number;
+
+  @Field(() => Number)
+  @Column({ type: 'int' })
+  lotenet_numero_digitos_premio: number;
+
   @Field(() => Sorteo)
   @OneToOne(() => Sorteo, (sorteo) => sorteo.lotenet_premio, {
     eager: true,
   })
   @JoinColumn({ name: 'id_sorteo' })
-  sorteo: Sorteo;
+  sorteo?: Sorteo;
 
   //todo field
   @Field(() => [PremiosDia])
   @OneToMany(() => PremiosDia, (premiosDia) => premiosDia.lotenet_premio, {
     eager: true,
   })
-  premio_dia: PremiosDia;
+  premio_dia?: PremiosDia;
 
   @Field(() => Plataforma)
   @ManyToOne(() => Plataforma, (plataforma) => plataforma.lotenet_premio, {
@@ -68,5 +76,5 @@ export class LotenetPremio {
     (responseLotenetPremio) => responseLotenetPremio.lotenet_premio,
     { eager: true },
   )
-  response_lotenet_premio: ResponseLotenetPremio;
+  response_lotenet_premio?: ResponseLotenetPremio;
 }

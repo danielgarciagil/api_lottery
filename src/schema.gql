@@ -110,6 +110,8 @@ type LotenetPremio {
   data_lotenet_id_lottery: Int!
   data_lotenet_name_sorteo: String!
   data_lotenet_name_loteria: String!
+  lotenet_numero_posiciones_premio: Float!
+  lotenet_numero_digitos_premio: Float!
   sorteo: Sorteo!
   premio_dia: [PremiosDia!]!
   plataforma: Plataforma!
@@ -553,6 +555,8 @@ input CreateLotenetPremioInput {
   data_lotenet_id_lottery: Int!
   data_lotenet_name_sorteo: String!
   data_lotenet_name_loteria: String!
+  lotenet_numero_posiciones_premio: Int!
+  lotenet_numero_digitos_premio: Int!
 }
 
 input UpdateLotenetPremioInput {
@@ -561,6 +565,8 @@ input UpdateLotenetPremioInput {
   data_lotenet_id_lottery: Int
   data_lotenet_name_sorteo: String
   data_lotenet_name_loteria: String
+  lotenet_numero_posiciones_premio: Int
+  lotenet_numero_digitos_premio: Int
   id: Int!
 }
 

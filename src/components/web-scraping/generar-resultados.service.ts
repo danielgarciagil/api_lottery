@@ -1,5 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import * as moment from 'moment';
 
 //PROPIO
 import { XpathService } from '../xpath/xpath.service';
@@ -11,14 +10,14 @@ import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entit
 import { BuscarAutomaticoService } from './buscar-automatico.service';
 import { ResultadosService } from '../resultados/resultados.service';
 import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.service';
+import { fecha_actual } from 'src/common/validar_fechas';
 
 @Injectable()
 export class GenerarResultadosService {
   private logger: Logger = new Logger('Generar-Resultados-Services');
-  fecha_actual(): string {
-    const fechaActual = moment().format('YYYY-MM-DD');
-    return fechaActual;
-  }
+
+  fecha_actual = fecha_actual();
+
   constructor(
     private readonly xpathService: XpathService,
     private readonly sorteoABuscarService: SorteoABuscarService,
@@ -37,7 +36,7 @@ export class GenerarResultadosService {
         message: MESSAGE.COMUN_ESTE_ID_NO_EXISTE,
       };
     }
-    const fecha_a_buscar = this.fecha_actual();
+    const fecha_a_buscar = this.fecha_actual;
     return await test_xpath.iniciar_proceso_xpath(xpath, fecha_a_buscar);
   }
 
@@ -76,9 +75,9 @@ export class GenerarResultadosService {
       this.logger.log(
         `Se Instancio una clase nueva de Buscar para: ${sorteoABuscar.name}`,
       );
-      const sorteo = new BuscarAutomaticoService();
+      let sorteo = new BuscarAutomaticoService();
       const response = await sorteo.iniciar_busqueda(sorteoABuscar);
-
+      sorteo = null;
       if (!response.error) {
         await this.publicar(sorteoABuscar, response);
         //todo me falta manjear todas las respuesttas de sorteoabuscar
