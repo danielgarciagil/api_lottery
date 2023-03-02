@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
 
 //PROPIO
 import { PremiosAutomaticoLotenetService } from './premios-automatico-lotenet.service';
 import { ApiLotenetService } from './api-lotenet.service';
+import { PlataformaModule } from '../plataforma/plataforma.module';
 
 @Module({
-  imports: [HttpModule],
+  imports: [PlataformaModule],
   providers: [PremiosAutomaticoLotenetService, ApiLotenetService],
 })
 export class PremiosAutomaticoLotenetModule {}

@@ -39,6 +39,10 @@ export class LotenetPremio {
   @Column({ type: 'varchar' })
   data_lotenet_name_sorteo: string;
 
+  @Field(() => String)
+  @Column({ type: 'varchar' })
+  data_lotenet_name_loteria: string;
+
   @Field(() => Sorteo)
   @OneToOne(() => Sorteo, (sorteo) => sorteo.lotenet_premio, {
     eager: true,

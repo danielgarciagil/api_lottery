@@ -39,4 +39,9 @@ export class CreateLotenetPremioInput {
   @IsString()
   @MinLength(3)
   data_lotenet_name_sorteo: string;
+
+  @Field(() => String)
+  @IsString()
+  @MinLength(3)
+  data_lotenet_name_loteria: string;
 }

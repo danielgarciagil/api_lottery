@@ -7,5 +7,6 @@ import { Plataforma } from './entities/plataforma.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Plataforma])],
   providers: [PlataformaResolver, PlataformaService],
+  exports: [TypeOrmModule],
 })
 export class PlataformaModule {}

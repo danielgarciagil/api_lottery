@@ -2968,13 +2968,28 @@
 											"top": 695,
 											"width": 228.38134765625,
 											"height": 15
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGGn4fDiunSCLY=",
+											"_parent": {
+												"$ref": "AAAAAAGGWv8lJ/Xo3vo="
+											},
+											"model": {
+												"$ref": "AAAAAAGGn4fDcunPBnQ="
+											},
+											"font": "Arial;15;0",
+											"left": 381,
+											"top": 748,
+											"width": 228.38134765625,
+											"height": 15
 										}
 									],
 									"font": "Arial;15;0",
 									"left": 376,
 									"top": 641,
 									"width": 238.38134765625,
-									"height": 110
+									"height": 127
 								}
 							],
 							"font": "Arial;15;0",
@@ -5915,6 +5930,16 @@
 							},
 							"name": "ID_modelo_a_premiar",
 							"type": "FK",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGGn4fDcunPBnQ=",
+							"_parent": {
+								"$ref": "AAAAAAGGWv8lJvXk3WA="
+							},
+							"name": "lotenet_name_loteria",
+							"type": "varchar",
 							"length": 0
 						}
 					]

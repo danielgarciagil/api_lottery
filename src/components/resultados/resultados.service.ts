@@ -74,6 +74,22 @@ export class ResultadosService {
     }
   }
 
+  async devolverResultadoByBecha(
+    id_sorteo: number,
+    fecha: Date,
+  ): Promise<Resultado> {
+    const resultado = await this.resultadoRepository.findOne({
+      where: {
+        sorteo: { id: id_sorteo },
+        fecha: fecha,
+      },
+    });
+    if (resultado) {
+      return resultado;
+    }
+    throw Error(MESSAGE.AUN_NO_ESTAN_PUBLICADOS_LOS_RESULTADOS);
+  }
+
   async verificar_reglas_sorteo(
     id_sorteo: number,
     numeros_ganadores: number[],

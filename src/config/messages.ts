@@ -38,4 +38,5 @@ export enum MESSAGE {
   YA_SE_ESTA_BUSCANDO_AUTOMATICAMENTE_ESTE_SORTEO = 'Ya se esta buscando automaticamente este sorteo',
 
   EL_NAVEGADOR_NO_PUEDE_ABRIR = 'El navegador no puede abrir',
+  AUN_NO_ESTAN_PUBLICADOS_LOS_RESULTADOS = 'AUN NO ESTAN PUBLICADOS LOS RESULTADOS DE ESTE SORTEO',
 }
