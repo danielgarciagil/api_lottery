@@ -4,7 +4,7 @@ import { isEqual } from 'lodash';
 import { RESPONSE_BY_XPATH } from './../../common/response';
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
 import { WebScrapingXpathService } from './WebScrapingXpath.service';
-import { fecha_actual } from 'src/common/validar_fechas';
+import { fecha_actual } from './../../common/validar_fechas';
 
 @Injectable()
 export class BuscarAutomaticoService {

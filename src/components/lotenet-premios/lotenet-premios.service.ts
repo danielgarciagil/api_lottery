@@ -48,6 +48,18 @@ export class LotenetPremiosService {
     });
   }
 
+  async findAllByDays(idDay: number): Promise<LotenetPremio[]> {
+    return await this.lotenetPremioRepository.find({
+      where: {
+        premio_dia: {
+          dias: {
+            id: idDay,
+          },
+        },
+      },
+    });
+  }
+
   async findOne(id: number): Promise<LotenetPremio> {
     const lotenetPremio = await this.lotenetPremioRepository.findOneBy({ id });
     if (!lotenetPremio) {

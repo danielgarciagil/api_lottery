@@ -174,7 +174,6 @@ type AuthResponse {
 }
 
 type ResponsePropioGQl {
-  status: String!
   message: String!
   error: Boolean!
 }
@@ -391,6 +390,9 @@ type Mutation {
 
   """Eliminar el dia de un Premio"""
   removePremioDias(id: Int!): ResponsePropioGQl!
+
+  """Para premiar Automaticamentnte en Lotenet"""
+  generarPremioAutomaticoLotenet(buscarByLotenetPremio: BuscarByLotenerPremioInput!): ResponsePropioGQl!
 }
 
 input SignupInput {
@@ -617,4 +619,8 @@ input UpdatePremiosDiaInput {
   id_lotenet_premio: Int
   id_dia: Int
   id: Int!
+}
+
+input BuscarByLotenerPremioInput {
+  id_lotenet_premio: Int!
 }

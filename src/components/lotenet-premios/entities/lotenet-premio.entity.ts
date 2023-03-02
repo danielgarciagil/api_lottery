@@ -71,7 +71,7 @@ export class LotenetPremio {
   @OneToMany(() => PremiosDia, (premiosDia) => premiosDia.lotenet_premio, {
     eager: true,
   })
-  premio_dia: PremiosDia;
+  premio_dia: PremiosDia[];
 
   @Field(() => Plataforma)
   @ManyToOne(() => Plataforma, (plataforma) => plataforma.lotenet_premio, {

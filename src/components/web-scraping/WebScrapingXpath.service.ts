@@ -40,6 +40,19 @@ export class WebScrapingXpathService {
     }
   }
 
+  async buscar_xpath(xpath: string) {
+    try {
+      return await this.driver.wait(
+        until.elementLocated(By.xpath(xpath)),
+        30000,
+        '',
+        30000,
+      );
+    } catch (error) {
+      throw Error(`NO SE ENCONTRO ESTE XPATH ${xpath}`);
+    }
+  }
+
   validar_que_es_un_numero(numero: any): number {
     const newNumeroo = parseInt(numero);
     if (isNaN(newNumeroo)) {
@@ -52,7 +65,6 @@ export class WebScrapingXpathService {
     }
   }
 
-  //TODO ESTO ESTA MALO
   validar_fechas_iguales(arr_fecha: string[]): string {
     const todas_fechas_iguales = arr_fecha.every((elemento, indice, arr) => {
       return elemento === arr[0];
@@ -119,16 +131,9 @@ export class WebScrapingXpathService {
     arr_xpath_fechas: string[][],
     fecha_a_buscar: string,
   ): Promise<string> {
-    const driverActual = this.driver;
-    this.validar_driver();
     for (const xpath_Actual_fecha of arr_xpath_fechas[index_actual]) {
       try {
-        const xpath_fecha = await driverActual.wait(
-          until.elementLocated(By.xpath(xpath_Actual_fecha)),
-          30000,
-          '',
-          30000,
-        );
+        const xpath_fecha = await this.buscar_xpath(xpath_Actual_fecha);
         const value_fecha = await xpath_fecha.getText();
         return validarFecha(value_fecha, fecha_a_buscar);
       } catch (error) {
@@ -143,16 +148,10 @@ export class WebScrapingXpathService {
     arr_xpath_digitos: string[][],
   ): Promise<number> {
     let digito = '';
-    const driverActual = this.driver;
     this.validar_driver();
     for (const xpath_digito_actual of arr_xpath_digitos[index_actual]) {
       try {
-        const message = await driverActual.wait(
-          until.elementLocated(By.xpath(xpath_digito_actual)),
-          30000,
-          '',
-          30000,
-        );
+        const message = await this.buscar_xpath(xpath_digito_actual);
         const value = this.quitar_palabras_de_digitos(await message.getText());
         digito += value; //todo
       } catch (error) {

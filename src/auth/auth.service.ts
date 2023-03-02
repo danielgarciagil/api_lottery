@@ -58,7 +58,6 @@ export class AuthService {
     await this.usersService.updateToken(id, token); //todo controlar error
     return {
       message: MESSAGE.SE_CERRO_CORRECTAMENTE_SU_SESION,
-      status: 200,
       error: false,
     };
   }

@@ -56,13 +56,11 @@ export class GenerarResultadosService {
       return {
         error: false,
         message: 'INICIO EL GENERADOR',
-        status: 201,
       };
     } catch (error) {
       return {
         error: true,
         message: error,
-        status: 400,
       };
     }
   }
@@ -89,7 +87,6 @@ export class GenerarResultadosService {
         return {
           error: false,
           message: `SE PUBLICO BIEN => ${sorteoABuscar.name}`,
-          status: 200,
         };
       }
       this.logger.debug(response);
@@ -97,14 +94,12 @@ export class GenerarResultadosService {
       return {
         error: true,
         message: `NO SE PUBLICO => ${sorteoABuscar.name}`,
-        status: 200,
       };
     } catch (error) {
       this.logger.error(error);
       return {
         error: true,
         message: `NO SE PUBLICO => ${sorteoABuscar.name} ERROR => ${error}`,
-        status: 400,
       };
     }
   }

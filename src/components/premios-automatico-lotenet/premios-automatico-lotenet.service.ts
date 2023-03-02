@@ -17,11 +17,6 @@ export class PremiosAutomaticoLotenetService {
     private readonly lotenetPremioService: LotenetPremiosService,
   ) {}
 
-  async onModuleInit() {
-    const lote = await this.lotenetPremioService.findOne(5);
-    await this.premiarAutomatico(lote);
-  }
-
   async bloquearPrograma(time: number) {
     await new Promise((resolve) => setTimeout(resolve, time * 1000));
   }
@@ -66,17 +61,18 @@ export class PremiosAutomaticoLotenetService {
           message = res.message;
           break;
         }
+        message = res.message;
         await this.bloquearPrograma(lotenetPremio.tiempo_de_espera_segundos);
       } catch (error) {
-        error = true;
-        message = error;
         this.logger.error(error);
+        message = error;
+        error = true;
         await this.bloquearPrograma(lotenetPremio.tiempo_de_espera_segundos);
       }
-      return {
-        error,
-        message,
-      };
     }
+    return {
+      error,
+      message,
+    };
   }
 }

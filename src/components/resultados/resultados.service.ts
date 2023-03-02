@@ -148,13 +148,11 @@ export class ResultadosService {
       await this.resultadoRepository.remove(resultado);
       return {
         message: MESSAGE.COMUN_SE_ELIMINO_CORRECTAMENTE,
-        status: 200,
         error: false,
       };
     } catch (error) {
       return {
         message: MESSAGE.COMUN_NO_SE_PUDO_ELIMINAR,
-        status: 401,
         error: true,
       };
     }

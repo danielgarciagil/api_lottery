@@ -6,6 +6,9 @@ import { GenerarResultadosService } from '../web-scraping/generar-resultados.ser
 import { SorteoABuscarService } from '../sorteo_a_buscar/sorteo_a_buscar.service';
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
 import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.service';
+import { LotenetPremio } from '../lotenet-premios/entities/lotenet-premio.entity';
+import { LotenetPremiosService } from '../lotenet-premios/lotenet-premios.service';
+import { PremiosAutomaticoLotenetService } from '../premios-automatico-lotenet/premios-automatico-lotenet.service';
 
 @Injectable()
 export class CronService {
@@ -13,6 +16,8 @@ export class CronService {
     private readonly sorteoABuscarService: SorteoABuscarService,
     private readonly generarResultadosService: GenerarResultadosService,
     private readonly responseSorteoABuscar: ResponseSorteoABuscarService,
+    private readonly lotenetPremiosService: LotenetPremiosService,
+    private readonly premiosAutomaticoLotenetService: PremiosAutomaticoLotenetService,
   ) {}
   private tareas: cron.ScheduledTask[] = [];
   private logger: Logger = new Logger('Cron-Services');
@@ -31,10 +36,19 @@ export class CronService {
     return todos_los_sorteos;
   }
 
+  //Devulvo todos los Lotenet Premios del dia en Curso
+  async consultar_lotenetPremio(): Promise<LotenetPremio[]> {
+    const id_fecha_hoy = this.id_fecha_hoy();
+    const todos_los_lotenet = await this.lotenetPremiosService.findAllByDays(
+      id_fecha_hoy,
+    );
+    return todos_los_lotenet;
+  }
+
   // A las 12:00 AM cargos los nuevos cron y borros los anteriores
   iniciar_tareas() {
     if (process.env.NODE_ENV === 'PROD') {
-      //todo this.borrar_cron_cargar_nuevos();
+      this.borrar_cron_cargar_nuevos();
       cron.schedule('0 0 * * *', () => {
         this.borrar_cron_cargar_nuevos();
       });
@@ -48,39 +62,67 @@ export class CronService {
       tareaCron = null;
     });
     this.tareas = [];
-    this.crear_tareas_automaticas();
+    //this.crear_tareas_automaticas();
+    this.crear_premios_lotenet_automaticos();
   }
 
-  //Creo los cron individuales y lo agregoa un Array
+  async crear_premios_lotenet_automaticos() {
+    const arrLotenetPremios = await this.consultar_lotenetPremio();
+    for (const lotenetPremio of arrLotenetPremios) {
+      if (!lotenetPremio.activo) continue;
+      for (let i = 0; i < lotenetPremio.premio_dia.length; i++) {
+        const cron_expresion = cronExpression(
+          lotenetPremio.premio_dia[i].id,
+          lotenetPremio.premio_dia[i].hora,
+        );
+        this.logger.debug(
+          `SE BUSCARA UN PREMIO LOTENET => ${lotenetPremio.name} HORA: ${cron_expresion}`,
+        );
+        const tareaLotenet = cron.schedule(cron_expresion, async () => {
+          this.logger.debug(
+            `Comenzo el Cron de este Premio Lotenet ${lotenetPremio.name}`,
+          );
+          let res =
+            await this.premiosAutomaticoLotenetService.premiarAutomatico(
+              lotenetPremio,
+            );
+          this.logger.debug(res); // todo manejar esto por telegram por el momento
+          res = null;
+        });
+        this.tareas.push(tareaLotenet);
+      }
+    }
+  }
+
+  //Creo los cron individuales de Buscar Numeros y lo agregoa un Array
   async crear_tareas_automaticas() {
     const arrSorteosABuscars = await this.consultar_sorteosABuscar();
     for (const sorteoABuscar of arrSorteosABuscars) {
-      if (sorteoABuscar.activo) {
-        const sorteo = sorteoABuscar.sorteo;
-        for (let i = 0; i < sorteo.sorteo_dias.length; i++) {
-          const cron_expresion = cronExpression(
-            sorteo.sorteo_dias[i].id,
-            sorteo.sorteo_dias[i].hora,
-          );
+      if (!sorteoABuscar.activo) continue;
+      const sorteo = sorteoABuscar.sorteo;
+      for (let i = 0; i < sorteo.sorteo_dias.length; i++) {
+        const cron_expresion = cronExpression(
+          sorteo.sorteo_dias[i].id,
+          sorteo.sorteo_dias[i].hora,
+        );
 
-          this.logger.debug(
-            `HOY SE BUSCARAN =>  ${sorteo.name} a las => ${cron_expresion}`,
+        this.logger.debug(
+          `HOY SE BUSCARAN =>  ${sorteo.name} a las => ${cron_expresion}`,
+        );
+        const responseSorteo = await this.responseSorteoABuscar.create({
+          id_sorteo_a_buscar: sorteoABuscar.id,
+          message: 'Se instancio un nuevo response de Sorteo a Buscar',
+        });
+        const tarea = cron.schedule(cron_expresion, async () => {
+          this.logger.debug(`Comenzo el Cron de este sorteo ${sorteo.name}`);
+          let res = await this.generarResultadosService.init_generar(
+            sorteoABuscar,
+            responseSorteo.id,
           );
-          const responseSorteo = await this.responseSorteoABuscar.create({
-            id_sorteo_a_buscar: sorteoABuscar.id,
-            message: 'Se instancio un nuevo response de Sorteo a Buscar',
-          });
-          const tarea = cron.schedule(cron_expresion, async () => {
-            this.logger.debug(`Comenzo el Cron de este sorteo ${sorteo.name}`);
-            let res = await this.generarResultadosService.init_generar(
-              sorteoABuscar,
-              responseSorteo.id,
-            );
-            this.logger.debug(res); // todo manejar esto por telegram por el momento
-            res = null;
-          });
-          this.tareas.push(tarea);
-        }
+          this.logger.debug(res); // todo manejar esto por telegram por el momento
+          res = null;
+        });
+        this.tareas.push(tarea);
       }
     }
   }

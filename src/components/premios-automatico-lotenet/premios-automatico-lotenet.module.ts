@@ -15,5 +15,6 @@ import { LotenetPremiosModule } from '../lotenet-premios/lotenet-premios.module'
     ApiLotenetService,
     PremiosAutomaticoLotenetResolver,
   ],
+  exports: [PremiosAutomaticoLotenetService],
 })
 export class PremiosAutomaticoLotenetModule {}
