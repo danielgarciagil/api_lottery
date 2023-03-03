@@ -2801,7 +2801,7 @@
 									"font": "Arial;15;1",
 									"left": 376,
 									"top": 621,
-									"width": 238.38134765625,
+									"width": 302.30712890625,
 									"height": 15,
 									"text": "lotenet_premio"
 								},
@@ -2827,7 +2827,7 @@
 											"font": "Arial;15;0",
 											"left": 381,
 											"top": 646,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2843,7 +2843,7 @@
 											"font": "Arial;15;0",
 											"left": 277,
 											"top": 635,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2858,7 +2858,7 @@
 											"font": "Arial;15;0",
 											"left": 381,
 											"top": 663,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2874,7 +2874,7 @@
 											"font": "Arial;15;0",
 											"left": 277,
 											"top": 650,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2889,7 +2889,7 @@
 											"font": "Arial;15;0",
 											"left": 381,
 											"top": 680,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2905,7 +2905,7 @@
 											"font": "Arial;15;0",
 											"left": 277,
 											"top": 665,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2920,7 +2920,7 @@
 											"font": "Arial;15;0",
 											"left": 381,
 											"top": 697,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2935,7 +2935,7 @@
 											"font": "Arial;15;0",
 											"left": 381,
 											"top": 714,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2950,7 +2950,7 @@
 											"font": "Arial;15;0",
 											"left": 381,
 											"top": 731,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2966,7 +2966,7 @@
 											"font": "Arial;15;0",
 											"left": 277,
 											"top": 695,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2981,7 +2981,7 @@
 											"font": "Arial;15;0",
 											"left": 381,
 											"top": 748,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -2996,7 +2996,7 @@
 											"font": "Arial;15;0",
 											"left": 381,
 											"top": 765,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										},
 										{
@@ -3011,21 +3011,21 @@
 											"font": "Arial;15;0",
 											"left": 381,
 											"top": 782,
-											"width": 228.38134765625,
+											"width": 292.30712890625,
 											"height": 15
 										}
 									],
 									"font": "Arial;15;0",
 									"left": 376,
 									"top": 641,
-									"width": 238.38134765625,
+									"width": 302.30712890625,
 									"height": 161
 								}
 							],
 							"font": "Arial;15;0",
 							"left": 376,
 							"top": 616,
-							"width": 238.38134765625,
+							"width": 302.30712890625,
 							"height": 186,
 							"nameLabel": {
 								"$ref": "AAAAAAGGWv8lJ/XnodQ="
@@ -3763,8 +3763,8 @@
 										"$ref": "AAAAAAGGmXC8OIXTS3Q="
 									},
 									"font": "Arial;15;1",
-									"left": 672,
-									"top": 645,
+									"left": 648,
+									"top": 877,
 									"width": 214.19677734375,
 									"height": 15,
 									"text": "Response_lotenet_premios"
@@ -3789,8 +3789,8 @@
 												"$ref": "AAAAAAGGmXEyIoXhulw="
 											},
 											"font": "Arial;15;0",
-											"left": 677,
-											"top": 670,
+											"left": 653,
+											"top": 902,
 											"width": 204.19677734375,
 											"height": 15
 										},
@@ -3804,8 +3804,8 @@
 												"$ref": "AAAAAAGGmXFdAYXp4Ac="
 											},
 											"font": "Arial;15;0",
-											"left": 677,
-											"top": 687,
+											"left": 653,
+											"top": 919,
 											"width": 204.19677734375,
 											"height": 15
 										},
@@ -3819,8 +3819,8 @@
 												"$ref": "AAAAAAGGmXGEsYXw4+g="
 											},
 											"font": "Arial;15;0",
-											"left": 677,
-											"top": 704,
+											"left": 653,
+											"top": 936,
 											"width": 204.19677734375,
 											"height": 15
 										},
@@ -3834,8 +3834,8 @@
 												"$ref": "AAAAAAGGmXHDiIX3eF4="
 											},
 											"font": "Arial;15;0",
-											"left": 677,
-											"top": 721,
+											"left": 653,
+											"top": 953,
 											"width": 204.19677734375,
 											"height": 15
 										},
@@ -3849,22 +3849,22 @@
 												"$ref": "AAAAAAGGmYlsJoZo9uU="
 											},
 											"font": "Arial;15;0",
-											"left": 677,
-											"top": 738,
+											"left": 653,
+											"top": 970,
 											"width": 204.19677734375,
 											"height": 15
 										}
 									],
 									"font": "Arial;15;0",
-									"left": 672,
-									"top": 665,
+									"left": 648,
+									"top": 897,
 									"width": 214.19677734375,
 									"height": 93
 								}
 							],
 							"font": "Arial;15;0",
-							"left": 672,
-							"top": 640,
+							"left": 648,
+							"top": 872,
 							"width": 214.19677734375,
 							"height": 118,
 							"nameLabel": {
@@ -3892,8 +3892,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 642,
-									"top": 676,
+									"left": 686,
+									"top": 829,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -3909,8 +3909,8 @@
 										"$ref": "AAAAAAGGmXIw3YYeYBw="
 									},
 									"font": "Arial;13;0",
-									"left": 638,
-									"top": 676,
+									"left": 687,
+									"top": 820,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -3926,8 +3926,8 @@
 										"$ref": "AAAAAAGGmXIw3YYeYBw="
 									},
 									"font": "Arial;13;0",
-									"left": 646,
-									"top": 676,
+									"left": 687,
+									"top": 840,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -3944,7 +3944,7 @@
 								"$ref": "AAAAAAGGWv8lJ/XmJL0="
 							},
 							"lineStyle": 2,
-							"points": "613:697;672:697",
+							"points": "672:801;672:872",
 							"nameLabel": {
 								"$ref": "AAAAAAGGmXIw3YYfZWY="
 							},
@@ -5988,7 +5988,9 @@
 							"_parent": {
 								"$ref": "AAAAAAGGWv8lJvXk3WA="
 							},
-							"name": "Column1"
+							"name": "Tiempo_de_espera_segundos",
+							"type": "INT",
+							"length": 0
 						}
 					]
 				},

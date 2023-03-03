@@ -33,9 +33,9 @@ export const validarFecha = (
     if (fechaXpath == fecha_a_buscar) {
       return fechaXpath;
     }
-  } else {
-    throw new Error('La fecha no es válida');
   }
+
+  throw new Error('La fecha no es válida');
 };
 
 export const fecha_actual = (): string => {

@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 
 //PROPIO
 import { XpathService } from '../xpath/xpath.service';
@@ -16,7 +16,7 @@ import { fecha_actual } from './../../common/validar_fechas';
 export class GenerarResultadosService {
   private logger: Logger = new Logger('Generar-Resultados-Services');
 
-  fecha_actual = fecha_actual();
+  private fecha_actual = fecha_actual();
 
   constructor(
     private readonly xpathService: XpathService,
@@ -28,20 +28,16 @@ export class GenerarResultadosService {
   ) {}
 
   async validar_xpath_individual(id_xpath: number): Promise<RESPONSE_BY_XPATH> {
-    const xpath = await this.xpathService.findOneSinError(id_xpath);
-    if (!xpath) {
-      return {
-        data_by_xpath_digitos: [],
-        data_by_xpath_fecha: '',
-        error: true,
-        message: MESSAGE.COMUN_ESTE_ID_NO_EXISTE,
-      };
+    const xpath = await this.xpathService.findOne(id_xpath);
+    try {
+      const fecha_a_buscar = this.fecha_actual;
+      return await this.webScrapingXpathService.iniciar_proceso_xpath(
+        xpath,
+        fecha_a_buscar,
+      );
+    } catch (error) {
+      throw new BadRequestException(error?.message);
     }
-    const fecha_a_buscar = this.fecha_actual;
-    return await this.webScrapingXpathService.iniciar_proceso_xpath(
-      xpath,
-      fecha_a_buscar,
-    );
   }
 
   async generar_resultados(
@@ -56,7 +52,7 @@ export class GenerarResultadosService {
           id_sorteo_a_buscar: responseSorteo.id,
           message: 'Se instancio un nuevo response de Sorteo a Buscar',
         });
-      this.init_generar(responseSorteo, responseSorteoABuscar.id); //todo
+      this.init_generar(responseSorteo, responseSorteoABuscar.id);
       return {
         error: false,
         message: 'INICIO EL GENERADOR',
@@ -83,9 +79,7 @@ export class GenerarResultadosService {
 
       if (!response.error) {
         await this.publicar(sorteoABuscar, response);
-        //todo me falta manjear todas las respuesttas de sorteoabuscar
 
-        this.logger.debug(`SE PUBLICO BIEN => ${sorteoABuscar.name}`);
         await this.responseSorteoABuscarService.update(id_response_sorteo, {
           message: 'Se publico bien',
         });
@@ -142,6 +136,7 @@ export class GenerarResultadosService {
         this.logger.error(error);
       }
       if (publicar) {
+        this.logger.debug(`SE PUBLICO BIEN => ${sorteo_a_buscar.name}`);
         break;
       }
     }

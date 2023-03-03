@@ -19,15 +19,15 @@ export class ResponsePropioGQl {
 
 @ObjectType()
 export class RESPONSE_BY_XPATH {
-  @Field(() => [Int])
+  @Field(() => [Int], { nullable: true })
   data_by_xpath_digitos: number[];
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   data_by_xpath_fecha: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   message: string;
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, { nullable: true })
   error: boolean;
 }

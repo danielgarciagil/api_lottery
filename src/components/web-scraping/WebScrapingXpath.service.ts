@@ -114,12 +114,7 @@ export class WebScrapingXpathService {
         error: false,
       };
     } catch (error) {
-      return {
-        error: true,
-        message: error,
-        data_by_xpath_digitos: [],
-        data_by_xpath_fecha: '',
-      };
+      throw new Error(error);
     } finally {
       this.stopDriver();
     }

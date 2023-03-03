@@ -179,10 +179,10 @@ type ResponsePropioGQl {
 }
 
 type RESPONSE_BY_XPATH {
-  data_by_xpath_digitos: [Int!]!
-  data_by_xpath_fecha: String!
-  message: String!
-  error: Boolean!
+  data_by_xpath_digitos: [Int!]
+  data_by_xpath_fecha: String
+  message: String
+  error: Boolean
 }
 
 type Query {

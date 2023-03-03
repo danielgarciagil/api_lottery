@@ -8,6 +8,9 @@ import { fecha_actual } from './../../common/validar_fechas';
 
 @Injectable()
 export class BuscarAutomaticoService {
+  constructor(
+    private readonly webScrapingXpathService: WebScrapingXpathService,
+  ) {}
   private logger: Logger = new Logger('Buscar-Automatico-Services');
 
   fecha_actual = fecha_actual();
@@ -92,20 +95,22 @@ export class BuscarAutomaticoService {
     sorteo_a_buscar: SorteoABuscar,
     fecha_a_buscar: string,
   ): Promise<RESPONSE_BY_XPATH[]> {
-    const elementos_a_instanciar: RESPONSE_BY_XPATH[] = [];
+    try {
+      const elementos_a_instanciar: RESPONSE_BY_XPATH[] = [];
 
-    for (const xpath_actual of sorteo_a_buscar.xpath) {
-      const instancia = new WebScrapingXpathService();
-      if (xpath_actual.activo) {
-        const init = await instancia.iniciar_proceso_xpath(
+      for (const xpath_actual of sorteo_a_buscar.xpath) {
+        if (!xpath_actual.activo) continue; //todo quede aqui poner en un try proque
+        const init = await this.webScrapingXpathService.iniciar_proceso_xpath(
           xpath_actual,
           fecha_a_buscar,
         );
         elementos_a_instanciar.push(init);
       }
+      const data = await Promise.all(elementos_a_instanciar);
+      this.comprobar_arreglos_iguales_sin_errores(data);
+      return data;
+    } catch (error) {
+      throw Error(error);
     }
-    const data = await Promise.all(elementos_a_instanciar);
-    this.comprobar_arreglos_iguales_sin_errores(data);
-    return data;
   }
 }
