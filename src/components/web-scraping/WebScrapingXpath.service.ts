@@ -1,57 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { By, WebDriver, until, Builder } from 'selenium-webdriver';
-import { Options as ChromeOptions } from 'selenium-webdriver/chrome';
-
+import { Injectable, Logger } from '@nestjs/common';
 //PROPIO
 import { RESPONSE_BY_XPATH } from './../../common/response';
 import { validarFecha } from './../../common/validar_fechas';
 import { Xpath } from '../xpath/entities/xpath.entity';
+import { SeleniumWebdriver } from '../selenium/selenium-webdriver';
 
 @Injectable()
 export class WebScrapingXpathService {
-  private driver: WebDriver;
-
-  async startDriver() {
-    const options = new ChromeOptions();
-    options.addArguments('--disable-extensions');
-    options.addArguments('--disable-gpu');
-    options.addArguments('--no-sandbox');
-    options.addArguments('--disable-dev-shm-usage');
-    options.addArguments('ignore-certificate-errors');
-    options.addArguments('--disable-notifications');
-    options.addArguments('--disable-popup-blocking');
-    options.addArguments('--disable-infobars');
-    options.addArguments('--disable-default-apps');
-    options.addArguments('--disable-background-networking');
-    options.addArguments('--disable-geolocation');
-    options.addArguments('--disable-client-side-phishing-detection');
-    options.headless();
-
-    this.driver = await new Builder()
-      .forBrowser('chrome')
-      .setChromeOptions(options)
-      .build();
-  }
-
-  async stopDriver() {
-    if (this.driver) {
-      await this.driver.quit();
-      this.driver = null;
-    }
-  }
-
-  async buscar_xpath(xpath: string) {
-    try {
-      return await this.driver.wait(
-        until.elementLocated(By.xpath(xpath)),
-        30000,
-        '',
-        30000,
-      );
-    } catch (error) {
-      throw Error(`NO SE ENCONTRO ESTE XPATH ${xpath}`);
-    }
-  }
+  private seleniumWebdriver: SeleniumWebdriver;
+  private readonly logger = new Logger('CRON-INIT');
 
   validar_que_es_un_numero(numero: any): number {
     const newNumeroo = parseInt(numero);
@@ -82,8 +39,8 @@ export class WebScrapingXpathService {
     fecha_a_buscar: string,
   ): Promise<RESPONSE_BY_XPATH> {
     try {
-      await this.startDriver();
-      this.validar_driver();
+      this.seleniumWebdriver = new SeleniumWebdriver();
+      await this.seleniumWebdriver.startDriver();
       const data_xpath_digitos: number[] = [];
       const data_xpath_fechas: string[] = [];
       let fecha_final = '';
@@ -114,9 +71,15 @@ export class WebScrapingXpathService {
         error: false,
       };
     } catch (error) {
+      this.logger.error(error);
       throw new Error(error);
     } finally {
-      this.stopDriver();
+      this.seleniumWebdriver.stopDriver();
+      this.seleniumWebdriver = null;
+      this.logger.debug('BORRE ESTA INSTANCIA DE NAVEGADOR');
+      //if (global.gc) {
+      //  global.gc();
+      //}
     }
   }
 
@@ -128,11 +91,15 @@ export class WebScrapingXpathService {
   ): Promise<string> {
     for (const xpath_Actual_fecha of arr_xpath_fechas[index_actual]) {
       try {
-        const xpath_fecha = await this.buscar_xpath(xpath_Actual_fecha);
+        const xpath_fecha = await this.seleniumWebdriver.buscar_xpath(
+          xpath_Actual_fecha,
+        );
         const value_fecha = await xpath_fecha.getText();
         return validarFecha(value_fecha, fecha_a_buscar);
       } catch (error) {
-        throw new Error('ESTE XPATH DE FECHA NO PUEDE SER ENCONTRADO');
+        throw new Error(
+          `ESTE XPATH DE FECHA NO PUEDE SER ENCONTRADO => ${error?.message}`,
+        );
       }
     }
   }
@@ -143,14 +110,17 @@ export class WebScrapingXpathService {
     arr_xpath_digitos: string[][],
   ): Promise<number> {
     let digito = '';
-    this.validar_driver();
     for (const xpath_digito_actual of arr_xpath_digitos[index_actual]) {
       try {
-        const message = await this.buscar_xpath(xpath_digito_actual);
+        const message = await this.seleniumWebdriver.buscar_xpath(
+          xpath_digito_actual,
+        );
         const value = this.quitar_palabras_de_digitos(await message.getText());
         digito += value; //todo
       } catch (error) {
-        throw new Error('ESTE XPATH DE DIGITO NO PUEDE SER ENCONTRADO');
+        throw new Error(
+          `ESTE XPATH DE DIGITO NO PUEDE SER ENCONTRADO => ${error?.message}`,
+        );
       }
     }
     return this.validar_que_es_un_numero(digito);
@@ -158,21 +128,12 @@ export class WebScrapingXpathService {
 
   //? Aqui visito las diferentes URL por digitos
   async for_urls_digitos(index_actual: number, arr_urls_digitos: string[][]) {
-    const driverActual = this.driver;
-    this.validar_driver();
     try {
       for (const url of arr_urls_digitos[index_actual]) {
-        driverActual.manage().setTimeouts({ implicit: 500 });
-        await this.driver.get(url);
+        await this.seleniumWebdriver.navigateTo(url);
       }
     } catch (error) {
       throw Error('NO SE PUDO ACEDER A LA URL');
-    }
-  }
-
-  validar_driver() {
-    if (!this.driver) {
-      throw Error('El driver no existe');
     }
   }
 

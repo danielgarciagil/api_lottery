@@ -16,8 +16,6 @@ import { fecha_actual } from './../../common/validar_fechas';
 export class GenerarResultadosService {
   private logger: Logger = new Logger('Generar-Resultados-Services');
 
-  private fecha_actual = fecha_actual();
-
   constructor(
     private readonly xpathService: XpathService,
     private readonly sorteoABuscarService: SorteoABuscarService,
@@ -30,7 +28,7 @@ export class GenerarResultadosService {
   async validar_xpath_individual(id_xpath: number): Promise<RESPONSE_BY_XPATH> {
     const xpath = await this.xpathService.findOne(id_xpath);
     try {
-      const fecha_a_buscar = this.fecha_actual;
+      const fecha_a_buscar = fecha_actual();
       return await this.webScrapingXpathService.iniciar_proceso_xpath(
         xpath,
         fecha_a_buscar,

@@ -13,8 +13,6 @@ export class BuscarAutomaticoService {
   ) {}
   private logger: Logger = new Logger('Buscar-Automatico-Services');
 
-  fecha_actual = fecha_actual();
-
   async bloquearPrograma(time: number) {
     await new Promise((resolve) => setTimeout(resolve, time * 1000));
   }
@@ -42,7 +40,7 @@ export class BuscarAutomaticoService {
   async iniciar_busqueda(
     sorteo_a_buscar: SorteoABuscar,
   ): Promise<RESPONSE_BY_XPATH> {
-    const fecha_a_buscar = this.fecha_actual;
+    const fecha_a_buscar = fecha_actual();
     let numero_a_publicar: number[];
     let fecha_a_publicar: string;
     let message_error: string;
