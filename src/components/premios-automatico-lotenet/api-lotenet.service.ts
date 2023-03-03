@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 
 //PROPIO
 import { LOTENET_XPATH } from './lotenet.enum';
@@ -9,7 +9,6 @@ import { convertir_formato_date } from './../../common/validar_fechas';
 import { ResponsePropioGQl } from './../../common/response';
 import { SeleniumWebdriver } from '../selenium/selenium-webdriver';
 
-@Injectable()
 export class ApiLotenetService {
   private seleniumWebdriver: SeleniumWebdriver;
   private readonly logger = new Logger('API-LOTENET-SERVICE');

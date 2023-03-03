@@ -1,11 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 //PROPIO
 import { RESPONSE_BY_XPATH } from './../../common/response';
 import { validarFecha } from './../../common/validar_fechas';
 import { Xpath } from '../xpath/entities/xpath.entity';
 import { SeleniumWebdriver } from '../selenium/selenium-webdriver';
 
-@Injectable()
 export class WebScrapingXpathService {
   private seleniumWebdriver: SeleniumWebdriver;
   private readonly logger = new Logger('WEBSCRAPING-SERVICE');
@@ -79,9 +78,9 @@ export class WebScrapingXpathService {
       this.logger.debug(
         'BORRE ESTA INSTANCIA DE NAVEGADOR DE BUSCAR RESULTADOS',
       );
-      //if (global.gc) {
-      //  global.gc();
-      //}
+      if (global.gc) {
+        global.gc();
+      }
     }
   }
 

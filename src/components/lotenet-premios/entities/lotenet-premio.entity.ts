@@ -5,7 +5,6 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -60,7 +59,7 @@ export class LotenetPremio {
   tiempo_de_espera_segundos: number;
 
   @Field(() => Sorteo)
-  @OneToOne(() => Sorteo, (sorteo) => sorteo.lotenet_premio, {
+  @ManyToOne(() => Sorteo, (sorteo) => sorteo.lotenet_premio, {
     eager: true,
   })
   @JoinColumn({ name: 'id_sorteo' })
@@ -77,6 +76,7 @@ export class LotenetPremio {
   @ManyToOne(() => Plataforma, (plataforma) => plataforma.lotenet_premio, {
     eager: true,
   })
+  @JoinColumn({ name: 'id_plataforma' })
   plataforma: Plataforma;
 
   @OneToMany(

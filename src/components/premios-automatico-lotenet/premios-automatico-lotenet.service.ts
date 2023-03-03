@@ -12,7 +12,6 @@ import { fecha_actual } from './../../common/validar_fechas';
 export class PremiosAutomaticoLotenetService {
   private logger: Logger = new Logger('Premios-Automatico-Services');
   constructor(
-    private readonly apiLotenet: ApiLotenetService,
     private readonly resultadoService: ResultadosService,
     private readonly lotenetPremioService: LotenetPremiosService,
   ) {}
@@ -45,15 +44,13 @@ export class PremiosAutomaticoLotenetService {
     let error = true;
     let message = '';
     for (let i = 0; i < lotenetPremio.numeros_intentos; i++) {
+      let ApiLotenet = new ApiLotenetService();
       try {
         const resultado = await this.resultadoService.devolverResultadoByBecha(
           lotenetPremio.sorteo.id,
           new Date(fecha_a_premiar),
         );
-        const res = await this.apiLotenet.iniciar_premio(
-          resultado,
-          lotenetPremio,
-        );
+        const res = await ApiLotenet.iniciar_premio(resultado, lotenetPremio);
         this.logger.debug(res);
 
         if (!res.error) {
@@ -68,6 +65,8 @@ export class PremiosAutomaticoLotenetService {
         message = error;
         error = true;
         await this.bloquearPrograma(lotenetPremio.tiempo_de_espera_segundos);
+      } finally {
+        ApiLotenet = null;
       }
     }
     return {

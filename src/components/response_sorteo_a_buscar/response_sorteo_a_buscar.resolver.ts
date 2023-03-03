@@ -6,6 +6,9 @@ import { ResponseSorteoABuscar } from './entities/response_sorteo_a_buscar.entit
 
 import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { PaginationArgs } from './../../common/dto/args';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { VALID_PERMISO_ACCION } from 'src/config/valid-roles';
+import { User } from '../users/entities/user.entity';
 
 //TODO este Resolver a Futuro agregar roels y todos
 @UseGuards(JwtAuthGuard)
@@ -31,6 +34,7 @@ export class ResponseSorteoABuscarResolver {
     description: 'Obtener todos los Response de SOrteo a Buscar',
   })
   findAll(
+    @CurrentUser([VALID_PERMISO_ACCION.SORTEO_A_BUSCAR_VIEW]) user: User,
     @Args() paginationArgs: PaginationArgs,
   ): Promise<ResponseSorteoABuscar[]> {
     return this.responseSorteoABuscarService.findAll(paginationArgs);
@@ -41,6 +45,7 @@ export class ResponseSorteoABuscarResolver {
     description: 'Obtener un Response especifico',
   })
   findOne(
+    @CurrentUser([VALID_PERMISO_ACCION.SORTEO_A_BUSCAR_VIEW]) user: User,
     @Args('id', { type: () => Int }) id: number,
   ): Promise<ResponseSorteoABuscar> {
     return this.responseSorteoABuscarService.findOne(id);

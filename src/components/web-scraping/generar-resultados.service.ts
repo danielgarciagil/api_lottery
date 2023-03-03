@@ -22,19 +22,22 @@ export class GenerarResultadosService {
     private readonly resultadosServiceE: ResultadosService,
     private readonly responseSorteoABuscarService: ResponseSorteoABuscarService,
     private readonly buscarAutomaticoService: BuscarAutomaticoService,
-    private readonly webScrapingXpathService: WebScrapingXpathService,
   ) {}
 
   async validar_xpath_individual(id_xpath: number): Promise<RESPONSE_BY_XPATH> {
     const xpath = await this.xpathService.findOne(id_xpath);
+    let WebScraping = new WebScrapingXpathService();
     try {
       const fecha_a_buscar = fecha_actual();
-      return await this.webScrapingXpathService.iniciar_proceso_xpath(
+      const res = await WebScraping.iniciar_proceso_xpath(
         xpath,
         fecha_a_buscar,
       );
+      return res;
     } catch (error) {
       throw new BadRequestException(error?.message);
+    } finally {
+      WebScraping = null;
     }
   }
 

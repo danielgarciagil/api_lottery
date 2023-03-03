@@ -21,7 +21,6 @@ export class Plataforma {
   usuario: string;
 
   //todo encriptar esta contrasena
-  @Field(() => String)
   @Column({ type: 'varchar' })
   password: string;
 
@@ -35,12 +34,12 @@ export class Plataforma {
 
   @Field(() => String, { nullable: true })
   @Column({ type: 'varchar', nullable: true })
-  img_url?: string;
+  img_url: string;
 
   //todo revisar este lazy
   @Field(() => [LotenetPremio])
   @OneToMany(() => LotenetPremio, (lotenetPremio) => lotenetPremio.plataforma, {
     lazy: true,
   })
-  lotenet_premio?: LotenetPremio[];
+  lotenet_premio: LotenetPremio[];
 }

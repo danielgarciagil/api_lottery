@@ -1,7 +1,11 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
+import { IsNumber, IsString } from 'class-validator';
 
 @InputType()
 export class CreateResponseLotenetPremioInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @IsNumber()
+  id_lotenet_premio: number;
+
+  @IsString()
+  message: string;
 }

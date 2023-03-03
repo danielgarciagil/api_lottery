@@ -85,7 +85,6 @@ type Plataforma {
   id: ID!
   name: String!
   usuario: String!
-  password: String!
   url: String!
   descripcion: String!
   img_url: String

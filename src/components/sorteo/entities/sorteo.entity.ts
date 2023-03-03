@@ -73,8 +73,8 @@ export class Sorteo {
   sorteo_dias: SorteoDias[];
 
   //TODO no tiene FIELD
-  @OneToOne(() => LotenetPremio, (lotenetPremio) => lotenetPremio.sorteo, {
+  @OneToMany(() => LotenetPremio, (lotenetPremio) => lotenetPremio.sorteo, {
     lazy: true,
   })
-  lotenet_premio: LotenetPremio;
+  lotenet_premio: LotenetPremio[];
 }
