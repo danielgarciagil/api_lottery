@@ -25,7 +25,7 @@ export class ResponseSorteoABuscarService {
       });
       return await this.responseRepository.save(newResponse);
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error?.message);
     }
   }
 
@@ -53,7 +53,7 @@ export class ResponseSorteoABuscarService {
       this.responseRepository.merge(response, updateResponseSorteoABuscarInput);
       return await this.responseRepository.save(response);
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error?.message);
     }
   }
 

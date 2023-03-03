@@ -29,7 +29,7 @@ export class ResponseLotenetPremioService {
       });
       return await this.responseLotenetPremioRepository.save(newResponse);
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error?.message);
     }
   }
 
@@ -62,7 +62,7 @@ export class ResponseLotenetPremioService {
       );
       return await this.responseLotenetPremioRepository.save(response);
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error?.message);
     }
   }
 

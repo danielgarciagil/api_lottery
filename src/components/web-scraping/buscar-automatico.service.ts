@@ -16,12 +16,12 @@ export class BuscarAutomaticoService {
 
   comprobar_arreglos_iguales_sin_errores(arr: RESPONSE_BY_XPATH[]) {
     if (arr.length <= 0) {
-      throw Error('NO SE MANDO NINGUN XPATH A VALIDAR');
+      throw new Error('NO SE MANDO NINGUN XPATH A VALIDAR');
     }
 
     arr.forEach((response) => {
       if (response.error) {
-        throw Error(response.message);
+        throw new Error(response.message);
       }
     });
 
@@ -50,39 +50,27 @@ export class BuscarAutomaticoService {
         );
         const data_xpath_1 = data_xpath[0];
 
-        if (!data_xpath_1.error) {
-          if (fecha_a_buscar == data_xpath_1.data_by_xpath_fecha) {
-            numero_a_publicar = data_xpath_1.data_by_xpath_digitos;
-            fecha_a_publicar = data_xpath_1.data_by_xpath_fecha;
-            break;
-          } else {
-            message_error = 'NO ES LA FECHA A BUSCAR';
-          }
-        } else {
-          message_error = data_xpath_1.message;
-        }
+        if (data_xpath_1.error) throw new Error(data_xpath_1.message);
+
+        if (fecha_a_buscar !== data_xpath_1.data_by_xpath_fecha)
+          throw new Error('NO ES LA FECHA A BUSCAR');
+
+        numero_a_publicar = data_xpath_1.data_by_xpath_digitos;
+        fecha_a_publicar = data_xpath_1.data_by_xpath_fecha;
+        break;
       } catch (error) {
+        this.logger.error(`${error?.message} SORTEO: ${sorteo_a_buscar.name}`);
         message_error = error;
-        this.logger.error(`ERROR => ${message_error}`);
+        await this.bloquearPrograma(sorteo_a_buscar.tiempo_de_espera_segundos);
       }
-      this.logger.debug(`STATUS => ${message_error}`);
-      await this.bloquearPrograma(sorteo_a_buscar.tiempo_de_espera_segundos);
     }
-    if (numero_a_publicar && fecha_a_publicar) {
-      return {
-        data_by_xpath_digitos: numero_a_publicar,
-        data_by_xpath_fecha: fecha_a_publicar,
-        error: false,
-        message: 'SE ENCONTRO EL XPATH',
-      };
-    } else {
-      return {
-        error: true,
-        data_by_xpath_digitos: [],
-        data_by_xpath_fecha: '',
-        message: message_error,
-      };
-    }
+    if (!numero_a_publicar || !fecha_a_publicar) throw new Error(message_error);
+    return {
+      data_by_xpath_digitos: numero_a_publicar,
+      data_by_xpath_fecha: fecha_a_publicar,
+      error: false,
+      message: 'SE ENCONTRO EL XPATH',
+    };
   }
 
   //? Aqui instancio todos los xpath de un sorteo
@@ -108,7 +96,8 @@ export class BuscarAutomaticoService {
 
       return data;
     } catch (error) {
-      throw Error(error);
+      this.logger.error(error?.message);
+      throw new Error(error?.message);
     } finally {
       WebScraping = null;
     }

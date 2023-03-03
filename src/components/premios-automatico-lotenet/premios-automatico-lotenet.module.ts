@@ -7,9 +7,15 @@ import { PlataformaModule } from '../plataforma/plataforma.module';
 import { PremiosAutomaticoLotenetResolver } from './premios-automatico-lotenet.resolver';
 import { ResultadosModule } from '../resultados/resultados.module';
 import { LotenetPremiosModule } from '../lotenet-premios/lotenet-premios.module';
+import { ResponseLotenetPremioModule } from '../response-lotenet-premio/response-lotenet-premio.module';
 
 @Module({
-  imports: [PlataformaModule, ResultadosModule, LotenetPremiosModule],
+  imports: [
+    PlataformaModule,
+    ResultadosModule,
+    LotenetPremiosModule,
+    ResponseLotenetPremioModule,
+  ],
   providers: [
     PremiosAutomaticoLotenetService,
     ApiLotenetService,

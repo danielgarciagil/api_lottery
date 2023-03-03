@@ -70,8 +70,8 @@ export class WebScrapingXpathService {
         error: false,
       };
     } catch (error) {
-      this.logger.error(error);
-      throw new Error(error);
+      this.logger.error(error?.message);
+      throw new Error(error?.message);
     } finally {
       this.seleniumWebdriver.stopDriver();
       this.seleniumWebdriver = null;

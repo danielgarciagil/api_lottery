@@ -12,12 +12,14 @@ import {
 } from './dto/buscar-by-xpath.input';
 import { User } from '../users/entities/user.entity';
 import { GenerarResultadosService } from './generar-resultados.service';
+import { ResultadosSorteoService } from './resultados-sorteo.service';
 
 @UseGuards(JwtAuthGuard)
 @Resolver(() => ResponsePropioGQl)
 export class ProcesoDeSorteoABuscarResolver {
   constructor(
     private readonly generaeResultadosServices: GenerarResultadosService,
+    private readonly resultadosSorteo: ResultadosSorteoService,
   ) {}
   @Mutation(() => ResponsePropioGQl, {
     name: 'generarResultadoAutomatico',
@@ -43,7 +45,7 @@ export class ProcesoDeSorteoABuscarResolver {
     @Args('buscarByXpathWebScrapingInput')
     buscarByXpathWebScrapingInput: BuscarByXpathWebScrapingInput,
   ): Promise<RESPONSE_BY_XPATH> {
-    return await this.generaeResultadosServices.validar_xpath_individual(
+    return await this.resultadosSorteo.validar_xpath_individual(
       buscarByXpathWebScrapingInput.id_xpath_a_buscar,
     );
   }

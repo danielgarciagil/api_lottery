@@ -166,7 +166,7 @@ export class ApiLotenetService {
         message: 'SE PREMIO CORRECTAMENTE',
       };
     } catch (error) {
-      throw Error(error);
+      throw new Error(error?.message);
     } finally {
       this.seleniumWebdriver.stopDriver();
       this.seleniumWebdriver = null;

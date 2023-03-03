@@ -266,7 +266,12 @@ type Query {
 
   """Buscar una plataforma espeficifica"""
   findPlataforma(id: Int!): Plataforma!
-  responseLotenetPremio(id: Int!): ResponseLotenetPremio!
+
+  """Para ver todos los Response de Lotenet Premio"""
+  AllResponseLotenetPremio(offset: Int = 0, limit: Int = 10): [ResponseLotenetPremio!]!
+
+  """Para ver un Reponse Especifico con detalle"""
+  findResponseLotenetPremio(id: Int!): ResponseLotenetPremio!
 
   """Ver todos los dias de los premios"""
   allPremiosDias(offset: Int = 0, limit: Int = 10): [PremiosDia!]!
@@ -377,9 +382,6 @@ type Mutation {
 
   """Eliminar una paltaforma de LOTENEt"""
   removePlataforma(id: Int!): ResponsePropioGQl!
-  createResponseLotenetPremio(createResponseLotenetPremioInput: CreateResponseLotenetPremioInput!): ResponseLotenetPremio!
-  updateResponseLotenetPremio(updateResponseLotenetPremioInput: UpdateResponseLotenetPremioInput!): ResponseLotenetPremio!
-  removeResponseLotenetPremio(id: Int!): ResponseLotenetPremio!
 
   """Para crear el dia de un Premio Automatico de Lotenet"""
   createPremisoDias(createPremiosDiaInput: CreatePremiosDiaInput!): PremiosDia!
@@ -593,17 +595,6 @@ input UpdatePlataformaInput {
   url: String
   descripcion: String
   img_url: String
-  id: Int!
-}
-
-input CreateResponseLotenetPremioInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateResponseLotenetPremioInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
 }
 

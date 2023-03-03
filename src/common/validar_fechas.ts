@@ -129,7 +129,6 @@ export const validarFecha = (
 
 export const fecha_actual = (): string => {
   const fechaActual = moment().format('YYYY-MM-DD');
-  console.log(`LLAMO A FECHA ACTUAL => ${fechaActual}`);
   return fechaActual;
 };
 

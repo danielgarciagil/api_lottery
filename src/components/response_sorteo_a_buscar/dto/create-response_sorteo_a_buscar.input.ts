@@ -1,5 +1,5 @@
 import { InputType } from '@nestjs/graphql';
-import { IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsString } from 'class-validator';
 
 @InputType()
 export class CreateResponseSorteoABuscarInput {
@@ -8,4 +8,10 @@ export class CreateResponseSorteoABuscarInput {
 
   @IsNumber()
   id_sorteo_a_buscar: number;
+
+  @IsBoolean()
+  completed?: boolean;
+
+  @IsBoolean()
+  is_error?: boolean;
 }

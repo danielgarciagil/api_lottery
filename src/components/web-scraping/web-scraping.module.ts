@@ -11,6 +11,7 @@ import { ResultadosModule } from '../resultados/resultados.module';
 import { GenerarResultadosService } from './generar-resultados.service';
 import { ResponseSorteoABuscarModule } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.module';
 import { BuscarAutomaticoService } from './buscar-automatico.service';
+import { ResultadosSorteoService } from './resultados-sorteo.service';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { BuscarAutomaticoService } from './buscar-automatico.service';
     WebScrapingXpathService,
     GenerarResultadosService,
     BuscarAutomaticoService,
+    ResultadosSorteoService,
   ],
   exports: [GenerarResultadosService],
 })

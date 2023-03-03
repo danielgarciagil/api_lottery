@@ -10,7 +10,6 @@ import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entit
 import { BuscarAutomaticoService } from './buscar-automatico.service';
 import { ResultadosService } from '../resultados/resultados.service';
 import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.service';
-import { fecha_actual } from './../../common/validar_fechas';
 
 @Injectable()
 export class GenerarResultadosService {
@@ -24,21 +23,8 @@ export class GenerarResultadosService {
     private readonly buscarAutomaticoService: BuscarAutomaticoService,
   ) {}
 
-  async validar_xpath_individual(id_xpath: number): Promise<RESPONSE_BY_XPATH> {
-    const xpath = await this.xpathService.findOne(id_xpath);
-    let WebScraping = new WebScrapingXpathService();
-    try {
-      const fecha_a_buscar = fecha_actual();
-      const res = await WebScraping.iniciar_proceso_xpath(
-        xpath,
-        fecha_a_buscar,
-      );
-      return res;
-    } catch (error) {
-      throw new BadRequestException(error?.message);
-    } finally {
-      WebScraping = null;
-    }
+  async bloquearPrograma(time: number) {
+    await new Promise((resolve) => setTimeout(resolve, time * 1000));
   }
 
   async generar_resultados(
@@ -51,7 +37,7 @@ export class GenerarResultadosService {
       const responseSorteoABuscar =
         await this.responseSorteoABuscarService.create({
           id_sorteo_a_buscar: responseSorteo.id,
-          message: 'Se instancio un nuevo response de Sorteo a Buscar',
+          message: 'SE INSTANCIO',
         });
       this.init_generar(responseSorteo, responseSorteoABuscar.id);
       return {
@@ -59,6 +45,7 @@ export class GenerarResultadosService {
         message: 'INICIO EL GENERADOR',
       };
     } catch (error) {
+      this.logger.error(error?.message);
       return {
         error: true,
         message: error,
@@ -71,36 +58,30 @@ export class GenerarResultadosService {
     id_response_sorteo: number,
   ): Promise<ResponsePropioGQl> {
     try {
-      this.logger.debug(
-        `Se Instancio una clase nueva de Buscar para: ${sorteoABuscar.name}`,
-      );
+      this.logger.debug(`BUSCANDO: ${sorteoABuscar.name}`);
       const response = await this.buscarAutomaticoService.iniciar_busqueda(
         sorteoABuscar,
       );
 
-      if (!response.error) {
-        await this.publicar(sorteoABuscar, response);
+      if (response.error) throw new Error(response.message);
 
-        await this.responseSorteoABuscarService.update(id_response_sorteo, {
-          message: 'Se publico bien',
-        });
-        return {
-          error: false,
-          message: `SE PUBLICO BIEN => ${sorteoABuscar.name}`,
-        };
-      }
-      this.logger.debug(response);
+      const msPublicar = await this.publicar(sorteoABuscar, response);
 
+      await this.responseSorteoABuscarService.update(id_response_sorteo, {
+        message: msPublicar,
+      });
+      this.logger.debug(`${msPublicar} => ${sorteoABuscar.name}`);
       return {
-        error: true,
-        message: `NO SE PUBLICO => ${sorteoABuscar.name}`,
+        error: false,
+        message: `${msPublicar} => ${sorteoABuscar.name}`,
       };
     } catch (error) {
-      this.logger.error(error);
-      return {
-        error: true,
-        message: `NO SE PUBLICO => ${sorteoABuscar.name} ERROR => ${error}`,
-      };
+      await this.responseSorteoABuscarService.update(
+        id_response_sorteo,
+        error?.message,
+      );
+      this.logger.error(error?.message);
+      throw new Error(error?.message);
     }
   }
 
@@ -122,7 +103,7 @@ export class GenerarResultadosService {
   async publicar(
     sorteo_a_buscar: SorteoABuscar,
     response_xpath: RESPONSE_BY_XPATH,
-  ) {
+  ): Promise<string> {
     let publicar = false;
     for (let i = 0; i < 10; i++) {
       try {
@@ -134,15 +115,12 @@ export class GenerarResultadosService {
         });
         publicar = true;
       } catch (error) {
-        this.logger.error(error);
+        this.logger.error(error?.message);
+        await this.bloquearPrograma(5);
       }
-      if (publicar) {
-        this.logger.debug(`SE PUBLICO BIEN => ${sorteo_a_buscar.name}`);
-        break;
-      }
+      if (publicar) break;
     }
-    if (!publicar) {
-      throw new Error('NO SE PUBLICO SE INTENTO 10 VECES');
-    }
+    if (!publicar) throw new Error('NO SE PUBLICO SE INTENTO 10 VECES');
+    return 'SE PUBLICO BIEN';
   }
 }

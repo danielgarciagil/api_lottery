@@ -9,6 +9,7 @@ import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/respon
 import { LotenetPremio } from '../lotenet-premios/entities/lotenet-premio.entity';
 import { LotenetPremiosService } from '../lotenet-premios/lotenet-premios.service';
 import { PremiosAutomaticoLotenetService } from '../premios-automatico-lotenet/premios-automatico-lotenet.service';
+import { ResponseLotenetPremioService } from '../response-lotenet-premio/response-lotenet-premio.service';
 
 @Injectable()
 export class CronService {
@@ -16,6 +17,7 @@ export class CronService {
     private readonly sorteoABuscarService: SorteoABuscarService,
     private readonly generarResultadosService: GenerarResultadosService,
     private readonly responseSorteoABuscar: ResponseSorteoABuscarService,
+    private readonly responseLotenetPremio: ResponseLotenetPremioService,
     private readonly lotenetPremiosService: LotenetPremiosService,
     private readonly premiosAutomaticoLotenetService: PremiosAutomaticoLotenetService,
   ) {}
@@ -73,18 +75,19 @@ export class CronService {
           lotenetPremio.premio_dia[i].id,
           lotenetPremio.premio_dia[i].hora,
         );
-        this.logger.debug(
-          `SE BUSCARA UN PREMIO LOTENET => ${lotenetPremio.name} HORA: ${cron_expresion}`,
-        );
+        this.logger.debug(`PREMIO=> ${lotenetPremio.name} : ${cron_expresion}`);
         const tareaLotenet = cron.schedule(cron_expresion, async () => {
-          this.logger.debug(
-            `Comenzo el Cron de este Premio Lotenet ${lotenetPremio.name}`,
-          );
+          this.logger.debug(`COMENZO Premio Lotenet ${lotenetPremio.name}`);
+          const responsePremio = await this.responseLotenetPremio.create({
+            message: 'SE INSTANCIO UN PREMIO',
+            id_lotenet_premio: lotenetPremio.id,
+          });
           let res =
             await this.premiosAutomaticoLotenetService.premiarAutomatico(
               lotenetPremio,
+              responsePremio.id,
             );
-          this.logger.debug(res); // todo manejar esto por telegram por el momento
+          this.logger.debug(`${res.message} => ${lotenetPremio.name}`); // todo manejar esto por telegram por el momento
           res = null;
         });
         this.tareas.push(tareaLotenet);
@@ -104,21 +107,25 @@ export class CronService {
           sorteo.sorteo_dias[i].hora,
         );
 
-        this.logger.debug(
-          `HOY SE BUSCARAN =>  ${sorteo.name} a las => ${cron_expresion}`,
-        );
+        this.logger.debug(`SORTEO: ${sorteo.name} => ${cron_expresion}`);
+
         const responseSorteo = await this.responseSorteoABuscar.create({
           id_sorteo_a_buscar: sorteoABuscar.id,
-          message: 'Se instancio un nuevo response de Sorteo a Buscar',
+          message: 'Se instancio un nuevo response',
         });
+
         const tarea = cron.schedule(cron_expresion, async () => {
           this.logger.debug(`Comenzo el Cron de este sorteo ${sorteo.name}`);
-          let res = await this.generarResultadosService.init_generar(
-            sorteoABuscar,
-            responseSorteo.id,
-          );
-          this.logger.debug(res); // todo manejar esto por telegram por el momento
-          res = null;
+          try {
+            let res = await this.generarResultadosService.init_generar(
+              sorteoABuscar,
+              responseSorteo.id,
+            );
+            this.logger.debug(res); // todo manejar esto por telegram por el momento
+            res = null;
+          } catch (error) {
+            this.logger.error(error?.message);
+          }
         });
         this.tareas.push(tarea);
       }

@@ -45,7 +45,7 @@ export class UsersService {
       });
       return await this.userRepository.save(newUser);
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error?.message);
       throw new BadRequestException(error?.detail);
     }
   }
