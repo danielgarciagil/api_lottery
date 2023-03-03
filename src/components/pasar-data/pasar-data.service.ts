@@ -13,39 +13,34 @@ export class PasarDataService implements OnModuleInit {
 
   async obtener_data() {
     const data: response_restapi[] = [];
-    this.httpSerive
-      .get('http://localhost:4000/api/v1/loteriasRD/?fecha=27-02-2023')
-      .subscribe({
-        next: (response) => {
-          const dataActual: response_restapi[] = response.data.message;
-          dataActual.forEach((e) => {
-            const [dia, mes, anio] = e.fecha.split('-');
-            const fecha_resultados = new Date(
-              Number(anio),
-              Number(mes) - 1,
-              Number(dia),
-            );
-            const arr_numneros = this.devolver_premios_en_numeros(
-              e.numeros_ganadores,
-            );
+    this.httpSerive.get('http://localhost:4000/api/v1/loteriasRD').subscribe({
+      next: (response) => {
+        const dataActual: response_restapi[] = response.data.message;
+        dataActual.forEach((e) => {
+          const [dia, mes, anio] = e.fecha.split('-');
+          const newFecha = `${anio}-${mes}-${dia}`;
+          const fecha_resultados = new Date(newFecha);
 
-            const id_sorteo = this.devolver_id(e.sorteo, e.loteria);
-            if (id_sorteo != 0) {
-              console.log('Va a publicar');
-              this.publicar_interna(fecha_resultados, id_sorteo, arr_numneros);
-            }
-          });
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
+          const arr_numneros = this.devolver_premios_en_numeros(
+            e.numeros_ganadores,
+          );
+
+          const id_sorteo = this.devolver_id(e.sorteo, e.loteria);
+          if (id_sorteo != 0) {
+            this.publicar_interna(fecha_resultados, id_sorteo, arr_numneros);
+          }
+        });
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
     console.log(data);
   }
 
   async publicar_interna(fecha_resultados, id_sorteo, arr_numneros) {
     try {
-      await this.resultadoSerice.createSinError({
+      this.resultadoSerice.createSinError({
         fecha: fecha_resultados,
         id_sorteo: id_sorteo,
         id_user: 1,
@@ -56,12 +51,6 @@ export class PasarDataService implements OnModuleInit {
       console.log(error?.message);
     }
   }
-
-  async onModuleInit() {
-    console.log('MODULO DE PASAR DATA');
-    //this.obtener_data();
-  }
-
   devolver_id(name_sorteo: string, name_loteria: string): number {
     if (name_sorteo === 'PRIMERA DIA' && name_loteria === 'PRIMERA') {
       return 1;
@@ -116,5 +105,10 @@ export class PasarDataService implements OnModuleInit {
     new_arr.push(Number(nu2));
     new_arr.push(Number(nu3));
     return new_arr;
+  }
+
+  async onModuleInit() {
+    console.log('MODULO DE PASAR DATAa');
+    //this.obtener_data();
   }
 }
