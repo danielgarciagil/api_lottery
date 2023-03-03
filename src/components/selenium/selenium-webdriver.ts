@@ -74,4 +74,8 @@ export class SeleniumWebdriver {
       throw Error(`NO SE PUDO ACCEDER A  ${url}`);
     }
   }
+
+  returnDriver() {
+    return this.driver;
+  }
 }

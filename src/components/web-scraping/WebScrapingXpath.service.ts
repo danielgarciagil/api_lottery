@@ -8,7 +8,7 @@ import { SeleniumWebdriver } from '../selenium/selenium-webdriver';
 @Injectable()
 export class WebScrapingXpathService {
   private seleniumWebdriver: SeleniumWebdriver;
-  private readonly logger = new Logger('CRON-INIT');
+  private readonly logger = new Logger('WEBSCRAPING-SERVICE');
 
   validar_que_es_un_numero(numero: any): number {
     const newNumeroo = parseInt(numero);
@@ -76,7 +76,9 @@ export class WebScrapingXpathService {
     } finally {
       this.seleniumWebdriver.stopDriver();
       this.seleniumWebdriver = null;
-      this.logger.debug('BORRE ESTA INSTANCIA DE NAVEGADOR');
+      this.logger.debug(
+        'BORRE ESTA INSTANCIA DE NAVEGADOR DE BUSCAR RESULTADOS',
+      );
       //if (global.gc) {
       //  global.gc();
       //}
