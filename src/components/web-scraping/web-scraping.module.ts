@@ -4,13 +4,10 @@ import { Module } from '@nestjs/common';
 
 import { XpathModule } from './../xpath/xpath.module';
 import { SorteoABuscarModule } from '../sorteo_a_buscar/sorteo_a_buscar.module';
-import { ProcesoDeSorteoABuscarResolver } from './generar-automaticos.resolver';
-
 import { WebScrapingXpathService } from './WebScrapingXpath.service';
 import { ResultadosModule } from '../resultados/resultados.module';
-import { GenerarResultadosService } from './generar-resultados.service';
 import { ResponseSorteoABuscarModule } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.module';
-import { BuscarAutomaticoService } from './buscar-automatico.service';
+import { ProcesoDeSorteoABuscarResolver } from './generar-automaticos.resolver';
 import { ResultadosSorteoService } from './resultados-sorteo.service';
 
 @Module({
@@ -21,12 +18,10 @@ import { ResultadosSorteoService } from './resultados-sorteo.service';
     ResponseSorteoABuscarModule,
   ],
   providers: [
-    ProcesoDeSorteoABuscarResolver,
     WebScrapingXpathService,
-    GenerarResultadosService,
-    BuscarAutomaticoService,
     ResultadosSorteoService,
+    ProcesoDeSorteoABuscarResolver,
   ],
-  exports: [GenerarResultadosService],
+  exports: [WebScrapingXpathService, ResultadosSorteoService],
 })
 export class WebScrapingModule {}

@@ -71,6 +71,16 @@ export class SorteoABuscarService {
     return sorteo_a_buscar;
   }
 
+  async devolverSiestaActivo(id: number): Promise<SorteoABuscar> {
+    const sorteoABuscar = await this.findOne(id);
+    if (!sorteoABuscar.activo) {
+      throw new UnprocessableEntityException(
+        MESSAGE.COMUN_ESTE_ELEMENTO_ESTA_INACTIVO,
+      );
+    }
+    return sorteoABuscar;
+  }
+
   async findOneSinError(id: number): Promise<SorteoABuscar> {
     const sorteo_a_buscar = await this.sorteoABuscarRepository.findOneBy({
       id,

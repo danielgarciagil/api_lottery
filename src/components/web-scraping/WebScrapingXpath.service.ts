@@ -33,7 +33,7 @@ export class WebScrapingXpathService {
   }
 
   //Esta sera la funcion padre para bsucar toda la data de un xpath valido
-  async iniciar_proceso_xpath(
+  async iniciar_xpath(
     xpath: Xpath,
     fecha_a_buscar: string,
   ): Promise<RESPONSE_BY_XPATH> {
@@ -70,14 +70,11 @@ export class WebScrapingXpathService {
         error: false,
       };
     } catch (error) {
-      this.logger.error(error?.message);
+      //this.logger.error(error?.message);
       throw new Error(error?.message);
     } finally {
       this.seleniumWebdriver.stopDriver();
       this.seleniumWebdriver = null;
-      this.logger.debug(
-        'BORRE ESTA INSTANCIA DE NAVEGADOR DE BUSCAR RESULTADOS',
-      );
       if (global.gc) {
         global.gc();
       }

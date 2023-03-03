@@ -8,6 +8,7 @@ import { LotenetPremiosService } from '../lotenet-premios/lotenet-premios.servic
 import { ResponsePropioGQl } from './../../common/response';
 import { fecha_actual } from './../../common/validar_fechas';
 import { ResponseLotenetPremioService } from '../response-lotenet-premio/response-lotenet-premio.service';
+import { pausaBySeg } from 'src/common/funciones/bloquearPrograma';
 
 @Injectable()
 export class PremiosAutomaticoLotenetService {
@@ -17,10 +18,6 @@ export class PremiosAutomaticoLotenetService {
     private readonly lotenetPremioService: LotenetPremiosService,
     private readonly responseLotenetPremio: ResponseLotenetPremioService,
   ) {}
-
-  async bloquearPrograma(time: number) {
-    await new Promise((resolve) => setTimeout(resolve, time * 1000));
-  }
 
   async premiarLotenet(id_lotenet_Premio: number): Promise<ResponsePropioGQl> {
     const lotenetPremio = await this.lotenetPremioService.findOne(
@@ -46,6 +43,7 @@ export class PremiosAutomaticoLotenetService {
     let error = true;
     let message = '';
     for (let i = 0; i < lotenetPremio.numeros_intentos; i++) {
+      this.logger.debug(`SE INSTAMCIO LOTENET => ${lotenetPremio.name}`);
       let ApiLotenet = new ApiLotenetService();
       try {
         const resultado = await this.resultadoService.devolverResultadoByBecha(
@@ -53,17 +51,24 @@ export class PremiosAutomaticoLotenetService {
           new Date(fecha_a_premiar),
         );
         const res = await ApiLotenet.iniciar_premio(resultado, lotenetPremio);
-        this.logger.debug(res);
+        this.logger.debug(`LOOTENET: ${lotenetPremio.name} => ${res.message}`);
 
         if (res.error) throw new Error(res.message);
         error = false;
         message = res.message;
         break;
       } catch (error) {
+        //SI ES QUE ESTA PREMIADA MANDO A PARA
+        if (error?.message === 'YA ESTA PREMIADA ESTA LOTERIA') {
+          message = error?.message;
+          error = true;
+          break;
+        }
+
         this.logger.error(`${error?.message} => ${LotenetPremio.name}`);
         message = error?.message;
-        error = true;
-        await this.bloquearPrograma(lotenetPremio.tiempo_de_espera_segundos);
+        error = false;
+        await pausaBySeg(lotenetPremio.tiempo_de_espera_segundos);
       } finally {
         ApiLotenet = null;
       }

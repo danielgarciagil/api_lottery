@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import * as cron from 'node-cron';
 
 import { cronExpression } from './../../common/funciones/cronExpresion';
-import { GenerarResultadosService } from '../web-scraping/generar-resultados.service';
 import { SorteoABuscarService } from '../sorteo_a_buscar/sorteo_a_buscar.service';
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
 import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.service';
@@ -10,16 +9,17 @@ import { LotenetPremio } from '../lotenet-premios/entities/lotenet-premio.entity
 import { LotenetPremiosService } from '../lotenet-premios/lotenet-premios.service';
 import { PremiosAutomaticoLotenetService } from '../premios-automatico-lotenet/premios-automatico-lotenet.service';
 import { ResponseLotenetPremioService } from '../response-lotenet-premio/response-lotenet-premio.service';
+import { ResultadosSorteoService } from '../web-scraping/resultados-sorteo.service';
 
 @Injectable()
 export class CronService {
   constructor(
     private readonly sorteoABuscarService: SorteoABuscarService,
-    private readonly generarResultadosService: GenerarResultadosService,
     private readonly responseSorteoABuscar: ResponseSorteoABuscarService,
     private readonly responseLotenetPremio: ResponseLotenetPremioService,
     private readonly lotenetPremiosService: LotenetPremiosService,
     private readonly premiosAutomaticoLotenetService: PremiosAutomaticoLotenetService,
+    private readonly resultadosSorteo: ResultadosSorteoService,
   ) {}
   private tareas: cron.ScheduledTask[] = [];
   private logger: Logger = new Logger('Cron-Services');
@@ -117,10 +117,11 @@ export class CronService {
         const tarea = cron.schedule(cron_expresion, async () => {
           this.logger.debug(`Comenzo el Cron de este sorteo ${sorteo.name}`);
           try {
-            let res = await this.generarResultadosService.init_generar(
-              sorteoABuscar,
-              responseSorteo.id,
-            );
+            let res =
+              await this.resultadosSorteo.generar_resultados_automaticos(
+                sorteoABuscar,
+                responseSorteo.id,
+              );
             this.logger.debug(res); // todo manejar esto por telegram por el momento
             res = null;
           } catch (error) {

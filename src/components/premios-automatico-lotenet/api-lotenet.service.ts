@@ -8,17 +8,15 @@ import { Resultado } from '../resultados/entities/resultado.entity';
 import { convertir_formato_date } from './../../common/validar_fechas';
 import { ResponsePropioGQl } from './../../common/response';
 import { SeleniumWebdriver } from '../selenium/selenium-webdriver';
+import { pausaBySeg } from 'src/common/funciones/bloquearPrograma';
 
 export class ApiLotenetService {
   private seleniumWebdriver: SeleniumWebdriver;
   private readonly logger = new Logger('API-LOTENET-SERVICE');
-  async bloquearPrograma(time: number) {
-    await new Promise((resolve) => setTimeout(resolve, time * 1000));
-  }
 
   async iniciar_seccion(plataforma: Plataforma) {
     await this.seleniumWebdriver.navigateTo(plataforma.url);
-    await this.bloquearPrograma(2);
+    await pausaBySeg(2);
 
     const btnUsuario = await this.seleniumWebdriver.buscar_xpath(
       LOTENET_XPATH.usuario,
@@ -35,7 +33,7 @@ export class ApiLotenetService {
     );
     btnIniSesion.click();
 
-    await this.bloquearPrograma(2);
+    await pausaBySeg(2);
     const url_actual = await this.seleniumWebdriver
       .returnDriver()
       .getCurrentUrl();
@@ -53,7 +51,7 @@ export class ApiLotenetService {
     await this.seleniumWebdriver.navigateTo(
       `${plataforma.url}/operaciones/premios/`,
     );
-    await this.bloquearPrograma(2);
+    await pausaBySeg(2);
     const url_actual = await this.seleniumWebdriver
       .returnDriver()
       .getCurrentUrl();
@@ -61,14 +59,14 @@ export class ApiLotenetService {
     if (!url_actual.endsWith('/operaciones/premios/')) {
       throw Error('NO SE PUDO ACEDER A LA SESION DE PREMIO');
     }
-    await this.bloquearPrograma(2);
+    await pausaBySeg(2);
 
     const inputfecha = await this.seleniumWebdriver.buscar_xpath(
       LOTENET_XPATH.input_fecha,
     );
     const fecha = convertir_formato_date(resultado.fecha.toISOString());
     await inputfecha.sendKeys(fecha);
-    await this.bloquearPrograma(2);
+    await pausaBySeg(2);
 
     const inputLoteria = await this.seleniumWebdriver.buscar_xpath(
       LOTENET_XPATH.input_loteria,
@@ -79,13 +77,13 @@ export class ApiLotenetService {
       LOTENET_XPATH.inputt_sorteo,
     );
     await inputSorteo.sendKeys(lotenetPremio.data_lotenet_name_sorteo);
-    await this.bloquearPrograma(2);
+    await pausaBySeg(2);
 
     const btnByPremio = await this.seleniumWebdriver.buscar_xpath(
       LOTENET_XPATH.primer_premio,
     );
     await btnByPremio.click();
-    await this.bloquearPrograma(2);
+    await pausaBySeg(2);
 
     const sorSelect = await this.seleniumWebdriver.buscar_xpath(
       LOTENET_XPATH.loteria_select,
@@ -124,7 +122,7 @@ export class ApiLotenetService {
         throw Error('NO SE MANDO CON LOS DIGITOS CORRECTOS');
       }
       btnPremio.sendKeys(numero_a_mandar);
-      await this.bloquearPrograma(2);
+      await pausaBySeg(2);
     }
 
     const btnPremiar = await this.seleniumWebdriver.buscar_xpath(
@@ -134,7 +132,7 @@ export class ApiLotenetService {
       throw Error('ESTE NO ES EL BOTON DE PROCESAR');
     }
     await btnPremiar.click();
-    await this.bloquearPrograma(2);
+    await pausaBySeg(2);
 
     const resultadoPage = await this.seleniumWebdriver
       .returnDriver()

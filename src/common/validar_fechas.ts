@@ -84,7 +84,6 @@ export const validarFecha = (
   fechaXpath: string,
   fechaABuscar: string,
 ): string => {
-  console.log(fechaXpath);
   const verificar_fecha = parsearFecha(fechaXpath);
   if (!verificar_fecha) throw new Error('La fecha no es válida');
   if (verificar_fecha.format('YYYY-MM-DD') !== fechaABuscar)
