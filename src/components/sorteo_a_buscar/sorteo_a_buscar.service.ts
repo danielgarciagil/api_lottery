@@ -71,7 +71,7 @@ export class SorteoABuscarService {
     return sorteo_a_buscar;
   }
 
-  async devolverSiestaActivo(id: number): Promise<SorteoABuscar> {
+  async devolverSiEstaActivo(id: number): Promise<SorteoABuscar> {
     const sorteoABuscar = await this.findOne(id);
     if (!sorteoABuscar.activo) {
       throw new UnprocessableEntityException(

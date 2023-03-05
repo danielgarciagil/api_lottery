@@ -40,7 +40,7 @@ export class PasarDataService implements OnModuleInit {
 
   async publicar_interna(fecha_resultados, id_sorteo, arr_numneros) {
     try {
-      this.resultadoSerice.createSinError({
+      this.resultadoSerice.createAutomatico({
         fecha: fecha_resultados,
         id_sorteo: id_sorteo,
         id_user: 1,

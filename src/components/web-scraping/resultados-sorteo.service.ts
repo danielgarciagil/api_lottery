@@ -4,17 +4,18 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { RESPONSE_BY_XPATH, ResponsePropioGQl } from './../../common/response';
 import { XpathService } from '../xpath/xpath.service';
 import { WebScrapingXpathService } from './WebScrapingXpath.service';
-import { fecha_actual, arrFechasHoy } from './../../common/validar_fechas';
 import { SorteoABuscarService } from '../sorteo_a_buscar/sorteo_a_buscar.service';
 import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.service';
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
-import { pausaBySeg } from './../../common/funciones/bloquearPrograma';
 import { Xpath } from '../xpath/entities/xpath.entity';
-import { COMPROBAR_XPATH_IGUALES } from './../../common/funciones/arreglosIguales';
 import { ResultadosService } from '../resultados/resultados.service';
-import { Sorteo } from '../sorteo/entities/sorteo.entity';
+import {
+  arrFechasHoy,
+  COMPROBAR_DIGITOS_IGUALES_ARR_XPATH,
+  pausaBySeg,
+  fecha_actual,
+} from './../../common';
 import { MESSAGE } from 'src/config/messages';
-
 @Injectable()
 export class ResultadosSorteoService {
   constructor(
@@ -30,10 +31,12 @@ export class ResultadosSorteoService {
     const xpath = await this.xpathService.findOne(id_xpath);
     let WebScraping = new WebScrapingXpathService();
     const arr_fecha_hoy = arrFechasHoy();
+    //console.log(arr_fecha_hoy);
     try {
       const res = await WebScraping.iniciar_xpath(xpath, arr_fecha_hoy);
       return res;
     } catch (error) {
+      this.logger.error(error?.message);
       throw new BadRequestException(error?.message);
     } finally {
       WebScraping = null;
@@ -44,7 +47,7 @@ export class ResultadosSorteoService {
   async buscar_generar_autoamtico(
     id_sorteo_a_buscar: number,
   ): Promise<ResponsePropioGQl> {
-    const sorteoABuscar = await this.sorteoABuscarService.devolverSiestaActivo(
+    const sorteoABuscar = await this.sorteoABuscarService.devolverSiEstaActivo(
       id_sorteo_a_buscar,
     );
     const responseSorteoABsucar = await this.responseSorteoABuscarSerive.create(
@@ -84,64 +87,7 @@ export class ResultadosSorteoService {
     } finally {
       WebScraping = null;
     }
-    return COMPROBAR_XPATH_IGUALES(instanciaXpath);
-  }
-
-  async premiarResultados(
-    sorteo: Sorteo,
-    xpath: RESPONSE_BY_XPATH,
-    idResponse: number,
-  ): Promise<ResponsePropioGQl> {
-    let message = '';
-    let error = true;
-    const fecha_hoy = fecha_actual();
-    for (let i = 0; i < 10; i++) {
-      try {
-        await this.resultadoService.createSinError({
-          fecha: new Date(fecha_hoy),
-          id_sorteo: sorteo.id,
-          numeros_ganadores: xpath.data_by_xpath_digitos,
-          id_user: 1,
-        });
-        error = false;
-        message = 'SE PUBLICO BIEN';
-        break;
-      } catch (error) {
-        if (
-          error?.message ===
-          MESSAGE.YA_ESTA_PUBLICADO_ESTE_RESULTADO_PARA_ESTA_FECHA
-        ) {
-          message = error?.message;
-          error = false;
-          break;
-        }
-
-        this.logger.error(error?.message);
-        message = error?.message;
-        error = true;
-
-        await pausaBySeg(5);
-      }
-    }
-    if (error) {
-      await this.responseSorteoABuscarSerive.update(idResponse, {
-        completed: true,
-        is_error: true,
-        message: message,
-      });
-      throw new Error(message);
-    } else {
-      await this.responseSorteoABuscarSerive.update(idResponse, {
-        completed: true,
-        is_error: false,
-        message: message,
-      });
-    }
-
-    return {
-      error,
-      message,
-    };
+    return COMPROBAR_DIGITOS_IGUALES_ARR_XPATH(instanciaXpath);
   }
 
   //ESTE ME VA A GENERAR EL RESULTADO COMO TAL
@@ -150,9 +96,9 @@ export class ResultadosSorteoService {
     idResponseSorteo: number,
   ): Promise<ResponsePropioGQl> {
     const arr_fecha_a_buscar = arrFechasHoy();
-    let error = true;
+    const fecha_a_publicar = fecha_actual();
     let message = '';
-
+    let error = true;
     for (let i = 0; i < sorteoABuscar.numeros_intentos; i++) {
       try {
         this.logger.debug(`BUSCANDO => ${sorteoABuscar.name}`);
@@ -160,23 +106,32 @@ export class ResultadosSorteoService {
           sorteoABuscar.xpath,
           arr_fecha_a_buscar,
         );
-
-        await this.premiarResultados(
-          sorteoABuscar.sorteo,
-          xpath_a_publicar,
-          idResponseSorteo,
-        );
+        message = 'SE ECNONTRO LA DATA';
+        await this.resultadoService.createAutomatico({
+          fecha: new Date(fecha_a_publicar),
+          id_sorteo: sorteoABuscar.sorteo.id,
+          id_user: 1,
+          numeros_ganadores: xpath_a_publicar.data_by_xpath_digitos,
+        });
+        message = 'SE PUBLICO BIEN';
         error = false;
-        message = 'SE PUBLICO EL XPATH';
         break;
       } catch (error) {
-        this.logger.error(error?.message);
+        this.logger.error(
+          `SORTEO: ${sorteoABuscar.name} ERROR: ${error?.message}`,
+        );
         await pausaBySeg(sorteoABuscar.tiempo_de_espera_segundos);
         error = true;
-        message = error?.message;
+        message = error?.message || 'HUBO UN ERROR AL BUSCAR LA DATA';
       }
     }
 
+    await this.responseSorteoABuscarSerive.update(idResponseSorteo, {
+      is_error: error,
+      completed: true,
+      message: message,
+    });
+    this.logger.debug(`SORTEO => ${sorteoABuscar.name} STATUS => ${message}`);
     return {
       error,
       message,

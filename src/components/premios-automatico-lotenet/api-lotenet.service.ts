@@ -5,7 +5,7 @@ import { LOTENET_XPATH } from './lotenet.enum';
 import { Plataforma } from '../plataforma/entities/plataforma.entity';
 import { LotenetPremio } from '../lotenet-premios/entities/lotenet-premio.entity';
 import { Resultado } from '../resultados/entities/resultado.entity';
-import { convertir_formato_date } from './../../common/validar_fechas';
+import { convertir_formato_date } from '../../common/funciones/validar_fechas';
 import { ResponsePropioGQl } from './../../common/response';
 import { SeleniumWebdriver } from '../selenium/selenium-webdriver';
 import { pausaBySeg } from 'src/common/funciones/bloquearPrograma';

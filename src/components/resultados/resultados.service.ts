@@ -13,9 +13,10 @@ import { UpdateResultadoInput } from './dto/update-resultado.input';
 import { Resultado } from './entities/resultado.entity';
 import { PaginationArgs } from './../../common/dto/args';
 import { MESSAGE } from './../../config/messages';
-import { ResponsePropioGQl } from './../../common/response';
+import { RESPONSE_BY_XPATH, ResponsePropioGQl } from './../../common/response';
 import { SorteoService } from '../sorteo/sorteo.service';
 import { FilterResultado } from './dto/filter-resultado.input';
+import { Sorteo } from '../sorteo/entities/sorteo.entity';
 
 @Injectable()
 export class ResultadosService {
@@ -55,10 +56,20 @@ export class ResultadosService {
     }
   }
 
-  async createSinError(
+  async createAutomatico(
     createResultadoInput: CreateResultadoInput,
   ): Promise<Resultado> {
-    return await this.prevCreate(createResultadoInput);
+    try {
+      return await this.prevCreate(createResultadoInput);
+    } catch (error) {
+      if (
+        error.message ===
+        MESSAGE.YA_ESTA_PUBLICADO_ESTE_RESULTADO_PARA_ESTA_FECHA
+      ) {
+        return;
+      }
+      throw new Error(error?.message);
+    }
   }
 
   async verificar_que_no_se_duplique(id_sorteo: number, fecha: Date) {
@@ -69,7 +80,7 @@ export class ResultadosService {
       },
     });
     if (sorteo) {
-      throw Error(MESSAGE.YA_ESTA_PUBLICADO_ESTE_RESULTADO_PARA_ESTA_FECHA);
+      throw new Error(MESSAGE.YA_ESTA_PUBLICADO_ESTE_RESULTADO_PARA_ESTA_FECHA);
     }
   }
 

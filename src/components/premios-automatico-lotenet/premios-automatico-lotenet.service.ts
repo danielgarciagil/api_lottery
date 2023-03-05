@@ -6,7 +6,7 @@ import { LotenetPremio } from '../lotenet-premios/entities/lotenet-premio.entity
 import { ResultadosService } from '../resultados/resultados.service';
 import { LotenetPremiosService } from '../lotenet-premios/lotenet-premios.service';
 import { ResponsePropioGQl } from './../../common/response';
-import { fecha_actual } from './../../common/validar_fechas';
+import { fecha_actual } from '../../common/funciones/validar_fechas';
 import { ResponseLotenetPremioService } from '../response-lotenet-premio/response-lotenet-premio.service';
 import { pausaBySeg } from 'src/common/funciones/bloquearPrograma';
 

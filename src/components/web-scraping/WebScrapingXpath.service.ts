@@ -1,25 +1,16 @@
 import { Logger } from '@nestjs/common';
 //PROPIO
 import { RESPONSE_BY_XPATH } from './../../common/response';
-import { validarFecha } from './../../common/validar_fechas';
 import { Xpath } from '../xpath/entities/xpath.entity';
 import { SeleniumWebdriver } from '../selenium/selenium-webdriver';
-
+import {
+  validarFechaQueSeaDeHoy,
+  quitar_palabras_de_digitos,
+  validar_que_es_un_numero,
+} from './../../common';
 export class WebScrapingXpathService {
   private seleniumWebdriver: SeleniumWebdriver;
   private readonly logger = new Logger('WEBSCRAPING-SERVICE');
-
-  validar_que_es_un_numero(numero: any): number {
-    const newNumeroo = parseInt(numero);
-    if (isNaN(newNumeroo)) {
-      throw new Error('ESTE XPATH NO ES UN NUMERO');
-    }
-    if (newNumeroo >= 0) {
-      return newNumeroo;
-    } else {
-      throw new Error('ESTE XPATH DIO UN NUMERO INFERIOR A 0');
-    }
-  }
 
   //Esta sera la funcion padre para bsucar toda la data de un xpath valido
   async iniciar_xpath(
@@ -79,7 +70,7 @@ export class WebScrapingXpathService {
           xpath_Actual_fecha,
         );
         const value_fecha = await xpath_fecha.getText();
-        return validarFecha(value_fecha, arrFechasHoy);
+        return validarFechaQueSeaDeHoy(value_fecha, arrFechasHoy);
       } catch (error) {
         throw new Error(
           `ESTE XPATH DE FECHA NO PUEDE SER ENCONTRADO => ${error?.message}`,
@@ -99,7 +90,7 @@ export class WebScrapingXpathService {
         const message = await this.seleniumWebdriver.buscar_xpath(
           xpath_digito_actual,
         );
-        const value = this.quitar_palabras_de_digitos(await message.getText());
+        const value = quitar_palabras_de_digitos(await message.getText());
         digito += value; //todo
       } catch (error) {
         throw new Error(
@@ -107,7 +98,7 @@ export class WebScrapingXpathService {
         );
       }
     }
-    return this.validar_que_es_un_numero(digito);
+    return validar_que_es_un_numero(digito);
   }
 
   //? Aqui visito las diferentes URL por digitos
@@ -119,13 +110,5 @@ export class WebScrapingXpathService {
     } catch (error) {
       throw Error('NO SE PUDO ACEDER A LA URL');
     }
-  }
-
-  quitar_palabras_de_digitos(digito: string): string {
-    if (digito.includes('1er.')) digito = digito.replace('1er.', '');
-    if (digito.includes('2do.')) digito = digito.replace('2do.', '');
-    if (digito.includes('3er.')) digito = digito.replace('3er.', '');
-    const newDigito = digito.replace(/\D/g, '');
-    return newDigito;
   }
 }

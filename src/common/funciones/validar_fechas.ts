@@ -3,10 +3,14 @@ import * as moment from 'moment';
 export const arrFechasHoy = (): string[] => {
   const fecha = moment();
   const fechaDiaUnDigito = fecha.format('D').replace(/^0+/, '');
-  const mesEspanol = fecha.format('MMMM');
-  const diaEspanol = fecha.format('dddd');
 
   return [
+    fecha.format('YYYY-MM-DD'), // PRIMERA
+    fecha.format('DD-MM-YYYY'), // LOTERIAS DOMINICANAS / REAL
+    fecha.locale('es').format('dddd, DD-MM-YYYY').toUpperCase(), // LOTEDOM
+    fecha.locale('en').format('dddd, MMMM D, YYYY'), //FLORIDA OFICIAL
+    fecha.format('DD/MM/YYYY'), //KING OFFICIAL
+    //!Falta por probar
     fecha.format(`dddd, MMMM ${fechaDiaUnDigito}, YYYY`),
     fecha.format('dddd, MMM D, YYYY'),
     fecha.format(`dddd, MMM ${fechaDiaUnDigito}, YYYY`),
@@ -18,20 +22,15 @@ export const arrFechasHoy = (): string[] => {
     fecha.format('dddd MMM Dth YYYY'),
     fecha.format('ddd MM/DD/YY'),
     fecha.format('dddd, MMM D, YYYY'),
-    fecha.format('DD-MM-YYYY'),
-    fecha.format('DD/MM/YYYY'),
-    fecha.format('YYYY-MM-DD'),
-    fecha.format(`Sorteo: DD de ${mesEspanol} del YYYY.`),
-    fecha.format(`${diaEspanol}, DD-MM-YYYY`),
-    fecha.format('Resultados MM/DD/YYYY'),
-    fecha.format(`${diaEspanol}, D de ${mesEspanol} de YYYY`),
+    fecha.format('[Resultados] MM/DD/YYYY'),
   ];
 };
 
-export const validarFecha = (
+export const validarFechaQueSeaDeHoy = (
   fechaComprobarXpath: string,
   arrFecha: string[],
 ): string => {
+  console.log(fechaComprobarXpath);
   const is_fecha = arrFecha.includes(fechaComprobarXpath);
   if (!is_fecha) throw new Error('NO ES LA FECHA A BUSCAR');
   return fechaComprobarXpath;

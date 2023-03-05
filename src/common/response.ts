@@ -1,5 +1,4 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { number } from 'joi';
 
 export interface ResponsePropio {
   details: string;

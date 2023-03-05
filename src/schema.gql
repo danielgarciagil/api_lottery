@@ -179,7 +179,7 @@ type ResponsePropioGQl {
 
 type RESPONSE_BY_XPATH {
   data_by_xpath_digitos: [Int!]
-  data_by_xpath_fecha: String
+  data_by_xpath_fecha: [String!]
   message: String
   error: Boolean
 }
@@ -223,6 +223,12 @@ type Query {
   """Para bsucar un sorteo"""
   findSorteo(id: Int!): Sorteo!
 
+  """Obtener todos los Response de SOrteo a Buscar"""
+  allResponseSorteoABuscar(offset: Int = 0, limit: Int = 10): [ResponseSorteoABuscar!]!
+
+  """Obtener un Response especifico"""
+  findResponseSorteoABuscar(id: Int!): ResponseSorteoABuscar!
+
   """Para ver todos los xpath"""
   allXpath(offset: Int = 0, limit: Int = 10): [Xpath!]!
 
@@ -248,12 +254,6 @@ type Query {
 
   """Para buscar la configuracion de un sorteo especifico"""
   findSorteoABuscar(id: Int!): SorteoABuscar!
-
-  """Obtener todos los Response de SOrteo a Buscar"""
-  allResponseSorteoABuscar(offset: Int = 0, limit: Int = 10): [ResponseSorteoABuscar!]!
-
-  """Obtener un Response especifico"""
-  findResponseSorteoABuscar(id: Int!): ResponseSorteoABuscar!
 
   """Para ver todos los premios configurados"""
   allLotenetPremios(offset: Int = 0, limit: Int = 10): [LotenetPremio!]!
