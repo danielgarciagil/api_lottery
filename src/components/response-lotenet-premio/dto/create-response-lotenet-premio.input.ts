@@ -7,7 +7,7 @@ export class CreateResponseLotenetPremioInput {
   id_lotenet_premio: number;
 
   @IsString()
-  message: string;
+  message?: string;
 
   @IsBoolean()
   completed?: boolean;

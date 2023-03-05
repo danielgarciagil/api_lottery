@@ -20,7 +20,7 @@ export class ResponseSorteoABuscarService {
   async create(createResponseInput: CreateResponseSorteoABuscarInput) {
     try {
       const newResponse = this.responseRepository.create({
-        message: createResponseInput.message,
+        message: createResponseInput.message || 'SE INSTANCIO',
         sorteo_a_buscar: { id: createResponseInput.id_sorteo_a_buscar },
       });
       return await this.responseRepository.save(newResponse);

@@ -168,10 +168,10 @@ export class ApiLotenetService {
     } finally {
       this.seleniumWebdriver.stopDriver();
       this.seleniumWebdriver = null;
-      this.logger.debug('BORRE ESTA INSTANCIA DE NAVEGADOR DE PREMIO LOTENET');
-      //if (global.gc) {
-      //  global.gc();
-      //}
+
+      if (global.gc) {
+        global.gc();
+      }
     }
   }
 

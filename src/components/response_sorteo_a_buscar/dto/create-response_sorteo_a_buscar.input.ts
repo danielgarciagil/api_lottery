@@ -4,7 +4,7 @@ import { IsBoolean, IsNumber, IsString } from 'class-validator';
 @InputType()
 export class CreateResponseSorteoABuscarInput {
   @IsString()
-  message: string;
+  message?: string;
 
   @IsNumber()
   id_sorteo_a_buscar: number;

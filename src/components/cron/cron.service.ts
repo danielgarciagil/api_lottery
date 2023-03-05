@@ -62,7 +62,7 @@ export class CronService {
       tareaCron = null;
     });
     this.tareas = [];
-    this.crear_tareas_automaticas();
+    this.crear_Sorteos_A_Buscar_automaticas();
     this.crear_premios_lotenet_automaticos();
   }
 
@@ -75,13 +75,11 @@ export class CronService {
           lotenetPremio.premio_dia[i].id,
           lotenetPremio.premio_dia[i].hora,
         );
-        this.logger.debug(`PREMIO=> ${lotenetPremio.name} : ${cron_expresion}`);
+        this.logger.warn(`CRON => ${lotenetPremio.name} : ${cron_expresion}`);
+        const responsePremio = await this.responseLotenetPremio.create({
+          id_lotenet_premio: lotenetPremio.id,
+        });
         const tareaLotenet = cron.schedule(cron_expresion, async () => {
-          this.logger.debug(`COMENZO Premio Lotenet ${lotenetPremio.name}`);
-          const responsePremio = await this.responseLotenetPremio.create({
-            message: 'SE INSTANCIO UN PREMIO',
-            id_lotenet_premio: lotenetPremio.id,
-          });
           let res =
             await this.premiosAutomaticoLotenetService.premiarAutomatico(
               lotenetPremio,
@@ -96,7 +94,7 @@ export class CronService {
   }
 
   //Creo los cron individuales de Buscar Numeros y lo agregoa un Array
-  async crear_tareas_automaticas() {
+  async crear_Sorteos_A_Buscar_automaticas() {
     const arrSorteosABuscars = await this.consultar_sorteosABuscar();
     for (const sorteoABuscar of arrSorteosABuscars) {
       if (!sorteoABuscar.activo) continue;
@@ -107,11 +105,10 @@ export class CronService {
           sorteo.sorteo_dias[i].hora,
         );
 
-        this.logger.debug(`SORTEO: ${sorteo.name} => ${cron_expresion}`);
+        this.logger.warn(`CRON=> ${sorteo.name} => ${cron_expresion}`);
 
         const responseSorteo = await this.responseSorteoABuscar.create({
           id_sorteo_a_buscar: sorteoABuscar.id,
-          message: 'Se instancio un nuevo response',
         });
 
         const tarea = cron.schedule(cron_expresion, async () => {
@@ -122,10 +119,10 @@ export class CronService {
                 sorteoABuscar,
                 responseSorteo.id,
               );
-            this.logger.debug(res); // todo manejar esto por telegram por el momento
+            this.logger.debug(res.message); // todo manejar esto por telegram por el momento
             res = null;
           } catch (error) {
-            this.logger.error(error?.message);
+            this.logger.error(`CRON => ERROR: ${error?.message}`);
           }
         });
         this.tareas.push(tarea);

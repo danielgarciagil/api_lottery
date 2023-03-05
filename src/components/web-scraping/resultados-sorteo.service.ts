@@ -15,7 +15,7 @@ import {
   pausaBySeg,
   fecha_actual,
 } from './../../common';
-import { MESSAGE } from 'src/config/messages';
+
 @Injectable()
 export class ResultadosSorteoService {
   constructor(
@@ -53,7 +53,6 @@ export class ResultadosSorteoService {
     const responseSorteoABsucar = await this.responseSorteoABuscarSerive.create(
       {
         id_sorteo_a_buscar: sorteoABuscar.id,
-        message: 'INICIO EL GENERADOR',
       },
     );
     this.generar_resultados_automaticos(
@@ -106,7 +105,7 @@ export class ResultadosSorteoService {
           sorteoABuscar.xpath,
           arr_fecha_a_buscar,
         );
-        message = 'SE ECNONTRO LA DATA';
+        message = 'SE ENCONTRO LA DATA';
         await this.resultadoService.createAutomatico({
           fecha: new Date(fecha_a_publicar),
           id_sorteo: sorteoABuscar.sorteo.id,

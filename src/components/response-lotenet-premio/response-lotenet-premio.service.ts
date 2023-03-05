@@ -22,7 +22,7 @@ export class ResponseLotenetPremioService {
   ): Promise<ResponseLotenetPremio> {
     try {
       const newResponse = this.responseLotenetPremioRepository.create({
-        message: createResponseLotenetPremioInput.message,
+        message: createResponseLotenetPremioInput.message || 'SE INSTANCIO',
         lotenet_premio: {
           id: createResponseLotenetPremioInput.id_lotenet_premio,
         },
