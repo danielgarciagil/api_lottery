@@ -4,7 +4,7 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { RESPONSE_BY_XPATH, ResponsePropioGQl } from './../../common/response';
 import { XpathService } from '../xpath/xpath.service';
 import { WebScrapingXpathService } from './WebScrapingXpath.service';
-import { fecha_actual } from './../../common/validar_fechas';
+import { fecha_actual, arrFechasHoy } from './../../common/validar_fechas';
 import { SorteoABuscarService } from '../sorteo_a_buscar/sorteo_a_buscar.service';
 import { ResponseSorteoABuscarService } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.service';
 import { SorteoABuscar } from '../sorteo_a_buscar/entities/sorteo_a_buscar.entity';
@@ -13,6 +13,7 @@ import { Xpath } from '../xpath/entities/xpath.entity';
 import { COMPROBAR_XPATH_IGUALES } from './../../common/funciones/arreglosIguales';
 import { ResultadosService } from '../resultados/resultados.service';
 import { Sorteo } from '../sorteo/entities/sorteo.entity';
+import { MESSAGE } from 'src/config/messages';
 
 @Injectable()
 export class ResultadosSorteoService {
@@ -28,9 +29,9 @@ export class ResultadosSorteoService {
   async validar_xpath_individual(id_xpath: number): Promise<RESPONSE_BY_XPATH> {
     const xpath = await this.xpathService.findOne(id_xpath);
     let WebScraping = new WebScrapingXpathService();
-    const fecha_a_buscar = fecha_actual();
+    const arr_fecha_hoy = arrFechasHoy();
     try {
-      const res = await WebScraping.iniciar_xpath(xpath, fecha_a_buscar);
+      const res = await WebScraping.iniciar_xpath(xpath, arr_fecha_hoy);
       return res;
     } catch (error) {
       throw new BadRequestException(error?.message);
@@ -65,7 +66,7 @@ export class ResultadosSorteoService {
   //BUSCO LOS XPATH INDIVIDUAL Y DEVUELVO EL COORECTO
   async bucar_xpath(
     arrXpath: Xpath[],
-    fecha_a_buscar: string,
+    arr_fecha_a_buscar: string[],
   ): Promise<RESPONSE_BY_XPATH> {
     const instanciaXpath: RESPONSE_BY_XPATH[] = [];
     let WebScraping = new WebScrapingXpathService();
@@ -74,7 +75,7 @@ export class ResultadosSorteoService {
         if (!xpathActual.activo) continue;
         const xpathIndividual = await WebScraping.iniciar_xpath(
           xpathActual,
-          fecha_a_buscar,
+          arr_fecha_a_buscar,
         );
         instanciaXpath.push(xpathIndividual);
       }
@@ -93,17 +94,28 @@ export class ResultadosSorteoService {
   ): Promise<ResponsePropioGQl> {
     let message = '';
     let error = true;
+    const fecha_hoy = fecha_actual();
     for (let i = 0; i < 10; i++) {
       try {
         await this.resultadoService.createSinError({
-          fecha: new Date(xpath.data_by_xpath_fecha),
+          fecha: new Date(fecha_hoy),
           id_sorteo: sorteo.id,
           numeros_ganadores: xpath.data_by_xpath_digitos,
           id_user: 1,
         });
         error = false;
         message = 'SE PUBLICO BIEN';
+        break;
       } catch (error) {
+        if (
+          error?.message ===
+          MESSAGE.YA_ESTA_PUBLICADO_ESTE_RESULTADO_PARA_ESTA_FECHA
+        ) {
+          message = error?.message;
+          error = false;
+          break;
+        }
+
         this.logger.error(error?.message);
         message = error?.message;
         error = true;
@@ -137,7 +149,7 @@ export class ResultadosSorteoService {
     sorteoABuscar: SorteoABuscar,
     idResponseSorteo: number,
   ): Promise<ResponsePropioGQl> {
-    const fecha_a_buscar = fecha_actual();
+    const arr_fecha_a_buscar = arrFechasHoy();
     let error = true;
     let message = '';
 
@@ -146,11 +158,9 @@ export class ResultadosSorteoService {
         this.logger.debug(`BUSCANDO => ${sorteoABuscar.name}`);
         const xpath_a_publicar = await this.bucar_xpath(
           sorteoABuscar.xpath,
-          fecha_a_buscar,
+          arr_fecha_a_buscar,
         );
-        if (xpath_a_publicar.data_by_xpath_fecha !== fecha_a_buscar) {
-          throw new Error('Esta no es la fecha');
-        }
+
         await this.premiarResultados(
           sorteoABuscar.sorteo,
           xpath_a_publicar,

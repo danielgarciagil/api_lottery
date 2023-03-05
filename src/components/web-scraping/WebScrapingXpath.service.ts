@@ -17,32 +17,20 @@ export class WebScrapingXpathService {
     if (newNumeroo >= 0) {
       return newNumeroo;
     } else {
-      throw new Error('ESTE XPATH DIO UN NUMERO INFERIOOR A 0');
-    }
-  }
-
-  validar_fechas_iguales(arr_fecha: string[]): string {
-    const todas_fechas_iguales = arr_fecha.every((elemento, indice, arr) => {
-      return elemento === arr[0];
-    });
-    if (todas_fechas_iguales) {
-      return arr_fecha[0]; //aqui corto la longitud de la fecha
-    } else {
-      throw Error('Una de las fechas eran diferentes');
+      throw new Error('ESTE XPATH DIO UN NUMERO INFERIOR A 0');
     }
   }
 
   //Esta sera la funcion padre para bsucar toda la data de un xpath valido
   async iniciar_xpath(
     xpath: Xpath,
-    fecha_a_buscar: string,
+    arrFechasHoy: string[],
   ): Promise<RESPONSE_BY_XPATH> {
     try {
       this.seleniumWebdriver = new SeleniumWebdriver();
       await this.seleniumWebdriver.startDriver();
       const data_xpath_digitos: number[] = [];
       const data_xpath_fechas: string[] = [];
-      let fecha_final = '';
 
       for (let index = 0; index < xpath.xpath_digitos.length; index++) {
         await this.for_urls_digitos(index, xpath.xpath_urls_by_digitos);
@@ -56,17 +44,15 @@ export class WebScrapingXpathService {
         const fecha_xpath = await this.for_fechas_xpath(
           index,
           xpath.xpath_fecha_by_digitos,
-          fecha_a_buscar,
+          arrFechasHoy,
         );
         data_xpath_fechas.push(fecha_xpath);
       }
 
-      fecha_final = this.validar_fechas_iguales(data_xpath_fechas);
-
       return {
         message: 'SE ENCONTRO LA DATA DEL XPATH',
         data_by_xpath_digitos: data_xpath_digitos,
-        data_by_xpath_fecha: fecha_final,
+        data_by_xpath_fecha: data_xpath_fechas,
         error: false,
       };
     } catch (error) {
@@ -85,7 +71,7 @@ export class WebScrapingXpathService {
   async for_fechas_xpath(
     index_actual: number,
     arr_xpath_fechas: string[][],
-    fecha_a_buscar: string,
+    arrFechasHoy: string[],
   ): Promise<string> {
     for (const xpath_Actual_fecha of arr_xpath_fechas[index_actual]) {
       try {
@@ -93,7 +79,7 @@ export class WebScrapingXpathService {
           xpath_Actual_fecha,
         );
         const value_fecha = await xpath_fecha.getText();
-        return validarFecha(value_fecha, fecha_a_buscar);
+        return validarFecha(value_fecha, arrFechasHoy);
       } catch (error) {
         throw new Error(
           `ESTE XPATH DE FECHA NO PUEDE SER ENCONTRADO => ${error?.message}`,

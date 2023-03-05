@@ -22,8 +22,8 @@ export class RESPONSE_BY_XPATH {
   @Field(() => [Int], { nullable: true })
   data_by_xpath_digitos: number[];
 
-  @Field(() => String, { nullable: true })
-  data_by_xpath_fecha: string;
+  @Field(() => [String], { nullable: true })
+  data_by_xpath_fecha: string[];
 
   @Field(() => String, { nullable: true })
   message: string;

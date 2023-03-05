@@ -1,130 +1,41 @@
 import * as moment from 'moment';
 
-const formatosDeFechas = [
-  'dddd, MMMM DD, YYYY',
-  'dddd, DD [de] MMMM [de] YYYY',
-  'dddd, MMM DD, YYYY',
-  'YYYY-MM-DD',
-  'DD-MM-YYYY',
-  'ddd MM/DD/YY',
-  'dddd, DD-MM-YYYY',
-  'dddd, MMMM DD, YYYY',
-  'dddd, DD [de] MMMM [de] YYYY',
-  'dddd, MMM DD, YYYY',
-  'YYYY-MM-DD',
-  'DD-MM-YYYY',
-  'ddd MM/DD/YY',
-  'dddd, DD-MM-YYYY',
-  'dddd, MMMM DD, YYYY',
-  'dddd, DD [de] MMMM [de] YYYY',
-  'dddd, MMM DD, YYYY',
-  'YYYY-MM-DD',
-  'DD-MM-YYYY',
-  'ddd MM/DD/YY',
-  'dddd, DD-MM-YYYY',
-  'dddd, MMMM DD, YYYY',
-  'dddd, DD [de] MMMM [de] YYYY',
-  'dddd, MMM DD, YYYY',
-  'YYYY-MM-DD',
-  'DD-MM-YYYY',
-  'ddd MM/DD/YY',
-  'dddd, DD-MM-YYYY',
-  'dddd, MMMM DD, YYYY',
-  'dddd, DD [de] MMMM [de] YYYY',
-  'dddd, MMM DD, YYYY',
-  'YYYY-MM-DD',
-  'DD-MM-YYYY',
-  'ddd MM/DD/YY',
-  'dddd, DD-MM-YYYY',
-  'dddd, MMMM DD, YYYY',
-  'dddd, DD [de] MMMM [de] YYYY',
-  'dddd, MMM DD, YYYY',
-  'YYYY-MM-DD',
-  'DD-MM-YYYY',
-  'ddd MM/DD/YY',
-  'dddd, DD-MM-YYYY',
-  'dddd, MMMM DD, YYYY',
-  'dddd, DD [de] MMMM [de] YYYY',
-  'dddd, MMM DD, YYYY',
-  'YYYY-MM-DD',
-  'DD-MM-YYYY',
-  'ddd MM/DD/YY',
-  'dddd, DD-MM-YYYY',
-  'dddd, MMMM DD, YYYY',
-  'dddd, DD [de] MMMM [de] YYYY',
-  'dddd, MMM DD, YYYY',
-  'YYYY-MM-DD',
-  'DD-MM-YYYY',
-  'ddd MM/DD/YY',
-  'dddd, DD-MM-YYYY',
-  'dddd, MMMM DD, YYYY',
-  'dddd, DD [de] MMMM [de] YYYY',
-  'dddd, MMM DD, YYYY',
-  'YYYY-MM-DD',
-  'DD-MM-YYYY',
-  'dddd, MMMM D, YYYY',
-];
+export const arrFechasHoy = (): string[] => {
+  const fecha = moment();
+  const fechaDiaUnDigito = fecha.format('D').replace(/^0+/, '');
+  const mesEspanol = fecha.format('MMMM');
+  const diaEspanol = fecha.format('dddd');
 
-const parsearFecha = (fecha: string): moment.Moment | null => {
-  for (const formato of formatosDeFechas) {
-    const fechaParseadaES = moment(fecha, formato, 'es', true);
-    if (fechaParseadaES.isValid()) {
-      return fechaParseadaES;
-    }
-
-    const fechaParseadaEN = moment(fecha, formato, 'en', true);
-    if (fechaParseadaEN.isValid()) {
-      return fechaParseadaEN;
-    }
-  }
-  return null;
+  return [
+    fecha.format(`dddd, MMMM ${fechaDiaUnDigito}, YYYY`),
+    fecha.format('dddd, MMM D, YYYY'),
+    fecha.format(`dddd, MMM ${fechaDiaUnDigito}, YYYY`),
+    fecha.format(`dddd MMMM ${fechaDiaUnDigito}[th] YYYY`),
+    fecha.format(`dddd MMMM ${fechaDiaUnDigito}[st] YYYY`),
+    fecha.format(`dddd MMMM ${fechaDiaUnDigito}[nd] YYYY`),
+    fecha.format(`dddd MMMM ${fechaDiaUnDigito}[rd] YYYY`),
+    fecha.format('ddd MM/DD/YYYY'),
+    fecha.format('dddd MMM Dth YYYY'),
+    fecha.format('ddd MM/DD/YY'),
+    fecha.format('dddd, MMM D, YYYY'),
+    fecha.format('DD-MM-YYYY'),
+    fecha.format('DD/MM/YYYY'),
+    fecha.format('YYYY-MM-DD'),
+    fecha.format(`Sorteo: DD de ${mesEspanol} del YYYY.`),
+    fecha.format(`${diaEspanol}, DD-MM-YYYY`),
+    fecha.format('Resultados MM/DD/YYYY'),
+    fecha.format(`${diaEspanol}, D de ${mesEspanol} de YYYY`),
+  ];
 };
 
 export const validarFecha = (
-  fechaXpath: string,
-  fechaABuscar: string,
+  fechaComprobarXpath: string,
+  arrFecha: string[],
 ): string => {
-  const verificar_fecha = parsearFecha(fechaXpath);
-  if (!verificar_fecha) throw new Error('La fecha no es válida');
-  if (verificar_fecha.format('YYYY-MM-DD') !== fechaABuscar)
-    throw new Error('No es la fecha a bsucar');
-
-  return verificar_fecha.format('YYYY-MM-DD');
+  const is_fecha = arrFecha.includes(fechaComprobarXpath);
+  if (!is_fecha) throw new Error('NO ES LA FECHA A BUSCAR');
+  return fechaComprobarXpath;
 };
-
-//
-////TODO agregar todas las fechas
-//export const validarFecha = (
-//  fechaXpath: string,
-//  fecha_a_buscar: string,
-//): string => {
-
-//  //console.log(fecha_a_buscar);
-//  // Intentamos parsear la fecha en español e inglés
-//  moment.locale('es');
-//  const fechaParseadaEs = moment(fechaXpath, formatosDeFecha);
-//  moment.locale('en');
-//  const fechaParseadaEn = moment(fechaXpath, formatosDeFecha);
-//
-//  // Verificamos si alguna de las dos fechas es válida y si es igual a la fecha original
-//  if (fechaParseadaEs.isValid()) {
-//    const newFechaXpath = convertir_date(fechaParseadaEs, 'es'); //todo revisar si no me cambia la fecha al dia siguinte
-//    if (newFechaXpath == fecha_a_buscar) {
-//      return newFechaXpath;
-//    }
-//  }
-//
-//  if (fechaParseadaEn.isValid()) {
-//    console.log(`AQUIIII => ${fechaParseadaEn}`);
-//    const newFechaXpath = convertir_date(fechaParseadaEn, 'en'); //todo revisar si no me cambia la fecha al dia siguinte
-//    if (newFechaXpath == fecha_a_buscar) {
-//      return newFechaXpath;
-//    }
-//  }
-//
-//  console.log(fecha_a_buscar);
-//  throw new Error('La fecha no es válida');
-//};
 
 export const fecha_actual = (): string => {
   const fechaActual = moment().format('YYYY-MM-DD');
