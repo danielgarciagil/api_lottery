@@ -64,8 +64,8 @@ export class PremiosAutomaticoLotenetService {
           error = true;
           break;
         }
-
-        this.logger.error(`${errorCatche?.message} => ${LotenetPremio.name}`);
+        //console.log(LotenetPremio);
+        this.logger.error(`${errorCatche?.message}`);
         message = errorCatche?.message;
         error = true;
         await pausaBySeg(lotenetPremio.tiempo_de_espera_segundos);
