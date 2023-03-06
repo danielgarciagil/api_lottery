@@ -8,7 +8,7 @@ import { LotenetPremiosService } from '../lotenet-premios/lotenet-premios.servic
 import { ResponsePropioGQl } from './../../common/response';
 import { fecha_actual } from '../../common/funciones/validar_fechas';
 import { ResponseLotenetPremioService } from '../response-lotenet-premio/response-lotenet-premio.service';
-import { pausaBySeg } from 'src/common/funciones/bloquearPrograma';
+import { pausaBySeg } from './../../common/funciones/bloquearPrograma';
 
 @Injectable()
 export class PremiosAutomaticoLotenetService {
@@ -47,6 +47,7 @@ export class PremiosAutomaticoLotenetService {
       this.logger.warn(`PUBLICANDO => ${lotenetPremio.name} Intentos# ${i}`);
 
       try {
+        //todo aqui mandar a validar la response si sigo buscando oh no
         const resultado = await this.resultadoService.devolverResultadoByBecha(
           lotenetPremio.sorteo.id,
           new Date(fecha_a_premiar),

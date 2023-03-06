@@ -50,7 +50,7 @@ export class CronService {
   // A las 12:00 AM cargos los nuevos cron y borros los anteriores
   iniciar_tareas() {
     //this.borrar_cron_cargar_nuevos();
-    cron.schedule('0 0 * * *', () => {
+    cron.schedule('0 5 * * *', () => {
       this.borrar_cron_cargar_nuevos();
     });
   }
@@ -75,7 +75,9 @@ export class CronService {
           lotenetPremio.premio_dia[i].id,
           lotenetPremio.premio_dia[i].hora,
         );
-        this.logger.warn(`CRON => ${lotenetPremio.name} : ${cron_expresion}`);
+        this.logger.warn(
+          `CRON LOTENET => ${lotenetPremio.name} : ${cron_expresion}`,
+        );
         const responsePremio = await this.responseLotenetPremio.create({
           id_lotenet_premio: lotenetPremio.id,
         });
@@ -105,7 +107,7 @@ export class CronService {
           sorteo.sorteo_dias[i].hora,
         );
 
-        this.logger.warn(`CRON=> ${sorteo.name} => ${cron_expresion}`);
+        this.logger.warn(`CRON SORTEO => ${sorteo.name} => ${cron_expresion}`);
 
         const responseSorteo = await this.responseSorteoABuscar.create({
           id_sorteo_a_buscar: sorteoABuscar.id,

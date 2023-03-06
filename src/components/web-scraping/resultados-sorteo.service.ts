@@ -100,6 +100,7 @@ export class ResultadosSorteoService {
     let error = true;
     for (let i = 0; i < sorteoABuscar.numeros_intentos; i++) {
       try {
+        //todo aqui agregar el parametro donde ande de ejcutar verifique si la respon se sigue tru o lo mandaron a para
         this.logger.debug(`BUSCANDO => ${sorteoABuscar.name}`);
         const xpath_a_publicar = await this.bucar_xpath(
           sorteoABuscar.xpath,

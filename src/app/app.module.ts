@@ -26,12 +26,13 @@ import {
   DiasModule,
   SorteoABuscarModule,
   ResponseSorteoABuscarModule,
-  PasarDataModule,
+  //PasarDataModule,
   LotenetPremiosModule,
   PlataformaModule,
   ResponseLotenetPremioModule,
   PremiosDiasModule,
   PremiosAutomaticoLotenetModule,
+  TelegramModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -48,9 +49,10 @@ import { AppInit } from './app-init.service';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: false,
-      //todo una vez en producion queitar de aqui y revisar comos eria la forma correcta
       plugins: [ApolloServerPluginLandingPageLocalDefault],
+      //cacheControl: true, // Habilita la caché de consultas
     }),
+    //todo una vez en producion queitar de aqui y revisar comos eria la forma correcta
 
     //Componentes de Auth
     AuthModule,
@@ -75,6 +77,7 @@ import { AppInit } from './app-init.service';
     ResponseSorteoABuscarModule,
     WebScrapingModule,
     //PasarDataModule,
+    //TelegramModule,
     LotenetPremiosModule,
     PlataformaModule,
     ResponseLotenetPremioModule,
