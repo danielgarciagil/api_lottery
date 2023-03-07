@@ -26,7 +26,9 @@ export class SeleniumWebdriver {
       options.addArguments('--disable-background-networking');
       options.addArguments('--disable-geolocation');
       options.addArguments('--disable-client-side-phishing-detection');
-      if (headless) options.headless();
+      if (!headless) {
+        options.headless();
+      }
 
       const capabilities = Capabilities.chrome().set(
         'chromeVersion',
