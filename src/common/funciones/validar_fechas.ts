@@ -15,8 +15,9 @@ export const arrFechasHoy = (): string[] => {
       .format('[Sorteo]: DD [de] MMMM [del] YYYY[.]')
       .toUpperCase(), //LEISA
     fecha.locale('en').format('ddd MM/DD/YY').toUpperCase(), //NEW YORK OFICIAL
-    //!Falta por probar
+    fecha.format('dddd, MMM DD, YYYY').toUpperCase(), //LoteryUsa
 
+    //!Falta por probar esa fecha son de FLORIDA
     fecha.format(`dddd MMMM ${fechaDiaUnDigito}[th] YYYY`).toUpperCase(),
     fecha.format(`dddd MMMM ${fechaDiaUnDigito}[st] YYYY`).toUpperCase(),
     fecha.format(`dddd MMMM ${fechaDiaUnDigito}[nd] YYYY`).toUpperCase(),

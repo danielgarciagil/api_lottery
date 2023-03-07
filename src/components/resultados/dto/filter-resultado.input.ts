@@ -1,5 +1,11 @@
 import { ArgsType, Field, Int } from '@nestjs/graphql';
-import { IsNumber, IsOptional, Min } from 'class-validator';
+import {
+  IsDateString,
+  IsNumber,
+  IsOptional,
+  Matches,
+  Min,
+} from 'class-validator';
 
 @ArgsType()
 export class FilterResultado {
@@ -8,6 +14,18 @@ export class FilterResultado {
   @IsNumber()
   @Min(1)
   id_sorteo: number;
+
+  @Field(() => String, { nullable: true })
+  @IsDateString()
+  @IsOptional()
+  @Matches(/^\d{4}-\d{2}-\d{2}$/) // AAAA:MM:DD  2022-10-19
+  desde: Date;
+
+  @Field(() => String, { nullable: true })
+  @IsDateString()
+  @IsOptional()
+  @Matches(/^\d{4}-\d{2}-\d{2}$/) //  AAAA:MM:DD  2022-10-19
+  hasta: Date;
 
   //TODO
   //@Field(() => Int, { nullable: true })

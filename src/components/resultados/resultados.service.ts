@@ -5,7 +5,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 
 //PROPIO
 import { CreateResultadoInput } from './dto/create-resultado.input';
@@ -13,10 +13,9 @@ import { UpdateResultadoInput } from './dto/update-resultado.input';
 import { Resultado } from './entities/resultado.entity';
 import { PaginationArgs } from './../../common/dto/args';
 import { MESSAGE } from './../../config/messages';
-import { RESPONSE_BY_XPATH, ResponsePropioGQl } from './../../common/response';
+import { ResponsePropioGQl } from './../../common/response';
 import { SorteoService } from '../sorteo/sorteo.service';
 import { FilterResultado } from './dto/filter-resultado.input';
-import { Sorteo } from '../sorteo/entities/sorteo.entity';
 
 @Injectable()
 export class ResultadosService {
@@ -125,12 +124,17 @@ export class ResultadosService {
     filterResultado: FilterResultado,
   ): Promise<Resultado[]> {
     const { limit, offset } = paginationArgs;
-    const { id_sorteo } = filterResultado;
+    const {
+      id_sorteo,
+      desde = new Date('2020-01-01'),
+      hasta = new Date(),
+    } = filterResultado;
     return await this.resultadoRepository.find({
       take: limit,
       skip: offset,
       where: {
         sorteo: { id: id_sorteo },
+        fecha: Between(desde, hasta),
       },
       order: {
         fecha: 'DESC', //todo

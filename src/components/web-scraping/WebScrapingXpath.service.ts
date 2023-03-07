@@ -19,7 +19,7 @@ export class WebScrapingXpathService {
   ): Promise<RESPONSE_BY_XPATH> {
     try {
       this.seleniumWebdriver = new SeleniumWebdriver();
-      await this.seleniumWebdriver.startDriver();
+      await this.seleniumWebdriver.startDriver(false);
       const data_xpath_digitos: number[] = [];
       const data_xpath_fechas: string[] = [];
 

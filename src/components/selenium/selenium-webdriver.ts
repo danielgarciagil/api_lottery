@@ -11,7 +11,7 @@ import { Options as ChromeOptions } from 'selenium-webdriver/chrome';
 export class SeleniumWebdriver {
   private driver: WebDriver;
 
-  async startDriver() {
+  async startDriver(headless: boolean) {
     try {
       const options = new ChromeOptions();
       options.addArguments('--disable-extensions');
@@ -26,7 +26,9 @@ export class SeleniumWebdriver {
       options.addArguments('--disable-background-networking');
       options.addArguments('--disable-geolocation');
       options.addArguments('--disable-client-side-phishing-detection');
-      options.headless();
+      if (!headless) {
+        options.headless();
+      }
 
       const capabilities = Capabilities.chrome().set(
         'chromeVersion',

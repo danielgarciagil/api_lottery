@@ -52,9 +52,11 @@ export class ApiLotenetService {
       `${plataforma.url}/operaciones/premios/`,
     );
     await pausaBySeg(2);
+
     const url_actual = await this.seleniumWebdriver
       .returnDriver()
       .getCurrentUrl();
+    await pausaBySeg(2);
 
     if (!url_actual.endsWith('/operaciones/premios/')) {
       throw Error('NO SE PUDO ACEDER A LA SESION DE PREMIO');
@@ -72,6 +74,7 @@ export class ApiLotenetService {
       LOTENET_XPATH.input_loteria,
     );
     await inputLoteria.sendKeys(lotenetPremio.data_lotenet_name_loteria);
+    await pausaBySeg(2);
 
     const inputSorteo = await this.seleniumWebdriver.buscar_xpath(
       LOTENET_XPATH.inputt_sorteo,
@@ -89,6 +92,7 @@ export class ApiLotenetService {
       LOTENET_XPATH.loteria_select,
     );
     const sorteoApremiar = await sorSelect.getText();
+    await pausaBySeg(2);
 
     if (!sorteoApremiar.endsWith(lotenetPremio.data_lotenet_name_sorteo)) {
       throw Error('NO SE ECONTRO EL SORTEO');
@@ -148,7 +152,7 @@ export class ApiLotenetService {
   ): Promise<ResponsePropioGQl> {
     try {
       this.seleniumWebdriver = new SeleniumWebdriver();
-      await this.seleniumWebdriver.startDriver();
+      await this.seleniumWebdriver.startDriver(true);
 
       await this.iniciar_seccion(lotenetPremio.plataforma);
 
