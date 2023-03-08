@@ -9,6 +9,7 @@ import { ResponsePropioGQl } from './../../common/response';
 import { fecha_actual } from '../../common/funciones/validar_fechas';
 import { ResponseLotenetPremioService } from '../response-lotenet-premio/response-lotenet-premio.service';
 import { pausaBySeg } from './../../common/funciones/bloquearPrograma';
+import { TelegramService } from '../telegram/telegram.service';
 
 @Injectable()
 export class PremiosAutomaticoLotenetService {
@@ -17,6 +18,7 @@ export class PremiosAutomaticoLotenetService {
     private readonly resultadoService: ResultadosService,
     private readonly lotenetPremioService: LotenetPremiosService,
     private readonly responseLotenetPremio: ResponseLotenetPremioService,
+    private readonly telegramService: TelegramService,
   ) {}
 
   async premiarLotenet(id_lotenet_Premio: number): Promise<ResponsePropioGQl> {
@@ -73,9 +75,6 @@ export class PremiosAutomaticoLotenetService {
         ApiLotenet = null;
       }
     }
-    this.logger.debug(
-      `LotenetPremio => ${lotenetPremio.name} STATUS => ${message}`,
-    );
     if (error) {
       await this.responseLotenetPremio.update(responsePremio, {
         completed: true,
@@ -89,10 +88,12 @@ export class PremiosAutomaticoLotenetService {
         message: message,
       });
     }
-
+    const newMessage = `\n\nMESSAGE => ${message}. \n\nLOTENETPREMIO => ${lotenetPremio.name}.`;
+    this.logger.debug(newMessage);
+    this.telegramService.sendNotificaciones({ error, message: newMessage });
     return {
       error,
-      message,
+      message: newMessage,
     };
   }
 }

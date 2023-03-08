@@ -1,8 +1,11 @@
 import * as path from 'path';
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import { Telegraf } from 'telegraf';
-import { config } from 'dotenv';
 import { ConfigService } from '@nestjs/config';
+import { Injectable, Logger } from '@nestjs/common';
+import { Context, Telegraf } from 'telegraf';
+import { Update } from 'telegraf/typings/core/types/typegram';
+import { config } from 'dotenv';
+import { UserTelegramService } from './user_telegram.service';
+import { ResponsePropioGQl } from 'src/common/response';
 
 // Especifica la ruta al archivo .env
 const envPath = path.resolve(
@@ -15,20 +18,59 @@ const envPath = path.resolve(
 config({ path: envPath });
 
 @Injectable()
-export class TelegramService implements OnModuleInit {
+export class TelegramService {
   private readonly configService = new ConfigService();
-
-  async prueba() {
-    console.log('SE INRTANCIO UN BOT');
+  private bot: Telegraf<Context<Update>>;
+  private readonly logger = new Logger('TELEGRAM-SERVICE-INIT');
+  constructor(private readonly userTelegramService: UserTelegramService) {
     const token = this.configService.get('API_NOTIFICACIONES');
-    const bot = new Telegraf(token);
-    bot.start((ctx) => {
-      ctx.reply('Hola');
-    });
-    bot.launch();
+    console.log('SE INSTANCIO UN NUEVO BOT');
+    this.bot = new Telegraf(token);
+    this.bot.launch();
+    this.all_cmds();
   }
 
-  async onModuleInit() {
-    this.prueba();
+  //Este es el comando de Start, que es para suscribir los users
+  async cmd_start() {
+    this.bot.start(async (ctx) => {
+      const id_save = ctx.from.id;
+      await this.userTelegramService.create({ user_id: id_save });
+      ctx.reply(
+        'TE HAS SUSCRISTO AL CANAL DE MENSAJES DE NOTIFICACIONES DE DIZLOTTE',
+      );
+    });
+  }
+
+  //AQUI agrego todos los comandos que configuro
+  async all_cmds() {
+    this.cmd_start();
+  }
+
+  //Esta Funcion me envia un Mensaje al chatId de Telegram
+  async sendMessage(chaiId: number, message: string) {
+    try {
+      await this.bot.telegram.sendMessage(chaiId, message);
+    } catch (error) {
+      this.logger.error(
+        `NO SE ENVIO LA NOTIFICACION ERROR =>${error?.message} CHATID =>${chaiId} MESSAGE => ${message}`,
+      );
+    }
+  }
+
+  //Esta funcion es para enviar notificaciones a todos los usuarios que quieran recibir notificaciones
+  async sendNotificaciones(message: ResponsePropioGQl) {
+    try {
+      const user_id_telegram = await this.userTelegramService.findAll();
+      for (const user of user_id_telegram) {
+        const newMessage = `\nERROR => ${message.error} \n\n${message.message}`;
+        await this.sendMessage(user.user_id, newMessage); //todo eso no va aqui
+      }
+    } catch (error) {
+      this.logger.error(`NO SE PUDO ENVIAR NIGNUN MENSAJE ${error?.message}`);
+    }
+  }
+
+  async init() {
+    console.log('TEST');
   }
 }

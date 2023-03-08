@@ -77,7 +77,7 @@ import { AppInit } from './app-init.service';
     ResponseSorteoABuscarModule,
     WebScrapingModule,
     //PasarDataModule,
-    //TelegramModule,
+    TelegramModule,
     LotenetPremiosModule,
     PlataformaModule,
     ResponseLotenetPremioModule,

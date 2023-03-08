@@ -9,6 +9,7 @@ import { ResponseSorteoABuscarModule } from '../response_sorteo_a_buscar/respons
 import { LotenetPremiosModule } from '../lotenet-premios/lotenet-premios.module';
 import { PremiosAutomaticoLotenetModule } from '../premios-automatico-lotenet/premios-automatico-lotenet.module';
 import { ResponseLotenetPremioModule } from '../response-lotenet-premio/response-lotenet-premio.module';
+import { TelegramModule } from '../telegram/telegram.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ResponseLotenetPremioModule } from '../response-lotenet-premio/response
     ResponseLotenetPremioModule,
     LotenetPremiosModule,
     PremiosAutomaticoLotenetModule,
+    TelegramModule,
   ],
   providers: [CronServiceInit, CronService],
 })

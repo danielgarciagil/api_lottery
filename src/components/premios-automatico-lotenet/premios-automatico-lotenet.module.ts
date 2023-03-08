@@ -8,6 +8,7 @@ import { PremiosAutomaticoLotenetResolver } from './premios-automatico-lotenet.r
 import { ResultadosModule } from '../resultados/resultados.module';
 import { LotenetPremiosModule } from '../lotenet-premios/lotenet-premios.module';
 import { ResponseLotenetPremioModule } from '../response-lotenet-premio/response-lotenet-premio.module';
+import { TelegramModule } from '../telegram/telegram.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ResponseLotenetPremioModule } from '../response-lotenet-premio/response
     ResultadosModule,
     LotenetPremiosModule,
     ResponseLotenetPremioModule,
+    TelegramModule,
   ],
   providers: [
     PremiosAutomaticoLotenetService,

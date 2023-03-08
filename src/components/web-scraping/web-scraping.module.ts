@@ -9,6 +9,7 @@ import { ResultadosModule } from '../resultados/resultados.module';
 import { ResponseSorteoABuscarModule } from '../response_sorteo_a_buscar/response_sorteo_a_buscar.module';
 import { ProcesoDeSorteoABuscarResolver } from './generar-automaticos.resolver';
 import { ResultadosSorteoService } from './resultados-sorteo.service';
+import { TelegramModule } from '../telegram/telegram.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ResultadosSorteoService } from './resultados-sorteo.service';
     SorteoABuscarModule,
     ResultadosModule,
     ResponseSorteoABuscarModule,
+    TelegramModule,
   ],
   providers: [
     WebScrapingXpathService,

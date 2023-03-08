@@ -15,6 +15,7 @@ import {
   pausaBySeg,
   fecha_actual,
 } from './../../common';
+import { TelegramService } from '../telegram/telegram.service';
 
 @Injectable()
 export class ResultadosSorteoService {
@@ -23,6 +24,7 @@ export class ResultadosSorteoService {
     private readonly sorteoABuscarService: SorteoABuscarService,
     private readonly responseSorteoABuscarSerive: ResponseSorteoABuscarService,
     private readonly resultadoService: ResultadosService,
+    private readonly telegramService: TelegramService,
   ) {}
   private readonly logger = new Logger('ResultadosSorteo-SERVICE');
 
@@ -131,7 +133,9 @@ export class ResultadosSorteoService {
       completed: true,
       message: message,
     });
-    this.logger.debug(`SORTEO => ${sorteoABuscar.name} STATUS => ${message}`);
+    const newMessage = `\n\nMESSAGE => ${message} \n\nSORTEO_A_BUSCAR => ${sorteoABuscar.name} \n\nSORTEO => ${sorteoABuscar.sorteo.name}`;
+    this.logger.debug(newMessage);
+    this.telegramService.sendNotificaciones({ error, message: newMessage });
     return {
       error,
       message,
