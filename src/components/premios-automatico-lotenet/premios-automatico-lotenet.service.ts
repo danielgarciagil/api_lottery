@@ -89,7 +89,7 @@ export class PremiosAutomaticoLotenetService {
       });
     }
     const newMessage = `\n\nMESSAGE => ${message}. \n\nLOTENETPREMIO => ${lotenetPremio.name}.`;
-    this.logger.debug(newMessage);
+    this.logger.debug(newMessage.replace(/\n/g, ''));
     this.telegramService.sendNotificaciones({ error, message: newMessage });
     return {
       error,

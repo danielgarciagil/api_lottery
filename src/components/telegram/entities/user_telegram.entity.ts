@@ -10,9 +10,9 @@ export class TelegramUser {
   @Field(() => ID)
   id: number;
 
-  @Field(() => Number)
-  @Column({ type: 'int', unique: true })
-  user_id: number;
+  @Field(() => String)
+  @Column({ type: 'varchar', unique: true })
+  user_id: string;
 
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: true })

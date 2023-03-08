@@ -33,8 +33,8 @@ export class TelegramService {
   //Este es el comando de Start, que es para suscribir los users
   async cmd_start() {
     this.bot.start(async (ctx) => {
-      const id_save = ctx.from.id;
-      await this.userTelegramService.create({ user_id: id_save });
+      const id_save = String(ctx.from.id);
+      this.userTelegramService.create({ user_id: id_save });
       ctx.reply(
         'TE HAS SUSCRISTO AL CANAL DE MENSAJES DE NOTIFICACIONES DE DIZLOTTE',
       );
@@ -47,7 +47,7 @@ export class TelegramService {
   }
 
   //Esta Funcion me envia un Mensaje al chatId de Telegram
-  async sendMessage(chaiId: number, message: string) {
+  async sendMessage(chaiId: string, message: string) {
     try {
       await this.bot.telegram.sendMessage(chaiId, message);
     } catch (error) {

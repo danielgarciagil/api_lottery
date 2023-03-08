@@ -60,9 +60,9 @@ export class SeleniumWebdriver {
     try {
       return await this.driver.wait(
         until.elementLocated(By.xpath(xpath)),
-        30000,
+        10000,
         '',
-        30000,
+        10000,
       );
     } catch (error) {
       throw Error(`NO SE ENCONTRO ESTE XPATH ${xpath}`);

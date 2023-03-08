@@ -134,7 +134,7 @@ export class ResultadosSorteoService {
       message: message,
     });
     const newMessage = `\n\nMESSAGE => ${message} \n\nSORTEO_A_BUSCAR => ${sorteoABuscar.name} \n\nSORTEO => ${sorteoABuscar.sorteo.name}`;
-    this.logger.debug(newMessage);
+    this.logger.debug(newMessage.replace(/\n/g, '')); //todo probar
     this.telegramService.sendNotificaciones({ error, message: newMessage });
     return {
       error,

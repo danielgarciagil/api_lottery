@@ -14,7 +14,7 @@ export class UserTelegramService {
     private readonly telegramUserRepository: Repository<TelegramUser>,
   ) {}
 
-  async findOneIdUser(idUser: number): Promise<TelegramUser> {
+  async findOneIdUser(idUser: string): Promise<TelegramUser> {
     return await this.telegramUserRepository.findOneBy({
       user_id: idUser,
     });

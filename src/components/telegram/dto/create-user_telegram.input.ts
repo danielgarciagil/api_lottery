@@ -3,8 +3,8 @@ import { IsNumber, Min } from 'class-validator';
 
 @InputType()
 export class CreateUserTelegram {
-  @Field(() => Int)
+  @Field(() => String)
   @IsNumber()
   @Min(1)
-  user_id: number;
+  user_id: string;
 }
