@@ -52,7 +52,7 @@ export class CronService {
   // A las 12:00 AM cargos los nuevos cron y borros los anteriores
   iniciar_tareas() {
     //this.borrar_cron_cargar_nuevos();
-    cron.schedule('30 10 * * *', () => {
+    cron.schedule('0 5 * * *', () => {
       this.borrar_cron_cargar_nuevos();
     });
   }

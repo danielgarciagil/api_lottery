@@ -123,8 +123,8 @@ export class ResultadosSorteoService {
           `SORTEO: ${sorteoABuscar.name} ERROR: ${error?.message}`,
         );
         await pausaBySeg(sorteoABuscar.tiempo_de_espera_segundos);
-        error = true;
         message = error?.message || 'HUBO UN ERROR AL BUSCAR LA DATA';
+        error = true;
       }
     }
 
