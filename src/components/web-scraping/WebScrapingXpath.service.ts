@@ -19,7 +19,7 @@ export class WebScrapingXpathService {
   ): Promise<RESPONSE_BY_XPATH> {
     try {
       this.seleniumWebdriver = new SeleniumWebdriver();
-      await this.seleniumWebdriver.startDriver(false);
+      await this.seleniumWebdriver.startDriver(true);
       const data_xpath_digitos: number[] = [];
       const data_xpath_fechas: string[] = [];
 
@@ -108,7 +108,7 @@ export class WebScrapingXpathService {
         await this.seleniumWebdriver.navigateTo(url);
       }
     } catch (error) {
-      throw Error('NO SE PUDO ACEDER A LA URL');
+      throw Error(`NO SE PUDO ACEDER A LA URL ${error?.message}`);
     }
   }
 }

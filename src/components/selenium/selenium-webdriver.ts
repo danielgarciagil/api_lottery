@@ -32,7 +32,7 @@ export class SeleniumWebdriver {
 
       const capabilities = Capabilities.chrome().set(
         'chromeVersion',
-        '110.0.5481.177',
+        '111.0.5563.64',
       );
 
       this.driver = await new Builder()
@@ -69,11 +69,46 @@ export class SeleniumWebdriver {
     }
   }
 
-  async navigateTo(url: string) {
+  async getUrl(url: string) {
     try {
+      // Establecer un tiempo límite de carga de la página
+      await this.driver.manage().setTimeouts({ pageLoad: 5000 });
+      // Cargar una página web
       await this.driver.get(url);
+    } catch (e) {
+      if (e.toString().includes('TimeoutError')) {
+        // Detener la carga de la página web
+        await this.driver.executeScript('window.stop();');
+        // Cargar la página web de nuevo
+        await this.driver.get(url);
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  async navigateTo(url: string) {
+    const pageLoadTimeout = 20000; // 20 segundos
+    const pageLoadPromise = this.getUrl(url);
+    //const pageLoadPromise = this.driver.get(url);
+
+    let timeoutId: NodeJS.Timeout;
+    const timeoutPromise = new Promise((_resolve, reject) => {
+      timeoutId = setTimeout(() => {
+        clearTimeout(timeoutId);
+        reject(
+          new Error(
+            `Tiempo de espera agotado pasaron 20 segundos para la URL: ${url}`,
+          ),
+        );
+      }, pageLoadTimeout);
+    });
+
+    try {
+      await Promise.race([pageLoadPromise, timeoutPromise]);
+      clearTimeout(timeoutId);
     } catch (error) {
-      throw Error(`NO SE PUDO ACCEDER A  ${url}`);
+      throw new Error(`NO SE PUDO ACCEDER A ${url}: ${error.message}`);
     }
   }
 

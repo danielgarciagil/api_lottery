@@ -52,7 +52,7 @@ export class TelegramService {
       await this.bot.telegram.sendMessage(chaiId, message);
     } catch (error) {
       this.logger.error(
-        `NO SE ENVIO LA NOTIFICACION ERROR =>${error?.message} CHATID =>${chaiId} MESSAGE => ${message}`,
+        `NO SE ENVIO LA NOTIFICACION ERROR =>${error?.message} CHATID => ${chaiId}`,
       );
     }
   }

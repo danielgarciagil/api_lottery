@@ -46,7 +46,7 @@ export class PremiosAutomaticoLotenetService {
     let message = '';
     let ApiLotenet: ApiLotenetService;
     for (let i = 0; i < lotenetPremio.numeros_intentos; i++) {
-      this.logger.warn(`PUBLICANDO => ${lotenetPremio.name} Intentos# ${i}`);
+      this.logger.debug(`PUBLICANDO => ${lotenetPremio.name} Intentos# ${i}`);
 
       try {
         //todo aqui mandar a validar la response si sigo buscando oh no
