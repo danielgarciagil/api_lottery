@@ -21,17 +21,17 @@ export class ApiLotenetService {
     const btnUsuario = await this.seleniumWebdriver.buscar_xpath(
       LOTENET_XPATH.usuario,
     );
-    btnUsuario.sendKeys(plataforma.usuario);
+    await btnUsuario.sendKeys(plataforma.usuario);
 
     const btnPassword = await this.seleniumWebdriver.buscar_xpath(
       LOTENET_XPATH.password,
     );
-    btnPassword.sendKeys(plataforma.password);
+    await btnPassword.sendKeys(plataforma.password);
 
     const btnIniSesion = await this.seleniumWebdriver.buscar_xpath(
       LOTENET_XPATH.iniciar_seccion,
     );
-    btnIniSesion.click();
+    await btnIniSesion.click();
 
     await pausaBySeg(2);
     const url_actual = await this.seleniumWebdriver
@@ -125,7 +125,7 @@ export class ApiLotenetService {
       ) {
         throw Error('NO SE MANDO CON LOS DIGITOS CORRECTOS');
       }
-      btnPremio.sendKeys(numero_a_mandar);
+      await btnPremio.sendKeys(numero_a_mandar);
       await pausaBySeg(2);
     }
 
@@ -170,7 +170,7 @@ export class ApiLotenetService {
     } catch (error) {
       throw new Error(error?.message);
     } finally {
-      this.seleniumWebdriver.stopDriver();
+      await this.seleniumWebdriver.stopDriver();
       this.seleniumWebdriver = null;
 
       if (global.gc) {
