@@ -581,7 +581,7 @@ input UpdateLotenetPremioInput {
 
 input CreatePlataformaInput {
   name: String!
-  user: String!
+  usuario: String!
   password: String!
   url: String!
   descripcion: String!
@@ -590,7 +590,7 @@ input CreatePlataformaInput {
 
 input UpdatePlataformaInput {
   name: String
-  user: String
+  usuario: String
   password: String
   url: String
   descripcion: String
