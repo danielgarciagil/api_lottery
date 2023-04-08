@@ -9,7 +9,7 @@ function generarNumeroAleatorio(min: number, max: number): number {
 @Injectable()
 export class InstagramService implements OnModuleInit {
   async ig() {
-    const user = 'danielacruzx2';
+    const user = '';
     const password = 'Negro19975';
     const url_publicacion = 'https://www.instagram.com/p/Cpx8geYjyQt/';
     //const url_publicacion =
@@ -29,10 +29,10 @@ export class InstagramService implements OnModuleInit {
     const mensaje_a_enviar = '@avylana @carlosdiazz08';
 
     const input_mensaje =
-      '/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/section/div/form/div/textarea';
+      '/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div[1]/article/div/div[2]/div/div[2]/section[3]/div/form/div/textarea';
 
     const btn_mandar_ms =
-      '/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/section/div/form/div/div[2]';
+      '/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div[1]/article/div/div[2]/div/div[2]/section[3]/div/form/div/div[2]/div';
 
     await selenium.startDriver(true);
     await selenium.getUrl('https://www.instagram.com/');
@@ -48,7 +48,7 @@ export class InstagramService implements OnModuleInit {
     await pausaBySeg(10);
     await selenium.getUrl(url_publicacion);
     await pausaBySeg(10);
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 500; i++) {
       try {
         const btn = await selenium.buscar_xpath(input_mensaje);
         await pausaBySeg(2);
@@ -68,7 +68,7 @@ export class InstagramService implements OnModuleInit {
         const btn2 = await selenium.buscar_xpath(btn_mandar_ms);
         await btn2.click();
         console.log('Listo');
-        await pausaBySeg(generarNumeroAleatorio(60, 120));
+        await pausaBySeg(generarNumeroAleatorio(30, 100));
       } catch (error) {
         console.log('paso un error');
         await pausaBySeg(10);
