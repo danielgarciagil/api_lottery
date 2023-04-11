@@ -35,10 +35,10 @@ type Juego {
 }
 
 type Loteria {
-  id: ID!
+  id: Int!
   name: String!
   abreviatura: String!
-  img_url: String!
+  img_url: String
   descripcion: String!
   activo: Boolean!
   sorteo: [Sorteo!]!

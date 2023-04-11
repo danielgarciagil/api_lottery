@@ -32,7 +32,7 @@ export class SeleniumWebdriver {
 
       const capabilities = Capabilities.chrome().set(
         'chromeVersion',
-        '111.0.5563.64',
+        '112.0.5615.49',
       );
 
       this.driver = await new Builder()
