@@ -30,13 +30,13 @@ export class SeleniumWebdriver {
         options.headless();
       }
 
-      const capabilities = Capabilities.chrome().set(
-        'chromeVersion',
-        '111.0.5563.64',
-      );
+      //const capabilities = Capabilities.chrome().set(
+      //  'chromeVersion',
+      //  '112.0.5615.49',
+      //);
 
       this.driver = await new Builder()
-        .withCapabilities(capabilities)
+        //.withCapabilities(capabilities)
         .forBrowser(Browser.CHROME)
         .setChromeOptions(options)
         .build();
