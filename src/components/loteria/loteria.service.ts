@@ -50,6 +50,7 @@ export class LoteriaService {
     id: number,
     updateLoteriaInput: UpdateLoteriaInput,
   ): Promise<Loteria> {
+    console.log(updateLoteriaInput);
     const loteria = await this.findOne(id);
     try {
       this.loteriaRepository.merge(loteria, updateLoteriaInput);

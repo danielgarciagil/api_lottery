@@ -33,6 +33,7 @@ import {
   PremiosDiasModule,
   PremiosAutomaticoLotenetModule,
   TelegramModule,
+  InstagramModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -83,6 +84,7 @@ import { AppInit } from './app-init.service';
     ResponseLotenetPremioModule,
     PremiosDiasModule,
     PremiosAutomaticoLotenetModule,
+    InstagramModule,
 
     //AUTOMATICO
     CronModule,

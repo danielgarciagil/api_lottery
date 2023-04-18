@@ -19,6 +19,7 @@ export { PlataformaModule } from './plataforma/plataforma.module';
 export { PremiosDiasModule } from './premios-dias/premios-dias.module';
 export { PremiosAutomaticoLotenetModule } from './premios-automatico-lotenet/premios-automatico-lotenet.module';
 export { TelegramModule } from './telegram/telegram.module';
+export { InstagramModule } from './instagram/instagram.module';
 
 //COMPONNETES CRON
 export { CronModule } from './cron/cron.module';

@@ -11,7 +11,7 @@ export class CreatePlataformaInput {
   @Field(() => String)
   @IsString()
   @MinLength(3)
-  user: string;
+  usuario: string;
 
   @Field(() => String)
   @IsString()
