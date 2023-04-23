@@ -14,11 +14,11 @@ import { User } from '../users/entities/user.entity';
 import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 import { FilterResultado } from './dto/filter-resultado.input';
 
-@UseGuards(JwtAuthGuard)
 @Resolver(() => Resultado)
 export class ResultadosResolver {
   constructor(private readonly resultadosService: ResultadosService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Resultado, {
     name: 'createResultados',
     description: 'Para crear un Resultado',
@@ -35,11 +35,14 @@ export class ResultadosResolver {
     description: 'Ver todos los resultados',
   })
   async findAll(
-    @CurrentUser([VALID_PERMISO_ACCION.RESULTADO_VIEW]) user: User,
+    //@CurrentUser([]) user: User,
     @Args() paginationArgs: PaginationArgs,
     @Args() filterResultado: FilterResultado,
   ): Promise<Resultado[]> {
-    return this.resultadosService.findAll(paginationArgs, filterResultado);
+    return await this.resultadosService.findAll(
+      paginationArgs,
+      filterResultado,
+    );
   }
 
   @Query(() => Resultado, {
@@ -47,12 +50,13 @@ export class ResultadosResolver {
     description: 'Ver un resultado especifico',
   })
   async findOne(
-    @CurrentUser([VALID_PERMISO_ACCION.RESULTADO_VIEW]) user: User,
+    // @CurrentUser([VALID_PERMISO_ACCION.RESULTADO_VIEW]) user: User,
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
   ): Promise<Resultado> {
     return this.resultadosService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Resultado, {
     name: 'updateResultados',
     description: 'Actualizar un Resultado',
@@ -67,6 +71,7 @@ export class ResultadosResolver {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => ResponsePropioGQl, {
     name: 'removeResultados',
     description: 'Remover un resultados',

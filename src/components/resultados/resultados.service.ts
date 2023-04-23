@@ -126,7 +126,7 @@ export class ResultadosService {
     const { limit, offset } = paginationArgs;
     const {
       id_sorteo,
-      desde = new Date('2020-01-01'),
+      desde = new Date(),
       hasta = new Date(),
     } = filterResultado;
     return await this.resultadoRepository.find({
@@ -137,10 +137,29 @@ export class ResultadosService {
         fecha: Between(desde, hasta),
       },
       order: {
-        fecha: 'DESC', //todo
+        fecha: 'desc',
       },
     });
   }
+
+  //async findAll(
+  //  paginationArgs: PaginationArgs,
+  //  filterResultado: FilterResultado,
+  //): Promise<Resultado[]> {
+  //  const { limit = 10, offset } = paginationArgs;
+  //  const { id_sorteo, desde, hasta = new Date() } = filterResultado;
+  //
+  //  const query = this.resultadoRepository
+  //    .createQueryBuilder('resultado')
+  //    .leftJoinAndSelect('resultado.sorteo', 'sorteo')
+  //    .where('sorteo.id = :id_sorteo', { id_sorteo })
+  //    .andWhere('resultado.fecha BETWEEN :desde AND :hasta', { desde, hasta })
+  //    .orderBy('resultado.fecha', 'DESC')
+  //    .skip(offset)
+  //    .take(limit);
+  //
+  //  return await query.getMany();
+  //}
 
   async findOne(id: number): Promise<Resultado> {
     const resultados = await this.resultadoRepository.findOneBy({ id });
