@@ -59,7 +59,7 @@ export class LoteriaResolver {
     @CurrentUser([VALID_PERMISO_ACCION.LOTERIA_UPDATE]) user: User,
     @Args('updateLoteriaInput') updateLoteriaInput: UpdateLoteriaInput,
   ): Promise<Loteria> {
-    return this.loteriaService.update(
+    return await this.loteriaService.update(
       updateLoteriaInput.id,
       updateLoteriaInput,
     );

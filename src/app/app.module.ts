@@ -3,7 +3,10 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
-import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import {
+  //ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault,
+} from 'apollo-server-core';
 
 // Modulos Propios
 import { AppController } from './app.controller';
@@ -19,9 +22,9 @@ import {
   JuegoModule,
   SorteoModule,
   ResultadosModule,
-  CronModule,
+  //CronModule,
   XpathModule,
-  WebScrapingModule,
+  //WebScrapingModule,
   SorteoDiasModule,
   DiasModule,
   SorteoABuscarModule,
@@ -31,8 +34,8 @@ import {
   PlataformaModule,
   ResponseLotenetPremioModule,
   PremiosDiasModule,
-  PremiosAutomaticoLotenetModule,
-  TelegramModule,
+  //PremiosAutomaticoLotenetModule,
+  //TelegramModule,
   InstagramModule,
 } from './../components';
 import { AppInit } from './app-init.service';
@@ -46,12 +49,30 @@ import { AppInit } from './app-init.service';
       validationSchema: validationENV(),
     }),
 
+    //GraphQLModule.forRoot<ApolloDriverConfig>({
+    //  driver: ApolloDriver,
+    //  autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    //  playground: false,
+    //  plugins: [ApolloServerPluginLandingPageLocalDefault],
+    //  //cacheControl: true, // Habilita la caché de consultas
+    //}),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault],
-      //cacheControl: true, // Habilita la caché de consultas
+      playground: false, // Deshabilita la consola de GraphQL Playground en producción
+      plugins: [ApolloServerPluginLandingPageProductionDefault], // Utiliza el plugin de landing page de Apollo para producción
+      //cacheControl: {
+      //  defaultMaxAge: 600, // Establece el tiempo de caché predeterminado en 10 minutos
+      //},
+      context: ({ req }) => ({ req }), // Configura el contexto con la solicitud HTTP
+      debug: false, // Deshabilita el modo de depuración en producción
+      introspection: false, // Deshabilita la introspección en producción
+      //tracing: false, // Deshabilita el seguimiento en producción
+      cors: {
+        origin: '*', // Configura el origen de la solicitud permitido en producción
+        credentials: true, // Habilita el intercambio de cookies en producción
+      },
+      // Configurar la autenticación y autorización según sea necesario para la aplicación en producción
     }),
     //todo una vez en producion queitar de aqui y revisar comos eria la forma correcta
 
@@ -76,18 +97,18 @@ import { AppInit } from './app-init.service';
     SorteoDiasModule,
     SorteoABuscarModule,
     ResponseSorteoABuscarModule,
-    WebScrapingModule,
+    //!WebScrapingModule,
     //PasarDataModule,
-    TelegramModule,
+    //!TelegramModule,
     LotenetPremiosModule,
     PlataformaModule,
     ResponseLotenetPremioModule,
     PremiosDiasModule,
-    PremiosAutomaticoLotenetModule,
-    InstagramModule,
+    //!PremiosAutomaticoLotenetModule,
+    //!InstagramModule,
 
     //AUTOMATICO
-    CronModule,
+    //!CronModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppInit],

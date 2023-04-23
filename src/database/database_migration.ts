@@ -8,7 +8,8 @@ const envPath = path.resolve(
   __dirname,
   '..',
   '..',
-  `.env.${process.env.NODE_ENV || 'DEV'}`,
+  '.env',
+  //`.env.${process.env.NODE_ENV || 'DEV'}`,
 );
 
 config({ path: envPath });

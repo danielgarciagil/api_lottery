@@ -7,21 +7,25 @@ export const arrFechasHoy = (): string[] => {
   return [
     fecha.format('YYYY-MM-DD').toUpperCase(), // PRIMERA
     fecha.format('DD-MM-YYYY').toUpperCase(), // LOTERIAS DOMINICANAS / REAL
+    fecha.format('DD - MM - YYYY').toUpperCase(), // REAL
     fecha.locale('es').format('dddd, DD-MM-YYYY').toUpperCase(), // LOTEDOM
     fecha.locale('en').format('dddd, MMMM D, YYYY').toUpperCase(), //FLORIDA OFICIAL
     fecha.format('DD/MM/YYYY'), //KING OFFICIAL //LOTEKA
     fecha
       .locale('es')
       .format('[Sorteo]: DD [de] MMMM [del] YYYY[.]')
-      .toUpperCase(), //LEISA
+      .toUpperCase(), //LEISA VIEJA
     fecha.locale('en').format('ddd MM/DD/YY').toUpperCase(), //NEW YORK OFICIAL
     fecha.format('dddd, MMM DD, YYYY').toUpperCase(), //LoteryUsa
 
-    //!Falta por probar esa fecha son de FLORIDA
+    //TODO !Falta por probar esa fecha son de FLORIDA
     fecha.format(`dddd MMMM ${fechaDiaUnDigito}[th] YYYY`).toUpperCase(),
     fecha.format(`dddd MMMM ${fechaDiaUnDigito}[st] YYYY`).toUpperCase(),
     fecha.format(`dddd MMMM ${fechaDiaUnDigito}[nd] YYYY`).toUpperCase(),
     fecha.format(`dddd MMMM ${fechaDiaUnDigito}[rd] YYYY`).toUpperCase(),
+    '8:50 P. M. ' +
+      fecha.locale('es').format('ddd,').toUpperCase().replace('.', '') +
+      fecha.locale('es').format(' D MMM').slice(0, -1).toUpperCase(), //LEIDSA
   ];
 };
 export const validarFechaQueSeaDeHoy = (
