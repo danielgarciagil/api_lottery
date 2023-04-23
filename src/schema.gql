@@ -177,13 +177,6 @@ type ResponsePropioGQl {
   error: Boolean!
 }
 
-type RESPONSE_BY_XPATH {
-  data_by_xpath_digitos: [Int!]
-  data_by_xpath_fecha: [String!]
-  message: String
-  error: Boolean
-}
-
 type Query {
   revaliteToken: AuthResponse!
 
@@ -359,12 +352,6 @@ type Mutation {
   """Eliminar el script de sorteo a buscar"""
   removeSorteoABuscar(id: Int!): ResponsePropioGQl!
 
-  """Para generar los resultados de un Sorteo en forma Autoamtica"""
-  generarResultadoAutomatico(buscarBySorteoaBuscarInput: BuscarBySorteoaBuscarInput!): ResponsePropioGQl!
-
-  """Para verificar que el Xpath esta bien"""
-  validarXpathIndividual(buscarByXpathWebScrapingInput: BuscarByXpathWebScrapingInput!): RESPONSE_BY_XPATH!
-
   """Para crear un Premio Automatico en Lotenet"""
   createLotenetPremio(createLotenetPremioInput: CreateLotenetPremioInput!): LotenetPremio!
 
@@ -391,9 +378,6 @@ type Mutation {
 
   """Eliminar el dia de un Premio"""
   removePremioDias(id: Int!): ResponsePropioGQl!
-
-  """Para premiar Automaticamentnte en Lotenet"""
-  generarPremioAutomaticoLotenet(buscarByLotenetPremio: BuscarByLotenerPremioInput!): ResponsePropioGQl!
 }
 
 input SignupInput {
@@ -544,14 +528,6 @@ input UpdateSorteoABuscarInput {
   id: Int!
 }
 
-input BuscarBySorteoaBuscarInput {
-  id_sorteo_a_buscar: Int!
-}
-
-input BuscarByXpathWebScrapingInput {
-  id_xpath_a_buscar: Int!
-}
-
 input CreateLotenetPremioInput {
   name: String!
   activo: Boolean
@@ -609,8 +585,4 @@ input UpdatePremiosDiaInput {
   id_lotenet_premio: Int
   id_dia: Int
   id: Int!
-}
-
-input BuscarByLotenerPremioInput {
-  id_lotenet_premio: Int!
 }
