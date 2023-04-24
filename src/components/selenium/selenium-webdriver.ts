@@ -15,6 +15,7 @@ export class SeleniumWebdriver {
     try {
       const options = new ChromeOptions();
       options.addArguments('--disable-extensions');
+      options.addArguments('--disable-application-cache');
       options.addArguments('--disable-gpu');
       options.addArguments('--no-sandbox');
       options.addArguments('--disable-dev-shm-usage');
@@ -40,6 +41,10 @@ export class SeleniumWebdriver {
         .forBrowser(Browser.CHROME)
         .setChromeOptions(options)
         .build();
+      await this.driver.manage().deleteAllCookies();
+      await this.driver.executeScript('window.sessionStorage.clear();');
+      await this.driver.executeScript('window.localStorage.clear();');
+      await this.driver.executeScript('window.applicationCache.clear();');
     } catch (error) {
       throw new Error(`EL NAVEGADOR DIO ERROR AL ABRIR ${error?.message}`);
     }
