@@ -35,7 +35,7 @@ export const arrFechasHoy = (): string[] => {
     'DRAW 3:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
     'DRAW 2:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
     'DRAW 1:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
-    'DRAW 12:00AM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 12:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
     'DRAW 11:00AM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
     'DRAW 10:00AM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
     'DRAW 9:00AM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
