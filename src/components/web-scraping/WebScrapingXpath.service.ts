@@ -7,6 +7,7 @@ import {
   validarFechaQueSeaDeHoy,
   quitar_palabras_de_digitos,
   validar_que_es_un_numero,
+  pausaBySeg,
 } from './../../common';
 export class WebScrapingXpathService {
   private seleniumWebdriver: SeleniumWebdriver;
@@ -35,6 +36,7 @@ export class WebScrapingXpathService {
           index,
           xpath.xpath_fecha_by_digitos,
           arrFechasHoy,
+          xpath.verify_string_date,
         );
         data_xpath_fechas.push(fecha_xpath);
       }
@@ -65,6 +67,7 @@ export class WebScrapingXpathService {
     index_actual: number,
     arr_xpath_fechas: string[][],
     arrFechasHoy: string[],
+    verify_string_date: string,
   ): Promise<string> {
     for (const xpath_Actual_fecha of arr_xpath_fechas[index_actual]) {
       try {
@@ -72,7 +75,15 @@ export class WebScrapingXpathService {
           xpath_Actual_fecha,
         );
         const value_fecha = await xpath_fecha.getText();
-        return validarFechaQueSeaDeHoy(value_fecha, arrFechasHoy);
+        const fecha = validarFechaQueSeaDeHoy(value_fecha, arrFechasHoy);
+
+        if (verify_string_date !== null) {
+          if (!fecha.includes(verify_string_date)) {
+            throw new Error('NO CUMPLE CON EL verify_string_date DEL XPATH');
+          }
+        }
+
+        return fecha;
       } catch (error) {
         throw new Error(
           `ESTE XPATH DE FECHA NO PUEDE SER ENCONTRADO => ${error?.message}`,
@@ -108,6 +119,7 @@ export class WebScrapingXpathService {
     try {
       for (const url of arr_urls_digitos[index_actual]) {
         await this.seleniumWebdriver.navigateTo(url);
+        await pausaBySeg(10); //Todo agrege un tiempo extra
       }
     } catch (error) {
       throw Error(`NO SE PUDO ACEDER A LA URL ${error?.message}`);

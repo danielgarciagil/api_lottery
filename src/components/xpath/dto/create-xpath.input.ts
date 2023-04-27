@@ -23,6 +23,11 @@ export class CreateXpathInput {
   @MinLength(3)
   descripcion: string;
 
+  @Field(() => String, { nullable: true })
+  @IsString()
+  @IsOptional()
+  verify_string_date: string;
+
   @Field(() => Boolean, { nullable: true })
   @IsOptional()
   @IsBoolean()
