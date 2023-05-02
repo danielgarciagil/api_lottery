@@ -26,6 +26,9 @@ export const arrFechasHoy = (): string[] => {
     '8:50 P. M. ' +
       fecha.locale('es').format('ddd,').toUpperCase().replace('.', '') +
       fecha.locale('es').format(' D MMM').slice(0, -1).toUpperCase(), //LEIDSA
+    '8:50 P. M. ' +
+      fecha.locale('es').format('ddd,').toUpperCase().replace('.', '') +
+      fecha.locale('es').format(' 0D MMM').slice(0, -1).toUpperCase(),
     'DRAW 9:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
     'DRAW 8:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
     'DRAW 7:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
@@ -45,8 +48,8 @@ export const validarFechaQueSeaDeHoy = (
   fechaComprobarXpath: string,
   arrFecha: string[],
 ): string => {
-  //console.log(`|${fechaComprobarXpath.trim().toUpperCase()}|`);
-  //console.log(arrFecha);
+  console.log(`|${fechaComprobarXpath.trim().toUpperCase()}|`);
+  console.log(arrFecha);
   const is_fecha = arrFecha.includes(fechaComprobarXpath.trim().toUpperCase());
   if (!is_fecha) throw new Error('NO ES LA FECHA A BUSCAR');
   return fechaComprobarXpath;
