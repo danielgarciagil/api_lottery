@@ -48,8 +48,8 @@ export const validarFechaQueSeaDeHoy = (
   fechaComprobarXpath: string,
   arrFecha: string[],
 ): string => {
-  console.log(`|${fechaComprobarXpath.trim().toUpperCase()}|`);
-  console.log(arrFecha);
+  //console.log(`|${fechaComprobarXpath.trim().toUpperCase()}|`);
+  //console.log(arrFecha);
   const is_fecha = arrFecha.includes(fechaComprobarXpath.trim().toUpperCase());
   if (!is_fecha) throw new Error('NO ES LA FECHA A BUSCAR');
   return fechaComprobarXpath;
