@@ -15,7 +15,11 @@ import { PaginationArgs } from './../../common/dto/args';
 import { MESSAGE } from './../../config/messages';
 import { ResponsePropioGQl } from './../../common/response';
 import { SorteoService } from '../sorteo/sorteo.service';
-import { FilterResultado } from './dto/filter-resultado.input';
+import {
+  FilterResultado,
+  FilterResultadoRestApi,
+} from './dto/filter-resultado.input';
+import { agregar_digitos } from 'src/common/funciones/agregarDigitos';
 
 @Injectable()
 export class ResultadosService {
@@ -81,6 +85,26 @@ export class ResultadosService {
     if (sorteo) {
       throw new Error(MESSAGE.YA_ESTA_PUBLICADO_ESTE_RESULTADO_PARA_ESTA_FECHA);
     }
+  }
+
+  async devolverResultadoLotenet(
+    params: FilterResultadoRestApi,
+  ): Promise<string[]> {
+    const resultado = await this.resultadoRepository.findOne({
+      where: {
+        sorteo: { id: params.id_sorteo },
+        fecha: params.fecha,
+      },
+    });
+    //console.log(resultado);
+    if (!resultado) {
+      return []; //TODo
+    }
+    const newResultadoString = resultado.numeros_ganadores.map((numero) =>
+      agregar_digitos(params.longitud, numero),
+    );
+
+    return newResultadoString; //TODo
   }
 
   async devolverResultadoByBecha(

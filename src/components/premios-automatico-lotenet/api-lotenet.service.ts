@@ -9,6 +9,7 @@ import { convertir_formato_date } from '../../common/funciones/validar_fechas';
 import { ResponsePropioGQl } from './../../common/response';
 import { SeleniumWebdriver } from '../selenium/selenium-webdriver';
 import { pausaBySeg } from 'src/common/funciones/bloquearPrograma';
+import { agregar_digitos } from 'src/common/funciones/agregarDigitos';
 
 export class ApiLotenetService {
   private seleniumWebdriver: SeleniumWebdriver;
@@ -116,7 +117,7 @@ export class ApiLotenetService {
     for (let i = 1; i <= lotenetPremio.lotenet_numero_posiciones_premio; i++) {
       const xpath = `${LOTENET_XPATH.input_premiar}/tr[${i}]/td[2]/div/input`;
       const btnPremio = await this.seleniumWebdriver.buscar_xpath(xpath);
-      const numero_a_mandar = this.agregar_digitos(
+      const numero_a_mandar = agregar_digitos(
         lotenetPremio.lotenet_numero_digitos_premio,
         resultado.numeros_ganadores[i - 1],
       );
@@ -177,17 +178,5 @@ export class ApiLotenetService {
         global.gc();
       }
     }
-  }
-
-  agregar_digitos(numero_digitos: number, numero_premio: number): string {
-    if (numero_digitos === numero_premio.toString().length) {
-      return numero_premio.toString();
-    }
-    let newDigito = String(numero_premio);
-    const ceros_faltantes = numero_digitos - numero_premio.toString().length;
-    for (let i = 0; i < ceros_faltantes; i++) {
-      newDigito = '0' + newDigito;
-    }
-    return newDigito;
   }
 }
