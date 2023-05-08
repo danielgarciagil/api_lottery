@@ -96,15 +96,14 @@ export class ResultadosService {
         fecha: params.fecha,
       },
     });
-    //console.log(resultado);
-    if (!resultado) {
-      return []; //TODo
-    }
+
+    if (!resultado) throw new NotFoundException();
+
     const newResultadoString = resultado.numeros_ganadores.map((numero) =>
       agregar_digitos(params.longitud, numero),
     );
 
-    return newResultadoString; //TODo
+    return newResultadoString;
   }
 
   async devolverResultadoByBecha(
