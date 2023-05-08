@@ -34,83 +34,74 @@ import {
   ResponseLotenetPremioModule,
   PremiosDiasModule,
   PremiosAutomaticoLotenetModule,
-  //TelegramModule,
-  InstagramModule,
+  TelegramModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
+const isProduction = process.env.STATE === 'PROD';
+
+const apolloPlugin = isProduction
+  ? ApolloServerPluginLandingPageProductionDefault
+  : ApolloServerPluginLandingPageLocalDefault;
+
+const baseImports = [
+  ConfigModule.forRoot({
+    envFilePath: [`.env.${process.env.STATE || 'DEV'}`],
+    load: [config],
+    isGlobal: true,
+    validationSchema: validationENV(),
+  }),
+
+  GraphQLModule.forRoot<ApolloDriverConfig>({
+    driver: ApolloDriver,
+    autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    playground: false, // Deshabilita la consola de GraphQL Playground en producción
+    plugins: [apolloPlugin], // Utiliza el plugin de landing page de Apollo para producción
+    context: ({ req }) => ({ req }), // Configura el contexto con la solicitud HTTP
+    debug: isProduction ? false : true, // Deshabilita el modo de depuración en producción
+    introspection: isProduction ? false : true, // Deshabilita la introspección en producción
+    cors: {
+      origin: '*', // Configura el origen de la solicitud permitido en producción
+      credentials: true, // Habilita el intercambio de cookies en producción
+    },
+    // Configurar la autenticación y autorización según sea necesario para la aplicación en producción
+  }),
+
+  //Componentes de Auth
+  AuthModule,
+
+  //Base de Datos
+  DatabaseModule,
+
+  //Compoenntes de User
+  UsersModule,
+  RoleModule,
+
+  //Componentes Propio
+  CommonModule,
+  LoteriaModule,
+  JuegoModule,
+  ResultadosModule,
+  XpathModule,
+  DiasModule,
+  SorteoModule,
+  SorteoDiasModule,
+  SorteoABuscarModule,
+  ResponseSorteoABuscarModule,
+  LotenetPremiosModule,
+  PlataformaModule,
+  ResponseLotenetPremioModule,
+  PremiosDiasModule,
+];
+
+//TODO Solo si estoy en produccion agrego estos modulos
+isProduction ? null : baseImports.push(CronModule);
+isProduction ? null : baseImports.push(WebScrapingModule);
+isProduction ? null : baseImports.push(PremiosAutomaticoLotenetModule);
+isProduction ? null : baseImports.push(TelegramModule);
+
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      envFilePath: [`.env.${process.env.NODE_ENV || 'DEV'}`],
-      load: [config],
-      isGlobal: true,
-      validationSchema: validationENV(),
-    }),
-
-    //TODO Desarrollo
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault],
-      //cacheControl: true, // Habilita la caché de consultas
-    }),
-
-    //TODO Produccion
-    //GraphQLModule.forRoot<ApolloDriverConfig>({
-    //  driver: ApolloDriver,
-    //  autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-    //  playground: false, // Deshabilita la consola de GraphQL Playground en producción
-    //  plugins: [ApolloServerPluginLandingPageProductionDefault], // Utiliza el plugin de landing page de Apollo para producción
-    //  //cacheControl: {
-    //  //  defaultMaxAge: 600, // Establece el tiempo de caché predeterminado en 10 minutos
-    //  //},
-    //  context: ({ req }) => ({ req }), // Configura el contexto con la solicitud HTTP
-    //  debug: false, // Deshabilita el modo de depuración en producción
-    //  introspection: false, // Deshabilita la introspección en producción
-    //  //tracing: false, // Deshabilita el seguimiento en producción
-    //  cors: {
-    //    origin: '*', // Configura el origen de la solicitud permitido en producción
-    //    credentials: true, // Habilita el intercambio de cookies en producción
-    //  },
-    //  // Configurar la autenticación y autorización según sea necesario para la aplicación en producción
-    //}),
-
-    //Componentes de Auth
-    AuthModule,
-
-    //Base de Datos
-    DatabaseModule,
-
-    //Compoenntes de User
-    UsersModule,
-    RoleModule,
-
-    //Componentes Propio
-    CommonModule,
-    LoteriaModule,
-    JuegoModule,
-    ResultadosModule,
-    XpathModule,
-    DiasModule,
-    SorteoModule,
-    SorteoDiasModule,
-    SorteoABuscarModule,
-    ResponseSorteoABuscarModule,
-    WebScrapingModule,
-
-    //!TelegramModule,
-    LotenetPremiosModule,
-    PlataformaModule,
-    ResponseLotenetPremioModule,
-    PremiosDiasModule,
-    PremiosAutomaticoLotenetModule,
-    InstagramModule,
-
-    //AUTOMATICO
-    CronModule,
-  ],
+  imports: baseImports,
   controllers: [AppController],
   providers: [AppService, AppInit],
 })

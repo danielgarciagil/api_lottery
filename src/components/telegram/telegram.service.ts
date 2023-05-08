@@ -24,7 +24,6 @@ export class TelegramService {
   private readonly logger = new Logger('TELEGRAM-SERVICE-INIT');
   constructor(private readonly userTelegramService: UserTelegramService) {
     const token = this.configService.get('API_NOTIFICACIONES');
-    console.log('SE INSTANCIO UN NUEVO BOT');
     this.bot = new Telegraf(token);
     this.bot.launch();
     this.all_cmds();
@@ -71,6 +70,6 @@ export class TelegramService {
   }
 
   async init() {
-    console.log('TEST');
+    this.logger.debug('Init Telegram Service');
   }
 }
