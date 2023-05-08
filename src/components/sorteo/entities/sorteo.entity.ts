@@ -17,6 +17,7 @@ import { SorteoABuscar } from './../../sorteo_a_buscar/entities/sorteo_a_buscar.
 import { SorteoDias } from './../../sorteo_dias/entities/sorteo_dia.entity';
 import { VALID_ENTITY } from './../../../config/valid-roles';
 import { LotenetPremio } from './../../../components/lotenet-premios/entities/lotenet-premio.entity';
+import { LotenetApi } from './../../../components/lotenet_api/entities/lotenet_api.entity';
 
 @Entity({ name: VALID_ENTITY.SORTEO })
 @ObjectType()
@@ -77,4 +78,10 @@ export class Sorteo {
     lazy: true,
   })
   lotenet_premio: LotenetPremio[];
+
+  @Field(() => LotenetApi)
+  @OneToOne(() => LotenetApi, (lotenetApi) => lotenetApi.sorteo, {
+    lazy: true,
+  })
+  lotenet_api: LotenetApi;
 }

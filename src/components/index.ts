@@ -20,6 +20,7 @@ export { PremiosDiasModule } from './premios-dias/premios-dias.module';
 export { PremiosAutomaticoLotenetModule } from './premios-automatico-lotenet/premios-automatico-lotenet.module';
 export { TelegramModule } from './telegram/telegram.module';
 export { InstagramModule } from './instagram/instagram.module';
+export { LotenetApiModule } from './lotenet_api/lotenet_api.module';
 
 //COMPONNETES CRON
 export { CronModule } from './cron/cron.module';

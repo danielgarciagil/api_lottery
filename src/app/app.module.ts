@@ -35,6 +35,7 @@ import {
   PremiosDiasModule,
   PremiosAutomaticoLotenetModule,
   TelegramModule,
+  LotenetApiModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -93,6 +94,7 @@ const baseImports = [
   PlataformaModule,
   ResponseLotenetPremioModule,
   PremiosDiasModule,
+  LotenetApiModule,
 ];
 
 //TODO Solo si estoy en produccion agrego estos modulos

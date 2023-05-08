@@ -136,6 +136,13 @@ type SorteoDias {
   dias: Dias!
 }
 
+type LotenetApi {
+  id: ID!
+  name: String!
+  longitud: Int!
+  sorteo: Sorteo!
+}
+
 type Sorteo {
   id: ID!
   name: String!
@@ -148,6 +155,7 @@ type Sorteo {
   activo: Boolean!
   sorteo_a_buscar: SorteoABuscar!
   sorteo_dias: [SorteoDias!]!
+  lotenet_api: LotenetApi!
 }
 
 type Resultado {
@@ -279,6 +287,12 @@ type Query {
 
   """Ver un dia especifico de premio"""
   findPremiosDia(id: Int!): PremiosDia!
+
+  """Para ver todos los LotenetApi"""
+  allLotenetApi(offset: Int = 0, limit: Int = 10): [LotenetApi!]!
+
+  """Para buscar un Lotenert Api especifico"""
+  findLotenetApi(id: Int!): LotenetApi!
 }
 
 type Mutation {
@@ -386,6 +400,13 @@ type Mutation {
 
   """Eliminar el dia de un Premio"""
   removePremioDias(id: Int!): ResponsePropioGQl!
+
+  """Para crear la conexcion con el api de Lotenet"""
+  createLotenetApi(createLotenetApiInput: CreateLotenetApiInput!): LotenetApi!
+
+  """Para actualizar un lotenetApi"""
+  updateLotenetApi(updateLotenetApiInput: UpdateLotenetApiInput!): LotenetApi!
+  removeLotenetApi(id: Int!): LotenetApi!
 
   """Para generar los resultados de un Sorteo en forma Autoamtica"""
   generarResultadoAutomatico(buscarBySorteoaBuscarInput: BuscarBySorteoaBuscarInput!): ResponsePropioGQl!
@@ -603,6 +624,19 @@ input UpdatePremiosDiaInput {
   hora: String
   id_lotenet_premio: Int
   id_dia: Int
+  id: Int!
+}
+
+input CreateLotenetApiInput {
+  name: String!
+  longitud: Int!
+  id_sorteo: Int!
+}
+
+input UpdateLotenetApiInput {
+  name: String
+  longitud: Int
+  id_sorteo: Int
   id: Int!
 }
 
