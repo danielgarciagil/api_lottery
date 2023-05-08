@@ -2,6 +2,7 @@ import { ArgsType, Field, Int } from '@nestjs/graphql';
 import {
   IsDateString,
   IsNumber,
+  IsNumberString,
   IsOptional,
   Matches,
   Min,
@@ -33,4 +34,16 @@ export class FilterResultado {
   //@IsNumber()
   //@Min(1)
   //id_lotery: number;
+}
+
+export class FilterResultadoRestApi {
+  @IsNumberString()
+  id_sorteo: number;
+
+  @IsNumberString()
+  longitud: number;
+
+  @IsDateString()
+  @Matches(/^\d{4}-\d{2}-\d{2}$/) //  AAAA:MM:DD  2022-10-19
+  fecha: Date;
 }

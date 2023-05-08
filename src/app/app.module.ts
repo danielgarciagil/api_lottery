@@ -4,7 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
 import {
-  //ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageLocalDefault,
   ApolloServerPluginLandingPageProductionDefault,
 } from 'apollo-server-core';
 
@@ -22,19 +22,18 @@ import {
   JuegoModule,
   SorteoModule,
   ResultadosModule,
-  //CronModule,
+  CronModule,
   XpathModule,
-  //WebScrapingModule,
+  WebScrapingModule,
   SorteoDiasModule,
   DiasModule,
   SorteoABuscarModule,
   ResponseSorteoABuscarModule,
-  //PasarDataModule,
   LotenetPremiosModule,
   PlataformaModule,
   ResponseLotenetPremioModule,
   PremiosDiasModule,
-  //PremiosAutomaticoLotenetModule,
+  PremiosAutomaticoLotenetModule,
   //TelegramModule,
   InstagramModule,
 } from './../components';
@@ -49,32 +48,34 @@ import { AppInit } from './app-init.service';
       validationSchema: validationENV(),
     }),
 
-    //GraphQLModule.forRoot<ApolloDriverConfig>({
-    //  driver: ApolloDriver,
-    //  autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-    //  playground: false,
-    //  plugins: [ApolloServerPluginLandingPageLocalDefault],
-    //  //cacheControl: true, // Habilita la caché de consultas
-    //}),
+    //TODO Desarrollo
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      playground: false, // Deshabilita la consola de GraphQL Playground en producción
-      plugins: [ApolloServerPluginLandingPageProductionDefault], // Utiliza el plugin de landing page de Apollo para producción
-      //cacheControl: {
-      //  defaultMaxAge: 600, // Establece el tiempo de caché predeterminado en 10 minutos
-      //},
-      context: ({ req }) => ({ req }), // Configura el contexto con la solicitud HTTP
-      debug: false, // Deshabilita el modo de depuración en producción
-      introspection: false, // Deshabilita la introspección en producción
-      //tracing: false, // Deshabilita el seguimiento en producción
-      cors: {
-        origin: '*', // Configura el origen de la solicitud permitido en producción
-        credentials: true, // Habilita el intercambio de cookies en producción
-      },
-      // Configurar la autenticación y autorización según sea necesario para la aplicación en producción
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault],
+      //cacheControl: true, // Habilita la caché de consultas
     }),
-    //todo una vez en producion queitar de aqui y revisar comos eria la forma correcta
+
+    //TODO Produccion
+    //GraphQLModule.forRoot<ApolloDriverConfig>({
+    //  driver: ApolloDriver,
+    //  autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    //  playground: false, // Deshabilita la consola de GraphQL Playground en producción
+    //  plugins: [ApolloServerPluginLandingPageProductionDefault], // Utiliza el plugin de landing page de Apollo para producción
+    //  //cacheControl: {
+    //  //  defaultMaxAge: 600, // Establece el tiempo de caché predeterminado en 10 minutos
+    //  //},
+    //  context: ({ req }) => ({ req }), // Configura el contexto con la solicitud HTTP
+    //  debug: false, // Deshabilita el modo de depuración en producción
+    //  introspection: false, // Deshabilita la introspección en producción
+    //  //tracing: false, // Deshabilita el seguimiento en producción
+    //  cors: {
+    //    origin: '*', // Configura el origen de la solicitud permitido en producción
+    //    credentials: true, // Habilita el intercambio de cookies en producción
+    //  },
+    //  // Configurar la autenticación y autorización según sea necesario para la aplicación en producción
+    //}),
 
     //Componentes de Auth
     AuthModule,
@@ -97,18 +98,18 @@ import { AppInit } from './app-init.service';
     SorteoDiasModule,
     SorteoABuscarModule,
     ResponseSorteoABuscarModule,
-    //!WebScrapingModule,
-    //PasarDataModule,
+    WebScrapingModule,
+
     //!TelegramModule,
     LotenetPremiosModule,
     PlataformaModule,
     ResponseLotenetPremioModule,
     PremiosDiasModule,
-    //!PremiosAutomaticoLotenetModule,
-    //!InstagramModule,
+    PremiosAutomaticoLotenetModule,
+    InstagramModule,
 
     //AUTOMATICO
-    //!CronModule,
+    CronModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppInit],

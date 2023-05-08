@@ -26,6 +26,10 @@ export class Xpath {
   @Column({ type: 'varchar' })
   descripcion: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ type: 'varchar', nullable: true })
+  verify_string_date: string;
+
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: true })
   activo: boolean;

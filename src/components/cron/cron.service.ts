@@ -52,20 +52,19 @@ export class CronService {
   // A las 12:00 AM cargos los nuevos cron y borros los anteriores
   iniciar_tareas() {
     //this.borrar_cron_cargar_nuevos();
-    cron.schedule('0 5 * * *', () => {
-      this.borrar_cron_cargar_nuevos();
+    cron.schedule('0 2 * * *', async () => {
+      await this.borrar_cron_cargar_nuevos();
     });
   }
 
   //Borro los cron existentes y creo nuevos
-  borrar_cron_cargar_nuevos() {
-    this.tareas.forEach((tareaCron) => {
-      tareaCron.stop();
-      tareaCron = null;
-    });
+  async borrar_cron_cargar_nuevos() {
+    for (const tarea of this.tareas) {
+      tarea.stop();
+    }
     this.tareas = [];
-    this.crear_Sorteos_A_Buscar_automaticas();
-    this.crear_premios_lotenet_automaticos();
+    await this.crear_Sorteos_A_Buscar_automaticas();
+    await this.crear_premios_lotenet_automaticos();
   }
 
   async crear_premios_lotenet_automaticos() {
@@ -84,14 +83,14 @@ export class CronService {
           id_lotenet_premio: lotenetPremio.id,
         });
         const tareaLotenet = cron.schedule(cron_expresion, async () => {
-          let response =
+          const response =
             await this.premiosAutomaticoLotenetService.premiarAutomatico(
               lotenetPremio,
               responsePremio.id,
             );
           this.logger.debug(`${response.message} => ${lotenetPremio.name}`); // todo manejar esto por telegram por el momento
           //await this.telegramService.sendNotificaciones(response);
-          response = null;
+          //response = null;
         });
         this.tareas.push(tareaLotenet);
       }
@@ -118,18 +117,18 @@ export class CronService {
 
         const tarea = cron.schedule(cron_expresion, async () => {
           this.logger.debug(`Comenzo el Cron de este sorteo ${sorteo.name}`);
-          try {
-            let response =
-              await this.resultadosSorteo.generar_resultados_automaticos(
-                sorteoABuscar,
-                responseSorteo.id,
-              );
-            this.logger.debug(response.message); // todo manejar esto por telegram por el momento
-            //await this.telegramService.sendNotificaciones(response);
-            response = null;
-          } catch (error) {
-            this.logger.error(`CRON => ERROR: ${error?.message}`);
-          }
+          //try {
+          const response =
+            await this.resultadosSorteo.generar_resultados_automaticos(
+              sorteoABuscar,
+              responseSorteo.id,
+            );
+          this.logger.debug(response.message); // todo manejar esto por telegram por el momento
+          //await this.telegramService.sendNotificaciones(response);
+          //response = null;
+          //} catch (error) {
+          //  this.logger.error(`CRON => ERROR: ${error?.message}`);
+          //}
         });
         this.tareas.push(tarea);
       }

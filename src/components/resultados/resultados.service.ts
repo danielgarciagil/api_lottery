@@ -15,7 +15,11 @@ import { PaginationArgs } from './../../common/dto/args';
 import { MESSAGE } from './../../config/messages';
 import { ResponsePropioGQl } from './../../common/response';
 import { SorteoService } from '../sorteo/sorteo.service';
-import { FilterResultado } from './dto/filter-resultado.input';
+import {
+  FilterResultado,
+  FilterResultadoRestApi,
+} from './dto/filter-resultado.input';
+import { agregar_digitos } from 'src/common/funciones/agregarDigitos';
 
 @Injectable()
 export class ResultadosService {
@@ -83,6 +87,25 @@ export class ResultadosService {
     }
   }
 
+  async devolverResultadoLotenet(
+    params: FilterResultadoRestApi,
+  ): Promise<string[]> {
+    const resultado = await this.resultadoRepository.findOne({
+      where: {
+        sorteo: { id: params.id_sorteo },
+        fecha: params.fecha,
+      },
+    });
+
+    if (!resultado) throw new NotFoundException();
+
+    const newResultadoString = resultado.numeros_ganadores.map((numero) =>
+      agregar_digitos(params.longitud, numero),
+    );
+
+    return newResultadoString;
+  }
+
   async devolverResultadoByBecha(
     id_sorteo: number,
     fecha: Date,
@@ -126,7 +149,7 @@ export class ResultadosService {
     const { limit, offset } = paginationArgs;
     const {
       id_sorteo,
-      desde = new Date(),
+      desde = new Date('2020-01-01'),
       hasta = new Date(),
     } = filterResultado;
     return await this.resultadoRepository.find({
@@ -137,7 +160,7 @@ export class ResultadosService {
         fecha: Between(desde, hasta),
       },
       order: {
-        fecha: 'desc',
+        fecha: 'DESC', //todo
       },
     });
   }

@@ -26,6 +26,22 @@ export const arrFechasHoy = (): string[] => {
     '8:50 P. M. ' +
       fecha.locale('es').format('ddd,').toUpperCase().replace('.', '') +
       fecha.locale('es').format(' D MMM').slice(0, -1).toUpperCase(), //LEIDSA
+    '8:50 P. M. ' +
+      fecha.locale('es').format('ddd,').toUpperCase().replace('.', '') +
+      fecha.locale('es').format(' 0D MMM').slice(0, -1).toUpperCase(),
+    'DRAW 9:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 8:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 7:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 6:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 5:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 4:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 3:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 2:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 1:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 12:00PM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 11:00AM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 10:00AM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
+    'DRAW 9:00AM. ' + fecha.format('DD/MM/YYYY'), // ANGUILA
   ];
 };
 export const validarFechaQueSeaDeHoy = (
