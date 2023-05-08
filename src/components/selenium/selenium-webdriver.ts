@@ -15,6 +15,7 @@ export class SeleniumWebdriver {
     try {
       const options = new ChromeOptions();
       options.addArguments('--disable-extensions');
+      options.addArguments('--disable-application-cache');
       options.addArguments('--disable-gpu');
       options.addArguments('--no-sandbox');
       options.addArguments('--disable-dev-shm-usage');
@@ -40,6 +41,10 @@ export class SeleniumWebdriver {
         .forBrowser(Browser.CHROME)
         .setChromeOptions(options)
         .build();
+      await this.driver.manage().deleteAllCookies();
+      //await this.driver.executeScript('window.sessionStorage.clear();');
+      //await this.driver.executeScript('window.localStorage.clear();');
+      //await this.driver.executeScript('window.applicationCache.clear();');
     } catch (error) {
       throw new Error(`EL NAVEGADOR DIO ERROR AL ABRIR ${error?.message}`);
     }
@@ -60,9 +65,9 @@ export class SeleniumWebdriver {
     try {
       return await this.driver.wait(
         until.elementLocated(By.xpath(xpath)),
-        10000,
+        20000,
         '',
-        10000,
+        20000,
       );
     } catch (error) {
       throw Error(`NO SE ENCONTRO ESTE XPATH ${xpath}`);
@@ -72,7 +77,7 @@ export class SeleniumWebdriver {
   async getUrl(url: string) {
     try {
       // Establecer un tiempo límite de carga de la página
-      await this.driver.manage().setTimeouts({ pageLoad: 5000 });
+      await this.driver.manage().setTimeouts({ pageLoad: 30000 });
       // Cargar una página web
       await this.driver.get(url);
     } catch (e) {

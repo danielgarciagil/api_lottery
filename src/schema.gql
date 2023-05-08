@@ -48,6 +48,7 @@ type Xpath {
   id: ID!
   name: String!
   descripcion: String!
+  verify_string_date: String
   activo: Boolean!
   xpath_digitos: [[String!]!]!
   xpath_urls_by_digitos: [[String!]!]!
@@ -487,6 +488,7 @@ input UpdateSorteoDiaInput {
 input CreateXpathInput {
   name: String!
   descripcion: String!
+  verify_string_date: String
   activo: Boolean
   xpath_digitos: [[String!]!]!
   xpath_urls_by_digitos: [[String!]!]!
@@ -497,6 +499,7 @@ input CreateXpathInput {
 input UpdateXpathInput {
   name: String
   descripcion: String
+  verify_string_date: String
   activo: Boolean
   xpath_digitos: [[String!]!]
   xpath_urls_by_digitos: [[String!]!]
