@@ -60,6 +60,7 @@ const baseImports = [
     context: ({ req }) => ({ req }), // Configura el contexto con la solicitud HTTP
     debug: isProduction ? false : true, // Deshabilita el modo de depuración en producción
     introspection: isProduction ? false : true, // Deshabilita la introspección en producción
+    persistedQueries: false,
     cors: {
       origin: '*', // Configura el origen de la solicitud permitido en producción
       credentials: true, // Habilita el intercambio de cookies en producción
