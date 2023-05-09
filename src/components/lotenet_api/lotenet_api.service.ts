@@ -8,7 +8,10 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 //Propio
-import { CreateLotenetApiInput } from './dto/create-lotenet_api.input';
+import {
+  CreateLotenetApiInput,
+  FilterSorteo,
+} from './dto/create-lotenet_api.input';
 import { UpdateLotenetApiInput } from './dto/update-lotenet_api.input';
 import { LotenetApi } from './entities/lotenet_api.entity';
 import { MESSAGE } from './../../config/messages';
@@ -46,6 +49,18 @@ export class LotenetApiService {
       take: limit,
       skip: offset,
     });
+  }
+
+  async findOneByName(filterSorteo: FilterSorteo): Promise<LotenetApi> {
+    const lotenet_api = await this.lotenetApiRepository.findOne({
+      where: {
+        name: filterSorteo.name,
+      },
+    });
+    if (!lotenet_api) {
+      throw new NotFoundException(MESSAGE.COMUN_ESTE_ID_NO_EXISTE);
+    }
+    return lotenet_api;
   }
 
   async findOne(id: number): Promise<LotenetApi> {

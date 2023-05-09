@@ -27,7 +27,7 @@ export class LotenetApi {
   longitud: number;
 
   @Field(() => Sorteo) //todo
-  @OneToOne(() => Sorteo, (sorteo) => sorteo.lotenet_api, { lazy: true })
+  @OneToOne(() => Sorteo, (sorteo) => sorteo.lotenet_api, { eager: true })
   @JoinColumn({ name: 'id_sorteo' })
   sorteo: Sorteo;
 }

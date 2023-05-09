@@ -18,3 +18,8 @@ export class CreateLotenetApiInput {
   @Min(1)
   id_sorteo: number;
 }
+
+export class FilterSorteo {
+  @IsString()
+  name: string;
+}
