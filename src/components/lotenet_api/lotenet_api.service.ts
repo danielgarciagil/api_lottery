@@ -1,5 +1,6 @@
 import {
   BadGatewayException,
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
@@ -25,14 +26,25 @@ export class LotenetApiService {
     private readonly lotenetApiRepository: Repository<LotenetApi>,
   ) {}
 
+  validar_name_api(name: string): string {
+    if (!name.endsWith('_api'))
+      throw new BadRequestException('El name no termina en _api');
+    return name.toLowerCase();
+  }
+
   async create(
     createLotenetApiInput: CreateLotenetApiInput,
   ): Promise<LotenetApi> {
     try {
-      const { id_sorteo, ...rest } = createLotenetApiInput;
+      const { id_sorteo, longitud, name } = createLotenetApiInput;
+
+      //Todo valido que el nombre tiene que terminar en _api
+      //Todo guardar el nombre en minuscula siempre
+      const newName = this.validar_name_api(name);
 
       const newLotenetApi = this.lotenetApiRepository.create({
-        ...rest,
+        longitud,
+        name: newName,
         sorteo: { id: id_sorteo },
       });
 
