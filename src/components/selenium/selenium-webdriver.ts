@@ -94,7 +94,7 @@ export class SeleniumWebdriver {
 
   async navigateTo(url: string) {
     const pageLoadTimeout = 20000; // 20 segundos
-    const pageLoadPromise = this.getUrl(url);
+    const pageLoadPromise = await this.getUrl(url);
     //const pageLoadPromise = this.driver.get(url);
 
     let timeoutId: NodeJS.Timeout;
