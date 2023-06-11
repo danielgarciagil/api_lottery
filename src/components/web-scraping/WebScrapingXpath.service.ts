@@ -119,7 +119,7 @@ export class WebScrapingXpathService {
     try {
       for (const url of arr_urls_digitos[index_actual]) {
         await this.seleniumWebdriver.navigateTo(url);
-        await pausaBySeg(10); //Todo agrege un tiempo extra
+        await pausaBySeg(2); //Todo agrege un tiempo extra
       }
     } catch (error) {
       throw Error(`NO SE PUDO ACEDER A LA URL ${error?.message}`);

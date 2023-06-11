@@ -77,7 +77,7 @@ export class SeleniumWebdriver {
   async getUrl(url: string) {
     try {
       // Establecer un tiempo límite de carga de la página
-      await this.driver.manage().setTimeouts({ pageLoad: 30000 });
+      await this.driver.manage().setTimeouts({ pageLoad: 20000 });
       // Cargar una página web
       await this.driver.get(url);
     } catch (e) {
@@ -93,7 +93,7 @@ export class SeleniumWebdriver {
   }
 
   async navigateTo(url: string) {
-    const pageLoadTimeout = 20000; // 20 segundos
+    const pageLoadTimeout = 10000; // 20 segundos
     const pageLoadPromise = await this.getUrl(url);
     //const pageLoadPromise = this.driver.get(url);
 
@@ -103,7 +103,7 @@ export class SeleniumWebdriver {
         clearTimeout(timeoutId);
         reject(
           new Error(
-            `Tiempo de espera agotado pasaron 20 segundos para la URL: ${url}`,
+            `Tiempo de espera agotado pasaron 10 segundos para la URL: ${url}`,
           ),
         );
       }, pageLoadTimeout);
