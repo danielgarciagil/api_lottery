@@ -16,6 +16,7 @@ import {
   fecha_actual,
 } from './../../common';
 import { TelegramService } from '../telegram/telegram.service';
+import { ResponseSorteoABuscar } from '../response_sorteo_a_buscar/entities/response_sorteo_a_buscar.entity';
 
 @Injectable()
 export class ResultadosSorteoService {
@@ -91,6 +92,12 @@ export class ResultadosSorteoService {
     return COMPROBAR_DIGITOS_IGUALES_ARR_XPATH(instanciaXpath);
   }
 
+  async saber_si_se_detuvo_manual(
+    idResponseSorteo: number,
+  ): Promise<ResponseSorteoABuscar> {
+    return await this.responseSorteoABuscarSerive.findOne(idResponseSorteo);
+  }
+
   //ESTE ME VA A GENERAR EL RESULTADO COMO TAL
   async generar_resultados_automaticos(
     sorteoABuscar: SorteoABuscar,
@@ -102,7 +109,14 @@ export class ResultadosSorteoService {
     let error = true;
     for (let i = 0; i < sorteoABuscar.numeros_intentos; i++) {
       try {
-        //todo aqui agregar el parametro donde ande de ejcutar verifique si la respon se sigue tru o lo mandaron a para
+        const responseSorteo = await this.saber_si_se_detuvo_manual(
+          idResponseSorteo,
+        );
+        if (!responseSorteo.activo) {
+          message = 'SE MANDO A PARAR MANUAL';
+          error = false;
+          break;
+        }
         this.logger.debug(`BUSCANDO => ${sorteoABuscar.name} INTENTO #${i}`);
         const xpath_a_publicar = await this.bucar_xpath(
           sorteoABuscar.xpath,
@@ -135,7 +149,12 @@ export class ResultadosSorteoService {
     });
     const newMessage = `\n\nMESSAGE => ${message} \n\nSORTEO_A_BUSCAR => ${sorteoABuscar.name} \n\nSORTEO => ${sorteoABuscar.sorteo.name}`;
     this.logger.debug(newMessage.replace(/\n/g, '')); //todo probar
-    this.telegramService.sendNotificaciones({ error, message: newMessage });
+
+    //TODO solo si hay un error mandare un mensaje
+    if (error) {
+      this.telegramService.sendNotificaciones({ error, message: newMessage });
+    }
+
     return {
       error,
       message,

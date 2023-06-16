@@ -63,7 +63,7 @@ export class CronService {
       tarea.stop();
     }
     this.tareas = [];
-    await this.crear_Sorteos_A_Buscar_automaticas();
+    //await this.crear_Sorteos_A_Buscar_automaticas();
     await this.crear_premios_lotenet_automaticos();
   }
 

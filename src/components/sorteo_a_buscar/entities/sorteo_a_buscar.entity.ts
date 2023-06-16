@@ -37,7 +37,7 @@ export class SorteoABuscar {
   tiempo_de_espera_segundos: number;
 
   @Field(() => Sorteo) //todo
-  @OneToOne(() => Sorteo, (sorteo) => sorteo.sorteo_a_buscar, { eager: true })
+  @OneToOne(() => Sorteo, (sorteo) => sorteo.sorteo_a_buscar, { lazy: true })
   @JoinColumn({ name: 'id_sorteo' })
   sorteo: Sorteo;
 
@@ -49,7 +49,7 @@ export class SorteoABuscar {
   @OneToMany(
     () => ResponseSorteoABuscar,
     (responseSorteoABuscar) => responseSorteoABuscar.sorteo_a_buscar,
-    { eager: true },
+    { lazy: true },
   )
   response_sorteo_a_buscar: ResponseSorteoABuscar;
 }
