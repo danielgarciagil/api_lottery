@@ -75,6 +75,7 @@ export class ResultadosService {
     }
   }
 
+  //TODO esta funcion esta mala
   async verificar_que_no_se_duplique(id_sorteo: number, fecha: Date) {
     const sorteo = await this.resultadoRepository.findOne({
       where: {

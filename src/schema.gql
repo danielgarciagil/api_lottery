@@ -227,7 +227,7 @@ type Query {
   findResultados(id: Int!): Resultado!
 
   """Para ver todos los sorteos"""
-  allSorteo(offset: Int = 0, limit: Int = 10): [Sorteo!]!
+  allSorteo(offset: Int = 0, limit: Int = 10, id_dia: Int = 0): [Sorteo!]!
 
   """Para bsucar un sorteo"""
   findSorteo(id: Int!): Sorteo!
@@ -408,7 +408,7 @@ type Mutation {
   updateLotenetApi(updateLotenetApiInput: UpdateLotenetApiInput!): LotenetApi!
   removeLotenetApi(id: Int!): LotenetApi!
 
-  """Para generar los resultados de un Sorteo en forma Autoamtica"""
+  """Para generar los resultados de un Sorteo en forma Automatica"""
   generarResultadoAutomatico(buscarBySorteoaBuscarInput: BuscarBySorteoaBuscarInput!): ResponsePropioGQl!
 
   """Para verificar que el Xpath esta bien"""

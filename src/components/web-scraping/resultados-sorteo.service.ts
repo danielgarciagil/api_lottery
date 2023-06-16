@@ -112,7 +112,7 @@ export class ResultadosSorteoService {
         await this.resultadoService.createAutomatico({
           fecha: new Date(fecha_a_publicar),
           id_sorteo: sorteoABuscar.sorteo.id,
-          id_user: 1,
+          id_user: 1, //todo me publica con el id 1
           numeros_ganadores: xpath_a_publicar.data_by_xpath_digitos,
         });
         message = 'SE PUBLICO BIEN';

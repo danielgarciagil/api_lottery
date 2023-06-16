@@ -13,6 +13,7 @@ import { Sorteo } from './entities/sorteo.entity';
 import { ResponsePropioGQl } from './../../common/response';
 import { PaginationArgs } from './../../common/dto/args';
 import { MESSAGE } from './../../config/messages';
+import { IdDiaArgs } from 'src/common/dto/args/pagination.args';
 
 @Injectable()
 export class SorteoService {
@@ -38,11 +39,27 @@ export class SorteoService {
     }
   }
 
-  async findAll(paginationArgs: PaginationArgs): Promise<Sorteo[]> {
+  async findAll(
+    paginationArgs: PaginationArgs,
+    idDiaArgs: IdDiaArgs,
+  ): Promise<Sorteo[]> {
     const { limit, offset } = paginationArgs;
+    const { id_dia } = idDiaArgs;
+    if (id_dia == 0) {
+      return await this.sorteoRepository.find({
+        take: limit,
+        skip: offset,
+      });
+    }
+
     return await this.sorteoRepository.find({
-      take: limit,
-      skip: offset,
+      where: {
+        sorteo_dias: {
+          dias: {
+            id: id_dia,
+          },
+        },
+      },
     });
   }
 

@@ -12,12 +12,14 @@ import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { CurrentUser } from './../../auth/decorators/current-user.decorator';
 import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 import { User } from '../users/entities/user.entity';
+import { IdDiaArgs } from 'src/common/dto/args/pagination.args';
 
-@UseGuards(JwtAuthGuard)
+//@UseGuards(JwtAuthGuard)
 @Resolver(() => Sorteo)
 export class SorteoResolver {
   constructor(private readonly sorteoService: SorteoService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Sorteo, {
     name: 'createSorteo',
     description: 'para crear un Sorteo',
@@ -34,12 +36,14 @@ export class SorteoResolver {
     description: 'Para ver todos los sorteos',
   })
   async findAll(
-    @CurrentUser([VALID_PERMISO_ACCION.SORTEO_VIEW]) user: User,
+    //@CurrentUser([VALID_PERMISO_ACCION.SORTEO_VIEW]) user: User,
     @Args() paginationArgs: PaginationArgs,
+    @Args() idDiaArgs: IdDiaArgs,
   ): Promise<Sorteo[]> {
-    return this.sorteoService.findAll(paginationArgs);
+    return this.sorteoService.findAll(paginationArgs, idDiaArgs);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => Sorteo, {
     name: 'findSorteo',
     description: 'Para bsucar un sorteo',
@@ -51,6 +55,7 @@ export class SorteoResolver {
     return this.sorteoService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Sorteo, {
     name: 'updateSorteo',
     description: 'Para actualizar un SOrteo',
@@ -62,6 +67,7 @@ export class SorteoResolver {
     return this.sorteoService.update(updateSorteoInput.id, updateSorteoInput);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => ResponsePropioGQl, {
     name: 'removeSorteo',
     description: 'Remover un sorteo',

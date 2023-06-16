@@ -13,16 +13,16 @@ import {
 import { User } from '../users/entities/user.entity';
 import { ResultadosSorteoService } from './resultados-sorteo.service';
 
-@UseGuards(JwtAuthGuard)
+//@UseGuards(JwtAuthGuard) //TODO lo comente para el cron automatico
 @Resolver(() => ResponsePropioGQl)
 export class ProcesoDeSorteoABuscarResolver {
   constructor(private readonly resultadosSorteo: ResultadosSorteoService) {}
   @Mutation(() => ResponsePropioGQl, {
     name: 'generarResultadoAutomatico',
-    description: 'Para generar los resultados de un Sorteo en forma Autoamtica',
+    description: 'Para generar los resultados de un Sorteo en forma Automatica',
   })
-  async generar_sorteo_automatico(
-    @CurrentUser([VALID_PERMISO_ACCION.SORTEO_CREATE]) user: User, //todo revisar permiso
+  async generarResultadoAutomatico(
+    //@CurrentUser([VALID_PERMISO_ACCION.SORTEO_CREATE]) user: User, //todo revisar permiso
     @Args('buscarBySorteoaBuscarInput')
     buscarBySorteoaBuscarInput: BuscarBySorteoaBuscarInput,
   ): Promise<ResponsePropioGQl> {
@@ -31,7 +31,9 @@ export class ProcesoDeSorteoABuscarResolver {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   //TODO PONER QUE LA FFECHA SE TENGA QUE ENVIAR PARA VALIDAR QUE ES LA RECIBIDA
+  //TODO lo de validar no sera por aqui, me refiero solo dev puede en pro no por mosquittos
   @Mutation(() => RESPONSE_BY_XPATH, {
     name: 'validarXpathIndividual',
     description: 'Para verificar que el Xpath esta bien',
