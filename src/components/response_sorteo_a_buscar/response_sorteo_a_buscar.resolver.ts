@@ -6,8 +6,8 @@ import { ResponseSorteoABuscar } from './entities/response_sorteo_a_buscar.entit
 
 import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { PaginationArgs } from './../../common/dto/args';
-import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { VALID_PERMISO_ACCION } from 'src/config/valid-roles';
+import { CurrentUser } from './../../auth/decorators/current-user.decorator';
+import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 import { User } from '../users/entities/user.entity';
 
 //TODO este Resolver a Futuro agregar roels y todos

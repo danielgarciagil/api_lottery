@@ -34,6 +34,6 @@ export class DiaInit implements OnModuleInit {
 
   //Consultar si existte un admin
   async onModuleInit() {
-    await this.crear_todos_los_dias();
+    //await this.crear_todos_los_dias();
   }
 }

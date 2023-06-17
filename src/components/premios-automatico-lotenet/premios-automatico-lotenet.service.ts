@@ -10,6 +10,7 @@ import { fecha_actual } from '../../common/funciones/validar_fechas';
 import { ResponseLotenetPremioService } from '../response-lotenet-premio/response-lotenet-premio.service';
 import { pausaBySeg } from './../../common/funciones/bloquearPrograma';
 import { TelegramService } from '../telegram/telegram.service';
+import { ResponseLotenetPremio } from '../response-lotenet-premio/entities/response-lotenet-premio.entity';
 
 @Injectable()
 export class PremiosAutomaticoLotenetService {
@@ -37,6 +38,12 @@ export class PremiosAutomaticoLotenetService {
     };
   }
 
+  async saber_si_se_detuvo_manual(
+    idResponseSorteo: number,
+  ): Promise<ResponseLotenetPremio> {
+    return await this.responseLotenetPremio.findOne(idResponseSorteo);
+  }
+
   async premiarAutomatico(
     lotenetPremio: LotenetPremio,
     responsePremio: number,
@@ -49,6 +56,14 @@ export class PremiosAutomaticoLotenetService {
       this.logger.debug(`PUBLICANDO => ${lotenetPremio.name} Intentos# ${i}`);
 
       try {
+        const saberResponsePremio = await this.saber_si_se_detuvo_manual(
+          responsePremio,
+        );
+        if (!saberResponsePremio.activo) {
+          message = 'SE MANDO A PARAR MANUAL';
+          error = false;
+          break;
+        }
         //todo aqui mandar a validar la response si sigo buscando oh no
         const resultado = await this.resultadoService.devolverResultadoByBecha(
           lotenetPremio.sorteo.id,
@@ -90,7 +105,10 @@ export class PremiosAutomaticoLotenetService {
     }
     const newMessage = `\n\nMESSAGE => ${message}. \n\nLOTENETPREMIO => ${lotenetPremio.name}.`;
     this.logger.debug(newMessage.replace(/\n/g, ''));
-    this.telegramService.sendNotificaciones({ error, message: newMessage });
+    if (error) {
+      this.telegramService.sendNotificaciones({ error, message: newMessage });
+    }
+
     return {
       error,
       message: newMessage,

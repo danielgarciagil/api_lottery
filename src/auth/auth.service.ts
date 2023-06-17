@@ -63,8 +63,9 @@ export class AuthService {
   }
 
   //Revalidar el token del que es enviado, generar uno nuevo
-  revalidateToken(user: User): AuthResponse {
+  async revalidateToken(user: User): Promise<AuthResponse> {
     const token = this.getJwtToken({ id: user.id });
+    await this.usersService.updateToken(user.id, token);
     const response: AuthResponse = {
       token: token,
       user: user,
