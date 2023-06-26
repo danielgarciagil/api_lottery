@@ -41,9 +41,6 @@ export class WebScrapingXpathService {
         data_xpath_fechas.push(fecha_xpath);
       }
 
-      //TODO COLOCAR NUEVO CAMPO EN EL XPATH, QUE TENGA QUE CUMPLIR UNA CONDICION ESPCIFICA PARA PODER PASAR SI NO QUE LANZE UN ERROR
-      // DE FORMA QUE PARA ANGUILA PUEDA ONTENER TODAS LAS LOTERIA DE ANGUILA INDICANDOLE ALGO POR EJEMPLO LA HORA
-
       return {
         message: 'SE ENCONTRO LA DATA DEL XPATH',
         data_by_xpath_digitos: data_xpath_digitos,

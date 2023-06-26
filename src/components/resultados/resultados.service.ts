@@ -29,6 +29,7 @@ export class ResultadosService {
     private readonly sorteoService: SorteoService,
   ) {}
 
+  //TODO revisar que cuando se manda automatico dos veces, se pu blica dos veces
   async prevCreate(
     createResultadoInput: CreateResultadoInput,
   ): Promise<Resultado> {
@@ -150,16 +151,38 @@ export class ResultadosService {
     const { limit, offset } = paginationArgs;
     const {
       id_sorteo,
+      id_lottery,
       desde = new Date('2020-01-01'),
       hasta = new Date(),
     } = filterResultado;
+
+    const whereCondition: any = {
+      fecha: Between(desde, hasta),
+    };
+
+    if (id_lottery && id_sorteo) {
+      whereCondition.sorteo = {
+        id: id_sorteo,
+        loteria: {
+          id: id_lottery,
+        },
+      };
+    } else if (id_sorteo) {
+      whereCondition.sorteo = {
+        id: id_sorteo,
+      };
+    } else if (id_lottery) {
+      whereCondition.sorteo = {
+        loteria: {
+          id: id_lottery,
+        },
+      };
+    }
+
     return await this.resultadoRepository.find({
       take: limit,
       skip: offset,
-      where: {
-        sorteo: { id: id_sorteo },
-        fecha: Between(desde, hasta),
-      },
+      where: whereCondition,
       order: {
         fecha: 'DESC', //todo
       },

@@ -16,6 +16,12 @@ export class FilterResultado {
   @Min(1)
   id_sorteo: number;
 
+  @Field(() => Int, { nullable: true })
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  id_lottery: number;
+
   @Field(() => String, { nullable: true })
   @IsDateString()
   @IsOptional()
