@@ -80,10 +80,10 @@
 							},
 							"fillColor": "#a5fbec",
 							"font": "Arial;13;0",
-							"left": 2384,
-							"top": 1744,
+							"left": 2408,
+							"top": 1728,
 							"width": 1017,
-							"height": 577
+							"height": 593
 						},
 						{
 							"_type": "ERDEntityView",
@@ -5231,11 +5231,11 @@
 										"$ref": "AAAAAAGI3pymB4534Nk="
 									},
 									"font": "Arial;13;1",
-									"left": 2896,
-									"top": 2197,
+									"left": 2928,
+									"top": 2189,
 									"width": 132.82080078125,
 									"height": 13,
-									"text": "Sorteo_cocurrentes"
+									"text": "Grupos_sorteo"
 								},
 								{
 									"_type": "ERDColumnCompartmentView",
@@ -5246,18 +5246,35 @@
 									"model": {
 										"$ref": "AAAAAAGI3pymB451bWk="
 									},
+									"subViews": [
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGI+FgkeaacBSM=",
+											"_parent": {
+												"$ref": "AAAAAAGI3pymB455Kzg="
+											},
+											"model": {
+												"$ref": "AAAAAAGI+FgkVKaZHcM="
+											},
+											"font": "Arial;13;0",
+											"left": 2933,
+											"top": 2212,
+											"width": 122.82080078125,
+											"height": 13
+										}
+									],
 									"font": "Arial;13;0",
-									"left": 2896,
-									"top": 2215,
+									"left": 2928,
+									"top": 2207,
 									"width": 132.82080078125,
-									"height": 10
+									"height": 23
 								}
 							],
 							"font": "Arial;13;0",
-							"left": 2896,
-							"top": 2192,
+							"left": 2928,
+							"top": 2184,
 							"width": 132.82080078125,
-							"height": 33,
+							"height": 46,
 							"nameLabel": {
 								"$ref": "AAAAAAGI3pymB454Tyk="
 							},
@@ -8049,7 +8066,19 @@
 					"_parent": {
 						"$ref": "AAAAAAFLzntJC6EktCk="
 					},
-					"name": "Sorteo_cocurrentes"
+					"name": "Grupos_sorteo",
+					"columns": [
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGI+FgkVKaZHcM=",
+							"_parent": {
+								"$ref": "AAAAAAGI3pymB451bWk="
+							},
+							"name": "name",
+							"type": "Varchar",
+							"length": 0
+						}
+					]
 				}
 			]
 		}

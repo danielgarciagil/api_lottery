@@ -5,6 +5,7 @@ export const arrFechasHoy = (): string[] => {
   const fechaDiaUnDigito = fecha.format('D').replace(/^0+/, '');
 
   return [
+    fecha.locale('es').format('dddd, D MMMM YYYY').toUpperCase(), //PRIMERA NUEVA PAGINA
     fecha.format('YYYY-MM-DD').toUpperCase(), // PRIMERA
     fecha.format('DD-MM-YYYY').toUpperCase(), // LOTERIAS DOMINICANAS / REAL
     fecha.format('DD - MM - YYYY').toUpperCase(), // REAL
