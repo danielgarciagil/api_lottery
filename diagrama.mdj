@@ -22,6 +22,19 @@
 					"ownedViews": [
 						{
 							"_type": "RectangleView",
+							"_id": "AAAAAAGKRqlq+W7t2FM=",
+							"_parent": {
+								"$ref": "AAAAAAFLzntJC6ElOqo="
+							},
+							"fillColor": "#222222",
+							"font": "Arial;13;0",
+							"left": 352,
+							"top": 744,
+							"width": 4705,
+							"height": 3121
+						},
+						{
+							"_type": "RectangleView",
 							"_id": "AAAAAAGIANS9TiSfVOs=",
 							"_parent": {
 								"$ref": "AAAAAAFLzntJC6ElOqo="
@@ -67,7 +80,7 @@
 							},
 							"fillColor": "#ffffd8",
 							"font": "Arial;13;0",
-							"left": 3472,
+							"left": 3464,
 							"top": 1744,
 							"width": 689,
 							"height": 297
@@ -8079,6 +8092,14 @@
 							"length": 0
 						}
 					]
+				},
+				{
+					"_type": "ERDEntity",
+					"_id": "AAAAAAGKRqjP1G7YRC8=",
+					"_parent": {
+						"$ref": "AAAAAAFLzntJC6EktCk="
+					},
+					"name": "Entity2"
 				}
 			]
 		}

@@ -1,25 +1,26 @@
-version: '3'
-
-services:
-  db:
-   image: postgres:14.4
-   restart: always
-   ports:
-     - "5432:5432"
-   environment:
-    POSTGRES_PASSWORD: ${DB_PASSWORD}
-    POSTGRES_DB: ${DB_NAME}
-    POSTGRES_USER: ${DB_USER}
-   #container_name: prueba
-   volumes:
-     - ./postgres:/var/lib/postgresql/data
-
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    ports:
-      - '5050:80'
-    depends_on:
-      - db
+#version: '3'
+#
+#services:
+#  db:
+#   image: postgres:14.4
+#   restart: always
+#   ports:
+#     - "5432:5432"
+#   environment:
+#    POSTGRES_PASSWORD: ${DB_PASSWORD}
+#    POSTGRES_DB: ${DB_NAME}
+#    POSTGRES_USER: ${DB_USER}
+#   #container_name: prueba
+#   volumes:
+#     - ./postgres:/var/lib/postgresql/data
+#
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    environment:
+#     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+#     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+#    ports:
+#      - '5050:80'
+#    depends_on:
+#      - db
+#
