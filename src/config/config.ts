@@ -30,6 +30,6 @@ export const validationENV = () => {
 
     PORT: Joi.number().required(),
 
-    API_NOTIFICACIONES: Joi.string().required(),
+    API_NOTIFICACIONES: Joi.string(),
   });
 };

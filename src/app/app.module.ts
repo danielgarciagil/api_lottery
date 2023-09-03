@@ -6,7 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import {
   ApolloServerPluginLandingPageLocalDefault,
   ApolloServerPluginLandingPageProductionDefault,
-} from 'apollo-server-core';
+} from '@apollo/server/plugin/landingPage/default';
 
 // Modulos Propios
 import { AppController } from './app.controller';
@@ -40,6 +40,7 @@ import {
 import { AppInit } from './app-init.service';
 
 const isProduction = process.env.STATE === 'PROD';
+console.log(isProduction);
 
 const apolloPlugin = isProduction
   ? ApolloServerPluginLandingPageProductionDefault
@@ -57,16 +58,14 @@ const baseImports = [
     driver: ApolloDriver,
     autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     playground: false, // Deshabilita la consola de GraphQL Playground en producción
-    plugins: [apolloPlugin], // Utiliza el plugin de landing page de Apollo para producción
+    plugins: [apolloPlugin()], // Utiliza el plugin de landing page de Apollo para producción
     context: ({ req }) => ({ req }), // Configura el contexto con la solicitud HTTP
-    debug: isProduction ? false : true, // Deshabilita el modo de depuración en producción
     introspection: isProduction ? false : true, // Deshabilita la introspección en producción
     persistedQueries: false,
-    cors: {
-      origin: '*', // Configura el origen de la solicitud permitido en producción
-      credentials: true, // Habilita el intercambio de cookies en producción
-    },
-    // Configurar la autenticación y autorización según sea necesario para la aplicación en producción
+    //cors: {
+    //  origin: '*', // Configura el origen de la solicitud permitido en producción
+    //  credentials: true, // Habilita el intercambio de cookies en producción
+    //},
   }),
 
   //Componentes de Auth
@@ -95,13 +94,14 @@ const baseImports = [
   ResponseLotenetPremioModule,
   PremiosDiasModule,
   LotenetApiModule,
+  CronModule,
+  WebScrapingModule,
+  PremiosAutomaticoLotenetModule,
+  TelegramModule,
 ];
 
 //TODO Solo si estoy en produccion agrego estos modulos
-isProduction ? null : baseImports.push(CronModule);
-isProduction ? null : baseImports.push(WebScrapingModule);
-isProduction ? null : baseImports.push(PremiosAutomaticoLotenetModule);
-isProduction ? null : baseImports.push(TelegramModule);
+//isProduction ? null : baseImports.push(TelegramModule);
 
 @Module({
   imports: baseImports,

@@ -50,9 +50,8 @@ export class ResultadosSorteoService {
   async buscar_generar_autoamtico(
     id_sorteo_a_buscar: number,
   ): Promise<ResponsePropioGQl> {
-    const sorteoABuscar = await this.sorteoABuscarService.devolverSiEstaActivo(
-      id_sorteo_a_buscar,
-    );
+    const sorteoABuscar =
+      await this.sorteoABuscarService.devolverSiEstaActivo(id_sorteo_a_buscar);
     const responseSorteoABsucar = await this.responseSorteoABuscarSerive.create(
       {
         id_sorteo_a_buscar: sorteoABuscar.id,
@@ -107,11 +106,14 @@ export class ResultadosSorteoService {
     const fecha_a_publicar = fecha_actual();
     let message = '';
     let error = true;
+    this.telegramService.sendNotificaciones({
+      error,
+      message: 'PRUEBAAAAAA 2',
+    });
     for (let i = 0; i < sorteoABuscar.numeros_intentos; i++) {
       try {
-        const responseSorteo = await this.saber_si_se_detuvo_manual(
-          idResponseSorteo,
-        );
+        const responseSorteo =
+          await this.saber_si_se_detuvo_manual(idResponseSorteo);
         if (!responseSorteo.activo) {
           message = 'SE MANDO A PARAR MANUAL';
           error = false;
@@ -148,7 +150,7 @@ export class ResultadosSorteoService {
       message: message,
     });
     const newMessage = `\n\nMESSAGE => ${message} \n\nSORTEO_A_BUSCAR => ${sorteoABuscar.name} \n\nSORTEO => ${sorteoABuscar.sorteo.name}`;
-    this.logger.debug(newMessage.replace(/\n/g, '')); //todo probar
+    this.logger.warn(newMessage.replace(/\n/g, '')); //todo probar
 
     //TODO solo si hay un error mandare un mensaje
     if (error) {

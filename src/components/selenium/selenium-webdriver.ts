@@ -1,11 +1,4 @@
-import {
-  By,
-  WebDriver,
-  until,
-  Builder,
-  Browser,
-  Capabilities,
-} from 'selenium-webdriver';
+import { By, WebDriver, until, Builder, Browser } from 'selenium-webdriver';
 import { Options as ChromeOptions } from 'selenium-webdriver/chrome';
 
 export class SeleniumWebdriver {

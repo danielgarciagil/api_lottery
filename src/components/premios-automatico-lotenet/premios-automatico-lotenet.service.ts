@@ -23,9 +23,8 @@ export class PremiosAutomaticoLotenetService {
   ) {}
 
   async premiarLotenet(id_lotenet_Premio: number): Promise<ResponsePropioGQl> {
-    const lotenetPremio = await this.lotenetPremioService.findOne(
-      id_lotenet_Premio,
-    );
+    const lotenetPremio =
+      await this.lotenetPremioService.findOne(id_lotenet_Premio);
     const responsePremio = await this.responseLotenetPremio.create({
       message: 'SE INSTANCIO UN PREMIO',
       id_lotenet_premio: lotenetPremio.id,
@@ -56,9 +55,8 @@ export class PremiosAutomaticoLotenetService {
       this.logger.debug(`PUBLICANDO => ${lotenetPremio.name} Intentos# ${i}`);
 
       try {
-        const saberResponsePremio = await this.saber_si_se_detuvo_manual(
-          responsePremio,
-        );
+        const saberResponsePremio =
+          await this.saber_si_se_detuvo_manual(responsePremio);
         if (!saberResponsePremio.activo) {
           message = 'SE MANDO A PARAR MANUAL';
           error = false;
@@ -104,7 +102,7 @@ export class PremiosAutomaticoLotenetService {
       });
     }
     const newMessage = `\n\nMESSAGE => ${message}. \n\nLOTENETPREMIO => ${lotenetPremio.name}.`;
-    this.logger.debug(newMessage.replace(/\n/g, ''));
+    this.logger.warn(newMessage.replace(/\n/g, ''));
     if (error) {
       this.telegramService.sendNotificaciones({ error, message: newMessage });
     }
