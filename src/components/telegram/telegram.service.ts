@@ -83,7 +83,5 @@ export class TelegramService {
     }
   }
 
-  async init() {
-    this.logger.debug('Init Telegram Service');
-  }
+  async init() {}
 }

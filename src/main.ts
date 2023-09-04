@@ -13,6 +13,7 @@ async function bootstrap() {
   //    //forbidNonWhitelisted: true, // Retorna bad request si hay propiedades en el objeto no requeridas
   //  }),
   //);
+  //app.useGlobalInterceptors(new GraphqlResponseInterceptor());
 
   await app.listen(process.env.PORT || 9999, () => {
     console.log(

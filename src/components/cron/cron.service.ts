@@ -34,18 +34,16 @@ export class CronService {
   //Devulvo todos los sorteos del dia en Curso
   async consultar_sorteosABuscar(): Promise<SorteoABuscar[]> {
     const id_fecha_hoy = this.id_fecha_hoy();
-    const todos_los_sorteos = await this.sorteoABuscarService.findAllByDays(
-      id_fecha_hoy,
-    );
+    const todos_los_sorteos =
+      await this.sorteoABuscarService.findAllByDays(id_fecha_hoy);
     return todos_los_sorteos;
   }
 
   //Devulvo todos los Lotenet Premios del dia en Curso
   async consultar_lotenetPremio(): Promise<LotenetPremio[]> {
     const id_fecha_hoy = this.id_fecha_hoy();
-    const todos_los_lotenet = await this.lotenetPremiosService.findAllByDays(
-      id_fecha_hoy,
-    );
+    const todos_los_lotenet =
+      await this.lotenetPremiosService.findAllByDays(id_fecha_hoy);
     return todos_los_lotenet;
   }
 

@@ -62,6 +62,7 @@ const baseImports = [
     context: ({ req }) => ({ req }), // Configura el contexto con la solicitud HTTP
     introspection: isProduction ? false : true, // Deshabilita la introspección en producción
     persistedQueries: false,
+    fieldResolverEnhancers: ['interceptors'],
     //cors: {
     //  origin: '*', // Configura el origen de la solicitud permitido en producción
     //  credentials: true, // Habilita el intercambio de cookies en producción
@@ -104,8 +105,15 @@ const baseImports = [
 //isProduction ? null : baseImports.push(TelegramModule);
 
 @Module({
+  providers: [
+    //{
+    //  provide: APP_INTERCEPTOR,
+    //  useClass: GraphqlResponseInterceptor,
+    //},
+    AppService,
+    AppInit,
+  ],
   imports: baseImports,
   controllers: [AppController],
-  providers: [AppService, AppInit],
 })
 export class AppModule {}
