@@ -105,14 +105,7 @@ const baseImports = [
 //isProduction ? null : baseImports.push(TelegramModule);
 
 @Module({
-  providers: [
-    //{
-    //  provide: APP_INTERCEPTOR,
-    //  useClass: GraphqlResponseInterceptor,
-    //},
-    AppService,
-    AppInit,
-  ],
+  providers: [AppService, AppInit],
   imports: baseImports,
   controllers: [AppController],
 })

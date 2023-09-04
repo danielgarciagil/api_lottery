@@ -83,3 +83,8 @@ Implementar la seed en NestJs
 ## Docker
 
 ``` docker build -t prueba . ```
+
+## Montarlo en producion
+0- Configurar variable de entornos
+1- ```docker network create my_network```
+2- ```docker-compose -f docker-compose.prod.yml up -d```

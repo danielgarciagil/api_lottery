@@ -1,38 +1,23 @@
-#
-#version: '3'
-#
-#
-#services:
-#  #db:
-#  #  image: postgres:14.4
-#  #  restart: always
-#  #  ports:
-#  #    - "${DB_PORT}:${DB_PORT}"
-#  #  environment:
-#  #    POSTGRES_PASSWORD: ${DB_PASSWORD}
-#  #    POSTGRES_DB: ${DB_NAME}
-#  #  container_name: anylistDB
-#  #  volumes:
-#  #    - ./postgres:/var/lib/postgresql/data
-#
-#  prueba_grapql:
-#    #depends_on:
-#    #  - db
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    image: nest-graphql
-#    container_name: AnylistApp
-#    restart: always # reiniciar el contenedor si se detiene
-#    ports:
-#      - "${PORT}:${PORT}"
-#
-#    environment:
-#      DB_PASSWORD: ${DB_PASSWORD}
-#      DB_NAME: ${DB_NAME}
-#      DB_HOST: ${DB_HOST}
-#      DB_PORT: ${DB_PORT}
-#      DB_USERNAME: ${DB_USERNAME}
-#      JWT_SECRET: ${JWT_SECRET}
-#      PORT: ${PORT}
-#
+version: '3'
+services:
+  api_lottery:
+    image: carlosdiazz08/api_lottery:1.0.0
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    # Otras configuraciones de contenedor
+
+  cron_api:
+    image: carlosdiazz08/cron_api:1.0.1
+    restart: always
+    depends_on:
+      - api_lottery
+    environment:
+      - URL_API=http://api_lottery:${PORT}/graphql
+    # Otras configuraciones de contenedor
+
+networks:
+  my_network:
+    external: true
