@@ -5,12 +5,6 @@ FROM node:20-bullseye as build
 RUN apt update && apt install tzdata -y
 ENV TZ="America/New_York"
 
-# Instala el navegador
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable
-
 # Establece el directorio de trabajo
 WORKDIR /app
 
@@ -27,7 +21,14 @@ RUN npm run build
 # Etapa 2: Creación de la imagen final
 FROM node:20-bullseye
 
+# Instala el navegador
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable
+
 # Configurar las variables de entorno
+ENV TZ="America/New_York"
 ENV PORT="3000"
 ENV STATE="DEV"
 ENV DB_PASSWORD="1234"

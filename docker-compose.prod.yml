@@ -1,7 +1,7 @@
 version: '3'
 services:
   api_lottery:
-    image: carlosdiazz08/api_lottery:1.0.0
+    image: carlosdiazz08/api_lottery:latest
     restart: always
     env_file:
       - .env
@@ -10,7 +10,7 @@ services:
     # Otras configuraciones de contenedor
 
   cron_api:
-    image: carlosdiazz08/cron_api:1.0.1
+    image: carlosdiazz08/cron_api:latest
     restart: always
     depends_on:
       - api_lottery

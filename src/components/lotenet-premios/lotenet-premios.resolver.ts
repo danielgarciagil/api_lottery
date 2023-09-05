@@ -49,7 +49,7 @@ export class LotenetPremiosResolver {
     description: 'Ver un premio especifico de lotenet',
   })
   async findOne(
-    @CurrentUser([VALID_PERMISO_ACCION.LOTENET_PREMIO_VIEW]) user: User,
+    //@CurrentUser([VALID_PERMISO_ACCION.LOTENET_PREMIO_VIEW]) user: User,
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
   ): Promise<LotenetPremio> {
     return this.lotenetPremiosService.findOne(id);

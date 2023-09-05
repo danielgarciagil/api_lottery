@@ -33,6 +33,7 @@ export class SeleniumWebdriver {
         //.withCapabilities(capabilities)
         .forBrowser(Browser.CHROME)
         .setChromeOptions(options)
+        //.withTimeouts({ pageLoad: 10000 })
         .build();
       await this.driver.manage().deleteAllCookies();
       //await this.driver.executeScript('window.sessionStorage.clear();');

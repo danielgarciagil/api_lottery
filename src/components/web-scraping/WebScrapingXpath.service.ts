@@ -68,9 +68,8 @@ export class WebScrapingXpathService {
   ): Promise<string> {
     for (const xpath_Actual_fecha of arr_xpath_fechas[index_actual]) {
       try {
-        const xpath_fecha = await this.seleniumWebdriver.buscar_xpath(
-          xpath_Actual_fecha,
-        );
+        const xpath_fecha =
+          await this.seleniumWebdriver.buscar_xpath(xpath_Actual_fecha);
         const value_fecha = await xpath_fecha.getText();
         const fecha = validarFechaQueSeaDeHoy(value_fecha, arrFechasHoy);
 
@@ -97,9 +96,8 @@ export class WebScrapingXpathService {
     let digito = '';
     for (const xpath_digito_actual of arr_xpath_digitos[index_actual]) {
       try {
-        const message = await this.seleniumWebdriver.buscar_xpath(
-          xpath_digito_actual,
-        );
+        const message =
+          await this.seleniumWebdriver.buscar_xpath(xpath_digito_actual);
         const value = quitar_palabras_de_digitos(await message.getText());
         digito += value; //todo
       } catch (error) {
