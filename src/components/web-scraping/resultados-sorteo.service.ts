@@ -106,10 +106,6 @@ export class ResultadosSorteoService {
     const fecha_a_publicar = fecha_actual();
     let message = '';
     let error = true;
-    this.telegramService.sendNotificaciones({
-      error,
-      message: 'PRUEBAAAAAA 2',
-    });
     for (let i = 0; i < sorteoABuscar.numeros_intentos; i++) {
       try {
         const responseSorteo =
@@ -153,9 +149,10 @@ export class ResultadosSorteoService {
     this.logger.warn(newMessage.replace(/\n/g, '')); //todo probar
 
     //TODO solo si hay un error mandare un mensaje
-    if (error) {
-      this.telegramService.sendNotificaciones({ error, message: newMessage });
-    }
+    //TODO HABILITAR que sea solo con error
+    //if (error) {
+    this.telegramService.sendNotificaciones({ error, message: newMessage });
+    //}
 
     return {
       error,
