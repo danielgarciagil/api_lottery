@@ -13,6 +13,7 @@ import { LotenetPremio } from './entities/lotenet-premio.entity';
 import { PaginationArgs } from './../../common/dto/args';
 import { ResponsePropioGQl } from './../../common/response';
 import { MESSAGE } from './../../config/messages';
+import { IdDiaArgs } from 'src/common/dto/args/pagination.args';
 
 @Injectable()
 export class LotenetPremiosService {
@@ -40,11 +41,27 @@ export class LotenetPremiosService {
     }
   }
 
-  async findAll(paginationArgs: PaginationArgs): Promise<LotenetPremio[]> {
+  async findAll(
+    paginationArgs: PaginationArgs,
+    idDiaArgs: IdDiaArgs,
+  ): Promise<LotenetPremio[]> {
     const { limit, offset } = paginationArgs;
+    const { id_dia } = idDiaArgs;
+    if (id_dia == 0) {
+      return await this.lotenetPremioRepository.find({
+        take: limit,
+        skip: offset,
+      });
+    }
+    //TODO Probar que solo devuelva lo del dia
     return await this.lotenetPremioRepository.find({
-      take: limit,
-      skip: offset,
+      where: {
+        premio_dia: {
+          dias: {
+            id: id_dia,
+          },
+        },
+      },
     });
   }
 

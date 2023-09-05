@@ -265,7 +265,7 @@ type Query {
   findSorteoABuscar(id: Int!): SorteoABuscar!
 
   """Para ver todos los premios configurados"""
-  allLotenetPremios(offset: Int = 0, limit: Int = 10): [LotenetPremio!]!
+  allLotenetPremios(offset: Int = 0, limit: Int = 10, id_dia: Int = 0): [LotenetPremio!]!
 
   """Ver un premio especifico de lotenet"""
   findLotenetPremio(id: Int!): LotenetPremio!

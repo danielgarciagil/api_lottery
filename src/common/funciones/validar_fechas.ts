@@ -61,7 +61,7 @@ export const fecha_actual = (): string => {
   return fechaActual;
 };
 
-export const convertir_formato_date = (date: string): string => {
+export const convertir_formato_date = (date: Date): string => {
   const fechaActual = moment.utc(date).format('DD-MM-YYYY');
   return fechaActual;
 };

@@ -1,16 +1,17 @@
-import { UseGuards } from '@nestjs/common';
+//import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 //PROPIO
-import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
+//import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { ResponsePropioGQl } from './../../common/response';
 import { PremiosAutomaticoLotenetService } from './premios-automatico-lotenet.service';
-import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { VALID_PERMISO_ACCION } from 'src/config/valid-roles';
-import { User } from '../users/entities/user.entity';
+//import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+//import { VALID_PERMISO_ACCION } from 'src/config/valid-roles';
+//import { User } from '../users/entities/user.entity';
 import { BuscarByLotenerPremioInput } from './dto/buscarByLotenetPremio.input';
 
-@UseGuards(JwtAuthGuard)
+//TODO por el cron
+//@UseGuards(JwtAuthGuard)
 @Resolver(() => ResponsePropioGQl)
 export class PremiosAutomaticoLotenetResolver {
   constructor(
@@ -22,7 +23,7 @@ export class PremiosAutomaticoLotenetResolver {
     description: 'Para premiar Automaticamentnte en Lotenet',
   })
   async generar_premio_automatico(
-    @CurrentUser([VALID_PERMISO_ACCION.LOTENET_PREMIO_CREATE]) user: User, //todo revisar permiso
+    //@CurrentUser([]) user: User, //todo revisar permiso
     @Args('buscarByLotenetPremio')
     buscarByLotenetPremio: BuscarByLotenerPremioInput,
   ): Promise<ResponsePropioGQl> {

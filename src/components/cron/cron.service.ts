@@ -50,9 +50,9 @@ export class CronService {
   // A las 12:00 AM cargos los nuevos cron y borros los anteriores
   async iniciar_tareas() {
     //this.borrar_cron_cargar_nuevos();
-    cron.schedule('0 2 * * *', async () => {
-      await this.borrar_cron_cargar_nuevos();
-    });
+    //cron.schedule('0 2 * * *', async () => {
+    //  await this.borrar_cron_cargar_nuevos();
+    //});
   }
 
   //Borro los cron existentes y creo nuevos

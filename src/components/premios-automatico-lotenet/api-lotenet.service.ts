@@ -67,7 +67,7 @@ export class ApiLotenetService {
     const inputfecha = await this.seleniumWebdriver.buscar_xpath(
       LOTENET_XPATH.input_fecha,
     );
-    const fecha = convertir_formato_date(resultado.fecha.toISOString());
+    const fecha = convertir_formato_date(resultado.fecha);
     await inputfecha.sendKeys(fecha);
     await pausaBySeg(2);
 
@@ -153,6 +153,7 @@ export class ApiLotenetService {
   ): Promise<ResponsePropioGQl> {
     try {
       this.seleniumWebdriver = new SeleniumWebdriver();
+      //TODO en consola todo,
       await this.seleniumWebdriver.startDriver(true);
 
       await this.iniciar_seccion(lotenetPremio.plataforma);

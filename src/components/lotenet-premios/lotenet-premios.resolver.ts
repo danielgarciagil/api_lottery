@@ -12,12 +12,14 @@ import { ResponsePropioGQl } from './../../common/response';
 import { CurrentUser } from './../../auth/decorators/current-user.decorator';
 import { VALID_PERMISO_ACCION } from './../../config/valid-roles';
 import { User } from '../users/entities/user.entity';
+import { IdDiaArgs } from 'src/common/dto/args/pagination.args';
 
-@UseGuards(JwtAuthGuard)
+//@UseGuards(JwtAuthGuard)
 @Resolver(() => LotenetPremio)
 export class LotenetPremiosResolver {
   constructor(private readonly lotenetPremiosService: LotenetPremiosService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => LotenetPremio, {
     name: 'createLotenetPremio',
     description: 'Para crear un Premio Automatico en Lotenet',
@@ -35,10 +37,11 @@ export class LotenetPremiosResolver {
     description: 'Para ver todos los premios configurados',
   })
   async findAll(
-    @CurrentUser([VALID_PERMISO_ACCION.LOTENET_PREMIO_VIEW]) user: User,
+    //@CurrentUser([VALID_PERMISO_ACCION.LOTENET_PREMIO_VIEW]) user: User,
     @Args() paginationArgs: PaginationArgs,
+    @Args() idDiaArgs: IdDiaArgs,
   ): Promise<LotenetPremio[]> {
-    return this.lotenetPremiosService.findAll(paginationArgs);
+    return this.lotenetPremiosService.findAll(paginationArgs, idDiaArgs);
   }
 
   @Query(() => LotenetPremio, {
@@ -52,6 +55,7 @@ export class LotenetPremiosResolver {
     return this.lotenetPremiosService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => LotenetPremio, {
     name: 'updateLotenetPremio',
     description: 'Actualizar una configuracion de premio de Lotenet',
@@ -67,6 +71,7 @@ export class LotenetPremiosResolver {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => ResponsePropioGQl, {
     name: 'removeLotenetPremio',
     description: 'Eliminar un LotenetPremio',
