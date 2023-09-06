@@ -32,7 +32,7 @@ export class Resultado {
   @Field(() => Sorteo)
   @ManyToOne(() => Sorteo, (sorteo) => sorteo.resultados, { lazy: true })
   @JoinColumn({ name: 'id_sorteo' })
-  sorteo?: Sorteo;
+  sorteo: Sorteo;
 
   @Field(() => Boolean)
   @Column({ type: 'boolean', default: true })

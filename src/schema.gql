@@ -493,7 +493,6 @@ input CreateResultadoInput {
   numeros_ganadores: [Int!]!
   fecha: String!
   id_sorteo: Int!
-  id_user: Int!
   activo: Boolean
 }
 
@@ -501,7 +500,6 @@ input UpdateResultadoInput {
   numeros_ganadores: [Int!]
   fecha: String
   id_sorteo: Int
-  id_user: Int
   activo: Boolean
   id: Int!
 }

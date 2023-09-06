@@ -27,7 +27,7 @@ export class ResultadosResolver {
     @CurrentUser([VALID_PERMISO_ACCION.RESULTADO_CREATE]) user: User,
     @Args('createResultadoInput') createResultadoInput: CreateResultadoInput,
   ): Promise<Resultado> {
-    return this.resultadosService.create(createResultadoInput);
+    return this.resultadosService.create(createResultadoInput, user);
   }
 
   @Query(() => [Resultado], {

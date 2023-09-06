@@ -40,7 +40,6 @@ import {
 import { AppInit } from './app-init.service';
 
 const isProduction = process.env.STATE === 'PROD';
-console.log(isProduction);
 
 const apolloPlugin = isProduction
   ? ApolloServerPluginLandingPageProductionDefault

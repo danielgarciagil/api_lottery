@@ -43,7 +43,7 @@ export class PasarDataService implements OnModuleInit {
       this.resultadoSerice.createAutomatico({
         fecha: fecha_resultados,
         id_sorteo: id_sorteo,
-        id_user: 1,
+        //id_user: 1,
         numeros_ganadores: arr_numneros,
       });
       console.log('Publioque');

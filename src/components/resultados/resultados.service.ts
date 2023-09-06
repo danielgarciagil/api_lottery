@@ -20,6 +20,7 @@ import {
   FilterResultadoRestApi,
 } from './dto/filter-resultado.input';
 import { agregar_digitos } from 'src/common/funciones/agregarDigitos';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class ResultadosService {
@@ -32,9 +33,9 @@ export class ResultadosService {
   //TODO revisar que cuando se manda automatico dos veces, se pu blica dos veces
   async prevCreate(
     createResultadoInput: CreateResultadoInput,
+    id_user = 1,
   ): Promise<Resultado> {
-    const { id_sorteo, fecha, numeros_ganadores, id_user } =
-      createResultadoInput;
+    const { id_sorteo, fecha, numeros_ganadores } = createResultadoInput;
     //! Aqui validos los numeros a publicar con las reglas del juego
     await this.verificar_reglas_sorteo(id_sorteo, numeros_ganadores);
 
@@ -45,16 +46,19 @@ export class ResultadosService {
       fecha: fecha,
       numeros_ganadores: numeros_ganadores,
       sorteo: { id: id_sorteo },
-      user: { id: id_user },
+      user: { id: id_user }, //Si es automatico se va a crear con el id uno
     });
 
     await this.resultadoRepository.save(newResultado);
     return this.findOne(newResultado.id);
   }
 
-  async create(createResultadoInput: CreateResultadoInput): Promise<Resultado> {
+  async create(
+    createResultadoInput: CreateResultadoInput,
+    user: User,
+  ): Promise<Resultado> {
     try {
-      return await this.prevCreate(createResultadoInput);
+      return await this.prevCreate(createResultadoInput, user.id);
     } catch (error) {
       throw new UnprocessableEntityException(error?.message);
     }

@@ -119,7 +119,6 @@ export class UsersService {
     } catch (error) {
       await queryRunner.rollbackTransaction();
       await queryRunner.release();
-      console.log(error);
       throw new UnprocessableEntityException(
         MESSAGE.COMUN_NO_SE_PUDO_ACTUALIZAR,
       );

@@ -16,6 +16,8 @@ services:
       - api_lottery
     environment:
       - URL_API=http://api_lottery:${PORT}/graphql
+      - BUSCAR_SORTEO=true
+      - BUSCAR_PREMIO=false
     # Otras configuraciones de contenedor
 
 networks:
