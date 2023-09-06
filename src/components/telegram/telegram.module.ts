@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 //PROPIO
-//import { TelegramServiceInit } from './telegram-init.service';
+import { TelegramServiceInit } from './telegram-init.service';
 import { TelegramService } from './telegram.service';
 import { TelegramUser } from './entities/user_telegram.entity';
 import { UserTelegramService } from './user_telegram.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([TelegramUser])],
-  providers: [TelegramService, UserTelegramService],
+  providers: [TelegramService, UserTelegramService, TelegramServiceInit],
   exports: [TelegramService],
 })
 export class TelegramModule {}
