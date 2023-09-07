@@ -1,4 +1,6 @@
 import { NestFactory } from '@nestjs/core';
+import * as express from 'express';
+import * as path from 'path';
 //import { ValidationPipe } from '@nestjs/common';
 
 //Modulos Propios
@@ -14,6 +16,9 @@ async function bootstrap() {
   //  }),
   //);
   //app.useGlobalInterceptors(new GraphqlResponseInterceptor());
+
+  // Configurar Express para servir archivos estáticos
+  app.use(express.static(path.join(__dirname, '../public')));
 
   await app.listen(process.env.PORT || 9999, () => {
     console.log(
