@@ -104,9 +104,9 @@ export class PremiosAutomaticoLotenetService {
     const newMessage = `\n\nMESSAGE => ${message}. \n\nLOTENETPREMIO => ${lotenetPremio.name}.`;
     this.logger.warn(newMessage.replace(/\n/g, ''));
     //TODO HABILITAR que sea solo con error
-    //if (error) {
-    this.telegramService.sendNotificaciones({ error, message: newMessage });
-    //}
+    if (error) {
+      this.telegramService.sendNotificaciones({ error, message: newMessage });
+    }
 
     return {
       error,

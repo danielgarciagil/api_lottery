@@ -150,9 +150,9 @@ export class ResultadosSorteoService {
 
     //TODO solo si hay un error mandare un mensaje
     //TODO HABILITAR que sea solo con error
-    //if (error) {
-    this.telegramService.sendNotificaciones({ error, message: newMessage });
-    //}
+    if (error) {
+      this.telegramService.sendNotificaciones({ error, message: newMessage });
+    }
 
     return {
       error,
