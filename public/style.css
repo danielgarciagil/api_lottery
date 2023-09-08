@@ -3,7 +3,7 @@
   }
 
   body {
-    background-color: #ffdfdf; /* Cambia este color al que prefieras */
+    background-color: #222020; /* Cambia este color al que prefieras */
   }
   
   .footer {
@@ -23,14 +23,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgb(255, 118, 26);
-    color: rgb(255, 158, 40);
+    border: 2px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
     transition: background-color 0.2s, color 0.2s;
   }
   
   .button:hover {
     cursor: pointer;
-    background-color: rgb(250, 82, 31);;
+    background-color: rgb(255, 255, 255);;
     color: white;
     transition: background-color 0.2s, color 0.2s;
   }
