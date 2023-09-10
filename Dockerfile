@@ -54,7 +54,11 @@ COPY --from=build /app /app
 # Establece el directorio de trabajo
 WORKDIR /app
 
-RUN 
+# Dale permisos de ejecución al script
+RUN chmod +x /app/borrar_cache.sh
+
+# Agrega una tarea cron para ejecutar el script todos los días a las 12:10
+RUN echo "5 0 * * * /app/borrar_cache.sh" > /etc/crontab
 
 # Comando para iniciar la aplicación en producción
 CMD ["npm", "run", "start:prod"]
