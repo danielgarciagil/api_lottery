@@ -63,9 +63,9 @@ export class TelegramService {
       //};
       //await axios.post(url, data);
     } catch (error) {
-      this.logger.error(
-        `NO SE ENVIO LA NOTIFICACION ERROR =>${error?.message} CHATID => ${chatId}`,
-      );
+      //this.logger.error(
+      //  `NO SE ENVIO LA NOTIFICACION ERROR =>${error?.message} CHATID => ${chatId}`,
+      //);
     }
   }
 
@@ -78,7 +78,7 @@ export class TelegramService {
         await this.sendMessage(user.user_id, newMessage); //todo eso no va aqui
       }
     } catch (error) {
-      this.logger.error(`NO SE PUDO ENVIAR NIGNUN MENSAJE ${error?.message}`);
+      //this.logger.error(`NO SE PUDO ENVIAR NIGNUN MENSAJE ${error?.message}`);
     }
   }
 

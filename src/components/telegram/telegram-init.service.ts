@@ -8,6 +8,10 @@ export class TelegramServiceInit implements OnModuleInit {
 
   async onModuleInit() {
     this.logger.debug('INICIO EL BOT DE TELEGRAM DE NOTIFICACIONES');
-    this.telegramService.init();
+    await this.telegramService.init();
+    await this.telegramService.sendNotificaciones({
+      error: false,
+      message: 'SE REINICIO EL SERVER',
+    });
   }
 }

@@ -8,6 +8,6 @@ export class CronServiceInit implements OnModuleInit {
   constructor(private readonly cronService: CronService) {}
 
   async onModuleInit() {
-    //await this.cronService.iniciar_tareas();
+    await this.cronService.iniciar_tareas();
   }
 }
