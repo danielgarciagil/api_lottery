@@ -76,7 +76,7 @@ export class PremiosAutomaticoLotenetService {
         //SI ES QUE ESTA PREMIADA MANDO A PARA
         if (errorCatche?.message === 'YA ESTA PREMIADA ESTA LOTERIA') {
           message = errorCatche?.message;
-          error = true;
+          error = false;
           break;
         }
         //console.log(LotenetPremio);
