@@ -10,6 +10,6 @@ export class ResultadosController {
   async findResultados(
     @Query() params: FilterResultadoRestApi,
   ): Promise<string[]> {
-    return this.resultadosServices.devolverResultadoLotenet(params);
+    return await this.resultadosServices.devolverResultadoLotenet(params);
   }
 }

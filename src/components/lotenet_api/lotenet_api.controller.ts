@@ -1,11 +1,18 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { LotenetApiService } from './lotenet_api.service';
 import { LotenetApi } from './entities/lotenet_api.entity';
-import { FilterSorteo } from './dto/create-lotenet_api.input';
+import {
+  FilterSorteo,
+  FilterSorteoHaiti,
+} from './dto/create-lotenet_api.input';
+import { Loto3_4Service } from './loto3_4.service';
 
 @Controller('lotenet-api')
 export class LotenetApiController {
-  constructor(private readonly lotenetApiService: LotenetApiService) {}
+  constructor(
+    private readonly lotenetApiService: LotenetApiService,
+    private readonly loto3_4Service: Loto3_4Service,
+  ) {}
 
   @Get()
   async findAll(): Promise<LotenetApi[]> {
@@ -19,5 +26,10 @@ export class LotenetApiController {
   ): Promise<LotenetApi> {
     // Todo
     return this.lotenetApiService.findOneByName(filterSorteo);
+  }
+
+  @Get('findByHaiti')
+  async findHaiti(@Query() filterSorteo: FilterSorteoHaiti) {
+    return await this.loto3_4Service.numerosHaiti(filterSorteo);
   }
 }
