@@ -193,6 +193,13 @@ type RESPONSE_BY_XPATH {
   error: Boolean
 }
 
+type LotenetHaitiApi {
+  id: ID!
+  name: String!
+  id_sorteo_pick3: Int!
+  id_sorteo_pick4: Int!
+}
+
 type Query {
   revaliteToken: AuthResponse!
 
@@ -293,6 +300,8 @@ type Query {
 
   """Para buscar un Lotenert Api especifico"""
   findLotenetApi(id: Int!): LotenetApi!
+  allLotenetHaitiApi(offset: Int = 0, limit: Int = 10): [LotenetHaitiApi!]!
+  findLotenetHaitiApi(id: Int!): LotenetHaitiApi!
 }
 
 type Mutation {
@@ -407,6 +416,9 @@ type Mutation {
   """Para actualizar un lotenetApi"""
   updateLotenetApi(updateLotenetApiInput: UpdateLotenetApiInput!): LotenetApi!
   removeLotenetApi(id: Int!): LotenetApi!
+  createLotenetHaitiApi(createLotenetHaitiApiInput: CreateLotenetHaitiApiInput!): LotenetHaitiApi!
+  updateLotenetHaitiApi(updateLotenetHaitiApiInput: UpdateLotenetHaitiApiInput!): LotenetHaitiApi!
+  removeLotenetHaitiApi(id: Int!): LotenetHaitiApi!
 
   """Para generar los resultados de un Sorteo en forma Automatica"""
   generarResultadoAutomatico(buscarBySorteoaBuscarInput: BuscarBySorteoaBuscarInput!): ResponsePropioGQl!
@@ -635,6 +647,19 @@ input UpdateLotenetApiInput {
   name: String
   longitud: Int
   id_sorteo: Int
+  id: Int!
+}
+
+input CreateLotenetHaitiApiInput {
+  name: String!
+  id_sorteo_pick3: Int!
+  id_sorteo_pick4: Int!
+}
+
+input UpdateLotenetHaitiApiInput {
+  name: String
+  id_sorteo_pick3: Int
+  id_sorteo_pick4: Int
   id: Int!
 }
 

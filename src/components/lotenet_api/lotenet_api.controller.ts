@@ -6,6 +6,7 @@ import {
   FilterSorteoHaiti,
 } from './dto/create-lotenet_api.input';
 import { Loto3_4Service } from './loto3_4.service';
+import { LotenetHaitiApi } from '../lotenet_haiti_api/entities/lotenet_haiti_api.entity';
 
 @Controller('lotenet-api')
 export class LotenetApiController {
@@ -18,6 +19,12 @@ export class LotenetApiController {
   async findAll(): Promise<LotenetApi[]> {
     // Todo
     return this.lotenetApiService.findAll({ limit: 999, offset: 0 });
+  }
+
+  @Get('haiti-api')
+  async findAllHaiti(): Promise<LotenetHaitiApi[]> {
+    // Todo
+    return this.lotenetApiService.findAllHaiti({ limit: 100, offset: 0 });
   }
 
   @Get('find')

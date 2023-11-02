@@ -18,12 +18,15 @@ import { LotenetApi } from './entities/lotenet_api.entity';
 import { MESSAGE } from './../../config/messages';
 import { PaginationArgs } from './../../common/dto/args';
 import { ResponsePropioGQl } from './../../common/response';
+import { LotenetHaitiApi } from '../lotenet_haiti_api/entities/lotenet_haiti_api.entity';
+import { LotenetHaitiApiService } from '../lotenet_haiti_api/lotenet_haiti_api.service';
 
 @Injectable()
 export class LotenetApiService {
   constructor(
     @InjectRepository(LotenetApi)
     private readonly lotenetApiRepository: Repository<LotenetApi>,
+    private readonly lotenetHaitiApiService: LotenetHaitiApiService,
   ) {}
 
   validar_name_api(name: string): string {
@@ -61,6 +64,12 @@ export class LotenetApiService {
       take: limit,
       skip: offset,
     });
+  }
+
+  async findAllHaiti(
+    paginationArgs: PaginationArgs,
+  ): Promise<LotenetHaitiApi[]> {
+    return this.lotenetHaitiApiService.findAll(paginationArgs);
   }
 
   async findOneByName(filterSorteo: FilterSorteo): Promise<LotenetApi> {

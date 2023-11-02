@@ -36,6 +36,7 @@ import {
   PremiosAutomaticoLotenetModule,
   TelegramModule,
   LotenetApiModule,
+  LotenetHaitiApiModule,
 } from './../components';
 import { AppInit } from './app-init.service';
 
@@ -94,6 +95,7 @@ const baseImports = [
   ResponseLotenetPremioModule,
   PremiosDiasModule,
   LotenetApiModule,
+  LotenetHaitiApiModule,
   CronModule,
   WebScrapingModule,
   PremiosAutomaticoLotenetModule,

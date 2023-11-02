@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
-
 export class FirstMigrations1693781423529 implements MigrationInterface {
   name = 'FirstMigrations1693781423529';
-
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `CREATE TABLE "JUEGO" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "abreviatura" character varying NOT NULL, "descripcion" character varying NOT NULL, "posiciones" integer NOT NULL, "rango_minimo" integer NOT NULL, "rango_maximo" integer NOT NULL, "activo" boolean NOT NULL DEFAULT true, CONSTRAINT "PK_fec785628b9b70736e088a16e8b" PRIMARY KEY ("id"))`,
@@ -137,7 +135,6 @@ export class FirstMigrations1693781423529 implements MigrationInterface {
       `ALTER TABLE "usuario_role" ADD CONSTRAINT "FK_01b5a4232f18641ecd38f7d239b" FOREIGN KEY ("uSERId") REFERENCES "USER"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
   }
-
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `ALTER TABLE "usuario_role" DROP CONSTRAINT "FK_01b5a4232f18641ecd38f7d239b"`,

@@ -8,10 +8,14 @@ import {
   LotoHaitiFormato,
 } from './dto/create-lotenet_api.input';
 import { ResultadosService } from '../resultados/resultados.service';
+import { LotenetHaitiApiService } from '../lotenet_haiti_api/lotenet_haiti_api.service';
 
 @Injectable()
 export class Loto3_4Service {
-  constructor(private readonly resultadoService: ResultadosService) {}
+  constructor(
+    private readonly resultadoService: ResultadosService,
+    private readonly lotenetHaitiApiService: LotenetHaitiApiService,
+  ) {}
 
   validarArreglo(arr: number[], numeros_a_validar: number): undefined {
     if (arr.length !== numeros_a_validar) {
@@ -31,51 +35,12 @@ export class Loto3_4Service {
   }
 
   //TODO colocar esto dinamico en una tabla/
-  saberIdLoto3y4(name: string): LotoHaitiFormato {
-    if (name === 'fl_md_haiti_api') {
-      return {
-        id_sorteo_pick3: 57,
-        id_sorteo_pick4: 58,
-      };
-    }
-    if (name === 'fl_pm_haiti_api') {
-      return {
-        id_sorteo_pick3: 66,
-        id_sorteo_pick4: 65,
-      };
-    }
-    if (name === 'ny_md_haiti_api') {
-      return {
-        id_sorteo_pick3: 62,
-        id_sorteo_pick4: 59,
-      };
-    }
-    if (name === 'ny_pm_haiti_api') {
-      return {
-        id_sorteo_pick3: 67,
-        id_sorteo_pick4: 68,
-      };
-    }
-    if (name === 'ga_md_haiti_api') {
-      return {
-        id_sorteo_pick3: 61,
-        id_sorteo_pick4: 60,
-      };
-    }
-    if (name === 'ga_pm_haiti_api') {
-      return {
-        id_sorteo_pick3: 63,
-        id_sorteo_pick4: 64,
-      };
-    }
-    if (name === 'ga_nt_haiti_api') {
-      return {
-        id_sorteo_pick3: 70,
-        id_sorteo_pick4: 69,
-      };
-    }
-
-    throw new BadRequestException('NO SE ENCONTRO ESTE API');
+  async saberIdLoto3y4(name: string): Promise<LotoHaitiFormato> {
+    const apiHaiti = await this.lotenetHaitiApiService.findOneByName(name);
+    return {
+      id_sorteo_pick3: apiHaiti.id_sorteo_pick3,
+      id_sorteo_pick4: apiHaiti.id_sorteo_pick4,
+    };
   }
 
   async devolverArregloResultadosGandor(
@@ -95,7 +60,7 @@ export class Loto3_4Service {
 
   async numerosHaiti(filterSorteo: FilterSorteoHaiti) {
     //Aqui tengo los id de cada sorteo estatico
-    const idsHaiti = this.saberIdLoto3y4(filterSorteo.name);
+    const idsHaiti = await this.saberIdLoto3y4(filterSorteo.name);
 
     const id_pick3 = idsHaiti.id_sorteo_pick3;
     const id_pick4 = idsHaiti.id_sorteo_pick4;
