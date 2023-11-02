@@ -30,11 +30,18 @@ export class Loto3_4Service {
     return resultado;
   }
 
+  //TODO colocar esto dinamico en una tabla/
   saberIdLoto3y4(name: string): LotoHaitiFormato {
     if (name === 'fl_md_haiti_api') {
       return {
         id_sorteo_pick3: 57,
         id_sorteo_pick4: 58,
+      };
+    }
+    if (name === 'fl_pm_haiti_api') {
+      return {
+        id_sorteo_pick3: 66,
+        id_sorteo_pick4: 65,
       };
     }
     if (name === 'ny_md_haiti_api') {
@@ -43,12 +50,31 @@ export class Loto3_4Service {
         id_sorteo_pick4: 59,
       };
     }
+    if (name === 'ny_pm_haiti_api') {
+      return {
+        id_sorteo_pick3: 67,
+        id_sorteo_pick4: 68,
+      };
+    }
     if (name === 'ga_md_haiti_api') {
       return {
         id_sorteo_pick3: 61,
         id_sorteo_pick4: 60,
       };
     }
+    if (name === 'ga_pm_haiti_api') {
+      return {
+        id_sorteo_pick3: 63,
+        id_sorteo_pick4: 64,
+      };
+    }
+    if (name === 'ga_nt_haiti_api') {
+      return {
+        id_sorteo_pick3: 70,
+        id_sorteo_pick4: 69,
+      };
+    }
+
     throw new BadRequestException('NO SE ENCONTRO ESTE API');
   }
 

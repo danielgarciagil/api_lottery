@@ -4791,8 +4791,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 2218,
-									"top": 2017,
+									"left": 2490,
+									"top": 2048,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -4809,7 +4809,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 2638,
-									"top": 2032,
+									"top": 2047,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -4825,8 +4825,8 @@
 										"$ref": "AAAAAAGH/PhUkR1EJ+A="
 									},
 									"font": "Arial;13;0",
-									"left": 2218,
-									"top": 1890,
+									"left": 2343,
+									"top": 2047,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -4843,7 +4843,7 @@
 								"$ref": "AAAAAAGGS4tLRUYTuBo="
 							},
 							"lineStyle": 2,
-							"points": "2664:2024;2233:2024;2233:1871",
+							"points": "2664:2039;2318:2039",
 							"nameLabel": {
 								"$ref": "AAAAAAGH/PhUkR1FGtg="
 							},
@@ -4872,10 +4872,10 @@
 									},
 									"font": "Arial;15;1",
 									"left": 2120,
-									"top": 1789,
-									"width": 161.5859375,
+									"top": 1957,
+									"width": 199.25537109375,
 									"height": 15,
-									"text": "lotenet_api"
+									"text": "lotenet_haiti"
 								},
 								{
 									"_type": "ERDColumnCompartmentView",
@@ -4898,23 +4898,8 @@
 											},
 											"font": "Arial;15;0",
 											"left": 2125,
-											"top": 1814,
-											"width": 151.5859375,
-											"height": 15
-										},
-										{
-											"_type": "ERDColumnView",
-											"_id": "AAAAAAGH/PWc/h0M6cw=",
-											"_parent": {
-												"$ref": "AAAAAAGH/PVQhRz5rtU="
-											},
-											"model": {
-												"$ref": "AAAAAAGH/PWc6x0J4ic="
-											},
-											"font": "Arial;15;0",
-											"left": 2125,
-											"top": 1831,
-											"width": 151.5859375,
+											"top": 1982,
+											"width": 189.25537109375,
 											"height": 15
 										},
 										{
@@ -4928,22 +4913,37 @@
 											},
 											"font": "Arial;15;0",
 											"left": 2125,
-											"top": 1848,
-											"width": 151.5859375,
+											"top": 1999,
+											"width": 189.25537109375,
+											"height": 15
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGLjWFSnNeZzLg=",
+											"_parent": {
+												"$ref": "AAAAAAGH/PVQhRz5rtU="
+											},
+											"model": {
+												"$ref": "AAAAAAGLjWFShdeW6kg="
+											},
+											"font": "Arial;15;0",
+											"left": 2125,
+											"top": 2016,
+											"width": 189.25537109375,
 											"height": 15
 										}
 									],
 									"font": "Arial;15;0",
 									"left": 2120,
-									"top": 1809,
-									"width": 161.5859375,
+									"top": 1977,
+									"width": 199.25537109375,
 									"height": 59
 								}
 							],
 							"font": "Arial;15;0",
 							"left": 2120,
-							"top": 1784,
-							"width": 161.5859375,
+							"top": 1952,
+							"width": 199.25537109375,
 							"height": 88,
 							"nameLabel": {
 								"$ref": "AAAAAAGH/PVQhRz4gKk="
@@ -5293,6 +5293,151 @@
 							},
 							"columnCompartment": {
 								"$ref": "AAAAAAGI3pymB455Kzg="
+							}
+						},
+						{
+							"_type": "ERDEntityView",
+							"_id": "AAAAAAGLjWB9ldd1WcU=",
+							"_parent": {
+								"$ref": "AAAAAAFLzntJC6ElOqo="
+							},
+							"model": {
+								"$ref": "AAAAAAGH/PVQhRz15J8="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGLjWB9ldd2dhE=",
+									"_parent": {
+										"$ref": "AAAAAAGLjWB9ldd1WcU="
+									},
+									"font": "Arial;15;1",
+									"left": 2112,
+									"top": 1813,
+									"width": 199.25537109375,
+									"height": 15,
+									"text": "lotenet_haiti"
+								},
+								{
+									"_type": "ERDColumnCompartmentView",
+									"_id": "AAAAAAGLjWB9ldd3cRY=",
+									"_parent": {
+										"$ref": "AAAAAAGLjWB9ldd1WcU="
+									},
+									"model": {
+										"$ref": "AAAAAAGH/PVQhRz15J8="
+									},
+									"subViews": [
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGLjWB9ldd4i14=",
+											"_parent": {
+												"$ref": "AAAAAAGLjWB9ldd3cRY="
+											},
+											"model": {
+												"$ref": "AAAAAAGH/PV2nh0CQDU="
+											},
+											"font": "Arial;15;0",
+											"left": 2117,
+											"top": 1838,
+											"width": 189.25537109375,
+											"height": 15
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGLjWB9ldd63lY=",
+											"_parent": {
+												"$ref": "AAAAAAGLjWB9ldd3cRY="
+											},
+											"model": {
+												"$ref": "AAAAAAGH/PXwFh0R6pk="
+											},
+											"font": "Arial;15;0",
+											"left": 2117,
+											"top": 1855,
+											"width": 189.25537109375,
+											"height": 15
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGLjWFSndecXD8=",
+											"_parent": {
+												"$ref": "AAAAAAGLjWB9ldd3cRY="
+											},
+											"model": {
+												"$ref": "AAAAAAGLjWFShdeW6kg="
+											},
+											"font": "Arial;15;0",
+											"left": 2117,
+											"top": 1872,
+											"width": 189.25537109375,
+											"height": 15
+										}
+									],
+									"font": "Arial;15;0",
+									"left": 2112,
+									"top": 1833,
+									"width": 199.25537109375,
+									"height": 59
+								}
+							],
+							"font": "Arial;15;0",
+							"left": 2112,
+							"top": 1808,
+							"width": 199.25537109375,
+							"height": 88,
+							"nameLabel": {
+								"$ref": "AAAAAAGLjWB9ldd2dhE="
+							},
+							"columnCompartment": {
+								"$ref": "AAAAAAGLjWB9ldd3cRY="
+							}
+						},
+						{
+							"_type": "ERDEntityView",
+							"_id": "AAAAAAGLjWCeVNeH7dw=",
+							"_parent": {
+								"$ref": "AAAAAAFLzntJC6ElOqo="
+							},
+							"model": {
+								"$ref": "AAAAAAGLjWCeU9eFgyg="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGLjWCeVNeItxg=",
+									"_parent": {
+										"$ref": "AAAAAAGLjWCeVNeH7dw="
+									},
+									"font": "Arial;13;1",
+									"top": 5,
+									"width": 53.341796875,
+									"height": 13,
+									"text": "Entity3"
+								},
+								{
+									"_type": "ERDColumnCompartmentView",
+									"_id": "AAAAAAGLjWCeVNeJduQ=",
+									"_parent": {
+										"$ref": "AAAAAAGLjWCeVNeH7dw="
+									},
+									"model": {
+										"$ref": "AAAAAAGLjWCeU9eFgyg="
+									},
+									"font": "Arial;13;0",
+									"top": 23,
+									"width": 53.341796875,
+									"height": 10
+								}
+							],
+							"font": "Arial;13;0",
+							"width": 53.341796875,
+							"height": 33,
+							"nameLabel": {
+								"$ref": "AAAAAAGLjWCeVNeItxg="
+							},
+							"columnCompartment": {
+								"$ref": "AAAAAAGLjWCeVNeJduQ="
 							}
 						}
 					]
@@ -7989,7 +8134,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFLzntJC6EktCk="
 					},
-					"name": "lotenet_api",
+					"name": "lotenet_haiti",
 					"columns": [
 						{
 							"_type": "ERDColumn",
@@ -8003,21 +8148,21 @@
 						},
 						{
 							"_type": "ERDColumn",
-							"_id": "AAAAAAGH/PWc6x0J4ic=",
-							"_parent": {
-								"$ref": "AAAAAAGH/PVQhRz15J8="
-							},
-							"name": "Longitud",
-							"type": "Interger",
-							"length": 0
-						},
-						{
-							"_type": "ERDColumn",
 							"_id": "AAAAAAGH/PXwFh0R6pk=",
 							"_parent": {
 								"$ref": "AAAAAAGH/PVQhRz15J8="
 							},
-							"name": "Id_sorteo",
+							"name": "Id_sorteo_pick3",
+							"type": "FK",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGLjWFShdeW6kg=",
+							"_parent": {
+								"$ref": "AAAAAAGH/PVQhRz15J8="
+							},
+							"name": "id_sorteo_pick4",
 							"type": "FK",
 							"length": 0
 						}
@@ -8100,6 +8245,14 @@
 						"$ref": "AAAAAAFLzntJC6EktCk="
 					},
 					"name": "Entity2"
+				},
+				{
+					"_type": "ERDEntity",
+					"_id": "AAAAAAGLjWCeU9eFgyg=",
+					"_parent": {
+						"$ref": "AAAAAAFLzntJC6EktCk="
+					},
+					"name": "Entity3"
 				}
 			]
 		}
