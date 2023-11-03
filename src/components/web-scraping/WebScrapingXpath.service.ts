@@ -67,6 +67,7 @@ export class WebScrapingXpathService {
     verify_string_date: string,
   ): Promise<string> {
     for (const xpath_Actual_fecha of arr_xpath_fechas[index_actual]) {
+      if (xpath_Actual_fecha === '---') continue; //TODO! SI UN ARREGLO TIENE DIMENSIONES DIFERENTES VIENE CON ESTO
       try {
         const xpath_fecha =
           await this.seleniumWebdriver.buscar_xpath(xpath_Actual_fecha);
@@ -95,6 +96,7 @@ export class WebScrapingXpathService {
   ): Promise<number> {
     let digito = '';
     for (const xpath_digito_actual of arr_xpath_digitos[index_actual]) {
+      if (xpath_digito_actual === '---') continue; //TODO! SI UN ARREGLO TIENE DIMENSIONES DIFERENTES VIENE CON ESTO
       try {
         const message =
           await this.seleniumWebdriver.buscar_xpath(xpath_digito_actual);
@@ -113,6 +115,7 @@ export class WebScrapingXpathService {
   async for_urls_digitos(index_actual: number, arr_urls_digitos: string[][]) {
     try {
       for (const url of arr_urls_digitos[index_actual]) {
+        if (url === '---') continue; //TODO! SI UN ARREGLO TIENE DIMENSIONES DIFERENTES VIENE CON ESTO
         await this.seleniumWebdriver.navigateTo(url);
         await pausaBySeg(2); //Todo agrege un tiempo extra
       }

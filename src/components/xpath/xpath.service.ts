@@ -22,6 +22,18 @@ export class XpathService {
     private readonly xpathRepository: Repository<Xpath>,
   ) {}
 
+  ajustarLongitud(arr: string[][]): string[][] {
+    const maxLength = Math.max(...arr.map((subArr) => subArr.length));
+
+    const ajustados = arr.map((subArr) => {
+      const diff = maxLength - subArr.length;
+      const guiones = Array(diff).fill('---');
+      return guiones.concat(subArr);
+    });
+
+    return ajustados;
+  }
+
   async create(createXpathInput: CreateXpathInput): Promise<Xpath> {
     const {
       id_sorteo_a_buscar,
@@ -33,26 +45,36 @@ export class XpathService {
 
     if (
       !(
-        xpath_digitos.length == xpath_fecha_by_digitos.length &&
-        xpath_digitos.length == xpath_urls_by_digitos.length
+        xpath_digitos.length === xpath_fecha_by_digitos.length &&
+        xpath_digitos.length === xpath_urls_by_digitos.length
       )
     ) {
       throw new UnprocessableEntityException(
         MESSAGE.EL_ARREGLO_NO_TIENE_LA_MISMA_POSICIONES,
       );
     }
+    //IGUALO TODOS LOS ARREGLOS PARA QUE TENGA LA MISMA LONGITUD
+    const newXpath_digitos = this.ajustarLongitud(xpath_digitos);
+    const newXpath_fecha_by_digitos = this.ajustarLongitud(
+      xpath_fecha_by_digitos,
+    );
+    const newXpath_urls_by_digitos = this.ajustarLongitud(
+      xpath_urls_by_digitos,
+    );
+
     try {
       const newXpath = this.xpathRepository.create({
         ...rest,
-        xpath_digitos: xpath_digitos,
-        xpath_fecha_by_digitos: xpath_fecha_by_digitos,
-        xpath_urls_by_digitos: xpath_urls_by_digitos,
+        xpath_digitos: newXpath_digitos,
+        xpath_fecha_by_digitos: newXpath_fecha_by_digitos,
+        xpath_urls_by_digitos: newXpath_urls_by_digitos,
         sorteo_a_buscar: { id: id_sorteo_a_buscar },
       });
 
       await this.xpathRepository.save(newXpath);
       return await this.findOne(newXpath.id);
     } catch (error) {
+      //console.log(error);
       throw new UnprocessableEntityException(error?.message);
     }
   }
