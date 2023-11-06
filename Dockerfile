@@ -1,5 +1,7 @@
 # Etapa 1: Construcción de la aplicación
-FROM node:20-bullseye as build
+###! VERSION MAS LIGERA
+###! FROM node:20-bullseye as build
+FROM node:21 as build
 
 # Instala tzdata
 RUN apt update && apt install tzdata -y
@@ -18,8 +20,11 @@ RUN npm run build
 # Ejecuta el comando npm run pg:run-mg
 #RUN npm run pg:run-mg
 
+
 # Etapa 2: Creación de la imagen final
-FROM node:20-bullseye
+###! VERSION MAS LIGERA
+###! FROM node:20-bullseye
+FROM node:21
 
 # Instala el navegador
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
