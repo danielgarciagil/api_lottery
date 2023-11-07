@@ -5,7 +5,7 @@ FROM node:21 as build
 
 # Instala tzdata
 RUN apt update && apt install tzdata -y
-ENV TZ=America/New_York
+ENV TZ=America/Puerto_Rico
 
 # Establece el directorio de trabajo
 WORKDIR /app
@@ -33,7 +33,7 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
     && apt-get install -y google-chrome-stable
 
 # Configurar las variables de entorno
-ENV TZ=America/New_York
+ENV TZ=America/Puerto_Rico
 ENV PORT=3000
 ENV STATE=DEV
 ENV DB_PASSWORD=1234
