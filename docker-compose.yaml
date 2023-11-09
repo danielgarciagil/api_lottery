@@ -1,26 +1,20 @@
-#version: '3'
-#
-#services:
-#  db:
-#   image: postgres:14.4
-#   restart: always
-#   ports:
-#     - "5432:5432"
-#   environment:
-#    POSTGRES_PASSWORD: ${DB_PASSWORD}
-#    POSTGRES_DB: ${DB_NAME}
-#    POSTGRES_USER: ${DB_USER}
-#   #container_name: prueba
-#   volumes:
-#     - ./postgres:/var/lib/postgresql/data
-#
-#  pgadmin:
-#    image: dpage/pgadmin4
-#    environment:
-#     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-#     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-#    ports:
-#      - '5050:80'
-#    depends_on:
-#      - db
-#
+version: '3.8'
+services:
+  api_lottery:
+    image: carlosdiazz08/api_lottery:latest
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    # Otras configuraciones de contenedor
+
+  cron_api:
+    image: carlosdiazz08/cron_api:latest
+    restart: always
+    depends_on:
+      - api_lottery
+    environment:
+      - URL_API=http://api_lottery:${PORT}/graphql
+      - BUSCAR_SORTEO=true
+      - BUSCAR_PREMIO=false

@@ -222,12 +222,14 @@ export class AppInit implements OnModuleInit {
 
   //Consultar si existte un admin
   async onModuleInit() {
+    //await this.crear_rol_root_and_user_root();
     //this.logger.debug('INICIO DEL MODULO SEEDS - APP_INIT');
-    //Creo todos los permisos accion
+    ////Creo todos los permisos accion
     //await this.crear_todos_los_permisos_accion();
     //
     ////Creo el rol ROOT y user ROOT
-    //await this.crear_rol_root_and_user_root();
+    //console.log('JEJE');
+    ////await this.crear_User_Default([1], 'carlos@mail.com', 'Carlos1234');
     //
     ////Creo el rol ADMIN y user ADMIN
     //await this.crear_rol_admin_and_user_admin();

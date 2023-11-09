@@ -20,6 +20,6 @@ services:
       - BUSCAR_PREMIO=false
     # Otras configuraciones de contenedor
 
-networks:
-  my_network:
-    external: true
+#networks:
+#  my_network:
+#    external: true
