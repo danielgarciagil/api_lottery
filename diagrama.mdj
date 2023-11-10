@@ -2080,7 +2080,7 @@
 										"$ref": "AAAAAAGGVtXl8mKGYyk="
 									},
 									"font": "Arial;15;1",
-									"left": 2432,
+									"left": 2424,
 									"top": 2157,
 									"width": 131.69677734375,
 									"height": 15,
@@ -2106,7 +2106,7 @@
 												"$ref": "AAAAAAGGVtYmNGKRQTs="
 											},
 											"font": "Arial;15;0",
-											"left": 2437,
+											"left": 2429,
 											"top": 2182,
 											"width": 121.69677734375,
 											"height": 15
@@ -2121,7 +2121,7 @@
 												"$ref": "AAAAAAGGVtZh4WKZ/E4="
 											},
 											"font": "Arial;15;0",
-											"left": 2437,
+											"left": 2429,
 											"top": 2199,
 											"width": 121.69677734375,
 											"height": 15
@@ -2136,21 +2136,21 @@
 												"$ref": "AAAAAAGGXJdAovd3ccE="
 											},
 											"font": "Arial;15;0",
-											"left": 2437,
+											"left": 2429,
 											"top": 2216,
 											"width": 121.69677734375,
 											"height": 15
 										}
 									],
 									"font": "Arial;15;0",
-									"left": 2432,
+									"left": 2424,
 									"top": 2177,
 									"width": 131.69677734375,
 									"height": 59
 								}
 							],
 							"font": "Arial;15;0",
-							"left": 2432,
+							"left": 2424,
 							"top": 2152,
 							"width": 131.69677734375,
 							"height": 84,
@@ -2213,7 +2213,7 @@
 										"$ref": "AAAAAAGGVta2R2Kvmo8="
 									},
 									"font": "Arial;13;0",
-									"left": 2588,
+									"left": 2580,
 									"top": 2176,
 									"height": 13,
 									"alpha": -0.5235987755982988,
@@ -2231,7 +2231,7 @@
 								"$ref": "AAAAAAGGS4tLRUYTuBo="
 							},
 							"lineStyle": 2,
-							"points": "2664:2128;2611:2128;2611:2168;2563:2168",
+							"points": "2664:2128;2611:2128;2611:2168;2555:2168",
 							"nameLabel": {
 								"$ref": "AAAAAAGGVta2R2KwuLs="
 							},
@@ -2294,7 +2294,7 @@
 										"$ref": "AAAAAAGGVtbHBWLDnG0="
 									},
 									"font": "Arial;13;0",
-									"left": 2588,
+									"left": 2580,
 									"top": 2216,
 									"height": 13,
 									"alpha": -0.5235987755982988,
@@ -2312,7 +2312,7 @@
 								"$ref": "AAAAAAGGS42ry0ZrIrg="
 							},
 							"lineStyle": 2,
-							"points": "2704:2256;2704:2208;2563:2208",
+							"points": "2704:2256;2704:2208;2555:2208",
 							"nameLabel": {
 								"$ref": "AAAAAAGGVtbHBWLEMFQ="
 							},

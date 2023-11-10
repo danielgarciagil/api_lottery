@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   api_lottery:
     image: carlosdiazz08/api_lottery:latest
@@ -8,6 +8,9 @@ services:
     ports:
       - "${PORT}:${PORT}"
     # Otras configuraciones de contenedor
+    networks:
+      dhcp-relay-net:
+        ipv4_address: '172.31.0.10'
 
   cron_api:
     image: carlosdiazz08/cron_api:latest
@@ -18,8 +21,10 @@ services:
       - URL_API=http://api_lottery:${PORT}/graphql
       - BUSCAR_SORTEO=true
       - BUSCAR_PREMIO=false
-    # Otras configuraciones de contenedor
+    networks:
+      dhcp-relay-net:
+        ipv4_address: '172.31.0.11'
 
-#networks:
-#  my_network:
-#    external: true
+networks:
+  dhcp-relay-net:
+    external: true
