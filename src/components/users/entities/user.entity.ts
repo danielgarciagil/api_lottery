@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import {
   BeforeInsert,
   Column,
@@ -18,7 +18,7 @@ import { Resultado } from './../../../components/resultados/entities/resultado.e
 @ObjectType()
 export class User {
   @PrimaryGeneratedColumn()
-  @Field(() => ID)
+  @Field(() => Int)
   id: number;
 
   @Column({ type: 'varchar', unique: true })

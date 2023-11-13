@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import {
   Column,
   Entity,
@@ -15,7 +15,7 @@ import { LotenetPremio } from './../../../components/lotenet-premios/entities/lo
 @ObjectType()
 export class PremiosDia {
   @PrimaryGeneratedColumn()
-  @Field(() => ID)
+  @Field(() => Int)
   id: number;
 
   @Field(() => String)

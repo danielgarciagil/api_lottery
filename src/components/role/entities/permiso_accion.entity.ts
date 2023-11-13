@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import {
   Column,
   Entity,
@@ -18,7 +18,7 @@ import { Role } from './role.entity';
 @Entity({ name: 'permiso_accion' })
 @ObjectType({ description: 'Entidad de los permisos con las acciones' })
 export class Permiso_Accion {
-  @Field(() => ID)
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
 

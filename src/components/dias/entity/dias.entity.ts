@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 //PROPIO
@@ -11,7 +11,7 @@ import { PremiosDia } from './../../../components/premios-dias/entities/premios-
 @ObjectType()
 export class Dias {
   @PrimaryGeneratedColumn()
-  @Field(() => ID)
+  @Field(() => Int)
   id: number;
 
   @Field(() => String)

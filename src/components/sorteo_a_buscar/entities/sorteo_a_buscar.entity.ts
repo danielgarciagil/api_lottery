@@ -1,4 +1,4 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   Entity,
@@ -17,7 +17,7 @@ import { ResponseSorteoABuscar } from './../../../components/response_sorteo_a_b
 @ObjectType()
 export class SorteoABuscar {
   @PrimaryGeneratedColumn()
-  @Field(() => ID)
+  @Field(() => Int)
   id: number;
 
   @Field(() => String)

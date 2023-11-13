@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import {
   Column,
   Entity,
@@ -15,7 +15,7 @@ import { VALID_ENTITY } from './../../../config/valid-roles';
 @Entity({ name: VALID_ENTITY.ROLE })
 @ObjectType({ description: 'Entidad de Roles' })
 export class Role {
-  @Field(() => ID)
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
 

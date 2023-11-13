@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 import { VALID_ENTITY } from './../../../config/valid-roles';
@@ -7,7 +7,7 @@ import { VALID_ENTITY } from './../../../config/valid-roles';
 @ObjectType()
 export class LotenetHaitiApi {
   @PrimaryGeneratedColumn()
-  @Field(() => ID)
+  @Field(() => Int)
   id: number;
 
   @Field(() => String)

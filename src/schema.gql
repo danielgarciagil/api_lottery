@@ -4,7 +4,7 @@
 
 """Entidad de los permisos con las acciones"""
 type Permiso_Accion {
-  id: ID!
+  id: Int!
   action: String!
   method: String!
   entity: String!
@@ -14,7 +14,7 @@ type Permiso_Accion {
 
 """Entidad de Roles"""
 type Role {
-  id: ID!
+  id: Int!
   name: String!
   descripcion: String!
   activo: Boolean!
@@ -23,7 +23,7 @@ type Role {
 }
 
 type Juego {
-  id: ID!
+  id: Int!
   name: String!
   abreviatura: String!
   descripcion: String!
@@ -45,7 +45,7 @@ type Loteria {
 }
 
 type Xpath {
-  id: ID!
+  id: Int!
   name: String!
   descripcion: String!
   verify_string_date: String
@@ -73,7 +73,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type SorteoABuscar {
-  id: ID!
+  id: Int!
   name: String!
   activo: Boolean!
   numeros_intentos: Int!
@@ -83,7 +83,7 @@ type SorteoABuscar {
 }
 
 type Plataforma {
-  id: ID!
+  id: Int!
   name: String!
   usuario: String!
   url: String!
@@ -104,7 +104,7 @@ type ResponseLotenetPremio {
 }
 
 type LotenetPremio {
-  id: ID!
+  id: Int!
   name: String!
   activo: Boolean!
   data_lotenet_id_lottery: Int!
@@ -120,31 +120,31 @@ type LotenetPremio {
 }
 
 type PremiosDia {
-  id: ID!
+  id: Int!
   hora: String!
   dias: Dias!
 }
 
 type Dias {
-  id: ID!
+  id: Int!
   name: String!
 }
 
 type SorteoDias {
-  id: ID!
+  id: Int!
   hora: String!
   dias: Dias!
 }
 
 type LotenetApi {
-  id: ID!
+  id: Int!
   name: String!
   longitud: Int!
   sorteo: Sorteo!
 }
 
 type Sorteo {
-  id: ID!
+  id: Int!
   name: String!
   abreviatura: String!
   img_url: String
@@ -159,7 +159,7 @@ type Sorteo {
 }
 
 type Resultado {
-  id: ID!
+  id: Int!
   numeros_ganadores: [Int!]!
   fecha: DateTime!
   sorteo: Sorteo!
@@ -168,7 +168,7 @@ type Resultado {
 }
 
 type User {
-  id: ID!
+  id: Int!
   nickname: String!
   name: String!
   email: String!
@@ -194,7 +194,7 @@ type RESPONSE_BY_XPATH {
 }
 
 type LotenetHaitiApi {
-  id: ID!
+  id: Int!
   name: String!
   id_sorteo_pick3: Int!
   id_sorteo_pick4: Int!
