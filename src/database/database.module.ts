@@ -20,6 +20,7 @@ import { config } from '../config/config';
           password: configService.POSTGRES.DB_PASSWORD,
           autoLoadEntities: true,
           synchronize: false,
+          //Agregar configuracion para ssl
         } as DataSourceOptions;
       },
     }),

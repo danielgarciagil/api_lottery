@@ -489,6 +489,7 @@ input CreateJuegoInput {
   posiciones: Int!
   rango_minimo: Int!
   rango_maximo: Int!
+  activo: Boolean
 }
 
 input UpdateJuegoInput {
@@ -498,6 +499,7 @@ input UpdateJuegoInput {
   posiciones: Int
   rango_minimo: Int
   rango_maximo: Int
+  activo: Boolean
   id: Int!
 }
 

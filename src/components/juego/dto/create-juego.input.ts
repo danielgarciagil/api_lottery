@@ -1,5 +1,12 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsNumber, IsString, Min, MinLength } from 'class-validator';
+import {
+  IsBoolean,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+  MinLength,
+} from 'class-validator';
 
 @InputType()
 export class CreateJuegoInput {
@@ -32,4 +39,9 @@ export class CreateJuegoInput {
   @IsNumber()
   @Min(0)
   rango_maximo: number;
+
+  @Field(() => Boolean, { nullable: true })
+  @IsBoolean()
+  @IsOptional()
+  activo?: boolean;
 }
