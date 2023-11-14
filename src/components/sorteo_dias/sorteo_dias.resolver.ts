@@ -52,8 +52,8 @@ export class SorteoDiasResolver {
   }
 
   @Mutation(() => SorteoDias, {
-    name: 'updateSorteo',
-    description: 'Para actualizar un Sorteo',
+    name: 'updateSorteoDia',
+    description: 'Para actualizar un Sorteo Dia',
   })
   updateSorteoDia(
     @CurrentUser([VALID_PERMISO_ACCION.SORTEO_DIAS_UPDATE]) user: User,
@@ -66,8 +66,8 @@ export class SorteoDiasResolver {
   }
 
   @Mutation(() => ResponsePropioGQl, {
-    name: 'removeSorteo',
-    description: 'Para eliminar un Sorteo',
+    name: 'removeSorteoDia',
+    description: 'Para eliminar un Sorteo Dia',
   })
   removeSorteoDia(
     @CurrentUser([VALID_PERMISO_ACCION.SORTEO_DIAS_DELETE]) user: User,
