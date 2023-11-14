@@ -356,10 +356,10 @@ type Mutation {
   """para crear un Sorteo"""
   createSorteo(createSorteoInput: CreateSorteoInput!): Sorteo!
 
-  """Para actualizar un Sorteo"""
-  updateSorteo(updateSorteoDiaInput: UpdateSorteoDiaInput!): SorteoDias!
+  """Para actualizar un SOrteo"""
+  updateSorteo(updateSorteoInput: UpdateSorteoInput!): Sorteo!
 
-  """Para eliminar un Sorteo"""
+  """Remover un sorteo"""
   removeSorteo(id: Int!): ResponsePropioGQl!
 
   """Para crear el Xpath"""
@@ -373,6 +373,12 @@ type Mutation {
 
   """Para crear los dias que tendra un sorteo con su hora"""
   createSorteoDia(createSorteoDiaInput: CreateSorteoDiaInput!): SorteoDias!
+
+  """Para actualizar un Sorteo Dia"""
+  updateSorteoDia(updateSorteoDiaInput: UpdateSorteoDiaInput!): SorteoDias!
+
+  """Para eliminar un Sorteo Dia"""
+  removeSorteoDia(id: Int!): ResponsePropioGQl!
 
   """Para crear un Sctipt que busque solo el premio mediante webscraping"""
   createSorteoABuscar(createSorteoABuscarInput: CreateSorteoABuscarInput!): SorteoABuscar!
@@ -523,14 +529,17 @@ input CreateSorteoInput {
   abreviatura: String!
   img_url: String
   descripcion: String!
+  activo: Boolean
   id_juego: Int!
   id_loteria: Int!
 }
 
-input UpdateSorteoDiaInput {
-  hora: String
-  id_sorteo: Int
-  id_dia: Int
+input UpdateSorteoInput {
+  name: String
+  abreviatura: String
+  img_url: String
+  descripcion: String
+  activo: Boolean
   id: Int!
 }
 
@@ -561,6 +570,13 @@ input CreateSorteoDiaInput {
   hora: String!
   id_sorteo: Int!
   id_dia: Int!
+}
+
+input UpdateSorteoDiaInput {
+  hora: String
+  id_sorteo: Int
+  id_dia: Int
+  id: Int!
 }
 
 input CreateSorteoABuscarInput {

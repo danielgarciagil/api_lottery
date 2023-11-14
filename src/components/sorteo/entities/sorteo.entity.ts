@@ -69,7 +69,8 @@ export class Sorteo {
   //todo field
   @Field(() => [SorteoDias])
   @OneToMany(() => SorteoDias, (sorteoDias) => sorteoDias.sorteo, {
-    eager: true,
+    //TODO! TUVE QUE CAMBIAR AQUI por flutter no se si afecte el proceso
+    lazy: true,
   })
   sorteo_dias: SorteoDias[];
 
