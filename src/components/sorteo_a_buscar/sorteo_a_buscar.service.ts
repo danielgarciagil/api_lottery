@@ -92,7 +92,16 @@ export class SorteoABuscarService {
     id: number,
     updateSorteoABuscarInput: UpdateSorteoABuscarInput,
   ): Promise<SorteoABuscar> {
-    throw new BadGatewayException(MESSAGE.FALTA_IMPLEMENTAR_ESTE_METODO); // todo
+    const sorteoABuscar = await this.findOne(id);
+    try {
+      this.sorteoABuscarRepository.merge(
+        sorteoABuscar,
+        updateSorteoABuscarInput,
+      );
+      return await this.sorteoABuscarRepository.save(sorteoABuscar);
+    } catch (error) {
+      throw new UnprocessableEntityException(error?.message);
+    }
   }
 
   async remove(id: number): Promise<ResponsePropioGQl> {
