@@ -13,11 +13,11 @@ import { User } from '../users/entities/user.entity';
 import { PaginationArgs } from './../../common/dto/args';
 import { ResponsePropioGQl } from 'src/common/response';
 
-@UseGuards(JwtAuthGuard)
 @Resolver(() => Loteria)
 export class LoteriaResolver {
   constructor(private readonly loteriaService: LoteriaService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Loteria, {
     name: 'createLoteria',
     description: 'Para crear una Loteria',
@@ -34,7 +34,7 @@ export class LoteriaResolver {
     description: 'Para ver todas las loterias',
   })
   async findAll(
-    @CurrentUser([VALID_PERMISO_ACCION.LOTERIA_VIEW]) user: User,
+    //@CurrentUser([VALID_PERMISO_ACCION.LOTERIA_VIEW]) user: User,
     @Args() paginationArgs: PaginationArgs,
   ): Promise<Loteria[]> {
     return this.loteriaService.findAll(paginationArgs);
@@ -45,12 +45,13 @@ export class LoteriaResolver {
     description: 'Para buscar una loteria en especifico',
   })
   async findOne(
-    @CurrentUser([VALID_PERMISO_ACCION.LOTERIA_VIEW]) user: User,
+    //@CurrentUser([VALID_PERMISO_ACCION.LOTERIA_VIEW]) user: User,
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
   ): Promise<Loteria> {
     return this.loteriaService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Loteria, {
     name: 'updateLoteria',
     description: 'Para actualizar una loteria',
@@ -65,6 +66,7 @@ export class LoteriaResolver {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => ResponsePropioGQl, {
     name: 'removeLoteria',
     description: 'Para eliminar una loteria',

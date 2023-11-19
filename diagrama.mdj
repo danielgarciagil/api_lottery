@@ -772,8 +772,8 @@
 										"$ref": "AAAAAAGGS5I8ukdSBT0="
 									},
 									"font": "Arial;15;1",
-									"left": 3136,
-									"top": 2133,
+									"left": 3120,
+									"top": 2181,
 									"width": 236.71875,
 									"height": 15,
 									"text": "Resultados"
@@ -798,8 +798,8 @@
 												"$ref": "AAAAAAGGS5JfSkddwt4="
 											},
 											"font": "Arial;15;0",
-											"left": 3141,
-											"top": 2158,
+											"left": 3125,
+											"top": 2206,
 											"width": 226.71875,
 											"height": 15
 										},
@@ -813,8 +813,8 @@
 												"$ref": "AAAAAAGGS5MGN0dl7O0="
 											},
 											"font": "Arial;15;0",
-											"left": 3141,
-											"top": 2175,
+											"left": 3125,
+											"top": 2223,
 											"width": 226.71875,
 											"height": 15
 										},
@@ -828,8 +828,8 @@
 												"$ref": "AAAAAAGGS5QsJ0eAvWQ="
 											},
 											"font": "Arial;15;0",
-											"left": 3141,
-											"top": 2192,
+											"left": 3125,
+											"top": 2240,
 											"width": 226.71875,
 											"height": 15
 										},
@@ -843,22 +843,22 @@
 												"$ref": "AAAAAAGGZTW4iviYK8g="
 											},
 											"font": "Arial;15;0",
-											"left": 3141,
-											"top": 2209,
+											"left": 3125,
+											"top": 2257,
 											"width": 226.71875,
 											"height": 15
 										}
 									],
 									"font": "Arial;15;0",
-									"left": 3136,
-									"top": 2153,
+									"left": 3120,
+									"top": 2201,
 									"width": 236.71875,
 									"height": 76
 								}
 							],
 							"font": "Arial;15;0",
-							"left": 3136,
-							"top": 2128,
+							"left": 3120,
+							"top": 2176,
 							"width": 236.71875,
 							"height": 101,
 							"nameLabel": {
@@ -1730,8 +1730,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 2987,
-									"top": 2123,
+									"left": 3158,
+									"top": 2137,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -1764,8 +1764,8 @@
 										"$ref": "AAAAAAGGUZByhorfZz0="
 									},
 									"font": "Arial;13;0",
-									"left": 3110,
-									"top": 2123,
+									"left": 3159,
+									"top": 2144,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -1782,7 +1782,7 @@
 								"$ref": "AAAAAAGGS4tLRUYTuBo="
 							},
 							"lineStyle": 2,
-							"points": "2839:2144;3136:2144",
+							"points": "2839:2144;3144:2144;3144:2176",
 							"nameLabel": {
 								"$ref": "AAAAAAGGUZByhorg4MY="
 							},
@@ -3771,7 +3771,7 @@
 										"$ref": "AAAAAAGGlaTX0sUU7Gk="
 									},
 									"font": "Arial;13;0",
-									"left": 3397,
+									"left": 3381,
 									"top": 2186,
 									"height": 13,
 									"alpha": -0.5235987755982988,
@@ -3789,7 +3789,7 @@
 								"$ref": "AAAAAAGGS5pMoEhoH44="
 							},
 							"lineStyle": 2,
-							"points": "3532:1934;3532:2178;3372:2178",
+							"points": "3532:1934;3532:2178;3356:2178",
 							"nameLabel": {
 								"$ref": "AAAAAAGGlaTX0sUVGao="
 							},
@@ -7015,8 +7015,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGGWnHrevSdKQU="
 							},
-							"name": "buscando",
-							"type": "BOOLEAN",
+							"name": "name",
+							"type": "String",
 							"length": 0
 						},
 						{
