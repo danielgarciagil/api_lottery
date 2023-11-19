@@ -28,4 +28,9 @@ export class CreateLoteriaInput {
   @IsBoolean()
   @IsOptional()
   activo?: boolean;
+
+  @Field(() => Boolean, { nullable: true })
+  @IsBoolean()
+  @IsOptional()
+  mostrar_pantalla?: boolean;
 }

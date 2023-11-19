@@ -31,6 +31,11 @@ export class Loteria {
   @Column({ type: 'boolean', default: true })
   activo: boolean;
 
+  @Field(() => Boolean)
+  @Column({ type: 'boolean', default: false })
+  mostrar_pantalla: boolean;
+
+
   @Field(() => [Sorteo])
   @OneToMany(() => Sorteo, (sorteo) => sorteo.loteria, { lazy: true })
   sorteo: Sorteo[];

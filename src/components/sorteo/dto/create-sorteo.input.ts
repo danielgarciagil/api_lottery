@@ -45,6 +45,11 @@ export class CreateSorteoInput {
   @IsOptional()
   activo?: boolean;
 
+  @Field(() => Boolean, { nullable: true })
+  @IsBoolean()
+  @IsOptional()
+  mostrar_pantalla?: boolean;
+
   @Field(() => Int)
   @IsNumber()
   @Min(1)

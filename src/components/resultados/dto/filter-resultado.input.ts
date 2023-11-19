@@ -1,5 +1,6 @@
 import { ArgsType, Field, Int } from '@nestjs/graphql';
 import {
+  IsBoolean,
   IsDateString,
   IsNumber,
   IsNumberString,
@@ -21,6 +22,11 @@ export class FilterResultado {
   @IsNumber()
   @Min(1)
   id_lottery: number;
+
+  @Field(() => Boolean, { nullable: true })
+  @IsOptional()
+  @IsBoolean()
+  mostrar_pantalla_sorteo?: boolean;
 
   @Field(() => String, { nullable: true })
   @IsDateString()

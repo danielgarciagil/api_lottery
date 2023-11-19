@@ -156,6 +156,7 @@ export class ResultadosService {
     const {
       id_sorteo,
       id_lottery,
+      mostrar_pantalla_sorteo,
       desde = new Date('2020-01-01'),
       hasta = new Date(),
     } = filterResultado;
@@ -175,6 +176,14 @@ export class ResultadosService {
       whereCondition.sorteo = {
         id: id_sorteo,
       };
+      console.log(mostrar_pantalla_sorteo);
+      if (mostrar_pantalla_sorteo) {
+        console.log('Entroo');
+        whereCondition.sorteo = {
+          id: id_sorteo,
+          mostrar_pantalla: mostrar_pantalla_sorteo,
+        };
+      }
     } else if (id_lottery) {
       whereCondition.sorteo = {
         loteria: {

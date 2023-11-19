@@ -60,6 +60,10 @@ export class Sorteo {
   @Column({ type: 'boolean', default: true })
   activo: boolean;
 
+  @Field(() => Boolean)
+  @Column({ type: 'boolean', default: false })
+  mostrar_pantalla: boolean;
+
   @Field(() => SorteoABuscar, { nullable: true }) //TODO puede ser null
   @OneToOne(() => SorteoABuscar, (sorteoABuscar) => sorteoABuscar.sorteo, {
     lazy: true,
