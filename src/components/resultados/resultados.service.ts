@@ -21,6 +21,7 @@ import {
 } from './dto/filter-resultado.input';
 import { agregar_digitos } from 'src/common/funciones/agregarDigitos';
 import { User } from '../users/entities/user.entity';
+import { date } from 'joi';
 
 @Injectable()
 export class ResultadosService {
@@ -157,13 +158,18 @@ export class ResultadosService {
       id_sorteo,
       id_lottery,
       mostrar_pantalla_sorteo,
-      mostrar_pantalla_loteria,
       desde = new Date('2020-01-01'),
       hasta = new Date(),
     } = filterResultado;
 
+    let new_date;
+    if (desde == null) {
+      new_date = new Date('2020-01-01');
+    } else {
+      new_date = desde;
+    }
     const whereCondition: any = {
-      fecha: Between(desde, hasta),
+      fecha: Between(new_date, hasta),
     };
 
     if (id_lottery && id_sorteo) {
@@ -197,6 +203,11 @@ export class ResultadosService {
           },
         };
       }
+    }
+    if (mostrar_pantalla_sorteo) {
+      whereCondition.sorteo = {
+        mostrar_pantalla: mostrar_pantalla_sorteo,
+      };
     }
 
     return await this.resultadoRepository.find({
