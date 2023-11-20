@@ -43,13 +43,13 @@ export class SorteoResolver {
     return this.sorteoService.findAll(paginationArgs, idDiaArgs);
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Query(() => Sorteo, {
     name: 'findSorteo',
     description: 'Para bsucar un sorteo',
   })
   async findOne(
-    @CurrentUser([VALID_PERMISO_ACCION.SORTEO_VIEW]) user: User,
+    //@CurrentUser([VALID_PERMISO_ACCION.SORTEO_VIEW]) user: User,
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
   ): Promise<Sorteo> {
     return this.sorteoService.findOne(id);
