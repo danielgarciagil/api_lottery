@@ -230,7 +230,7 @@ type Query {
   findJuego(id: Int!): Juego!
 
   """Ver todos los resultados"""
-  allResultados(offset: Int = 0, limit: Int = 10, id_sorteo: Int, id_lottery: Int, mostrar_pantalla_sorteo: Boolean, desde: String, hasta: String): [Resultado!]!
+  allResultados(offset: Int = 0, limit: Int = 10, id_sorteo: Int, id_lottery: Int, mostrar_pantalla_sorteo: Boolean, mostrar_pantalla_loteria: Boolean, desde: String, hasta: String): [Resultado!]!
 
   """Ver un resultado especifico"""
   findResultados(id: Int!): Resultado!

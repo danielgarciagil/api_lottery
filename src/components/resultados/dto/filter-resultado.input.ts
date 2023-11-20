@@ -28,6 +28,11 @@ export class FilterResultado {
   @IsBoolean()
   mostrar_pantalla_sorteo?: boolean;
 
+  @Field(() => Boolean, { nullable: true })
+  @IsOptional()
+  @IsBoolean()
+  mostrar_pantalla_loteria?: boolean;
+
   @Field(() => String, { nullable: true })
   @IsDateString()
   @IsOptional()
