@@ -162,52 +162,31 @@ export class ResultadosService {
       hasta = new Date(),
     } = filterResultado;
 
-    let new_date;
-    if (desde == null) {
-      new_date = new Date('2020-01-01');
-    } else {
-      new_date = desde;
-    }
+    const new_date = desde || new Date('2020-01-01');
+
     const whereCondition: any = {
       fecha: Between(new_date, hasta),
     };
 
-    if (id_lottery && id_sorteo) {
+    if (id_sorteo) {
       whereCondition.sorteo = {
         id: id_sorteo,
-        loteria: {
-          id: id_lottery,
-        },
-      };
-    } else if (id_sorteo) {
-      whereCondition.sorteo = {
-        id: id_sorteo,
-      };
-      if (mostrar_pantalla_sorteo) {
-        whereCondition.sorteo = {
-          id: id_sorteo,
+        ...(id_lottery && { loteria: { id: id_lottery } }),
+        ...(mostrar_pantalla_sorteo && {
           mostrar_pantalla: mostrar_pantalla_sorteo,
-        };
-      }
+        }),
+      };
     } else if (id_lottery) {
       whereCondition.sorteo = {
-        loteria: {
-          id: id_lottery,
-        },
-      };
-      if (mostrar_pantalla_sorteo) {
-        whereCondition.sorteo = {
+        ...(mostrar_pantalla_sorteo && {
           mostrar_pantalla: mostrar_pantalla_sorteo,
-          loteria: {
-            id: id_lottery,
-          },
-        };
-      }
-    }
-    if (mostrar_pantalla_sorteo) {
-      whereCondition.sorteo = {
-        mostrar_pantalla: mostrar_pantalla_sorteo,
+        }),
+        loteria: { id: id_lottery },
       };
+    } else {
+      if (mostrar_pantalla_sorteo) {
+        whereCondition.sorteo = { mostrar_pantalla: mostrar_pantalla_sorteo };
+      }
     }
 
     return await this.resultadoRepository.find({
