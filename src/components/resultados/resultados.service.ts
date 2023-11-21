@@ -162,10 +162,11 @@ export class ResultadosService {
       hasta = new Date(),
     } = filterResultado;
 
-    const new_date = desde || new Date('2020-01-01');
+    const new_date_desde = desde || new Date('2020-01-01');
+    const new_date_hasta = hasta || new Date();
 
     const whereCondition: any = {
-      fecha: Between(new_date, hasta),
+      fecha: Between(new_date_desde, new_date_hasta),
     };
 
     if (id_sorteo) {
